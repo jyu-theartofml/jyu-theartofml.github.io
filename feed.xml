@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="https://www.w3.org/2005/Atom" xmlns:dc="https://purl.org/dc/elements/1.1/">
   <channel>
-    <title>Chalk</title>
+    <title>The Art of Machine Learning</title>
     <description></description>
-    <link>http://chalk.nielsenramon.com</link>
-    <atom:link href="http://chalk.nielsenramon.com/feed.xml" rel="self" type="application/rss+xml" />
+    <link>http://yinniyu.github.io</link>
+    <atom:link href="http://yinniyu.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
         <title>Introducing chalk</title>
