@@ -62,7 +62,8 @@ figure,main {
 figure {
   margin: 1em 40px; }
 figcaption {
-   font-size:smaller;}
+   font-size:smaller;
+   font-style: italic;}
 /**
  * 1. Add the correct box sizing in Firefox.
  * 2. Show the overflow in Edge and IE.
