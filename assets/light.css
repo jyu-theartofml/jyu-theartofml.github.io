@@ -63,7 +63,8 @@ figure {
   margin: 1em; }
 figcaption {
    font-size:smaller;
-   font-style: italic;}
+   font-style: italic;
+   text-align: center;}
 /** table*/
 
 table {
