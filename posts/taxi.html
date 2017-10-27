@@ -71,9 +71,6 @@
 
           <div class="article-content">
 
-
-<h2 id="installation">Geo data visualization in Rstudio </h2>
-
 <p>The data set is from the Kaggle taxi ride data, and here's a preview of the data</p>
  <br> 
 <div style="overflow-x:auto;">
@@ -123,9 +120,20 @@
   
   </table>
 </div>
-
-<figure class="highlight"><pre><code class="language-R" data-lang="R">brew install ruby
-brew install npm</code></pre></figure>
+            <p>Often times, we need extract time stamp elements from a data frame. In R, the <i> lubridate</i> package 
+              is a fast and simple way to extract those information. This data sets contain data on the scale ranging from
+              hour, weekday, date, and month. A good way to visualize that is using geom_tile() function within ggplot:
+              
+<figure class="highlight"><pre><code class="language-R" data-lang="R">
+#Define the axis for each facet element (one facet corresponds to one month)
+p <-ggplot(df,aes(x=pickup_day,y=pickup_hour, fill=total))+
+  geom_tile(color="white", size=0.1) + coord_equal()+
+  scale_fill_viridis(name="Number of rides", option="D")
+#put facet plot in order
+p <-p + facet_grid(.~factor(pickup_month2, levels=c("Jan", "Feb", "March", "April", "May", 'June')))
+p <-p + scale_y_continuous(trans = "reverse", breaks = unique(df$pickup_hour))
+p + labs( x="Pickup Day", y="Pickup Hour")
+</code></pre></figure>
 
 <p>On windows, install Ruby and Node with the installers found here:</p>
 
