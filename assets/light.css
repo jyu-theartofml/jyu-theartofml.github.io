@@ -64,6 +64,18 @@ figure {
 figcaption {
    font-size:smaller;
    font-style: italic;}
+/** table*/
+
+table {
+    border-collapse: collapse;
+    width: 40%;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+
 /**
  * 1. Add the correct box sizing in Firefox.
  * 2. Show the overflow in Edge and IE.
