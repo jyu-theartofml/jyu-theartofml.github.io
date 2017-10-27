@@ -120,8 +120,8 @@
   </table>
 </div>
  <br>
-<p>Often times, we need extract time stamp elements from a data frame. In R, the <i> lubridate</i> package 
-              is a fast and simple way to extract those information. This data sets contain data on the scale ranging from
+<p>Often times, we need to extract time stamp elements from a data frame. In R, the <i> lubridate</i> package 
+              is a fast and simple way to extract those information. This data set contains  data on the scale ranging from
               hour, weekday, date, and month. A good way to visualize that is using geom_tile() function within ggplot:</p>
               
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
@@ -135,7 +135,13 @@ p <-p + scale_y_continuous(trans = "reverse", breaks = unique(df$pickup_hour))
 p + labs( x="Pickup Day", y="Pickup Hour")
 </code></pre></figure>
 
-<p>On windows, install Ruby and Node with the installers found here:</p>
+ <figure>
+   <img src="github.com/yinniyu/kaggle_taxi/blob/master/heatmap.png" alt="tile heat map" >
+  <figcaption>Calendar heat map of taxi pickup data points.
+          </figcaption>
+</figure>
+  
+  
 
 <ul>
   <li><a href="https://rubyinstaller.org/">Ruby</a></li>
