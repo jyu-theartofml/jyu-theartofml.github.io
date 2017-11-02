@@ -164,9 +164,35 @@ ggmap(p)+ stat_density_2d(data=combo_data, geom ='polygon', bins=10, aes(x=lon, 
    </figcaption>
    </figure>
 
-<h2 id="development">Development</h2>
+<h2 id="development">Feature Engineering for Regression</h2>
 
-<p>Run Jekyll:</p>
+<p>Most of the machine learning workflows can benefit from the art of feature engineering. Here, feature engineering is defined as adding or 
+transforming relevant information/variables 
+to the existing dataset in order to improve the model's learning and its performance. In some situations, feature 
+engineering requires extensive domain knowledge, for this taxi dataset it was pretty straight forward. The new features obtained 
+from the given features are the time stamp element (i.e, month, date, weekday, hour) and the <a href='https://www.r-bloggers.com/great-circle-distance-calculations-in-r/'>
+haversine distance</a> in km. The target variable, <i>trip duration</i> was log transformed since it displayed a highly skewered
+distribution. And I generally prefer to have normal-ish distribution when working with continunous variable, it helps some model 
+learn better. In fact, you might consider normalization/scaling to be a form of feature engineering because the raw data are transformed to
+optimize distance-based models or gradient descend parameter updates.</p>
+
+<p>There's a useful library called <i> GGally </i> that offers a simple one-liner function for matrix scatter plots, along with
+distribution plot, and correlation values. I also like it for its visual appeal. As shown in Fig 3 below, the strongest correlation was for one of the 
+feature engineered variable - haversine distance (calculated using the pick up and dropoff GPS coordinates). </p>
+
+<figure class="highlight"><pre><code class="language-R" data-lang="R">
+library(GGally)
+#using only 10K data points so it doesn't take too long to plot
+sample_data<-datasets[1:10000,]
+ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_month", "pickup_weekday","distance_h", "log_duration")])
+</code></pre></figure>
+
+<figure>
+   <img src="images/scatter_plot_matrix.png" alt="correlation plot" >
+   <figcaption>Fig 3. Scatter plots of variables.
+   </figcaption>
+   </figure>
+
 
 <figure class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>jekyll serve</code></pre></figure>
 
