@@ -49,7 +49,7 @@
         <article class="article appear">
           <header class="article-header">
             <h1>Data visualization and predicting taxi ride time (R) </h1>
-            <p>This post will cover some data visualization techniques for working with high dimensional datasets. Then I will talk about using \
+            <p>This post will cover some data visualization techniques for working with high dimensional datasets. Then I will talk about using 
             Random Forest and Caret to predict trip duration with parallel computing.</p>
             
             <div class="article-list-footer">
@@ -164,20 +164,21 @@ ggmap(p)+ stat_density_2d(data=combo_data, geom ='polygon', bins=10, aes(x=lon, 
    </figcaption>
    </figure>
 
-<h2 id="development">Feature Engineering for Regression</h2>
+<h2 id="feature engineering">Feature Engineering for Regression</h2>
 
-<p>Most of the machine learning workflows can benefit from the art of feature engineering. Here, feature engineering is defined as adding or 
+<p>Most of the time, machine learning workflows can benefit from feature engineering. Here, feature engineering is defined as adding or 
 transforming relevant information/variables 
 to the existing dataset in order to improve the model's learning and its performance. In some situations, feature 
 engineering requires extensive domain knowledge, for this taxi dataset it was pretty straight forward. The new features obtained 
 from the given features are the time stamp element (i.e, month, date, weekday, hour) and the <a href='https://www.r-bloggers.com/great-circle-distance-calculations-in-r/'>
 haversine distance</a> in km. The target variable, <i>trip duration</i> was log transformed since it displayed a highly skewered
-distribution. And I generally prefer to have normal-ish distribution when working with continunous variable, it helps some model 
+distribution. And I generally prefer to have normal-ish distribution when working with continunous variable, it helps some models to  
 learn better. In fact, you might consider normalization/scaling to be a form of feature engineering because the raw data are transformed to
-optimize distance-based models or gradient descend parameter updates.</p>
+optimize distance-based algorithms or gradient descend parameter updates.</p>
 
-<p>There's a useful library called <i> GGally </i> that offers a simple one-liner function for matrix scatter plots, along with
-distribution plot, and correlation values. I also like it for its visual appeal. As shown in Fig 3 below, the strongest correlation was for one of the 
+<p>There's a useful library called <i> GGally </i>  that offers a simple one-liner function for matrix scatter plots, along with display of
+distribution and correlation values. This is super useful for exploratory data analysis to get a sense of the data I'm working with. 
+As shown in Fig 3 below, the strongest correlation was for one of the 
 feature engineered variable - haversine distance (calculated using the pick up and dropoff GPS coordinates). </p>
 
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
@@ -194,37 +195,59 @@ ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_mo
    </figure>
 
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>jekyll serve</code></pre></figure>
+<h2 id="randomeforest">Caret and the Forest</h2>
 
-<h2 id="deploy-to-github-pages">Deploy to GitHub Pages</h2>
+<p>After the data are preprocessed, I used the <i>Caret</i> library to perform cross validation on grid search. I chose to use
+Random Forest (RF) regressor model because it is known to work well with nonlinear data, it applies bagging to select random 
+subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
+<p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
+This is helpful for running RF on large dataset with ~1M samples. On the <i>Caret</i> documentation, the author only mentioned 
+<i>doMC</i> for parallel computing but that only works for Macs. I have a windows 10 laptop with 4 cores (8 processors), and found that
+the <i>doParallel</i> package worked well with the CV workflow.
+<figure class="highlight"><pre><code class="language-R" data-lang="R">
+library(randomForest)
+library(caret)
+library(parallel)
+library(doParallel)
+library(dplyr)
+datasets<- datasets%>% mutate_if(is.integer, as.numeric)
+trainIndex <- createDataPartition(datasets$log_duration, p = .7, 
+                                  list = FALSE, 
+                                  times = 1)
+data_train<-datasets[trainIndex,]
+data_val<-datasets[-trainIndex,]
+#### grid must include mtry for RF model ####
+rfgrid<- expand.grid(mtry=c(6,13))
+set.seed(20)
+cv_control <- trainControl(
+  method = "cv",
+  number = 3)
+  
+###### NOTE: CV and grid functions has to come before cluster computing setup  ##########
 
-<p>Before you deploy, commit your changes to any working branch except the <code class="highlighter-rouge">gh-pages</code> one then run the following command:</p>
+cluster <- makeCluster(detectCores()-3)# leave at least 1 node for operating system 
+registerDoParallel(cluster)
 
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">bin/deploy</code></pre></figure>
+##train function will invoke dummy variables for formula input!
+##but randomForest library itself doesn't do that with formula input
+rfFit <- train(log_duration ~ ., data = data_train, 
+                 method = "rf", ntree=100,
+                 trControl = cv_control, 
+                 tuneGrid=rfgrid,
+                 verbose = FALSE, importance=TRUE)
 
-<p><strong>Important note</strong>: Chalk does not support the standard way of Jekyll hosting on GitHub Pages. You need to deploy your working branch (can be any branch, for .github.io users: use another branch than master) with the <code class="highlighter-rouge">bin/deploy</code> script. This is because Chalk uses Jekyll plugins that aren’t supported by GitHub pages. The <code class="highlighter-rouge">bin/deploy</code> script will automatically build the entire project, then push it to the <code class="highlighter-rouge">gh-pages</code> branch of your repo. The script creates that branch for you so no need to create it yourself.</p>
+stopCluster(cluster)
+registerDoSEQ()
+## to see error of the model
+rfFit$results
+</code></pre></figure>
 
-<p>You can find more info on how to use the <code class="highlighter-rouge">gh-pages</code> branch and a custom domain <a href="https://help.github.com/articles/quick-start-setting-up-a-custom-domain/">here</a>.</p>
+<p> Running the model fit on only 200K samples (to save time), the default metric RMSE was found to be about 0.44. There's still 
+room for improvement, especially by running the whole training set. As you can see, it's easy to perform cross validated parameter
+tuning on a Random Forest regressor through <i>Caret</i>, and it comes with other widely used models such as SVM, Logistic Regression, 
+and GLM regression, etc (total of 238).
+        
 
-<p><a href="https://github.com/nielsenramon/kickster#automated-deployment-with-circle-ci">View this</a> for more info about automated deployment with Circle CI.</p>
-
-<p><em>If you have any questions about using or configuring Chalk please create an issue <a href="" title="here" rel="noreferrer noopener" target="_blank">here</a>!</em></p>
-
-          </div>
-
-          <div class="article-share">
-            
-            
-            <a href="https://twitter.com/home?status=Introducing+chalk - http://chalk.nielsenramon.com/posts/introducing-chalk by @nielsenramon" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
-              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
-            </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=http://chalk.nielsenramon.com/posts/introducing-chalk" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
-              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
-            </a>
-            <a href="https://plus.google.com/share?url=http://chalk.nielsenramon.com/posts/introducing-chalk" title="Share on Google+" rel="noreferrer noopener" target="_blank">
-              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
-            </a>
-          </div>
 
           
             <div id="disqus_thread" class="article-comments"></div>
