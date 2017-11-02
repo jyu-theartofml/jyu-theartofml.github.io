@@ -82,32 +82,32 @@
   the input data do not have fixed size. Recurrent Neural Net (RNN) is designed to tackle problems with these characteristics, so
   let's delve into more details about this model.</p>
 
-<h2 id="LSTM">Pros and Cons of RNN</h2>
+<h2 id="LSTM">Choosing the model architecture</h2>
  <p>No single machine learning/deep learning method is silver bullet, and it's 
    important to compare methods to find the most efficient way to solve the problem. Often times, Natural Language Processing (NLP)
    is used for semantic/sentiment analysis of text data, this normally means preprocessing the data into a matrix suitable for machine learning
    algorithm like Random Forest or Naive Bayesian. However, since those ML models don't take word or sentence as input, it is necessary to 
    tokenize the words in the corpus, then convert the data into numerical feature vectors . You end up with a sparse matrix that contains a normalized numerical vector corresponding to each word/n-gram frequency 
-     using Tf-idf weighting (for more details, see this <a href="http://scikit-learn.org/stable/modules/feature_extraction.html>
-     link</a>).
+     using Tf-idf weighting (for more details, see this <a href="http://scikit-learn.org/stable/modules/feature_extraction.html">
+     link</a>). This approach works well with small text data set or a corpus that has consistent content info. A disadvantage of this approach
+   is that when you get test data that contain new words or new n-grams, the tokenized matrix used to train the model would not be applicable 
+   because the new words effectively expanded the feature vector space. To get around this issue, word vectors and RNN can be used.
 
-  
+   <p> <a href='https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/'>Word vectors </a>
+     refer to distributed word vectorization that encapsulates the semantics of each word. The dimension for the 
+     vector is fixed, and it corresponds to different semantic categories. For a sentence, we can embed a word vector to each word, 
+     cap the number of words to a given length before feeding it to the RNN model (this will determine the size of the model and numbers 
+     of parameters). Recurrent neural network has chain like structure composed of repeating units, and each unit (after time 0) accepts the data 
+     point AND the output of the previous unit as the input. Long Short Term Memory (LSTM) neural net is a recurrent network with 
+     individual unit that contains a memory cell which runs through the entire chain (see Fig 1 below). This memory cell works with other elements in the unit, such as forget-gate and 
+    input-gate, to decide what information/feature to keep, thus learning the semantic relevance of each word in the case of 
+     sentence input. This architecture allows LSTM to capture information few units prior and the memory 
+     cell avoids the vanishing-gradient problem which kills off the gradient during backpropagation and diminishes the model's ability to learn.
+     For background on recurrent neural net and its differnet derivations, Google Brain research scientist Christopher Olah 
+     provides excellent <a href='http://colah.github.io/posts/2015-08-Understanding-LSTMs/'>explanation </a>
+     complete with clear visualization. </p>
 
-<p>Now time for some contour plot, which requires both <i> ggmap</i> and <i> ggplot</i> libraries. <i>ggmap</i> 
-    is used to retrieve the map of a locale using <code class="highlighter-rouge"> get_map()</code></p>
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-p <- get_map("New York City",zoom=14,maptype='toner-lite',source="stamen")
-#select columns with the given pattern with dplyr.
-data_pickup<-data %>% select (starts_with("pickup_l"))
-data_dropoff<-data %>% select (starts_with("dropoff_l"))
-colnames(data_pickup)<-c('lon', 'lat')
-colnames(data_dropoff)<-c('lon', 'lat')
-combo_data<-rbind(data.frame(data_pickup, group="pickup"), data.frame(data_dropoff, group="dropoff"))
-#transparency of the plot (alpha) can be set to level of the sample points (there's 10 levels because there's 10 bins)
-ggmap(p)+ stat_density_2d(data=combo_data, geom ='polygon', bins=10, aes(x=lon, y=lat, fill=group, alpha=..level..))+
-  scale_fill_manual(values=c('pickup'='orchid4', 'dropoff'='darkorange1'))+
-  scale_alpha(guide = FALSE)
-</code></pre></figure> 
+
  
 <figure>
    <img src="images/contour.png" alt="contour map" >
