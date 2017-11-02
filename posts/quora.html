@@ -82,7 +82,7 @@
   the input data do not have fixed size. Recurrent Neural Net (RNN) is designed to tackle problems with these characteristics, so
   let's delve into more details about this model.</p>
 
-<h2 id="LSTM">Choosing the model architecture</h2>
+<h2 id="LSTM">Choosing the model</h2>
  <p>No single machine learning/deep learning method is silver bullet, and it's 
    important to compare methods to find the most efficient way to solve the problem. Often times, Natural Language Processing (NLP)
    is used for semantic/sentiment analysis of text data, this normally means preprocessing the data into a matrix suitable for machine learning
@@ -109,41 +109,65 @@
 
  
 <figure>
-   <img src="images/LSTM_quora.png" alt="LSTM schematic" >
+   <img src="images/LSTM3-chain.png" alt="LSTM schematic" >
    <figcaption>Fig 1. Design of LSTM neural network(source: http://colah.github.io/posts/2015-08-Understanding-LSTMs). For the input of this data set, 
      X_t corresponds to the word at t position of the sentence, and X_t+1 is the next word and so on.
    </figcaption>
    </figure>
 
-<h2 id="feature engineering">Feature Engineering for Regression</h2>
+<h2 id="LSTM model">Implementing LSTM</h2>
 
-<p>Most of the time, machine learning workflows can benefit from feature engineering. Here, feature engineering is defined as adding or 
-transforming relevant information/variables 
-to the existing dataset in order to improve the model's learning and its performance. In some situations, feature 
-engineering requires extensive domain knowledge, for this taxi dataset it was pretty straight forward. The new features obtained 
-from the given features are the time stamp element (i.e, month, date, weekday, hour) and the <a href='https://www.r-bloggers.com/great-circle-distance-calculations-in-r/'>
-haversine distance</a> in km. The target variable, <i> trip duration</i> was log transformed since it displayed a highly skewered
-distribution. I generally prefer to have normal-ish distribution when working with continunous variable, because it helps some models to  
-learn better. In fact, you might consider normalization/scaling to be a form of feature engineering because the raw data are transformed to
-optimize distance-based algorithms or gradient descend parameter updates.</p>
-
-<p>Two codes are shown in this repository - 
-  the first one is the preprocessing step to build the embedding matrix, and the second code is for model training and tuning. 
-  Log loss is used to evaluate the performance of the model. </p>
-
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(GGally)
-#using only 10K data points so it doesn't take too long to plot
-sample_data<-datasets[1:10000,]
-ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_month", "pickup_weekday","distance_h", "log_duration")])
-</code></pre></figure>
-
-<figure>
-   <img src="images/scatter_plot_matrix.png" alt="correlation plot" >
-   <figcaption>Fig 3. Scatter plots of variables below the diagonal. The diagonal plots correspond to the distribution of the given variable. For
-   example, for the plot in the 6th row and 3rd column, the x-axis is the pickup calendar day and the y-axis is the haversine distance.
+<p>This code is similar to one of the models suggested in Nikhil Dandekar's blog [1] - 
+  the model input would be a pair of questions and it outputs a prediction where 1 is duplicate. 
+  Each question is embedded using Stanford's NLP GloVe pretrained word vector, and each embedded vector is fed to a LSTM network. 
+  Then the representation output from the LSTM layer is combined to calculate the distance (the sum of the squared difference between 
+  the two representation vectors), and that goes through two dense layers with sigmoid functions. This model architecture is similar 
+  to Siamese network, except there's the final sigmoid function to predict a binary outcome, and the model is trained by minimizing 
+  log loss. </p>
+   
+   <figure>
+   <img src="images/lstm_quora.png" alt="model layout" >
+   <figcaption>Fig 2. Schematic of workflow for classifier model, the final output is a 1D vector with values from 0 - 1 corresponding to the probability that they are duplicate questions.
    </figcaption>
    </figure>
+  
+ <p>Two codes are shown in my <a href='https://github.com/yinniyu/kaggle_quora'>github repository</a> - 
+  the first one is the preprocessing step to build the embedding matrix, and the second code is for model training and tuning. 
+  In short the LSTM architecture is shown in the code snippet below</p>
+
+            
+            
+<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+#setup the word vector embedding
+from keras.layers.embeddings import Embedding
+
+nb_words=137077+1
+max_sentence_len=25
+embedding_layer = Embedding(nb_words,300,
+        weights=[embedding_matrix],
+        input_length=max_sentence_len,trainable=False)
+#############  LSTM model using functional API  ######################
+lstm_layer =LSTM(128)
+
+sequence_1_input = Input(shape=(max_sentence_len,), dtype='int32')
+embedded_sequences_1 = embedding_layer(sequence_1_input)
+x1 = lstm_layer(embedded_sequences_1)
+
+sequence_2_input = Input(shape=(max_sentence_len,), dtype='int32')
+embedded_sequences_2 = embedding_layer(sequence_2_input)
+y1 = lstm_layer(embedded_sequences_2)
+
+distance=Lambda(vec_distance, output_shape=vec_output_shape)([x1, y1])
+dense1=Dense(16, activation='sigmoid')(distance)
+dense1 = Dropout(0.3)(dense1)
+
+bn2 = BatchNormalization()(dense1)
+prediction=Dense(1, activation='sigmoid')(bn2)
+
+model = Model(input=[sequence_1_input, sequence_2_input], output=prediction)
+</code></pre></figure>
+
+
 
 
 <h2 id="randomeforest">Caret and the Forest</h2>
