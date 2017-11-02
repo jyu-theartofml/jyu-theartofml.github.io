@@ -102,16 +102,16 @@
      individual unit that contains a memory cell which runs through the entire chain (see Fig 1 below). This memory cell works with other elements in the unit, such as forget-gate and 
     input-gate, to decide what information/feature to keep, thus learning the semantic relevance of each word in the case of 
      sentence input. This architecture allows LSTM to capture information few units prior and the memory 
-     cell avoids the vanishing-gradient problem which kills off the gradient during backpropagation and diminishes the model's ability to learn.
-     For background on recurrent neural net and its differnet derivations, Google Brain research scientist Christopher Olah 
-     provides excellent <a href='http://colah.github.io/posts/2015-08-Understanding-LSTMs/'>explanation </a>
-     complete with clear visualization. </p>
-
+     cell avoids the vanishing-gradient problem, which kills off the gradient during backpropagation and diminishes the model's ability to learn. 
+     The down side of using LSTM is the computation cost - the longer the sentence/input, the more parameters the model has to learn.
+     For instance, a <code class="highlighter-rouge"> LSTM(128)</code> means for every temporal unit (in this case each word) there's 128 output from the nonlinear 
+     processing of the input using tanh as the activation step. 
 
  
 <figure>
-   <img src="images/contour.png" alt="contour map" >
-   <figcaption>Fig 2. Contour map of two groups of data.
+   <img src="images/LSTM_quora.png" alt="LSTM schematic" >
+   <figcaption>Fig 1. Design of LSTM neural network(source: http://colah.github.io/posts/2015-08-Understanding-LSTMs). For the input of this data set, 
+     X_t corresponds to the word at t position of the sentence, and X_t+1 is the next word and so on.
    </figcaption>
    </figure>
 
