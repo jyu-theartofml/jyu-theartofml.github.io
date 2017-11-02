@@ -122,7 +122,7 @@
  <br>
 <p>Often times, we need to extract time stamp elements from a data frame. In R, the <i> lubridate</i> package 
               is a fast and simple way to extract those information. This data set contains  data on the scale ranging from
-              hour, weekday, date, and month. A good way to visualize that is using geom_tile() function within ggplot:</p>
+              hour, weekday, date, and month. A good way to visualize that is using<code class="highlighter-rouge"> geom_tile() </code> function within <i> ggplot </i>:</p>
               
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
 #Define the axis for each facet element (one facet corresponds to one month)
@@ -143,7 +143,7 @@ p + labs( x="Pickup Day", y="Pickup Hour")
   
 
 <p>Now time for some contour plot, which requires both <i> ggmap</i> and <i> ggplot</i> libraries. <i>ggmap</i> 
-    is used to retrieve the map of a locale using <i>get_mapt()</i></p>
+    is used to retrieve the map of a locale using <code class="highlighter-rouge"> get_map()</code></p>
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
 p <- get_map("New York City",zoom=14,maptype='toner-lite',source="stamen")
 #select columns with the given pattern with dplyr.
@@ -171,8 +171,8 @@ transforming relevant information/variables
 to the existing dataset in order to improve the model's learning and its performance. In some situations, feature 
 engineering requires extensive domain knowledge, for this taxi dataset it was pretty straight forward. The new features obtained 
 from the given features are the time stamp element (i.e, month, date, weekday, hour) and the <a href='https://www.r-bloggers.com/great-circle-distance-calculations-in-r/'>
-haversine distance</a> in km. The target variable, <i>trip duration</i> was log transformed since it displayed a highly skewered
-distribution. And I generally prefer to have normal-ish distribution when working with continunous variable, it helps some models to  
+haversine distance</a> in km. The target variable, <i> trip duration</i> was log transformed since it displayed a highly skewered
+distribution. I generally prefer to have normal-ish distribution when working with continunous variable, because it helps some models to  
 learn better. In fact, you might consider normalization/scaling to be a form of feature engineering because the raw data are transformed to
 optimize distance-based algorithms or gradient descend parameter updates.</p>
 
@@ -198,12 +198,12 @@ ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_mo
 
 <h2 id="randomeforest">Caret and the Forest</h2>
 
-<p>After the data are preprocessed, I used the <i>Caret</i>  library to perform grid search with cross validation (CV). I chose 
+<p>After the data are preprocessed, I used the <i> Caret</i>  library to perform grid search with cross validation (CV). I chose 
 Random Forest (RF) regressor because it is known to work well with nonlinear data, it selects random 
 subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
 <p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
-This is helpful for running RF on large dataset with ~1M samples. On the <i>Caret</i>  documentation, the author only mentioned 
-<i>doMC</i>  for parallel computing but that only works for Macs. I have a windows 10 laptop with 4 cores (8 processors), and found that
+This is helpful for running RF on large dataset with ~1M samples. On the <i> Caret</i>  documentation, the author only mentioned 
+<i> doMC</i>  for parallel computing but that only works for Macs. I have a windows 10 laptop with 4 cores (8 processors), and found that
 the <i>doParallel</i>  package worked well with the CV workflow.
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
 library(randomForest)
