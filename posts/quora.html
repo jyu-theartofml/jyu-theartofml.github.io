@@ -87,7 +87,7 @@
    important to compare methods to find the most efficient way to solve the problem. Often times, Natural Language Processing (NLP)
    is used for semantic/sentiment analysis of text data, this normally means preprocessing the data into a matrix suitable for machine learning
    algorithm like Random Forest or Naive Bayesian. However, since those ML models don't take word or sentence as input, it is necessary to 
-   tokenize the words in the corpus, then convert the data into numerical feature vectors . You end up with a sparse matrix that contains a normalized numerical vector corresponding to each word/n-gram frequency 
+   tokenize the words in the corpus, then convert the data into numerical feature vectors . You end up with a sparse matrix that contains a normalized numerical vector corresponding to word/n-gram frequency 
      using Tf-idf weighting (for more details, see this <a href="http://scikit-learn.org/stable/modules/feature_extraction.html">
      link</a>). This approach works well with small text data set or a corpus that has consistent content info. A disadvantage of this approach
    is that when you get test data that contain new words or new n-grams, the tokenized matrix used to train the model would not be applicable 
