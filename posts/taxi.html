@@ -198,13 +198,13 @@ ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_mo
 
 <h2 id="randomeforest">Caret and the Forest</h2>
 
-<p>After the data are preprocessed, I used the <i>Caret</i>  library to perform grid search with cross validation. I chose 
+<p>After the data are preprocessed, I used the <i>Caret</i>  library to perform grid search with cross validation (CV). I chose 
 Random Forest (RF) regressor model because it is known to work well with nonlinear data, it applies bagging to select random 
 subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
 <p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
-This is helpful for running RF on large dataset with ~1M samples. On the <i>Caret</i> documentation, the author only mentioned 
-<i>doMC</i> for parallel computing but that only works for Macs. I have a windows 10 laptop with 4 cores (8 processors), and found that
-the <i>doParallel</i> package worked well with the CV workflow.
+This is helpful for running RF on large dataset with ~1M samples. On the <i>Caret</i>  documentation, the author only mentioned 
+<i>doMC</i>  for parallel computing but that only works for Macs. I have a windows 10 laptop with 4 cores (8 processors), and found that
+the <i>doParallel</i>  package worked well with the CV workflow.
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
 library(randomForest)
 library(caret)
@@ -245,7 +245,7 @@ rfFit$results
 
 <p> Running the model fit on only 200K samples (to save time), the default metric RMSE was found to be about 0.44. There's still 
 room for improvement, especially by running the whole training set. As you can see, it's easy to perform cross validated parameter
-tuning on a Random Forest regressor through <i>Caret</i>, and it comes with other widely used models such as SVM, Logistic Regression, 
+tuning on a Random Forest regressor through <i>Caret</i>, which comes with other widely used models such as SVM, Logistic Regression, 
 and GLM regression, etc (total of 238).
         
 
