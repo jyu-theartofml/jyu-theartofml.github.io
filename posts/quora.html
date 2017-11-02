@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>The Art of Machine Learning</title>
+  <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Regression for taxi data">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://yinniyu.github.io/posts/taxi">
+  <meta property="og:site_name" content="The Art of Machine Learning">
+  <meta property="og:image" content="http://chalk.nielsenramon.com/assets/documentation/sample-image.jpg">
+
+ 
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
+
+    <link rel="stylesheet" href="/assets/light.css">
+
+ </head>
+
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav appear">
+  <a href="/" class="header-logo" title="The Art of Machine Learning">The Art of Machine Learning</a>
+  <ul class="header-links">
+
+     <li>
+        <a href="https://github.com/yinniyu" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <span class="icon icon-github"></span>
+        </a>
+      </li>
+    
+    
+      <li>
+        <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+          <span class="icon icon-linkedin"></span>
+        </a>
+      </li>   
+  </ul>
+</nav>
+
+        
+        <article class="article appear">
+          <header class="article-header">
+            <h1>Designing a classifier to detect duplicate questions </h1>
+            <p>This post will cover some data visualization techniques for working with high dimensional dataset. Then I will talk about using 
+            Random Forest and Caret to predict trip duration with cluster computing.</p>
+            
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                October 2, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+              10 minute read
+              </span>
+              
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                <span class="article-list-divider">R, Regression, ggmap, ggplot </span>
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+
+<p>The data set is from the Kaggle taxi ride data, and here's a snapshot:</p>
+<div style="overflow-x:auto;">
+<table >
+  <colgroup span="11"></colgroup>
+  <tr>
+    <th>id</th>
+    <th>vendor_id</th>
+    <th>pickup_datetime</th>
+    <th>dropoff_datetime</th>
+    <th>passenger_count</th>
+    <th>pickup_longitude</th>
+    <th>pickup_latitude</th>
+    <th>dropoff_longitude</th>
+    <th>dropoff_latitude</th>
+    <th>store_and_fwd_flag</th>
+    <th>trip_duration (in seconds)</th>
+    
+  </tr>
+  <tr>
+    <td>id2875421</td>
+    <td>2</td>
+    <td>2016-03-14 17:24:55</td>
+    <td>2016-03-14 17:32:30</td>
+    <td>1</td>
+    <td>-73.98215</td>
+    <td>40.76794</td>
+    <td>-73.96463</td>
+    <td>40.76560</td>
+    <td>N</td>
+    <td>455</td>
+  </tr>
+  
+  <tr>
+    <td>id2377394</td>
+    <td>1</td>
+    <td>2016-06-12 00:43:35</td>
+    <td>2016-06-12 00:54:38</td>
+    <td>1</td>
+    <td>-73.98042</td>
+    <td>40.73856</td>
+    <td>-73.99948</td>
+    <td>40.73115</td>
+    <td>N</td>
+    <td>663</td>
+    </tr>
+  
+  </table>
+</div>
+ <br>
+<p>Often times, we need to extract time stamp elements from a data frame. In R, the <i> lubridate</i> package 
+              is a fast and simple way to extract those information. This data set contains  data on the scale ranging from
+              hour, weekday, date, and month. A good way to visualize that is using<code class="highlighter-rouge"> geom_tile() </code> function within <i> ggplot </i>:</p>
+              
+<figure class="highlight"><pre><code class="language-R" data-lang="R">
+#Define the axis for each facet element (one facet corresponds to one month)
+p <-ggplot(df,aes(x=pickup_day,y=pickup_hour, fill=total))+
+  geom_tile(color="white", size=0.1) + coord_equal()+
+  scale_fill_viridis(name="Number of rides", option="D")
+#put facet plot in order
+p <-p + facet_grid(.~factor(pickup_month2, levels=c("Jan", "Feb", "March", "April", "May", 'June')))
+p <-p + scale_y_continuous(trans = "reverse", breaks = unique(df$pickup_hour))
+p + labs( x="Pickup Day", y="Pickup Hour")
+</code></pre></figure>
+
+ <figure>
+   <img src="images/tile_map.png" alt="tile heat map" >
+   <figcaption>Fig 1. Calendar heat map of taxi pickup data points.
+   </figcaption>
+   </figure>
+  
+
+<p>Now time for some contour plot, which requires both <i> ggmap</i> and <i> ggplot</i> libraries. <i>ggmap</i> 
+    is used to retrieve the map of a locale using <code class="highlighter-rouge"> get_map()</code></p>
+<figure class="highlight"><pre><code class="language-R" data-lang="R">
+p <- get_map("New York City",zoom=14,maptype='toner-lite',source="stamen")
+#select columns with the given pattern with dplyr.
+data_pickup<-data %>% select (starts_with("pickup_l"))
+data_dropoff<-data %>% select (starts_with("dropoff_l"))
+colnames(data_pickup)<-c('lon', 'lat')
+colnames(data_dropoff)<-c('lon', 'lat')
+combo_data<-rbind(data.frame(data_pickup, group="pickup"), data.frame(data_dropoff, group="dropoff"))
+#transparency of the plot (alpha) can be set to level of the sample points (there's 10 levels because there's 10 bins)
+ggmap(p)+ stat_density_2d(data=combo_data, geom ='polygon', bins=10, aes(x=lon, y=lat, fill=group, alpha=..level..))+
+  scale_fill_manual(values=c('pickup'='orchid4', 'dropoff'='darkorange1'))+
+  scale_alpha(guide = FALSE)
+</code></pre></figure> 
+ 
+<figure>
+   <img src="images/contour.png" alt="contour map" >
+   <figcaption>Fig 2. Contour map of two groups of data.
+   </figcaption>
+   </figure>
+
+<h2 id="feature engineering">Feature Engineering for Regression</h2>
+
+<p>Most of the time, machine learning workflows can benefit from feature engineering. Here, feature engineering is defined as adding or 
+transforming relevant information/variables 
+to the existing dataset in order to improve the model's learning and its performance. In some situations, feature 
+engineering requires extensive domain knowledge, for this taxi dataset it was pretty straight forward. The new features obtained 
+from the given features are the time stamp element (i.e, month, date, weekday, hour) and the <a href='https://www.r-bloggers.com/great-circle-distance-calculations-in-r/'>
+haversine distance</a> in km. The target variable, <i> trip duration</i> was log transformed since it displayed a highly skewered
+distribution. I generally prefer to have normal-ish distribution when working with continunous variable, because it helps some models to  
+learn better. In fact, you might consider normalization/scaling to be a form of feature engineering because the raw data are transformed to
+optimize distance-based algorithms or gradient descend parameter updates.</p>
+
+<p>There's a useful library called <i> GGally</i>  that offers a simple one-liner function for matrix scatter plots, along with display of
+distribution and correlation values. This is super useful for exploratory data analysis to get a sense of the data I'm working with. 
+As shown in Fig 3 below, the strongest correlation was for one of the 
+feature engineered variables - haversine distance. </p>
+
+<figure class="highlight"><pre><code class="language-R" data-lang="R">
+library(GGally)
+#using only 10K data points so it doesn't take too long to plot
+sample_data<-datasets[1:10000,]
+ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_month", "pickup_weekday","distance_h", "log_duration")])
+</code></pre></figure>
+
+<figure>
+   <img src="images/scatter_plot_matrix.png" alt="correlation plot" >
+   <figcaption>Fig 3. Scatter plots of variables below the diagonal. The diagonal plots correspond to the distribution of the given variable. For
+   example, for the plot in the 6th row and 3rd column, the x-axis is the pickup calendar day and the y-axis is the haversine distance.
+   </figcaption>
+   </figure>
+
+
+<h2 id="randomeforest">Caret and the Forest</h2>
+
+<p>After the data are preprocessed, I used the <i> Caret</i>  library to perform grid search with cross validation (CV). I chose 
+Random Forest (RF) regressor because it is known to work well with nonlinear data, it selects random 
+subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
+<p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
+This is helpful for running RF on large dataset with ~1M samples. On the <i> Caret</i>  documentation, the author only mentioned 
+<i> doMC</i>  for parallel computing but that only works for Macs. I have a windows 10 laptop with 4 cores (8 processors), and found that
+the <i>doParallel</i>  package worked well with the CV workflow.
+<figure class="highlight"><pre><code class="language-R" data-lang="R">
+library(randomForest)
+library(caret)
+library(parallel)
+library(doParallel)
+library(dplyr)
+datasets<- datasets%>% mutate_if(is.integer, as.numeric)
+trainIndex <- createDataPartition(datasets$log_duration, p = .7, 
+                                  list = FALSE, 
+                                  times = 1)
+data_train<-datasets[trainIndex,]
+data_val<-datasets[-trainIndex,]
+#### grid must include mtry for RF model ####
+rfgrid<- expand.grid(mtry=c(6,13))
+set.seed(20)
+cv_control <- trainControl(
+  method = "cv",
+  number = 3)
+  
+###### NOTE: CV and grid functions has to come before cluster computing setup  ##########
+
+cluster <- makeCluster(detectCores()-3)# leave at least 1 node for operating system 
+registerDoParallel(cluster)
+
+##train function will invoke dummy variables for formula input!
+##but randomForest library itself doesn't do that with formula input
+rfFit <- train(log_duration ~ ., data = data_train, 
+                 method = "rf", ntree=100,
+                 trControl = cv_control, 
+                 tuneGrid=rfgrid,
+                 verbose = FALSE, importance=TRUE)
+
+stopCluster(cluster)
+registerDoSEQ()
+## to see error of the model
+rfFit$results
+</code></pre></figure>
+
+<p> Running the model fit on only 200K samples (to save time), the default metric RMSE was found to be about 0.44. There's still 
+room for improvement, especially by running the whole training set. As you can see, it's easy to perform cross validated parameter
+tuning on a Random Forest regressor through <i>Caret</i>, which comes with other widely used models such as SVM, Logistic Regression, 
+and GLM regression, etc (total of 238).
+        
+
+
+          
+            <div id="disqus_thread" class="article-comments"></div>
+            <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+          
+        </article>
+        <footer class="footer appear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+    ga('create','UA-28631876-6','auto');ga('send','pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>
