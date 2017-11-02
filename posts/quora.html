@@ -48,11 +48,12 @@
         
         <article class="article appear">
           <header class="article-header">
-            <h1>Designing a classifier to detect duplicate questions </h1>
+            <h1 id="quora duplicate quesitons">Designing a classifier to detect duplicate questions </h1>
             <p>For this Kaggle competition that took place 6 months ago, the goal is to compile a model to identify if a pair of questioins is asking the same thing. 
               Quora provided 400K+ question pairs for the training set, and the final test data set has 2,345,796 question pairs (that's alot of data!). 
               Many Kagglers have tried techniques such as Xgboost and feature extraction such as TF-IDF, ratio of matching words, and weighted word2vec. 
-              I wanted to learn how recurrent neural network works, and explore its potential in solving this problem. The final 
+              I wanted to learn how recurrent neural network works, and explore its potential in solving this problem and others (i.e., 
+              genomic functional prediction). The final 
               ranking for this submission was top 37% on Kaggle's private LB.</p>
             
             <div class="article-list-footer">
@@ -78,14 +79,17 @@
   column that states whether the pair was a duplicate (1 is duplicate, 0 is no). There're two things that make
   this dataset different than the vanilla binary classification problem. First, these are sequential data which means
   the context of a particular word depends on the preceeding word(s). Second, the sentences have varied lengths so
-  the input data do not have fixed size. Recurrent Neural Net is designed to tackle problems with these characteristics, so
-  let's delve into more details about this model.
-  for such Two codes are shown in this repository - 
-  the first one is the preprocessing step to build the embedding matrix, and the second code is for model training and tuning. 
-  Log loss is used to evaluate the performance of the model. 
-              </p>
+  the input data do not have fixed size. Recurrent Neural Net (RNN) is designed to tackle problems with these characteristics, so
+  let's delve into more details about this model.</p>
 
-            
+<h2 id="LSTM">Pros and Cons of RNN</h2>
+ <p>No single machine learning/deep learning method is silver bullet, and it's 
+   important to compare methods to find the most efficient way to solve the problem. Often times, Natural Language Processing (NLP)
+   is used for semantic/sentiment analysis of text data, this normally means preprocessing the data into a matrix suitable for machine learning
+   algorithm like Random Forest or Naive Bayesian. However, since those ML models don't take word or sentence as input, it is necessary to 
+   tokenize the words in the corpus, then convert the data into numerical feature vectors . You end up with a sparse matrix that contains a normalized numerical vector corresponding to each word/n-gram frequency 
+     using Tf-idf weighting (for more details, see this <a href="http://scikit-learn.org/stable/modules/feature_extraction.html>
+     link</a>).
 
   
 
