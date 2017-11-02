@@ -176,7 +176,7 @@ distribution. And I generally prefer to have normal-ish distribution when workin
 learn better. In fact, you might consider normalization/scaling to be a form of feature engineering because the raw data are transformed to
 optimize distance-based algorithms or gradient descend parameter updates.</p>
 
-<p>There's a useful library called <i> GGally</i> that offers a simple one-liner function for matrix scatter plots, along with display of
+<p>There's a useful library called <i> GGally</i>  that offers a simple one-liner function for matrix scatter plots, along with display of
 distribution and correlation values. This is super useful for exploratory data analysis to get a sense of the data I'm working with. 
 As shown in Fig 3 below, the strongest correlation was for one of the 
 feature engineered variable - haversine distance. </p>
@@ -198,7 +198,7 @@ ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_mo
 
 <h2 id="randomeforest">Caret and the Forest</h2>
 
-<p>After the data are preprocessed, I used the <i>Caret</i> library to perform cross validation on grid search. I chose to use
+<p>After the data are preprocessed, I used the <i>Caret</i>  library to perform grid search with cross validation. I chose to use
 Random Forest (RF) regressor model because it is known to work well with nonlinear data, it applies bagging to select random 
 subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
 <p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
