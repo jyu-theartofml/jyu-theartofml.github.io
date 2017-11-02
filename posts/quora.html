@@ -119,7 +119,7 @@
 
 <p>This code is similar to one of the models suggested in Nikhil Dandekar's blog [1] - 
   the model input would be a pair of questions and it outputs a prediction where 1 is duplicate. 
-  Each question is embedded using Stanford's NLP GloVe pretrained word vector, and each embedded vector is fed to a LSTM network. 
+  Each question is embedded using Stanford's NLP <a href='https://nlp.stanford.edu/projects/glove/'>GloVe </a>pretrained word vector, and each embedded vector is fed to a LSTM network [2]. 
   Then the representation output from the LSTM layer is combined to calculate the distance (the sum of the squared difference between 
   the two representation vectors), and that goes through two dense layers with sigmoid functions. This model architecture is similar 
   to Siamese network, except there's the final sigmoid function to predict a binary outcome, and the model is trained by minimizing 
@@ -141,7 +141,7 @@
 #setup the word vector embedding
 from keras.layers.embeddings import Embedding
 
-nb_words=137077+1
+nb_words=137077+1 #unique words in corpus (training and test sets)
 max_sentence_len=25
 embedding_layer = Embedding(nb_words,300,
         weights=[embedding_matrix],
@@ -167,62 +167,17 @@ prediction=Dense(1, activation='sigmoid')(bn2)
 model = Model(input=[sequence_1_input, sequence_2_input], output=prediction)
 </code></pre></figure>
 
+<h2 id="results">Performance</h2>
 
-
-
-<h2 id="randomeforest">Caret and the Forest</h2>
-
-<p>After the data are preprocessed, I used the <i> Caret</i>  library to perform grid search with cross validation (CV). I chose 
-Random Forest (RF) regressor because it is known to work well with nonlinear data, it selects random 
-subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
-<p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
-This is helpful for running RF on large dataset with ~1M samples. On the <i> Caret</i>  documentation, the author only mentioned 
-<i> doMC</i>  for parallel computing but that only works for Macs. I have a windows 10 laptop with 4 cores (8 processors), and found that
-the <i>doParallel</i>  package worked well with the CV workflow.
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(randomForest)
-library(caret)
-library(parallel)
-library(doParallel)
-library(dplyr)
-datasets<- datasets%>% mutate_if(is.integer, as.numeric)
-trainIndex <- createDataPartition(datasets$log_duration, p = .7, 
-                                  list = FALSE, 
-                                  times = 1)
-data_train<-datasets[trainIndex,]
-data_val<-datasets[-trainIndex,]
-#### grid must include mtry for RF model ####
-rfgrid<- expand.grid(mtry=c(6,13))
-set.seed(20)
-cv_control <- trainControl(
-  method = "cv",
-  number = 3)
-  
-###### NOTE: CV and grid functions has to come before cluster computing setup  ##########
-
-cluster <- makeCluster(detectCores()-3)# leave at least 1 node for operating system 
-registerDoParallel(cluster)
-
-##train function will invoke dummy variables for formula input!
-##but randomForest library itself doesn't do that with formula input
-rfFit <- train(log_duration ~ ., data = data_train, 
-                 method = "rf", ntree=100,
-                 trControl = cv_control, 
-                 tuneGrid=rfgrid,
-                 verbose = FALSE, importance=TRUE)
-
-stopCluster(cluster)
-registerDoSEQ()
-## to see error of the model
-rfFit$results
-</code></pre></figure>
-
-<p> Running the model fit on only 200K samples (to save time), the default metric RMSE was found to be about 0.44. There's still 
-room for improvement, especially by running the whole training set. As you can see, it's easy to perform cross validated parameter
-tuning on a Random Forest regressor through <i>Caret</i>, which comes with other widely used models such as SVM, Logistic Regression, 
-and GLM regression, etc (total of 238).
+<p> With <code class="highlighter-rouge"> BatchNormalization()</code> and <code class="highlighter-rouge">Dropout(0.3)</code> applied to reduce overfitting,
+  the LB log loss score was 0.32650. For this project, the number of training data was significantly lower than test data (400K vs. 2M). Ideally,
+  having more training data can siginificantly boost model performance, as well as trying pretrained word vectors from different sources. </p> 
+            
+<h4 id="reference">REFERENCE</h2>
+[1] Semantic Question Matching with Deep Learning, https://engineering.quora.com/Semantic-Question-Matching-with-Deep-Learning
+<br>
+[2] Using pre-trained word embeddings in a Keras model, https://blog.keras.io/using-pre-trained-word-embeddings-in-a-keras-model.html
         
-
 
           
             <div id="disqus_thread" class="article-comments"></div>
