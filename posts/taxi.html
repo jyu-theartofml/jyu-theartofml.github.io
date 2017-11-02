@@ -198,7 +198,7 @@ ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_mo
 
 <h2 id="randomeforest">Caret and the Forest</h2>
 
-<p>After the data are preprocessed, I used the <i>Caret</i>  library to perform grid search with cross validation. I chose to use
+<p>After the data are preprocessed, I used the <i>Caret</i>  library to perform grid search with cross validation. I chose 
 Random Forest (RF) regressor model because it is known to work well with nonlinear data, it applies bagging to select random 
 subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
 <p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
