@@ -48,7 +48,7 @@
         
         <article class="article appear">
           <header class="article-header">
-            <h1>Data visualization and predicting taxi ride time (R) </h1>
+            <h1>Data visualization and predicting taxi ride time (R studio) </h1>
             <p>This post will cover some data visualization techniques for working with high dimensional dataset. Then I will talk about using 
             Random Forest and Caret to predict trip duration with cluster computing.</p>
             
@@ -179,7 +179,7 @@ optimize distance-based algorithms or gradient descend parameter updates.</p>
 <p>There's a useful library called <i> GGally</i>  that offers a simple one-liner function for matrix scatter plots, along with display of
 distribution and correlation values. This is super useful for exploratory data analysis to get a sense of the data I'm working with. 
 As shown in Fig 3 below, the strongest correlation was for one of the 
-feature engineered variable - haversine distance. </p>
+feature engineered variables - haversine distance. </p>
 
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
 library(GGally)
@@ -190,8 +190,8 @@ ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_mo
 
 <figure>
    <img src="images/scatter_plot_matrix.png" alt="correlation plot" >
-   <figcaption>Fig 3. Scatter plots of variables below the diagonal. The diagonal plots are the distribution of the given variable. For
-   example, for the plot in the 6th row and 3rd column, the x-axis is the pickup calendar day and y-axis is the haversine distance.
+   <figcaption>Fig 3. Scatter plots of variables below the diagonal. The diagonal plots correspond to the distribution of the given variable. For
+   example, for the plot in the 6th row and 3rd column, the x-axis is the pickup calendar day and the y-axis is the haversine distance.
    </figcaption>
    </figure>
 
