@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>The Art of Machine Learning</title>
+  <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Regression for taxi data">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://yinniyu.github.io/posts/taxi">
+  <meta property="og:site_name" content="The Art of Machine Learning">
+  <meta property="og:image" content="http://chalk.nielsenramon.com/assets/documentation/sample-image.jpg">
+
+ 
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
+
+    <link rel="stylesheet" href="/assets/light.css">
+
+ </head>
+
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav appear">
+  <a href="/" class="header-logo" title="The Art of Machine Learning">The Art of Machine Learning</a>
+  <ul class="header-links">
+
+     <li>
+        <a href="https://github.com/yinniyu" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <span class="icon icon-github"></span>
+        </a>
+      </li>
+    
+    
+      <li>
+        <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+          <span class="icon icon-linkedin"></span>
+        </a>
+      </li>   
+  </ul>
+</nav>
+
+        
+        <article class="article appear">
+          <header class="article-header">
+            <h1 id="White matter hyperintensities">Segmentation of white matter hyperintensities using 3D U-net  </h1>
+            <p>White Matter Hyperintensities (aka., leukoaraiosis) is often linked to high risk of stroke and dementia in 
+            older patients[1]. While image segmentation is critical for timely diagnosis and evaluation of treatments, 
+            automated segmentation of medical images remains a challenging task. In this post, a deep learning network called U-net 
+            is evaluated on brain MRIs for segmentation of White Matter Hyperintensities (WMH). The dataset was obtained from the 
+            WMH Segmentation Challenge, which's organized by UMC Utrecht, VU Amsterdam, and NUHS Singapore. The goal is to train the 
+            deep learning model to generate binary mask that corresponds to WMH region of the brain MRI. This kind of deep learning 
+            model has great potential for automated medical diagnostic applications. 
+            In fact, commercial models have been developed for heart and breast imaging [2].</p>
+            
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                November 2, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+              15 minute read
+              </span>
+              
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                <span class="article-list-divider">Python, Convolutional Neural Net, Segmentation</span>
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+
+
+
+<h2 id="LSTM">Why U-net</h2>
+ <p> U-net was introduced by Olaf Ronneberger and his team back in 2015 as a refined autoencoder method targeting medical image 
+ segmentation [3]. Like an autoencoder, the contractive path (left side of the net) learns higher representations of the input, 
+ and the expansive path (right side) learns to generate new images (i.e, mask) by updating the weights of the convolutional 
+ layers through backpropagation. Upconvolution (<a href='https://distill.pub/2016/deconv-checkerboard/'>different from deconvolution</a>) is performed on the right side to generate 
+ higher resolution image from lower resolution feature maps. It's worth pointing out that while U-net looks very similar to 
+ SegNet (commonly used for semantic segmentation), the important difference is U-net's concatenation step, where 
+ high-resolution features in the contractive path is combined with more abstract features in the expansive path.This allows 
+ the network to learn localized finer features without losing contextual information, making it a desirable tool for images 
+ with high dynamic range and high resolution.</p>
+
+<p>For this project,a modified U-net was compiled to accomodate 3D image arrays and computation cost, and this particular model 
+is primarily based on Cicek et al.'s published work on volumetric segmentation[4]. Instead of using the Caffe framwork, 
+this model is built and trained using Keras.</p>
+
+<figure>
+   <img src="images/WMH/U-net.png" alt="Unet" >
+   <figcaption>Fig 1.4-layer U-net for volumetric segmentation.(source:https://lmb.informatik.uni-freiburg.de/Publications/2016/CABR16/)
+   </figcaption>
+   </figure>
+
+<h2 id=Data processing">Data Processing</h2>
+
+<p>There was total of 60 patient samples (20 from each site), and different MRI parameters were applied at different hospitals 
+to generate multiple 
+images for each patient. The images of interest are the pre-processed files that corrected for bias field, and only the flair 
+images are used. In the data_process.py script, it imports the image files and subsequently reformats the data into 
+numpy arrays. The input to the U-net model is resized to samples of 128x128x16x1 tensor. The mask files in the training 
+dataset were annotated manually by experts using the flair MRIs. In order to generate a bigger collection, image augmentation 
+by affine transformation was used in the data processing step. In the end, there was total of 240 images. 
+Due to large computational overhead,no batch normalization was used. </p>
+   
+  
+<h2 id="results">Model Performance</h2>
+
+<p><a href="https://www.omicsonline.org/JCSBimages/JCSB-07-209-g003.html">Dice coefficient</a> is used as a similarity metric to evaluate how much the predicted mask overlaps with the annotated/true mask and how robust it is. The use of kernels(3x3x1) that focus on the x-y plane and image augmentation significantly reduced overfitting. For a baseline model without augmentation, the Dice Coefficient for all validation image arrays was 73%. After data augmentation and training on more images, 
+the total Dice Coefficient on the validation set(54 un-augmented images) was 79%, with average of 72%±12%. 
+Given that there're computational constraints within the GPU instance, the images had to be resized and only parts of the slices were used. The model architecture can be further improved with more memory to handle additional image augmentation, more slices, and more channel for the T1 MRI.
+
+I was curious to see how the trained model 'sees' the input, so I pulled out the post-activation feature maps from the 
+convolution layers. From left to right on the top of Fig 2, it shows the representations as the model encodes and 
+compresses the features (hence more blurry at the end). As for the bottom row, the drastic color changes indicate that 
+there's some major learning/weight updating going on as the model is trying to compile a good mask image.</p> 
+
+<figure>
+   <img src="images/WMH/collage_down.png" alt="down_path" >
+   <img src="images/WMH/collage_up.png" alt="up_path" >
+   <figcaption>Fig 2.Activation maps from convolution layers. The top row corresponds to the contractive path, and the bottom row corresponds to the expansive/synthesis path. Few of the pictures were generated from low-intensity pixel distribution, 
+   so only one color is visble due to the collage displayed on global scale. 
+   </figcaption>
+   </figure>
+
+            <br>          
+<h4 id="reference">REFERENCE</h4>
+<p>[1] Wardlaw, J. M., Valdés Hernández, M. C., & Muñoz-Maniega, S. (2015). What are White Matter Hyperintensities Made of?: Relevance to Vascular Cognitive Impairment. Journal of the American Heart Association: Cardiovascular and Cerebrovascular Disease, 4(6), e001140. http://doi.org/10.1161/JAHA.114.0011402.
+<br>
+[2] Mukherjee, S., A.I.Versus M.D., The New Yorker, April 2017 issue (https://www.newyorker.com/magazine/2017/04/03/ai-versus-md)
+<br>
+[3]Ronneberger,O.,Fischer, F., Brox, T. (2015) U-Net: Convolutional Networksfor Biomedical Image Segmentation. Medical Image Computing and Computer-Assisted Intervention (MICCAI), Springer, LNCS, Vol.9351: 234--241, 2015
+<br<
+[4]Çiçek, O.,Abdulkadir, A., Lienkamp, S., Brox, T., Ronnebergeer, O. 3D U-Net: Learning Dense VolumetricSegmentation from Sparse Annotation. Medical Image Computing and Computer-Assisted Intervention (MICCAI), Springer, LNCS, Vol.9901: 424--432, Oct 2016
+          
+          </p>
+        
+
+          
+            <div id="disqus_thread" class="article-comments"></div>
+            <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+          
+        </article>
+        <footer class="footer appear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+    ga('create','UA-28631876-6','auto');ga('send','pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>
