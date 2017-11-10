@@ -199,7 +199,7 @@ ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_mo
 <h2 id="randomeforest">Caret and the Forest</h2>
 
 <p>After the data are preprocessed, I used the <i> Caret</i>  library to perform grid search with cross validation (CV). I chose 
-Random Forest (RF) regressor because it is known to work well with nonlinear data, it selects random 
+<a href="https://databricks.com/blog/2015/01/21/random-forests-and-boosting-in-mllib.html">Random Forest (RF) regressor </a> because it is known to work well with nonlinear data, it selects random 
 subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
 <p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
 This is helpful for running RF on large dataset with ~1M samples. On the <i> Caret</i>  documentation, the author only mentioned 
