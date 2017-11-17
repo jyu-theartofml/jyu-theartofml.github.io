@@ -111,9 +111,8 @@ images are used. In the data_process.py script, it imports the image files and s
 numpy arrays. The input to the U-net model is resized to samples of 128x128x16x1 tensor. The mask files in the training 
 dataset were annotated manually by experts using the flair MRIs. In order to generate a bigger collection, image augmentation 
 by affine transformation was used in the data processing step. In the end, there was total of 240 images. 
-Due to large computational overhead,no batch normalization was used. </p>
+Due to large computational overhead,no batch normalization was used. The codes can be found in my github <a href="https://github.com/yinniyu/WMH2017">repository</a>.</p>
    
-  
 <h2 id="results">Model Performance</h2>
 
 <p><a href="https://www.omicsonline.org/JCSBimages/JCSB-07-209-g003.html">Dice coefficient</a> is used as a similarity metric to evaluate how much the predicted mask overlaps with the annotated/true mask and how robust it is. The use of kernels(3x3x1) that focus on the x-y plane and image augmentation significantly reduced overfitting. For a baseline model without augmentation, the Dice Coefficient for all validation image arrays was 73%. After data augmentation and training on more images, 
