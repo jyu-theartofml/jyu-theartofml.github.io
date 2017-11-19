@@ -54,12 +54,12 @@
             in Women </a></b>. With DNA samples from 323 subjects in Austria, they profiled genetic variants known as Single-Nucleotide Polymorphism (SNP), 
               and identified a collection of SNPs associated with Lesche Type III alcoholism in women.
             Since then, new Genome Wide Association Studies(GWAS) have shed light on new SNPs strongly correlated with depression. So I had an
-              idea of adding these new SNPs to those in the publication to build a classifier that can identify Lesche Type III alcoholism, which is defined as co-morbid
+              idea of adding these new SNPs to supplement those in the publication and build a classifier that can identify Lesche Type III alcoholism, which is defined as co-morbid
               Major Depression Disorder(MDD) and Alcohol Dependent (AD).</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
-                October 2, 2017
+                Nov 20, 2017
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
@@ -69,65 +69,19 @@
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
                 
-                <span class="article-list-divider">R, caret, Regression, ggmap, ggplot </span>
+                <span class="article-list-divider">R, Neuralnet, crlmm, genotyping </span>
               </div>
             </div>
           </header>
 
           <div class="article-content">
 
-<p>The data set is from the Kaggle taxi ride data, and here's a snapshot:</p>
-<div style="overflow-x:auto;">
-<table >
-  <colgroup span="11"></colgroup>
-  <tr>
-    <th>id</th>
-    <th>vendor_id</th>
-    <th>pickup_datetime</th>
-    <th>dropoff_datetime</th>
-    <th>passenger_count</th>
-    <th>pickup_longitude</th>
-    <th>pickup_latitude</th>
-    <th>dropoff_longitude</th>
-    <th>dropoff_latitude</th>
-    <th>store_and_fwd_flag</th>
-    <th>trip_duration (in seconds)</th>
-    
-  </tr>
-  <tr>
-    <td>id2875421</td>
-    <td>2</td>
-    <td>2016-03-14 17:24:55</td>
-    <td>2016-03-14 17:32:30</td>
-    <td>1</td>
-    <td>-73.98215</td>
-    <td>40.76794</td>
-    <td>-73.96463</td>
-    <td>40.76560</td>
-    <td>N</td>
-    <td>455</td>
-  </tr>
-  
-  <tr>
-    <td>id2377394</td>
-    <td>1</td>
-    <td>2016-06-12 00:43:35</td>
-    <td>2016-06-12 00:54:38</td>
-    <td>1</td>
-    <td>-73.98042</td>
-    <td>40.73856</td>
-    <td>-73.99948</td>
-    <td>40.73115</td>
-    <td>N</td>
-    <td>663</td>
-    </tr>
-  
-  </table>
-</div>
- <br>
-<p>Often times, we need to extract time stamp elements from a data frame. In R, the <i> lubridate</i> package 
-              is a fast and simple way to extract those information. This data set contains  data on the scale ranging from
-              hour, weekday, date, and month. A good way to visualize that is using<code class="highlighter-rouge"> geom_tile() </code> function within <i> ggplot </i>:</p>
+<h2 id="GWAS">Genetic Loci linked to Alcoholism and Major Depression </h2>
+
+
+<p> In the publication mentioned above, subsets of SNPs on the same genetic loci were identified as having significant 
+  association with type III alcoholism. The subset constitutes a haplotype block, and each haplotype was analyzed using Odds Ratio to
+ and p-value to evaluate the strength of association to the phenotype (alcohol dependency + major depression).</p>
               
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
 #Define the axis for each facet element (one facet corresponds to one month)
@@ -169,7 +123,8 @@ ggmap(p)+ stat_density_2d(data=combo_data, geom ='polygon', bins=10, aes(x=lon, 
    </figcaption>
    </figure>
 
-<h2 id="feature engineering">Feature Engineering for Regression</h2>
+
+<h2 id="GWAS">SNPs</h2>
 
 <p>Most of the time, machine learning workflows can benefit from feature engineering. Here, feature engineering is defined as adding or 
 transforming relevant information/variables 
