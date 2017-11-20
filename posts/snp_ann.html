@@ -52,8 +52,8 @@
             <p>Recently, I read a paper published by my colleagues in 2013 titled <b> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3620932/">
             Genetic Markers of Co-Morbid Depression and Alcoholism
             in Women </a></b>. With DNA samples from 323 subjects in Austria, they profiled genetic variants known as Single-Nucleotide Polymorphism (SNP), 
-              and identified a collection of SNPs associated with Lesche Type III alcoholism in women.
-            Since then, new Genome Wide Association Studies(GWAS) have shed light on new SNPs strongly correlated with depression. So I had an
+              and identified a collection of SNPs associated with Lesche Type III alcoholism in women[1].
+            Since then, new Genome Wide Association Studies(GWAS) have shed light on new SNPs strongly correlated with depression. So I had the
               idea of adding these new SNPs to supplement those in the publication and build a classifier that can identify Lesche Type III alcoholism, which is defined as co-morbid
               Major Depression Disorder(MDD) and Alcohol Dependent (AD).</p>
             
@@ -76,82 +76,60 @@
 
           <div class="article-content">
 
-<h2 id="GWAS">Genetic Loci linked to Alcoholism and Major Depression </h2>
+<h2 id="Loci">Genetic Loci linked to Alcoholism and Major Depression Disorder (MDD)</h2>
 
 
-<p> In the publication mentioned above, subsets of SNPs on the same genetic loci were identified as having significant 
-  association with type III alcoholism. The subset constitutes a haplotype block, and each haplotype was analyzed using Odds Ratio to
- and p-value to evaluate the strength of association to the phenotype (alcohol dependency + major depression).</p>
-              
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-#Define the axis for each facet element (one facet corresponds to one month)
-p <-ggplot(df,aes(x=pickup_day,y=pickup_hour, fill=total))+
-  geom_tile(color="white", size=0.1) + coord_equal()+
-  scale_fill_viridis(name="Number of rides", option="D")
-#put facet plot in order
-p <-p + facet_grid(.~factor(pickup_month2, levels=c("Jan", "Feb", "March", "April", "May", 'June')))
-p <-p + scale_y_continuous(trans = "reverse", breaks = unique(df$pickup_hour))
-p + labs( x="Pickup Day", y="Pickup Hour")
-</code></pre></figure>
+<p>The scientific community has come to the consensus that MDD is a disease with genetic heritability in which many genes play a role, and its development can be
+  influenced by enviromental and social factors. In the publication mentioned above, subsets of SNP markers on the same locus (position of a gene on a chromosome) 
+  were identified as having significant association with type III alcoholism. A subset constitutes a haplotype block, and each haplotype was analyzed using Odds Ratio
+ and p-value to evaluate the strength of association to the phenotype of interest(alcohol dependency + major depression). In August 2016, 
+  researchers from Pfizer, Massachusetts General Hospital and 23andMe published an <a href='https://www.nature.com/articles/ng.3623#t2'>
+  articel</a> in <i> Nature</i> identifying 17 SNPs that are significantly associated with MDD in subjects of European ancestry[2].
+  The study presented in <i>Nature</i> by <i>Hyde et al</i> was a breakthrough because past research studies could not 
+  find genetic markers with significant and consistent association to MDD symptoms. One of the reasons was past studies did not focus on a select
+  group of cohorts. As it turns out, genetic markers for MDD varied greatly for different racial/ethnic groups. I chose to include 
+  the SNPs from the Nature article because it had a larget sample size (300K+ individuals for case and control) and their subject demographic (European) matched
+  my colleague's study.
+    </p>
+            
+<h2 id="data processing">Getting the genotype data</h2>
+
+<p>To obtain genotype data (SNP variants) of the individual, my colleagues ran the DNA samples on Affymetrix' Genome-Wide Human SNP Array 6.0.
+ It's a microarray chip l oaded with 906,600 prob sets corresponding to different SNP sequence, and the SNP variant is determined based 
+  on the intensity of the array signal (Fig 1).</p>
 
  <figure>
-   <img src="images/tile_map.png" alt="tile heat map" >
-   <figcaption>Fig 1. Calendar heat map of taxi pickup data points.
+   <img src="images/snp_array/affy_snp6.png" alt="affy snp6.0" >
+   <figcaption>Fig 1. Workflow of Affymetrix Genome Wide SNP6.0 array to generate SNP profile.
    </figcaption>
    </figure>
   
+<p>In my colleague's study, they excluded Lesche Type IV subjects due to potential confounding factors, and focused on the females
+  because past literature found that Type III alcoholism predominanty affects female. After QC, the sample size for statistical analysis
+  and logistic regression was 116. In building a classifier, I decided to include the male group since they made up 60% of the subjects,
+  and I see that there's quite a few male subjects in the Type III group within this study(Fig 2). This brings the sample size to 293.</p>
 
-<p>Now time for some contour plot, which requires both <i> ggmap</i> and <i> ggplot</i> libraries. <i>ggmap</i> 
-    is used to retrieve the map of a locale using <code class="highlighter-rouge"> get_map()</code></p>
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-p <- get_map("New York City",zoom=14,maptype='toner-lite',source="stamen")
-#select columns with the given pattern with dplyr.
-data_pickup<-data %>% select (starts_with("pickup_l"))
-data_dropoff<-data %>% select (starts_with("dropoff_l"))
-colnames(data_pickup)<-c('lon', 'lat')
-colnames(data_dropoff)<-c('lon', 'lat')
-combo_data<-rbind(data.frame(data_pickup, group="pickup"), data.frame(data_dropoff, group="dropoff"))
-#transparency of the plot (alpha) can be set to level of the sample points (there's 10 levels because there's 10 bins)
-ggmap(p)+ stat_density_2d(data=combo_data, geom ='polygon', bins=10, aes(x=lon, y=lat, fill=group, alpha=..level..))+
-  scale_fill_manual(values=c('pickup'='orchid4', 'dropoff'='darkorange1'))+
-  scale_alpha(guide = FALSE)
-</code></pre></figure> 
- 
 <figure>
-   <img src="images/contour.png" alt="contour map" >
-   <figcaption>Fig 2. Contour map of two groups of data.
+   <img src="images/snp_array/class_dist_gender.png" alt="gender distribution" >
+   <figcaption>Fig 2. Distribution of alcoholism subgroups in male and female. "Other" refers to the combination of Type I and II.
    </figcaption>
    </figure>
 
 
-<h2 id="GWAS">SNPs</h2>
+<h2 id="Neural Network">Neural Network</h2>
 
-<p>Most of the time, machine learning workflows can benefit from feature engineering. Here, feature engineering is defined as adding or 
-transforming relevant information/variables 
-to the existing dataset in order to improve the model's learning and its performance. In some situations, feature 
-engineering requires extensive domain knowledge, for this taxi dataset it was pretty straight forward. The new features obtained 
-from the given features are the time stamp element (i.e, month, date, weekday, hour) and the <a href='https://www.r-bloggers.com/great-circle-distance-calculations-in-r/'>
-haversine distance</a> in km. The target variable, <i> trip duration</i> was log transformed since it displayed a highly skewered
-distribution. I generally prefer to have normal-ish distribution when working with continunous variable, because it helps some models to  
-learn better. In fact, you might consider normalization/scaling to be a form of feature engineering because the raw data are transformed to
-optimize distance-based algorithms or gradient descend parameter updates.</p>
 
-<p>There's a useful library called <i> GGally</i>  that offers a simple one-liner function for matrix scatter plots, along with display of
-distribution and correlation values. This is super useful for exploratory data analysis to get a sense of the data I'm working with. 
-As shown in Fig 3 below, the strongest correlation was for one of the 
-feature engineered variables - haversine distance. </p>
-
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(GGally)
-#using only 10K data points so it doesn't take too long to plot
-sample_data<-datasets[1:10000,]
-ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_month", "pickup_weekday","distance_h", "log_duration")])
-</code></pre></figure>
+<p>Using the cleaned-up dataset, I will compare model performance of Logistic Regression with Neural Network using the <i>Neuralnet</i>
+             library in R. Neural network is a machine learning model inspired by neuronal activation and transmission of signal in the brain.
+            I like to think of it as a fully connected network of 'nodes' that introduce nonlinearity to the weighted inputs by applying some kind of 
+            activation function (i.e., sigmoid, tanh, ReLU functions) before sending the outputs to the next layer (Fig 3).The input layer 
+  corresponds to the feature variables of the data (SNP features, gender class). For each node in the hidden layer, the dot product 
+  of the input and weights are fed into the activation function. The nodes in the output layer corresponds to the number of classes. In my case, a binary classification (Type III or Non Type III) 
+            results in only one node in the final output layer.</p>
 
 <figure>
-   <img src="images/scatter_plot_matrix.png" alt="correlation plot" >
-   <figcaption>Fig 3. Scatter plots of variables below the diagonal. The diagonal plots correspond to the distribution of the given variable. For
-   example, for the plot in the 6th row and 3rd column, the x-axis is the pickup calendar day and the y-axis is the haversine distance.
+   <img src="images/snp_array/neural_net2.jpeg" alt="neural network" >
+   <figcaption>Fig 3. A simple NN architechture. <i>Source: https://cs231n.github.io/neural-networks-1/</i>
    </figcaption>
    </figure>
 
