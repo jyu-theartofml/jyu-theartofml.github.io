@@ -49,7 +49,9 @@
         <article class="article appear">
           <header class="article-header">
             <h1>Sparse PCA and XGboost classifier for predicting tumor type </h1>
-            <p>High throughput RNA sequencing data is used to build a classifier for 5 tumor types</p>
+            <p>High throughput RNA sequencing data is used to build a classifier for 5 tumor types: breast cancer, lung cancer,
+            colorectal cancer, kidney cancer and prostate cancer. This public data was provided and maintained by the 
+            <a href="https://portal.gdc.cancer.gov/">The Cancer Genome Atlas (TCGA) Research Network</a>.</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -70,27 +72,15 @@
 
           <div class="article-content">
 
-<h2 id="Loci">Genetic Loci linked to Alcoholism and Major Depression Disorder (MDD)</h2>
+<h2 id="Loci">Genomic profiling of cancer (MDD)</h2>
 
 
-<p>The scientific community has come to the consensus that MDD is a disease with genetic heritability in which many genes play a role, and its development can be
-  influenced by enviromental and social factors. In the publication mentioned above, subsets of SNP markers on the same locus (position of a gene on a chromosome) 
-  were identified as having significant association with type III alcoholism. A subset constitutes a haplotype block, and each haplotype was analyzed using Odds Ratio
- and p-value to evaluate the strength of association to the phenotype of interest(alcohol dependency + major depression). In August 2016, 
-  researchers from Pfizer, Massachusetts General Hospital and 23andMe published an <a href='https://www.nature.com/articles/ng.3623#t2'>
-  articel</a> in <i> Nature</i> identifying 17 SNPs that are significantly associated with MDD in subjects of European ancestry[2].
-  This study was a breakthrough because past research could not 
-  find genetic markers with significant and consistent association to MDD symptoms. One of the reasons was past studies did not focus on a select
-  group of cohorts. As it turns out, genetic markers for MDD varied greatly for different racial/ethnic groups. I chose to include 
-  the SNPs from the Nature article because it had a larget sample size (300K+ individuals for case and control) and their subject demographic (European) matched
-  my colleague's study.
+<p>\
     </p>
             
 <h2 id="data processing">Getting the genotype data</h2>
 
-<p>To obtain genotype data (SNP variants) of the individual, my colleagues ran the DNA samples on Affymetrix' Genome-Wide Human SNP Array 6.0.
- It's a microarray chip loaded with 906,600 prob sets corresponding to different SNP sequence, and the SNP variant is determined based 
-  on the intensity of the array signal (Fig 1).</p>
+<p></p>
 
  <figure>
    <img src="images/rna_seq/class_distribution.png" alt="tumor distribution in data" >
