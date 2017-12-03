@@ -48,14 +48,8 @@
         
         <article class="article appear">
           <header class="article-header">
-            <h1>Neural Network Classifier for Co-morbid Depression and Alcoholism </h1>
-            <p>Recently, I read a paper published by my colleagues in 2013 titled <b> <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3620932/">
-            Genetic Markers of Co-Morbid Depression and Alcoholism
-            in Women </a></b>. With DNA samples from 323 subjects in Austria, they profiled genetic variants known as Single-Nucleotide Polymorphism (SNP), 
-              and identified a collection of SNPs associated with Lesche Type III alcoholism in women[1].
-            Since then, new Genome Wide Association Studies(GWAS) have shed light on new SNPs strongly correlated with depression. So I had the
-              idea of adding these new SNPs to supplement those in the publication and build a classifier that can identify Lesche Type III alcoholism, which is defined as co-morbid
-              Major Depression Disorder(MDD) and Alcohol Dependent (AD).</p>
+            <h1>Sparse PCA and XGboost classifier for predicting tumor type </h1>
+            <p>High throughput RNA sequencing data is used to build a classifier for 5 tumor types</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -69,7 +63,7 @@
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
                 
-                <span class="article-list-divider">R, Neuralnet, crlmm, genotyping </span>
+                <span class="article-list-divider">R, Sparse PCA, Gene expression, xgboost </span>
               </div>
             </div>
           </header>
@@ -99,8 +93,8 @@
   on the intensity of the array signal (Fig 1).</p>
 
  <figure>
-   <img src="images/snp_array/affy_snp6.png" alt="affy snp6.0" >
-   <figcaption>Fig 1. Workflow of Affymetrix Genome Wide SNP6.0 array to generate SNP profile.
+   <img src="images/rna_seq/class_distribution.png" alt="tumor distribution in data" >
+   <figcaption>Fig 1. Count distribution of tumor types in 801 samples.
    </figcaption>
    </figure>
   
@@ -110,8 +104,11 @@
   and I see that there's quite a few male subjects in the Type III group within this study(Fig 2). This brings the sample size to 293.</p>
 
 <figure>
-   <img src="images/snp_array/class_dist_gender.png" alt="gender distribution" >
-   <figcaption>Fig 2. Distribution of alcoholism subgroups in male and female. "Other" refers to the combination of Type I and II.
+   <div>
+    <a href="https://plot.ly/~jypucca/2/?share_key=YRmcUqgqP0CZ02GCRwjcCY" target="_blank" title="pca_plot" style="display: block; text-align: center;"><img src="https://plot.ly/~jypucca/2.png?share_key=YRmcUqgqP0CZ02GCRwjcCY" alt="pca_plot" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+    <script data-plotly="jypucca:2" sharekey-plotly="YRmcUqgqP0CZ02GCRwjcCY" src="https://plot.ly/embed.js" async></script>
+</div>
+   <figcaption>Fig 2. 3D plot of principal components of tradition PCA (prcomp library).
    </figcaption>
    </figure>
 
