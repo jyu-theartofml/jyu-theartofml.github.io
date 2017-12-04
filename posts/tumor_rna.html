@@ -147,6 +147,22 @@ p <- plot_ly(df_out, x = ~PC1, y = ~PC2, z = ~PC3, color = ~group) %>%
 p
 </code></pre></figure>
 
+  
+ <figure>
+   <div>
+    <a href="https://plot.ly/~jypucca/2/?share_key=YRmcUqgqP0CZ02GCRwjcCY" target="_blank" title="pca_plot" style="display: block; text-align: center;"><img src="https://plot.ly/~jypucca/2.png?share_key=YRmcUqgqP0CZ02GCRwjcCY" alt="pca_plot" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+    <script data-plotly="jypucca:2" sharekey-plotly="YRmcUqgqP0CZ02GCRwjcCY" src="https://plot.ly/embed.js" async></script>
+</div>
+   <div>
+    <a href="https://plot.ly/~jypucca/4/?share_key=R6VcHxKIJYVKDpQvY7DLIy" target="_blank" title="pca_plot_sparse1000" style="display: block; text-align: center;"><img src="https://plot.ly/~jypucca/4.png?share_key=R6VcHxKIJYVKDpQvY7DLIy" alt="pca_plot_sparse1000" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+    <script data-plotly="jypucca:4" sharekey-plotly="R6VcHxKIJYVKDpQvY7DLIy" src="https://plot.ly/embed.js" async></script>
+</div>
+   <figcaption>Fig.2. Top-3D plot of PCA scores using traditional PCA on entire dataset.Bottom-3D plot of PCA scores using <b>sparse</b> PCA on entire dataset.
+   </figcaption>
+   </figure>
+  
+  
+  
 <p> Running the model fit on only 400K samples (to save time), the average validation RMSE was around 0.4135. There's still 
 room for improvement, especially by running the whole training set. As you can see, it's easy to perform cross validated parameter
 tuning on a Random Forest regressor through <i>Caret</i>, which comes with other widely used models such as SVM, Logistic Regression, 
