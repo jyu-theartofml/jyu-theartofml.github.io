@@ -49,9 +49,16 @@
         <article class="article appear">
           <header class="article-header">
             <h1>Sparse PCA and XGboost classifier for predicting tumor type </h1>
-            <p>High throughput RNA sequencing data is used to build a classifier for 5 tumor types: breast cancer, lung cancer,
+            <p>The Pan-Cancer intiative at <a href="https://portal.gdc.cancer.gov/">The Cancer Genome Atlas (TCGA) Research Network</a> 
+              has analyzed numerous tumor types using different technologies to profile genomic, transcriptomic and epigenomic variations.
+              This project represents an approach to study cancers not only based on the organ of origin, but also the broader biomarker 
+              profiles [1].
+              This High throughput RNA sequencing data is used to build a classifier for 5 tumor types: breast cancer, lung cancer,
             colorectal cancer, kidney cancer and prostate cancer. This public data was provided and maintained by the 
-            <a href="https://portal.gdc.cancer.gov/">The Cancer Genome Atlas (TCGA) Research Network</a>.</p>
+            . The raw RNA sequence data were 
+              normalized to Fragment per kilobase transcript per million mapped reads (FPKM) to adjust for differences of transcript lengths.
+              The normalized data are compiled and hosted by 
+              <a href="https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq#">UCI Machine Learning Repository</a>.</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -178,7 +185,9 @@ room for improvement, especially by running the whole training set. As you can s
 tuning on a Random Forest regressor through <i>Caret</i>, which comes with other widely used models such as SVM, Logistic Regression, 
 and GLM regression, etc (total of 238).
         
-
+<h3> REFERENCE </h3>
+<p>[1].The Cancer Genome Atlas Research Network, Weinstein, J., Collisson, E.A., Mills,G.B., et al. <i>The Cancer Genome Atlas 
+Pan-Cancer analysis project</i>,Nature Genetics 45, 1113–1120 (2013)
 
           
             <div id="disqus_thread" class="article-comments"></div>
