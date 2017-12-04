@@ -228,8 +228,11 @@ as.table(f1_val)
 </code></pre></figure>
 <p>Within each cross validation, sparse PCA is performed on training data only, and subsequent loadings are calculated for the validation data.
   At the end of each cross validations, the F1 scores of the predictions are obtained (Table 1). F1 score is the weighted average of precision and recall, 
-  and it's useful when you are working with an imbalanced dataset. The F1 value is calcuclated as 2*(precision*recall)/(precision+recall), and
-  it measures how precise and robust the classifier is.</p>  
+  and it's useful when you are working with an imbalanced dataset. The F1 value is calculated as 2*(precision*recall)/(precision+recall), and
+  it reflects how precise and robust the classifier is. The classifications of Colorectal and Lung cancers have 
+  the lowest average (about 0.967) and wider variations (0.025). This is consistent with the plot of the PC scores shown in Fig.2, where
+  the clusters of Colorectal cancer and Lung cancer are in close proximity, making it a bit harder to classify between these two cancers based on the
+  gene expression data.</p>  
   
   <table align="center" >
   <colgroup span="11"></colgroup>
@@ -262,7 +265,9 @@ as.table(f1_val)
       <td>0.9836</td><td>0.9677</td><td>0.9830</td><td>0.9818</td><td>0.9811</td>
      </tr>
   </table>
-  
+  <p align="center"> <i> Table 1. F1 scores of the 5 cross validation.</i>
+    
+    
 <h3> REFERENCES </h3>
 <p>[1].The Cancer Genome Atlas Research Network, Weinstein, J., Collisson, E.A., Mills,G.B., et al. <b>The Cancer Genome Atlas 
   Pan-Cancer analysis project</b>, <i>Nature Genetics</i> 45, 1113–1120 (2013)</p>
