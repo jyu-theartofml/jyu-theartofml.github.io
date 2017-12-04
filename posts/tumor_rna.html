@@ -215,12 +215,15 @@ for (i in 1:length(cv_folds)){
   dval.sparse<-xgb.DMatrix(data = as.matrix(val.spc), label = as.numeric(val.target))
   watchlist <- list(train=dtrain.sparse, test=dval.sparse)
   xgb.model <- xgb.train(data=dtrain.sparse, max_depth=2, eta=0.0001, nthread = 4,colsample_bytree=0.3, nrounds=150, verbose=F,
-                         watchlist=watchlist,num_class=5, early_stopping_rounds=3,objective = "multi:softmax", eval_metric="merrors")
+                         watchlist=watchlist,num_class=5, early_stopping_rounds=3,objective = "multi:softmax", eval_metric="merror")
   
   prob<-predict(xgb.model,dval.sparse)
   g<-confusionMatrix(prob, val.target)
   f1_val[i,]<-as.vector(g$byClass[,7])
 }
+colnames(f1_val) <- c("BRCA","COAD", "KIRC",'LUAD','PRAD')
+rownames(f1_val)<-c("CV1","CV2", "CV3",'CV4','CV5')
+as.table(f1_val)
 
 </code></pre></figure>
 <p>Within each cross validation, sparse PCA is performed on training data only, and subsequent loadings are calculated for the validation data.
@@ -228,7 +231,7 @@ for (i in 1:length(cv_folds)){
   and it's useful when you are working with an imbalanced dataset. The F1 value is calcuclated as 2*(precision*recall)/(precision+recall), and
   it measures how precise and robust the classifier is.</p>  
   
-  <table >
+  <table align="center" >
   <colgroup span="11"></colgroup>
   <tr>
     <th> </th>
