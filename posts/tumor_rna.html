@@ -224,8 +224,9 @@ for (i in 1:length(cv_folds)){
 
 </code></pre></figure>
 <p>Within each cross validation, sparse PCA is performed on training data only, and subsequent loadings are calculated for the validation data.
-  At the end of the 5Fold cross validations, the F1 scores of the predictions are obtained (Table 1). F1 score is the weighted average of precision and recall, 
-  and it's useful when you are working with an imbalanced dataset.</p>  
+  At the end of each cross validations, the F1 scores of the predictions are obtained (Table 1). F1 score is the weighted average of precision and recall, 
+  and it's useful when you are working with an imbalanced dataset. The F1 value is calcuclated as 2*(precision*recall)/(precision+recall), and
+  it measures how precise and robust the classifier is.</p>  
   
   <table >
   <colgroup span="11"></colgroup>
@@ -257,6 +258,7 @@ for (i in 1:length(cv_folds)){
       <td>CV 5</td>
       <td>0.9836</td><td>0.9677</td><td>0.9830</td><td>0.9818</td><td>0.9811</td>
      </tr>
+  </table>
   
 <h3> REFERENCES </h3>
 <p>[1].The Cancer Genome Atlas Research Network, Weinstein, J., Collisson, E.A., Mills,G.B., et al. <b>The Cancer Genome Atlas 
