@@ -50,19 +50,17 @@
           <header class="article-header">
             <h1>Sparse PCA and XGboost classifier for predicting tumor type </h1>
             <p>The Pan-Cancer intiative at <a href="https://portal.gdc.cancer.gov/">The Cancer Genome Atlas (TCGA) Research Network</a> 
-              has analyzed numerous tumor types using different technologies to profile genomic, transcriptomic and epigenomic variations.
-              This project represents an approach to study cancers not only based on the organ of origin, but also the broader biomarker 
-              profiles [1].
-              This High throughput RNA sequencing data is used to build a classifier for 5 tumor types: breast cancer, lung cancer,
-            colorectal cancer, kidney cancer and prostate cancer. This public data was provided and maintained by the 
-            . The raw RNA sequence data were 
+              has analyzed numerous tumor types using different technologies to profile the genomic, transcriptomic and epigenomic variations.
+              This body of work represents an approach to study cancers not only based on the organ of origin, but also the broader biomarker 
+              profiles [1]. For this post, high-throughput gene expression data are used to build a classifier for 5 tumor types: breast cancer, lung cancer,
+            colorectal cancer, kidney cancer and prostate cancer. The public data was provided and maintained by TCGA, The raw RNA sequence data were 
               normalized to Fragment per kilobase transcript per million mapped reads (FPKM) to adjust for differences of transcript lengths.
-              The normalized data are compiled and hosted by 
+              The normalized data (801 samples,20,531 features for gene expression level) are compiled and hosted by 
               <a href="https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq#">UCI Machine Learning Repository</a>.</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
-                Nov 20, 2017
+                Dec 4th, 2017
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
@@ -79,43 +77,31 @@
 
           <div class="article-content">
 
-<h2 id="Loci">Genomic profiling of cancer (MDD)</h2>
+<h2 id="preprocessing">Data preprocessing</h2>
 
-
-<p>\
-    </p>
-            
-<h2 id="data processing">Getting the genotype data</h2>
-
-<p></p>
+<p>As shown in Fig.1, this data set is imbalanced with Colorectal cancer being underpresented. Taking this into account for multiclass
+  classification, F1 score will be used that reflects the precision and recall performance within each class. There's also the
+  issue of high dimensionality in this data, where number of features (20,531 columns) far exceeds the number of samples (801 rows).
+  A modified form of Principal Component Analysis (PCA) will be used to reduce the complexity of the dataset.</p>
 
  <figure>
    <img src="images/rna_seq/class_distribution.png" alt="tumor distribution in data" >
-   <figcaption>Fig 1. Count distribution of tumor types in 801 samples. BRCA-breast cancer,COAD-Colorectal cancer, KIRC-Kidney cancer, LUAD- Lung cancer,
+   <figcaption>Fig.1. Count distribution of tumor types in 801 samples. BRCA-breast cancer,COAD-Colorectal cancer, KIRC-Kidney cancer, LUAD- Lung cancer,
     PRAD- Prostate cancer.
    </figcaption>
    </figure>
   
-<p>In my colleague's study, they excluded Lesche Type IV subjects due to potential confounding factors, and focused on the females
-  because past literature found that Type III alcoholism predominanty affects female. After QC, the sample size for statistical analysis
-  and logistic regression was 116. In building a classifier, I decided to include the male group since they made up 60% of the subjects,
-  and I see that there's quite a few male subjects in the Type III group within this study(Fig 2). This brings the sample size to 293.</p>
-
-<figure>
-   <div>
-    <a href="https://plot.ly/~jypucca/2/?share_key=YRmcUqgqP0CZ02GCRwjcCY" target="_blank" title="pca_plot" style="display: block; text-align: center;"><img src="https://plot.ly/~jypucca/2.png?share_key=YRmcUqgqP0CZ02GCRwjcCY" alt="pca_plot" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
-    <script data-plotly="jypucca:2" sharekey-plotly="YRmcUqgqP0CZ02GCRwjcCY" src="https://plot.ly/embed.js" async></script>
-</div>
-  <div>
-    <a href="https://plot.ly/~jypucca/4/?share_key=R6VcHxKIJYVKDpQvY7DLIy" target="_blank" title="pca_plot_sparse1000" style="display: block; text-align: center;"><img src="https://plot.ly/~jypucca/4.png?share_key=R6VcHxKIJYVKDpQvY7DLIy" alt="pca_plot_sparse1000" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
-    <script data-plotly="jypucca:4" sharekey-plotly="R6VcHxKIJYVKDpQvY7DLIy" src="https://plot.ly/embed.js" async></script>
-</div>
-   <figcaption>Fig 2. Top- 3D plot of principal components of tradition PCA (prcomp library). Bottom-3D plot of sparse PCA (nspca library).
-   </figcaption>
-   </figure>
-
-
-<h2 id="Neural Network">Neural Network</h2>
+<p> For a quick refresher on the theoretical frame work of Prinicipal Component Analysis (PCA), I highly recommend <a href="https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues">
+  this link</a>. Briefly, PCA is a technique commonly used to reduce high dimensional numerical data to lower dimensional space.
+   Traditional PCA works by combining all original features with linear weights (aka: loadings) to capture the maximum variance 
+  of the data. The analysis results in several principal components, which are ranked by the amount of variance it captures. 
+  Each Principal Component(PC) will have its own eigenvector and eigenvalues that characterizes the variance, and each PC will have its own loadings 
+  for the features. For example, to calculate the first PC score for one sample, let <i>C<sub>i,j</sub></i> be the loadings for <i>i-th</i> PC 
+  and <i>jth</i> <a href="https://izabelcavassim.files.wordpress.com/2015/03/screenshot-from-2015-03-08-2245511.png">FPKM-normalized </a>
+    gene expression feature:
+  <br>PC1 Score = gene_measurement{1} x C<sub>1,1</sub></i> +
+            gene_measurement{2} x C<sub>1,2</sub></i> +...
+            gene_measurement{j} x C<sub>1,j</sub></i></br>
 
 
 <p>Using the cleaned-up dataset, I will compare model performance of Logistic Regression with Neural Network using the R library <i>Neuralnet</i>.
