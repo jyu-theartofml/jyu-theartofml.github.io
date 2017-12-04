@@ -110,7 +110,8 @@
   to select sub group of features, we can use sparse PCA which results in sparse loadings.  Sparsity of the loadings is 
   effectively a form of feature selection, and it offers practical advantages such as easier interpretation and the need for 
   less variable measurements, which can be costly in RNA sequencing. One of the well 
-  know sparse PCA methods was published by Zou, Hastie, and Tibshirani in 2005[2]. In this paper, they approached PCA as a 
+  know sparse PCA methods was published by Zou, Hastie, and Tibshirani in 2005[2]. In <a href="https://web.stanford.edu/~hastie/Papers/spc_jcgs.pdf">this paper</a>, 
+  they approached PCA as a 
   regression problem optimized by lasso shrinkage of the coefficients resulting in some loadings of zero values. In this example, I used the 
   nsprcomp package in R, which allows you to specifiy the maximum number of non-zero loadings for each PC (and optional constraint for non-negative loadings). 
   I picked 1000 (5% of the total number of genes), but it's a parameter that can be further optimized. The codes for sparse
