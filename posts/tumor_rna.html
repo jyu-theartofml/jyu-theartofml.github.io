@@ -214,7 +214,7 @@ for (i in 1:length(cv_folds)){
   dtrain.sparse<-xgb.DMatrix(data = as.matrix(train.spc), label =as.numeric(train.target))
   dval.sparse<-xgb.DMatrix(data = as.matrix(val.spc), label = as.numeric(val.target))
   watchlist <- list(train=dtrain.sparse, test=dval.sparse)
-  xgb.model <- xgb.train(data=dtrain.sparse, max_depth=2, eta=0.001, nthread = 2,colsample_bytree=0.5, nrounds=150, verbose=F,
+  xgb.model <- xgb.train(data=dtrain.sparse, max_depth=2, eta=0.0001, nthread = 4,colsample_bytree=0.3, nrounds=150, verbose=F,
                          watchlist=watchlist,num_class=5, early_stopping_rounds=3,objective = "multi:softmax", eval_metric="merrors")
   
   prob<-predict(xgb.model,dval.sparse)
@@ -227,6 +227,36 @@ for (i in 1:length(cv_folds)){
   At the end of the 5Fold cross validations, the F1 scores of the predictions are obtained (Table 1). F1 score is the weighted average of precision and recall, 
   and it's useful when you are working with an imbalanced dataset.</p>  
   
+  <table >
+  <colgroup span="11"></colgroup>
+  <tr>
+    <th> </th>
+    <th>BRCA</th>
+    <th>COAD</th>
+    <th>KIRC</th>
+    <th>LUAD</th>
+    <th>PRAD</th>
+  </tr>
+    <tr>
+      <td>CV 1</td>
+      <td>0.9833</td><td>0.9697</td><td>1.0000</td><td>0.9630</td><td>0.9824</td>
+    </tr>
+     <tr>
+      <td>CV 2</td>
+      <td>1.0000</td><td>0.9677</td><td>0.9836</td><td>1.0000</td><td>1.0000</td>
+     </tr>
+    <tr>
+      <td>CV 3</td>
+      <td>0.9600</td><td>0.9286</td><td>0.9824</td><td>0.9286</td><td>0.9615</td>
+     </tr>
+    <tr>
+      <td>CV 4</td>
+      <td>0.9831</td><td>1.0000</td><td>1.0000</td><td>0.9655</td><td>1.0000</td>
+     </tr>
+    <tr>
+      <td>CV 5</td>
+      <td>0.9836</td><td>0.9677</td><td>0.9830</td><td>0.9818</td><td>0.9811</td>
+     </tr>
   
 <h3> REFERENCES </h3>
 <p>[1].The Cancer Genome Atlas Research Network, Weinstein, J., Collisson, E.A., Mills,G.B., et al. <b>The Cancer Genome Atlas 
