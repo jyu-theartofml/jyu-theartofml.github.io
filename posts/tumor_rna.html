@@ -7,9 +7,9 @@
   <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta property="og:title" content="Neural Network for type 3 alcoholism classifier">
+  <meta property="og:title" content="Sparse PCA and XGboost classifier for predicting tumor type">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://yinniyu.github.io/posts/snp_ann.html">
+  <meta property="og:url" content="http://yinniyu.github.io/posts/tumor_rna.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
   <meta property="og:image" content="http://chalk.nielsenramon.com/assets/documentation/sample-image.jpg">
 
@@ -48,7 +48,7 @@
         
         <article class="article appear">
           <header class="article-header">
-            <h1>Sparse PCA and XGboost classifier for predicting tumor type </h1>
+            <h1>Sparse PCA and XGboost classifier for predicting tumor type</h1>
             <p>The Pan-Cancer intiative at <a href="https://portal.gdc.cancer.gov/">The Cancer Genome Atlas (TCGA) Research Network</a> 
               has analyzed numerous tumor types using different technologies to profile the genomic, transcriptomic and epigenomic variations.
               This body of work represents an approach to study cancers not only based on the organ of origin, but also the broader biomarker 
@@ -161,24 +161,80 @@ p
    </figcaption>
    </figure>
   
+<p>As shown in Fig.2. below, the sparse PCA resulted in clear clustering of the groups along the PC axis, showing that feature 
+  selection of subgroup of gene expression did not compromise the clustering performance of the PCs.</p>
+  
+<h2 id="xgboost of gene expression PCA">XGB model of PC scores</h2>  
+<p>After getting the loadings for 1000 genes, 10 PC scores are computed for each sample. This would serve as the input matrix to 
+  the classification model Xtreme Gradient Boosting (XBG). In short, XGB is a regularized boosting algorithm in which the weak 
+  classifier learns its parameters based on the performance of the previous classifier, giving more weight to previously misclassified samples 
+  (or large error in case of regression) (see fig 3). The regularization in XGB helps to control for overfitting.</p>
+  
+  <figure>
+   <img src="images//rna_seq/xgboost.png" alt="schematic of xgb" >
+   <figcaption>Fig.3. Schematic of gradient boosting trees. The 'growth' of the tree is based on the gradient/error of the previous iteration.
+     Source:https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/
+   </figcaption>
+   </figure>
+  
+<figure class="highlight"><pre><code class="language-R" data-lang="R">
+library(xgboost)
+cv_folds <- createFolds(target, k=5)
+val_split<-lapply(cv_folds, function(ind, dat) dat[ind,], dat=df)
+train_split<-lapply(cv_folds, function(ind, dat) dat[-ind,], dat=df)
+
+# placeholder for 5 CV and 5 classes F1 scores
+f1_val<-matrix(NA, nrow=5, ncol=5)
+
+for (i in 1:length(cv_folds)){
+  group<-names(cv_folds)[i]
+  val.df<-val_split[[group]]
+  train.df<-train_split[[group]]
+  ## perform sparse PCA on training set, limit to 1K non-zero loadings for the feature variables
+  library(doSNOW)
+  library(ff)
+  library(doSNOW)
+  cluster<-makeCluster(6,"SOCK")
+  registerDoSNOW(cluster)
+  spca.train<-nsprcomp(train.df, k=c(1000,1000,1000,1000,1000,1000,1000,1000,1000,1000))
+  train.spc<-spca.train$x
+  ## get loadings for validation data frame
+  val.spc<-predict(spca.train, val.df)
+  
+  #get target info
+  valIdx<-cv_folds[group][[group]]
+  train.target<-target.num[-valIdx]
+  val.target<-target.num[valIdx]
+  
+  #set up for xgb
+  dtrain.sparse<-xgb.DMatrix(data = as.matrix(train.spc), label =as.numeric(train.target))
+  dval.sparse<-xgb.DMatrix(data = as.matrix(val.spc), label = as.numeric(val.target))
+  watchlist <- list(train=dtrain.sparse, test=dval.sparse)
+  xgb.model <- xgb.train(data=dtrain.sparse, max_depth=2, eta=0.001, nthread = 2,colsample_bytree=0.5, nrounds=150, verbose=F,
+                         watchlist=watchlist,num_class=5, early_stopping_rounds=3,objective = "multi:softmax", eval_metric="merrors")
+  
+  prob<-predict(xgb.model,dval.sparse)
+  # F1-score metric is the weighted average of  precision and recall, which is extremely useful when you are working with imbalanced datasets.
+  g<-confusionMatrix(prob, val.target)
+  f1_val[i,]<-as.vector(g$byClass[,7])
+}
+
+</code></pre></figure>
+<p>With 5Fold cross validation, the F1 scores of the predictions are obtained (Table 1). F1 score is basically a metric that summarizes a confusion matrix for classification, 
+  and it's useful when you are working with an imbalanced dataset.</p>  
   
   
-<p> Running the model fit on only 400K samples (to save time), the average validation RMSE was around 0.4135. There's still 
-room for improvement, especially by running the whole training set. As you can see, it's easy to perform cross validated parameter
-tuning on a Random Forest regressor through <i>Caret</i>, which comes with other widely used models such as SVM, Logistic Regression, 
-and GLM regression, etc (total of 238).
-        
 <h3> REFERENCE </h3>
 <p>[1].The Cancer Genome Atlas Research Network, Weinstein, J., Collisson, E.A., Mills,G.B., et al. <b>The Cancer Genome Atlas 
 Pan-Cancer analysis project</b>, <i>Nature Genetics</i> 45, 1113–1120 (2013)
 [2].Zou, H., Hastie, T., Tibshirani, R., <b>Sparse Principal Component Analysis</b>,<i>Journal of Computational and Graphical Statistics</i>, Volume 15, Number 2, Pages 265–286
           
-            <div id="disqus_thread" class="article-comments"></div>
-            <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
-            <noscript>Please enable JavaScript to view the comments.</noscript>
+<div id="disqus_thread" class="article-comments"></div>
+<script src="https://chalk-1.disqus.com/embed.js" async defer></script>
+<noscript>Please enable JavaScript to view the comments.</noscript>
           
-        </article>
-        <footer class="footer appear">
+</article>
+<footer class="footer appear">
   <p>
     Chalk is a high quality, completely customizable, performant and 100% free
     blog template for Jekyll built by
