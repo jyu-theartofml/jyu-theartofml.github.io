@@ -99,71 +99,52 @@
   for the features. For example, to calculate the first PC score for one sample, let <i>C<sub>i,j</sub></i> be the loadings for <i>i-th</i> PC 
   and <i>jth</i> <a href="https://izabelcavassim.files.wordpress.com/2015/03/screenshot-from-2015-03-08-2245511.png">FPKM-normalized </a>
     gene expression feature:
-  <br>PC1 Score = gene_measurement{1} x C<sub>1,1</sub></i> +
-            gene_measurement{2} x C<sub>1,2</sub></i> +...
-            gene_measurement{j} x C<sub>1,j</sub></i></br>
+  <p align="center">PC1 Score = gene_measurement{1} x C<sub>1,1</sub></i> +
+                                gene_measurement{2} x C<sub>1,2</sub></i> +...
+                                gene_measurement{j} x C<sub>1,j</sub></i></p>
 
 
-<p>Using the cleaned-up dataset, I will compare model performance of Logistic Regression with Neural Network using the R library <i>Neuralnet</i>.
-       Neural network is a machine learning model inspired by neuronal activation and transmission of signal in the brain.
-        I like to think of it as a fully connected network of 'nodes' that introduce nonlinearity to the weighted inputs by applying some kind of 
-       activation function (i.e., sigmoid, tanh, ReLU functions) before propagating the outputs to the next layer (Fig 3).The input layer 
-  corresponds to the feature variables of the data (SNP features, gender class). For each node in the hidden layer, the dot product 
-  of the input and weights are fed into the activation function. The nodes in the output layer correspond to the number of classes. In my case, a binary classification (Type III or Non Type III) 
-            results in only one node in the final output layer.</p>
+<p>When we are dealing with genomic data such as gene expression measurements, typically there's hundreds of thousands to 
+  millions of gene or transcript being quantified per sample. Based on existing literature, we know that only a fraction of those
+  genomic features are driving the target of interest, in this case it's the 5 categories of tumors. To apply this constraint and
+  to select sub group of features, we can use sparse PCA which results in sparse loadings.  Sparsity of the loadings is 
+  effectively a form of feature selection, and it offers practical advantages such as easier interpretation and the need for 
+  less variable measurements, which can be costly in RNA sequencing. One of the well 
+  know sparse PCA methods was published by Zou, Hastie, and Tibshirani in 2005[2]. In this paper, they approached PCA as a 
+  regression problem optimized by lasso shrinkage of the coefficients resulting in some loadings of zero values. In this example, I used nspca package in R, which allows you specifiy the maximum number of non-zero loadings for each PA (and optional non-negative loadings). 
+  I picked 1000 (5% of the total number of genes), but it's a parameter that can be further optimized. The codes for sparse
+  PCA are shown below (cleaned up R script can be found at the <a href="https://github.com/yinniyu/tumor_rna_seq">github repo</a>).<
+  I tried both traditional PCA (<code class="highlighter-rouge"> prcomp() </code>) and sparse PCA to generate the plots in Fig.2.</p>
 
-<figure>
-   <img src="images/snp_array/neural_net2.jpeg" alt="neural network" >
-   <figcaption>Fig 3. A simple NN architechture. <i>Source: https://cs231n.github.io/neural-networks-1/</i>
-   </figcaption>
-   </figure>
-
-
-<h2 id="randomeforest">Caret and the Forest</h2>
-
-<p>After the data are preprocessed, I used the <i> Caret</i>  library to perform grid search with cross validation (CV). I chose 
-<a href="https://databricks.com/blog/2015/01/21/random-forests-and-boosting-in-mllib.html">Random Forest (RF) regressor </a> because it is known to work well with nonlinear data, it selects random 
-subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
-<p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
-This is helpful for running RF on large dataset with ~1M samples. On the <i> Caret</i>  documentation, the author only mentioned 
-<i> doMC</i>  for parallel computing but that only works for Macs. I have a windows 10 laptop with 4 cores (8 processors), and found that
-the <i>doParallel</i>  package worked well with the CV workflow.
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(randomForest)
+library(data.table)
+library(plyr)
 library(caret)
-library(parallel)
-library(doParallel)
-library(dplyr)
-datasets<- datasets%>% mutate_if(is.integer, as.numeric)
-trainIndex <- createDataPartition(datasets$log_duration, p = .7, 
-                                  list = FALSE, 
-                                  times = 1)
-data_train<-datasets[trainIndex,]
-data_val<-datasets[-trainIndex,]
-#### grid must include mtry for RF model ####
-rfgrid<- expand.grid(mtry=c(6,13))
-set.seed(20)
-cv_control <- trainControl(
-  method = "cv",
-  number = 3)
-  
-###### NOTE: CV and grid functions has to come before cluster computing setup  ##########
+library(nsprcomp)
 
-cluster <- makeCluster(detectCores()-3)# leave at least 1 node for operating system 
-registerDoParallel(cluster)
+raw.data<-fread('data.csv')
+label<-fread('labels.csv')
+raw.data<-data.frame(raw.data)
+### exclude columns where values are all 0s
+df<-raw.data[,-(which(colSums(raw.data) == 0))]
 
-##train function will invoke dummy variables for formula input!
-##but randomForest library itself doesn't do that with formula input
-rfFit <- train(log_duration ~ ., data = data_train, 
-                 method = "rf", ntree=100,
-                 trControl = cv_control, 
-                 tuneGrid=rfgrid,
-                 verbose = FALSE, importance=TRUE)
+### the gene expressions values are normalized, no need to set scale to True in nspca()
+pca.df<-nsprcomp(df, k=c(1000,1000,1000,1000,1000,1000,1000,1000,1000,1000))
+df_out <- as.data.frame(pca.df$x)
+df_out$group <- label$Class
 
-stopCluster(cluster)
-registerDoSEQ()
-## to see error of the model
-rfFit$results
+library(ggplot2)
+library(grid)
+library(gridExtra)
+
+#### Use plotly to generatate 3D interactive chart. 
+library(plotly)
+p <- plot_ly(df_out, x = ~PC1, y = ~PC2, z = ~PC3, color = ~group) %>%
+  add_markers() %>%
+  layout(scene = list(xaxis = list(title = 'PC1'),
+                      yaxis = list(title = 'PC2'),
+                      zaxis = list(title = 'PC3')))
+p
 </code></pre></figure>
 
 <p> Running the model fit on only 400K samples (to save time), the average validation RMSE was around 0.4135. There's still 
@@ -172,9 +153,9 @@ tuning on a Random Forest regressor through <i>Caret</i>, which comes with other
 and GLM regression, etc (total of 238).
         
 <h3> REFERENCE </h3>
-<p>[1].The Cancer Genome Atlas Research Network, Weinstein, J., Collisson, E.A., Mills,G.B., et al. <i>The Cancer Genome Atlas 
-Pan-Cancer analysis project</i>,Nature Genetics 45, 1113–1120 (2013)
-
+<p>[1].The Cancer Genome Atlas Research Network, Weinstein, J., Collisson, E.A., Mills,G.B., et al. <b>The Cancer Genome Atlas 
+Pan-Cancer analysis project</b>, <i>Nature Genetics</i> 45, 1113–1120 (2013)
+[2].Zou, H., Hastie, T., Tibshirani, R., <b>Sparse Principal Component Analysis</b>,<i>Journal of Computational and Graphical Statistics</i>, Volume 15, Number 2, Pages 265–286
           
             <div id="disqus_thread" class="article-comments"></div>
             <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
