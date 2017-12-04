@@ -200,6 +200,7 @@ for (i in 1:length(cv_folds)){
   cluster<-makeCluster(6,"SOCK")
   registerDoSNOW(cluster)
   spca.train<-nsprcomp(train.df, k=c(1000,1000,1000,1000,1000,1000,1000,1000,1000,1000))
+  ## transformed data in training set
   train.spc<-spca.train$x
   ## get loadings for validation data frame
   val.spc<-predict(spca.train, val.df)
