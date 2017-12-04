@@ -61,7 +61,7 @@
               This body of work represents an approach to study cancers not only based on the organ of origin, but also the broader biomarker 
               profiles [1]. For this post, high-throughput gene expression data are used to build a classifier for 5 tumor types: breast cancer, lung cancer,
             colorectal cancer, kidney cancer and prostate cancer. The public data was provided and maintained by TCGA, the raw RNA sequence data were 
-              normalized to Fragment per kilobase transcript per million mapped reads (FPKM) to adjust for differences of transcript lengths.
+              normalized to Fragment per kilobase transcript per million mapped reads (FPKM) to adjust for differences in transcript lengths.
               The normalized data are compiled and hosted by 
               <a href="https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq#">UCI Machine Learning Repository</a>.</p>
             
@@ -117,7 +117,7 @@
   to select sub group of features, we can use sparse PCA which results in sparse loadings.  Sparsity of the loadings is 
   effectively a form of feature selection, and it offers practical advantages such as easier interpretation and the need for 
   less variable measurements, which can be costly in RNA sequencing. One of the well 
-  know sparse PCA methods was published by Zou, Hastie, and Tibshirani in 2005[2]. In <a href="https://web.stanford.edu/~hastie/Papers/spc_jcgs.pdf">this paper</a>, 
+  known sparse PCA methods was published by Zou, Hastie, and Tibshirani in 2005[2]. In <a href="https://web.stanford.edu/~hastie/Papers/spc_jcgs.pdf">this paper</a>, 
   they approached PCA as a 
   regression problem optimized by lasso shrinkage of the coefficients resulting in some loadings of zero values. In this example, I used the 
   nsprcomp package in R, which allows you to specifiy the maximum number of non-zero loadings for each PC (and optional constraint for non-negative loadings). 
