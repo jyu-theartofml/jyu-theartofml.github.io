@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="http://yinniyu.github.io/posts/melanoma.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
-  <meta property="og:image" content=>
+  <meta property="og:image" content="images/melanoma/skin_check_app.jpeg">
 
  
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -56,9 +56,11 @@
             <h1>Binary Classifier for Melanoma Using MobileNet</h1>
              <figure>
               <img src="images/rna_seq/xgb_multi_tree.png" alt="xgb" ></figure>
-            <p>I recently read an <a href='https://cs.stanford.edu/people/esteva/nature/'>article </a>about researchers utilizing 
+            <p>I recently read an <a href='https://cs.stanford.edu/people/esteva/nature/'> <u>article</u> </a>about researchers utilizing 
             Deep Learning models to detect categories of skin lesions, and ultimately to detect whether the lesion is melanoma or not.
-            Every year, an estimated 68,000 cases in the U.S. are diagnosed as melanoma. Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry, Border irregularity, Color variation, and Diameter (aka, ABCD) [1].
+            CDC reports that in the year 2014, 76,665 people in the U.S. were diagnosed with melanomas resulting in 9,324 deaths. 
+             Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry, 
+              Border irregularity, Color variation, Diameter and Evolving shape (aka, ABCDE) [1].
             In case if you are wondering how well your eyes can detect malignant lesion, 
               here's a sample collage of pictures (I will admit that when I tried, it was as good as tossing a coin).</p>
             
@@ -220,63 +222,33 @@ model_full=model.fit_generator(train_generator,
   
         
   
-<p>The final validation binary cross entropy was 0.43, F1 score (balanced accuracy accounting for imbalanced category distribution) is 86%, and AUC for ROC is 0.89 (1 being the best).</p>
+        <p>The final validation binary cross entropy was <b>0.43</b>, F1 score (balanced accuracy accounting for imbalanced 
+          class distribution) is <b>86%</b>, and AUC for ROC is <b>0.89 </b>(1 being the best).</p>
   
 
   <figure>
-   <img src="images/melanoma/roc.png" alt="ROC of validation" >
-   <figcaption>Fig.3. ROC of the validation dataset.
+    <center><img src="images/melanoma/roc.png" alt="ROC of validation" ></center>
+   <figcaption>Fig.3. ROC of the validation dataset showing the trade-off between sensitivity (TPR) and specificity (1-FPR). 
+     Area under the curve is the overall performance metric.
    </figcaption>
    </figure>
   
+<p>For my own future reference, here are some things to keep in mind when training a deep learning model for image classification:
+<ul>
+  <li>Pay attention to preprocessing step for a given deep neural net model. It's NOT always mean centered or standard deviation normalized to 1.
+</li>
+  <li>Sanity check- make sure the images in trainnig and test sets have more or less the same distribution.</li>
+  <li>Explore augmentation options such as contrasting the image, or adaptive histogram equilization. It is a handy tool especially
+    when poor lighting or resolution of the digital image becomes an issue (Note to self:need to  explore this further).</li>
+  <li>Obviously there's room for improvement for this classifier (I didn't change the default parameters of the model). 
+    For example,the number of filter in each layer and dropout rate can be tuned.
+</ul>  
 
-
-<p>Within each cross validation, sparse PCA is performed on training data only, and subsequent loadings are calculated for the validation data.
-  At the end of each cross validations, the F1 scores of the predictions are obtained (Table 1). F1 score is the weighted average of precision and recall, 
-  and it's useful when you are working with an imbalanced dataset. The F1 value is calculated as 2*(precision*recall)/(precision+recall), and
-  it reflects how precise and robust the classifier is. </p>  
-  
-  <table align="center" >
-  <colgroup span="11"></colgroup>
-  <tr>
-    <th> </th>
-    <th>BRCA</th>
-    <th>COAD</th>
-    <th>KIRC</th>
-    <th>LUAD</th>
-    <th>PRAD</th>
-  </tr>
-    <tr>
-      <td>CV 1</td>
-      <td>0.9833</td><td>0.9697</td><td>1.0000</td><td>0.9630</td><td>0.9824</td>
-    </tr>
-     <tr>
-      <td>CV 2</td>
-      <td>1.0000</td><td>0.9677</td><td>0.9836</td><td>1.0000</td><td>1.0000</td>
-     </tr>
-    <tr>
-      <td>CV 3</td>
-      <td>0.9600</td><td>0.9286</td><td>0.9824</td><td>0.9286</td><td>0.9615</td>
-     </tr>
-    <tr>
-      <td>CV 4</td>
-      <td>0.9831</td><td>1.0000</td><td>1.0000</td><td>0.9655</td><td>1.0000</td>
-     </tr>
-    <tr>
-      <td>CV 5</td>
-      <td>0.9836</td><td>0.9677</td><td>0.9830</td><td>0.9818</td><td>0.9811</td>
-     </tr>
-  </table>
-  <p align="center"> <i> Table 1. F1 scores of the 5 cross validation.</i></p>
-   <p> The classifications of Colorectal and Lung cancers have the lowest average (about 0.967) and wider variations (0.025). This is consistent with the plot of the PC scores shown in Fig.2, where
-  the clusters of Colorectal cancer and Lung cancer are in close proximity, making it a bit harder to classify between these two cancers based on the
-  gene expression data. Beyond this set of data related to tumor specimen gene expression, I think the approach described in this post 
-     can be extended to liquid biopsy of blood samples for prognosis of disease.
-    
 <h3> REFERENCES </h3>
-  <p>[1]https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3508547/</p>
+  <p>[1]Herman, Cila. <b>Emerging Technologies for the Detection of Melanoma: Achieving Better Outcomes.</b>
+    <i>Clinical, Cosmetic and Investigational Dermatology</i> 5 (2012): 195–212. PMC. Web. 10 Jan. 2018.</p>
   <p>[2]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications(https://arxiv.org/pdf/1704.04861.pdf)</p>
-  <p>[3]https://keras.io/applications/</p>
+  <p>[3]Keras Documentation: https://keras.io/applications/</p>
           
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
