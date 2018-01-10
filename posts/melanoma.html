@@ -233,7 +233,10 @@ model_full=model.fit_generator(train_generator,
    </figcaption>
    </figure>
   
-<p>For my own future reference, here are some things to keep in mind when training a deep learning model for image classification:
+<p>While the AUC score was lower than the ones presented by Esteve et al[4], I should point out that this MobileNet model was trained on 
+  siginificantly less samples as provided by the <a href='https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a'> ISIC 2017 Challenge</a>. 
+  I expect that better performance (>90% balanced accuracy) can be achieved with a larger training set. For my own future reference, here are some things to 
+  keep in mind when training a deep learning model for image classification:
 <ul>
   <li>Pay attention to preprocessing step for a given deep neural net model. It's NOT always mean centered or standard deviation normalized to 1.
 </li>
@@ -243,12 +246,15 @@ model_full=model.fit_generator(train_generator,
   <li>Obviously there's room for improvement. For example,the number of filter in each layer and dropout rate can be tuned.
 </ul>  
 
+<p><i>Note: For Fig.1, the center 4 images are melanoma, and the rest are benign. <i></p>       
+          
 <h3> REFERENCES </h3>
-  <p>[1]Herman, Cila. <b>Emerging Technologies for the Detection of Melanoma: Achieving Better Outcomes.</b>
-    <i>Clinical, Cosmetic and Investigational Dermatology</i> 5 (2012): 195–212. PMC. Web. 10 Jan. 2018.</p>
+  <p>[1]Herman, C. <b>Emerging Technologies for the Detection of Melanoma: Achieving Better Outcomes.</b>
+    <i>Clinical, Cosmetic and Investigational Dermatology</i> 5 (2012): 195–212.</p>
   <p>[2]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications(https://arxiv.org/pdf/1704.04861.pdf)</p>
   <p>[3]Keras Documentation: https://keras.io/applications/</p>
-          
+  <p>[4]Esteva, A.,Kuprel, B., et al. <b>Dermatologist-level classification of skin cancer with deep neural networks</b>.
+    <i>Nature</i> 542(2017): 115–118.</p>
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
 <noscript>Please enable JavaScript to view the comments.</noscript>
