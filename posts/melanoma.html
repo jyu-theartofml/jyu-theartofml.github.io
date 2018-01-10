@@ -103,9 +103,9 @@
   
 <p> With that in mind, I want to train a lightweight deep neural net called  <a href='https://research.googleblog.com/2017/06/mobilenets-open-source-models-for.html'>
   MobileNet</a> with dermascopic images, and see how it performs as a binary classifier. 
-  What makes MobileNet special is its small and elegant architecture optimized for mobile devices, while maintaining decent 
-  performance as shown in its ImageNet <a href='https://keras.io/applications/'>accuracy score</a>. Instead of regular 
-  convolution layer, it uses depthwise convolution followed by point-wise convolution to dramatically reduce computational cost.</p>
+  What makes MobileNet special is its small and elegant architecture optimized for mobile devices, while not compromising too much in accuracy
+  as shown in its <a href='https://keras.io/applications/'>ImageNet performance </a>. Instead of <a href='https://cdn-images-1.medium.com/max/1600/1*_34EtrgYk6cQxlJ2br51HQ.gif'>
+    regular convolution layer</a> to learn the image features, it uses depthwise convolution followed by point-wise convolution to dramatically reduce computational cost (Fig.2).</p>
 
   figure>
    <img src="images/melanoma/depth_pointwise.jpg" alt="illustration of depthwise conv" >
@@ -114,11 +114,13 @@
      component that make up the MobileNet, which consists of repeat depthwise separable convolution and full-connected layer at the end.
    </figcaption>
    </figure>
-<p>Unlike a regular convolution  depthwise convolution performs convolution on each channel separately first, 
+        
+<p>Unlike a regular convolution depthwise convolution performs convolution on each channel separately first, 
   effectively filters and selects features for each channel.  Then the pointwise (1x1) convolution sums up the features to 
   generate a new feature map. The combinaton of the two operation is called depthwise separable convolution, and according to 
   the Mobilenet paper [2], for a 3×3 kernel depthwise separable convolution is about 9X faster than regular convolution 
-  operation. The size of MobileNet is 17MB, whereas InceptionV3 and VGG16 is 92MB and 528MB, respectively[3].</p>
+  operation. MobileNet has 28 layers (17MB), most of which are repeats of depthwise separable convolution,
+  and 95% of the total computation is spent on the 1x1 pointwise convolution[1].</p>
 
 <h2>Data Processing </h2>
     <p>The dermoscopic images had many distracting artifacts (e.g, vignette borders, measurement scale, hair, etc) that can possilby interfere with the model learning. 
@@ -161,7 +163,6 @@ model2.fit(train_data, train_labels,
 ################# Use functional API to  create the full model#############
 top_model2 = Top_model(base_model.output_shape[1:])
 top_model2.load_weights('bottleneck_fc_model(3layer)_512size_mobilenet.h5')
-# Stack top_model on top
 model = Model(input=base_model.input, output=top_model2(base_model.output))
 
 for layer in model.layers[:4]:
@@ -170,8 +171,8 @@ model.compile(loss='binary_crossentropy',
               optimizer=SGD(lr=1e-3, momentum=0.9),
               metrics=['accuracy',f1])
 </code></pre></figure>
-<p>After training the top model, I used image augmentation with <code class='highligter-rouge'>ImageDataGenerator</code> along with preprocessing function 
-  to scale the pixel values. I choose Stochastic Gradient Descend as the optimizer 
+<p>After training the top model, I augmented the image files with <code class='highligter-rouge'>ImageDataGenerator</code> along with 
+  the default preprocessing function to scale the pixel values. I choose Stochastic Gradient Descend as the optimizer 
   because that was the optimizer used to train the original MobileNet.</p>
 
 <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
@@ -182,11 +183,12 @@ train_datagen = ImageDataGenerator(
         preprocessing_function=preprocess_input)
 
 validation_datagen=ImageDataGenerator(preprocessing_function=preprocess_input)
+
 ROWS=192
 COLS=192
 train_generator = train_datagen.flow_from_directory(
             train_data_dir,
-            classes=['benign_masked','malignant_masked'], #order, benign first
+            classes=['benign_masked','malignant_masked'],
             target_size=(ROWS, COLS),
             batch_size=32,
             class_mode='binary',
@@ -205,7 +207,7 @@ class_weight = class_weight.compute_class_weight('balanced', np.unique(train_lab
 
 early_stopping =EarlyStopping(monitor='val_loss', patience=4)
 model_checkpoint = ModelCheckpoint('training_weights_mobilenet_bottlneck.h5',
-monitor='val_loss', save_best_only=True,save_weights_only=True)
+                                    monitor='val_loss', save_best_only=True,save_weights_only=True)
 
 model_full=model.fit_generator(train_generator,
                            steps_per_epoch=86,
@@ -222,58 +224,13 @@ model_full=model.fit_generator(train_generator,
   
 
   <figure>
-   <img src="images//rna_seq/xgboost.png" alt="schematic of xgb" >
-   <figcaption>Fig.3. Schematic of gradient boosting trees. The growth of the tree is guided by the gradient/error of the previous iteration.
-     (Source:https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/)
+   <img src="images/melanoma/roc.png" alt="ROC of validation" >
+   <figcaption>Fig.3. ROC of the validation dataset.
    </figcaption>
    </figure>
   
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(xgboost)
-cv_folds <- createFolds(target, k=5)
-val_split<-lapply(cv_folds, function(ind, dat) dat[ind,], dat=df)
-train_split<-lapply(cv_folds, function(ind, dat) dat[-ind,], dat=df)
 
-# placeholder for 5 CV and 5 classes F1 scores
-f1_val<-matrix(NA, nrow=5, ncol=5)
 
-for (i in 1:length(cv_folds)){
-  group<-names(cv_folds)[i]
-  val.df<-val_split[[group]]
-  train.df<-train_split[[group]]
-  ## perform sparse PCA on training set, limit to 1K non-zero loadings for the feature variables
-  library(doSNOW)
-  library(ff)
-  library(doSNOW)
-  cluster<-makeCluster(6,"SOCK")
-  registerDoSNOW(cluster)
-  spca.train<-nsprcomp(train.df, k=c(1000,1000,1000,1000,1000,1000,1000,1000,1000,1000))
-  ## transformed data in training set
-  train.spc<-spca.train$x
-  ## get loadings for validation data frame
-  val.spc<-predict(spca.train, val.df)
-  
-  #get target info
-  valIdx<-cv_folds[group][[group]]
-  train.target<-target.num[-valIdx]
-  val.target<-target.num[valIdx]
-  
-  #set up for xgb
-  dtrain.sparse<-xgb.DMatrix(data = as.matrix(train.spc), label =as.numeric(train.target))
-  dval.sparse<-xgb.DMatrix(data = as.matrix(val.spc), label = as.numeric(val.target))
-  watchlist <- list(train=dtrain.sparse, test=dval.sparse)
-  xgb.model <- xgb.train(data=dtrain.sparse, max_depth=2, eta=0.0001, nthread = 4,colsample_bytree=0.3, nrounds=150, verbose=F,
-                         watchlist=watchlist,num_class=5, early_stopping_rounds=3,objective = "multi:softmax", eval_metric="merror")
-  
-  prob<-predict(xgb.model,dval.sparse)
-  g<-confusionMatrix(prob, val.target)
-  f1_val[i,]<-as.vector(g$byClass[,7])
-}
-colnames(f1_val) <- c("BRCA","COAD", "KIRC",'LUAD','PRAD')
-rownames(f1_val)<-c("CV1","CV2", "CV3",'CV4','CV5')
-as.table(f1_val)
-
-</code></pre></figure>
 <p>Within each cross validation, sparse PCA is performed on training data only, and subsequent loadings are calculated for the validation data.
   At the end of each cross validations, the F1 scores of the predictions are obtained (Table 1). F1 score is the weighted average of precision and recall, 
   and it's useful when you are working with an imbalanced dataset. The F1 value is calculated as 2*(precision*recall)/(precision+recall), and
