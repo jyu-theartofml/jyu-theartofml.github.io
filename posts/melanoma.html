@@ -58,7 +58,7 @@
               <img src="images/melanoma/skin_check_app.jpeg" alt="skin app" ></figure>
             <p>I recently read an <a href='https://cs.stanford.edu/people/esteva/nature/'> <u>article</u> </a>about researchers utilizing 
             Deep Learning model (InceptionV3) to detect categories of skin lesions, and ultimately to detect whether the lesion is melanoma or not.
-            CDC reports that in the year 2014, 76,665 people in the U.S. were diagnosed with melanomas resulting in 9,324 deaths. 
+            CDC reports that in the year 2014, there were 76,665 Americans diagnosed with melanoma resulting in 9,324 deaths. 
              Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry, 
               Border irregularity, Color variation, Diameter and Evolving shape (aka, ABCDE) [1].
             In case if you are wondering how well your eyes can detect malignant lesion, 
@@ -87,7 +87,7 @@
 <figure>
    <img src="images/melanoma/collage2x4.png" alt="skin lesions" >
    <figcaption>Fig.1. Can you guess which ones are malignant and which ones are not? Answers are at the end of this post.
-   <i>Source: ISIC 2017 (https://challenge.kitware.com/#phase/5840f53ccad3a51cc66c8dab)</i></figcaption>
+   <i>Source: isic-archive.com</figcaption>
 </figure>  
 
 
@@ -106,23 +106,23 @@
 <p> With that in mind, I want to train a lightweight deep neural net called  <a href='https://research.googleblog.com/2017/06/mobilenets-open-source-models-for.html'>
   MobileNet</a> with dermascopic images, and see how it performs as a binary classifier. 
   What makes MobileNet special is its small and elegant architecture optimized for mobile devices, while not compromising too much in accuracy
-  as shown in its <a href='https://keras.io/applications/'>ImageNet performance </a>. Instead of <a href='https://cdn-images-1.medium.com/max/1600/1*_34EtrgYk6cQxlJ2br51HQ.gif'>
-    regular convolution layer</a> to learn the image features, it uses depthwise convolution followed by point-wise convolution to dramatically reduce computational cost (Fig.2).</p>
+  as shown in its <a href='https://keras.io/applications/'>ImageNet performance </a>. Instead of using<a href='https://cdn-images-1.medium.com/max/1600/1*_34EtrgYk6cQxlJ2br51HQ.gif'>
+    regular convolution layer</a> to learn image features(i.e., shape, area), it uses depthwise convolution followed by point-wise convolution to dramatically reduce computational cost (Fig.2).</p>
 
   <figure>
    <img src="images/melanoma/depth_pointwise.jpg" alt="illustration of depthwise conv" >
           <center><img src="images/melanoma/mobilenet_structure.png" alt="model component" ></center>  
-   <figcaption>Fig.2.Top drawing illustrates the concept of depthwise + pointwise convolution. Bottle schematic shows the
-     building block of the MobileNet, which consists of repeating depthwise separable convolutions and full-connected layer at the end.
+   <figcaption>Fig.2.Top drawing illustrates the concept of depthwise + pointwise convolution. Bottom schematic shows the
+     building block unit of the MobileNet, which consists of repeating depthwise separable convolutions and full-connected layers at the end.
    </figcaption>
    </figure>
         
-<p>Unlike a regular convolution depthwise convolution performs convolution on each channel separately first, 
-  effectively filters and selects features for each channel.  Then the pointwise (1x1) convolution sums up the features to 
+<p>Unlike a regular convolution, depthwise convolution performs convolution on each channel separately first, 
+  effectively filters and selects features for each channel.  Then the pointwise (1x1) convolution merge the features to 
   generate a new feature map. The combinaton of the two operation is called depthwise separable convolution, and according to 
   the Mobilenet paper [2], for a 3×3 kernel depthwise separable convolution is about 9X faster than regular convolution 
   operation. MobileNet has 28 layers (17MB), most of which are repeats of depthwise separable convolution,
-  and 95% of the total computation is spent on the 1x1 pointwise convolution[1].</p>
+  and 95% of the total computation is spent on the 1x1 pointwise convolution[2].</p>
 
 <h2>Data Processing </h2>
     <p>The dermoscopic images had many distracting artifacts (e.g, vignette borders, measurement scale, hair, etc) that can possilby interfere with the model learning. 
@@ -131,13 +131,14 @@
 
     <p>Another issue is that the malignant category was underpresented (20%), and it's difficult to  train a deep neural net 
       model with fewer than 1,000 pictures per class(yes, I did try). I used augmentation (rotation and translation)
-      to produce copies of the original malignant training images to mitigate the under-representation. No other augmentation methods were used at this stage. </p>   
+      to produce copies of the original malignant images to mitigate the under-representation. No other augmentation methods were used at this stage. </p>   
 
  <h2>Transfer the learning with Bottleneck </h2>  
         <p>There's a wonderful <a href='https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html'>
-           tutorial</a> by the creator of Keras illustrating transfer learning for deep neural net. What it means is that you take advantage of fine-tuned model trained on larget datasets, 
-          and apply the pre-trained weights to train on new data to save time and computational cost. One common way to do that is 
-          using 'bottleneck' features - output of the 'bottom' part of a neural net model, essentially it's the convolutional layers (everything up to the fully-connected layers ). I saved the bottleneck features as 
+           tutorial</a> by the creator of Keras illustrating transfer learning for deep neural net. What it means is that you take 
+          advantage of fine-tuned model trained on large datasets, 
+          and start training new data with the pre-trained weights to save time and computational cost. One common way to do that is 
+          using 'bottleneck' features - output of the 'bottom' part of a deep learning model, essentially it's all the convolutional layers (everything up to the fully-connected layers ). I saved the bottleneck features as 
           numpy array, then train a customized 'top' part of the model for a binary classifier (see code below). Training the top part separately ensures that the 
           top model weight provides a consistent and smooth training when it's attached to the bottom model later on.</p>
 
@@ -173,9 +174,9 @@ model.compile(loss='binary_crossentropy',
               optimizer=SGD(lr=1e-3, momentum=0.9),
               metrics=['accuracy',f1])
 </code></pre></figure>
-<p>After training the top model, I augmented the image files with <code class='highligter-rouge'>ImageDataGenerator</code> along with 
-  the default preprocessing function to scale the pixel values. I choose Stochastic Gradient Descend as the optimizer 
-  because that was the optimizer used to train the original MobileNet.</p>
+<p>After training the top model, I augmented the image files with <code class='highligter-rouge'>ImageDataGenerator()</code> along with 
+  the default preprocessing function to scale the pixel values. I chose Stochastic Gradient Descend as the optimizer 
+  because that was the optimizer used on the original MobileNet.</p>
 
 <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
 train_datagen = ImageDataGenerator(
@@ -223,12 +224,12 @@ model_full=model.fit_generator(train_generator,
         
   
         <p>The final validation binary cross entropy was <b>0.43</b>, F1 score (balanced accuracy accounting for imbalanced 
-          class distribution) is <b>86%</b>, and AUC for ROC is <b>0.89 </b>(1 being the best).</p>
+          class distribution) was <b>86%</b>, and AUC for ROC was <b>0.89 </b>(1 being the best).</p>
   
 
   <figure>
     <center><img src="images/melanoma/roc.png" alt="ROC of validation" ></center>
-   <figcaption>Fig.3. ROC of the validation dataset showing the trade-off between sensitivity (TPR) and specificity (1-FPR). 
+   <figcaption>Fig.3. ROC of the validation dataset showing the trade-off between sensitivity (True Positive) and specificity (1-False Positive). 
      Area under the curve is the overall performance metric.
    </figcaption>
    </figure>
