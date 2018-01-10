@@ -55,7 +55,7 @@
           <header class="article-header">
             <h1>Binary Classifier for Melanoma Using MobileNet</h1>
              <figure>
-              <img src="images/rna_seq/xgb_multi_tree.png" alt="xgb" ></figure>
+              <img src="images/melanoma/skin_check_app.jpeg" alt="skin app" ></figure>
             <p>I recently read an <a href='https://cs.stanford.edu/people/esteva/nature/'> <u>article</u> </a>about researchers utilizing 
             Deep Learning models to detect categories of skin lesions, and ultimately to detect whether the lesion is melanoma or not.
             CDC reports that in the year 2014, 76,665 people in the U.S. were diagnosed with melanomas resulting in 9,324 deaths. 
@@ -109,7 +109,7 @@
   as shown in its <a href='https://keras.io/applications/'>ImageNet performance </a>. Instead of <a href='https://cdn-images-1.medium.com/max/1600/1*_34EtrgYk6cQxlJ2br51HQ.gif'>
     regular convolution layer</a> to learn the image features, it uses depthwise convolution followed by point-wise convolution to dramatically reduce computational cost (Fig.2).</p>
 
-  figure>
+  <figure>
    <img src="images/melanoma/depth_pointwise.jpg" alt="illustration of depthwise conv" >
           <center><img src="images/melanoma/mobilenet_structure.png" alt="model component" ></center>  
    <figcaption>Fig.2.Top drawing illustrates the concept of depthwise + pointwise convolution. Bottle schematic shows the
@@ -237,11 +237,10 @@ model_full=model.fit_generator(train_generator,
 <ul>
   <li>Pay attention to preprocessing step for a given deep neural net model. It's NOT always mean centered or standard deviation normalized to 1.
 </li>
-  <li>Sanity check- make sure the images in trainnig and test sets have more or less the same distribution.</li>
-  <li>Explore augmentation options such as contrasting the image, or adaptive histogram equilization. It is a handy tool especially
-    when poor lighting or resolution of the digital image becomes an issue (Note to self:need to  explore this further).</li>
-  <li>Obviously there's room for improvement for this classifier (I didn't change the default parameters of the model). 
-    For example,the number of filter in each layer and dropout rate can be tuned.
+  <li>Sanity check: make sure the images in trainnig and test sets have more or less the same distribution.</li>
+  <li>Explore augmentation options such as contrasting or adaptive histogram equilization. It is a handy tool especially
+    when poor lighting or resolution of the digital image becomes an issue (Note to self: need to  explore this further).</li>
+  <li>Obviously there's room for improvement. For example,the number of filter in each layer and dropout rate can be tuned.
 </ul>  
 
 <h3> REFERENCES </h3>
