@@ -58,7 +58,9 @@
               <img src="images/rna_seq/xgb_multi_tree.png" alt="xgb" ></figure>
             <p>I recently read an <a href='https://cs.stanford.edu/people/esteva/nature/'>article </a>about researchers utilizing 
             Deep Learning models to detect categories of skin lesions, and ultimately to detect whether the lesion is melanoma or not.
-            Every year, an estimated 68,000 cases in the U.S. are diagnosed as melanoma. Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry, Border irregularity, Color variation, and Diameter (aka, ABCD) [1].</p>
+            Every year, an estimated 68,000 cases in the U.S. are diagnosed as melanoma. Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry, Border irregularity, Color variation, and Diameter (aka, ABCD) [1].
+            In case if you are wondering how well your eyes can detect malignant lesion, 
+              here's a sample collage of pictures (I will admit that when I tried, it was as good as tossing a coin).</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -79,27 +81,25 @@
 
           <div class="article-content">
 
-<p>In case if you are wondering how well your eyes can detect malignant lesion,
-     here's a sample collage of pictures (I will admit that when I tried, it was as good as tossing a coin)</p>
-     
+
 <figure>
-   <img src="https://raw.githubusercontent.com/yinniyu/ISIC_melanoma/master/graphics/collage2x4.png" alt="skin lesions" >
-   <figcaption>Fig.1. Dermoscopic images of skin lesions. Answers are at the end of this post.</figcaption>
+   <img src="images/melanoma/collage2x4.png" alt="skin lesions" >
+   <figcaption>Fig.1. Can you guess which ones are malignant and which ones are not? Answers are at the end of this post.
+     <i>Source: ISIC 2017 (https://challenge.kitware.com/#phase/5840f53ccad3a51cc66c8dab)</i></figcaption>
    </figure>  
 
-<h2 id="preprocessing">Data preprocessing</h2>
 
-<p>As shown in Fig.1, this data set is imbalanced with Colorectal cancer being the most underpresented. Taking this into account for multiclass
-  classification, F1 score will be used to reflect the precision and recall performance within each class. There's also the
-  issue of high dimensionality, where number of features (20,531 columns) far exceeds the number of samples (801 rows).
-  A modified form of Principal Component Analysis (PCA) will be used to reduce the complexity of the dataset.</p>
 
- <figure>
-   <img src="images/rna_seq/class_distribution.png" alt="tumor distribution in data" >
-   <figcaption>Fig.1. Count distribution of tumor types in 801 samples. BRCA-breast cancer,COAD-Colorectal cancer, KIRC-Kidney cancer, LUAD- Lung cancer,
-    PRAD- Prostate cancer.
-   </figcaption>
-   </figure>
+<p>The largest public collection of dermoscopic images of skin lesions is maintained by International Skin 
+  Imaging Collaboration (ISIC). The images were collected from established clinical centers worldwide, and they were 
+  captured by various devices within each center. The goal of ISIC's collaboration effort can be summed up in this statement:
+  <br>
+  >"As inexpensive consumer dermatoscope attachments for smart phones are beginning to reach the market, 
+  the opportunity for automated dermoscopic assessment algorithms to positively influence patient care increases."
+
+</p>
+
+ 
   
 <p> For a detailed explanation on Prinicipal Component Analysis (PCA), I highly recommend <a href="https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues">
   this link</a> (it's the best I've seen and the visual is awesome!). Briefly, PCA is a technique commonly used to reduce high dimensional numerical data to lower dimensional space.
