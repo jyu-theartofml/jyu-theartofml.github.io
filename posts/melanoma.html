@@ -85,8 +85,8 @@
 <figure>
    <img src="images/melanoma/collage2x4.png" alt="skin lesions" >
    <figcaption>Fig.1. Can you guess which ones are malignant and which ones are not? Answers are at the end of this post.
-     <i>Source: ISIC 2017 (https://challenge.kitware.com/#phase/5840f53ccad3a51cc66c8dab)</i></figcaption>
-   </figure>  
+   <i>Source: ISIC 2017 (https://challenge.kitware.com/#phase/5840f53ccad3a51cc66c8dab)</i></figcaption>
+</figure>  
 
 
 <p>The largest public collection of dermoscopic images of skin lesions is maintained by International Skin 
@@ -94,97 +94,133 @@
   captured by various devices within each center. The goal of ISIC's collaboration effort can be summed up in this statement:
   
    <blockquote class="w3-panel w3-leftbar w3-light-grey">
-  
-  <i>"As inexpensive consumer dermatoscope attachments for smart phones are beginning to reach the market, 
+     <i>"As inexpensive consumer dermatoscope attachments for smart phones are beginning to reach the market, 
   the opportunity for automated dermoscopic assessment algorithms to positively influence patient care increases."</i>
-  </blockquote> 
- 
-</p>
+    </blockquote> 
+ </p>
 
- 
+<h2>MobileNet - one channel at a time</h2>
   
-<p> For a detailed explanation on Prinicipal Component Analysis (PCA), I highly recommend <a href="https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues">
-  this link</a> (it's the best I've seen and the visual is awesome!). Briefly, PCA is a technique commonly used to reduce high dimensional numerical data to lower dimensional space.
-   Traditional PCA works by combining all original features with linear weights (aka: loadings) to capture the maximum variance 
-  of the data. The analysis results in several principal components, which are ranked by the amount of variance it captures (first PC captures the most). 
-  Each Principal Component(PC) will have its own eigenvector and eigenvalues that characterizes the variance, and each PC will have its own loadings 
-  for transforming the original data. For example, to calculate the first PC score for one sample, let <i>C<sub>i,j </sub></i> be the loadings for the <i>i-th</i> PC 
-  and the <i>jth </i> <a href="https://izabelcavassim.files.wordpress.com/2015/03/screenshot-from-2015-03-08-2245511.png">FPKM-normalized </a>
-    gene expression feature:
-  <p align="center">PC1 Score = gene_measurement{1} x C<sub>1,1</sub></i> +
-                                gene_measurement{2} x C<sub>1,2</sub></i> +...
-                                gene_measurement{j} x C<sub>1,j</sub></i></p>
+<p> With that in mind, I want to train a lightweight deep neural net called  <a href='https://research.googleblog.com/2017/06/mobilenets-open-source-models-for.html'>
+  MobileNet</a> with dermascopic images, and see how it performs as a binary classifier. 
+  What makes MobileNet special is its small and elegant architecture optimized for mobile devices, while maintaining decent 
+  performance as shown in its ImageNet <a href='https://keras.io/applications/'>accuracy score</a>. Instead of regular 
+  convolution layer, it uses depthwise convolution followed by point-wise convolution to dramatically reduce computational cost.</p>
 
-
-<p>When we are dealing with genomic data such as gene expression measurements, typically there's hundreds of thousands to 
-  millions of gene or transcript being quantified per sample. Based on existing literature, we know that only a fraction of those
-  genomic features are driving the target of interest. To apply this constraint and
-  to select sub group of features, we can use sparse PCA which results in sparse loadings.  Sparsity of the loadings is 
-  effectively a form of feature selection, and it offers practical advantages such as easier interpretation and the need for 
-  less variable measurements, which can be costly in RNA sequencing. One of the well 
-  known sparse PCA methods was published by Zou, Hastie, and Tibshirani in 2005[2]. In <a href="https://web.stanford.edu/~hastie/Papers/spc_jcgs.pdf">this paper</a>, 
-  they approached PCA as a 
-  regression problem optimized by lasso shrinkage of the coefficients resulting in some loadings of zero values. In this example, I used the 
-  nsprcomp package in R, which allows you to specifiy the maximum number of non-zero loadings for each PC (and optional constraint for non-negative loadings). 
-  I picked 1000 (5% of the total number of genes), but it's a parameter that can be further optimized. The codes for sparse
-  PCA are shown below (complete R script can be found at the <a href="https://github.com/yinniyu/tumor_rna_seq">github repo</a>).
-  I tried both traditional PCA (<code class="highlighter-rouge"> prcomp() </code>) and sparse PCA to generate the plots in Fig.2.</p>
-
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(data.table)
-library(plyr)
-library(caret)
-library(nsprcomp)
-
-raw.data<-fread('data.csv')
-label<-fread('labels.csv')
-raw.data<-data.frame(raw.data)
-### exclude columns where values are all 0s
-df<-raw.data[,-(which(colSums(raw.data) == 0))]
-
-### the gene expressions values are normalized, no need to set scale to True in nspca()
-pca.df<-nsprcomp(df, k=c(1000,1000,1000,1000,1000,1000,1000,1000,1000,1000))
-df_out <- as.data.frame(pca.df$x)
-df_out$group <- label$Class
-
-library(ggplot2)
-library(grid)
-library(gridExtra)
-
-#### Use plotly to generatate 3D interactive chart. 
-library(plotly)
-p <- plot_ly(df_out, x = ~PC1, y = ~PC2, z = ~PC3, color = ~group) %>%
-  add_markers() %>%
-  layout(scene = list(xaxis = list(title = 'PC1'),
-                      yaxis = list(title = 'PC2'),
-                      zaxis = list(title = 'PC3')))
-p
-</code></pre></figure>
-
-  
- <figure>
-   <div>
-    <a href="https://plot.ly/~jypucca/2/?share_key=YRmcUqgqP0CZ02GCRwjcCY" target="_blank" title="pca_plot" style="display: block; text-align: center;"><img src="https://plot.ly/~jypucca/2.png?share_key=YRmcUqgqP0CZ02GCRwjcCY" alt="pca_plot" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
-    <script data-plotly="jypucca:2" sharekey-plotly="YRmcUqgqP0CZ02GCRwjcCY" src="https://plot.ly/embed.js" async></script>
-</div>
-   <div>
-    <a href="https://plot.ly/~jypucca/4/?share_key=R6VcHxKIJYVKDpQvY7DLIy" target="_blank" title="pca_plot_sparse1000" style="display: block; text-align: center;"><img src="https://plot.ly/~jypucca/4.png?share_key=R6VcHxKIJYVKDpQvY7DLIy" alt="pca_plot_sparse1000" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
-    <script data-plotly="jypucca:4" sharekey-plotly="R6VcHxKIJYVKDpQvY7DLIy" src="https://plot.ly/embed.js" async></script>
-</div>
-   <figcaption>Fig.2. Top-3D plot of PCA scores using traditional PCA on entire dataset. Bottom-3D plot of PCA scores using <b>sparse</b> PCA on entire dataset.
+  figure>
+   <img src="images/melanoma/depth_pointwise.jpg" alt="illustration of depthwise conv" >
+    <img src="images/melanoma/mobilenet_depthwise.png" alt="model component" >   
+   <figcaption>Fig.2.Top drawing illustrates the concept of depthwise + pointwise convolution. Bottle schematic shows the main
+     component that make up the MobileNet, which consists of repeat depthwise separable convolution and full-connected layer at the end.
    </figcaption>
    </figure>
+<p>Unlike a regular convolution  depthwise convolution performs convolution on each channel separately first, 
+  effectively filters and selects features for each channel.  Then the pointwise (1x1) convolution sums up the features to 
+  generate a new feature map. The combinaton of the two operation is called depthwise separable convolution, and according to 
+  the Mobilenet paper [2], for a 3×3 kernel depthwise separable convolution is about 9X faster than regular convolution 
+  operation. The size of MobileNet is 17MB, whereas InceptionV3 and VGG16 is 92MB and 528MB, respectively[3].</p>
+
+<h2>Data Processing </h2>
+    <p>The dermoscopic images had many distracting artifacts (e.g, vignette borders, measurement scale, hair, etc) that can possilby interfere with the model learning. 
+      Instead of writing a code for each type of artifacts to clean up the image,
+      I realize it's more efficient to apply binary segmentation mask to select for the general lesion area.</p>
+
+    <p>Another issue is that the malignant category was underpresented (20%), and it's difficult to  train a deep neural net 
+      model with fewer than 1,000 pictures per class(yes, I did try). I used augmentation (rotation and translation)
+      to produce copies of the original malignant training images to mitigate the under-representation. No other augmentation methods were used at this stage. </p>   
+
+ <h2>Transfer the learning with Bottleneck </h2>  
+        <p>There's a wonderful <a href='https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html'>
+           tutorial</a> by the creator of Keras illustrating transfer learning for deep neural net. What it means is that you take advantage of fine-tuned model trained on larget datasets, 
+          and apply the pre-trained weights to train on new data to save time and computational cost. One common way to do that is 
+          using 'bottleneck' features - output of the 'bottom' part of a neural net model, essentially it's the convolutional layers (everything up to the fully-connected layers ). I saved the bottleneck features as 
+          numpy array, then train a customized 'top' part of the model for a binary classifier (see code below). Training the top part separately ensures that the 
+          top model weight provides a consistent and smooth training when it's attached to the bottom model later on.</p>
+
+<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+base_model = MobileNet(input_shape=(192,192,3), include_top=False,weights='imagenet')
+
+def Top_model(input_dim):
+    top_model = Sequential()
+    top_model.add(Flatten(input_shape=input_dim))
+    top_model.add(Dense(512, activation='relu'))
+    top_model.add(Dropout(0.6))
+    top_model.add(Dense(512, activation='relu'))
+    top_model.add(Dropout(0.6))
+    top_model.add(Dense(1, activation='sigmoid'))
+   
+    return top_model
+
+model2=Top_model(train_data.shape[1:])
+model2.compile(optimizer=RMSprop(lr=0.0001), loss='binary_crossentropy', metrics=['accuracy',f1])
+
+model2.fit(train_data, train_labels,
+              epochs=5, batch_size=32,verbose=1,
+              validation_data=(validation_data, validation_labels))
+
+################# Use functional API to  create the full model#############
+top_model2 = Top_model(base_model.output_shape[1:])
+top_model2.load_weights('bottleneck_fc_model(3layer)_512size_mobilenet.h5')
+# Stack top_model on top
+model = Model(input=base_model.input, output=top_model2(base_model.output))
+
+for layer in model.layers[:4]:
+    layer.trainable=False
+model.compile(loss='binary_crossentropy',
+              optimizer=SGD(lr=1e-3, momentum=0.9),
+              metrics=['accuracy',f1])
+</code></pre></figure>
+<p>After training the top model, I used image augmentation with <code class='highligter-rouge'>ImageDataGenerator</code> along with preprocessing function 
+  to scale the pixel values. I choose Stochastic Gradient Descend as the optimizer 
+  because that was the optimizer used to train the original MobileNet.</p>
+
+<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+train_datagen = ImageDataGenerator(
+        height_shift_range=0.2,
+        shear_range=0.4,
+        rotation_range=40,
+        preprocessing_function=preprocess_input)
+
+validation_datagen=ImageDataGenerator(preprocessing_function=preprocess_input)
+ROWS=192
+COLS=192
+train_generator = train_datagen.flow_from_directory(
+            train_data_dir,
+            classes=['benign_masked','malignant_masked'], #order, benign first
+            target_size=(ROWS, COLS),
+            batch_size=32,
+            class_mode='binary',
+            shuffle='True')
+
+validation_generator = validation_datagen.flow_from_directory(
+            validation_data_dir,
+            classes=['benign_masked','malignant_masked'],
+            target_size=(ROWS, COLS),
+            batch_size=32,
+            class_mode='binary',
+            shuffle='True')
+
+from sklearn.utils import class_weight
+class_weight = class_weight.compute_class_weight('balanced', np.unique(train_labels), train_labels)
+
+early_stopping =EarlyStopping(monitor='val_loss', patience=4)
+model_checkpoint = ModelCheckpoint('training_weights_mobilenet_bottlneck.h5',
+monitor='val_loss', save_best_only=True,save_weights_only=True)
+
+model_full=model.fit_generator(train_generator,
+                           steps_per_epoch=86,
+                           validation_data=validation_generator,
+                           validation_steps=1,
+                           class_weight=class_weight,
+                           callbacks=[early_stopping, model_checkpoint],
+                           epochs=20,verbose=1)  
+</code></pre></figure>
   
-<p>As shown above, the sparse PCA resulted in clear clustering of the groups along the PC axes, showing that 
-  selection of subgroup of gene expressions did not compromise the performance of the PCs.</p>
+        
   
-<h2 id="xgboost of gene expression PCA">XGB model of PC scores</h2>  
-<p>After getting the loadings for 1,000 gene expression features, 10 PC scores are computed for each sample. This would serve as the input matrix to 
-  the classification model Xtreme Gradient Boosting (XGB). In short, XGB is a regularized boosting algorithm in which the weak 
-  classifier learns its parameters based on the performance of the previous iteration, giving more weight to previously misclassified samples 
-  (or large error in case of regression) (see fig 3). The regularization in XGB helps to control for overfitting common in Gradient Boosting 
-  Machine (GBM) as boosting tries to reduce the bias of its learner.</p>
+<p>The final validation binary cross entropy was 0.43, F1 score (balanced accuracy accounting for imbalanced category distribution) is 86%, and AUC for ROC is 0.89 (1 being the best).</p>
   
+
   <figure>
    <img src="images//rna_seq/xgboost.png" alt="schematic of xgb" >
    <figcaption>Fig.3. Schematic of gradient boosting trees. The growth of the tree is guided by the gradient/error of the previous iteration.
@@ -281,8 +317,9 @@ as.table(f1_val)
      can be extended to liquid biopsy of blood samples for prognosis of disease.
     
 <h3> REFERENCES </h3>
-<p>[1]https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3508547/
-<p>[2].Zou, H., Hastie, T., Tibshirani, R., <b>Sparse Principal Component Analysis</b>,<i>Journal of Computational and Graphical Statistics</i>, Volume 15, Number 2, Pages 265–286</p>
+  <p>[1]https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3508547/</p>
+  <p>[2]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications(https://arxiv.org/pdf/1704.04861.pdf)</p>
+  <p>[3]https://keras.io/applications/</p>
           
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
