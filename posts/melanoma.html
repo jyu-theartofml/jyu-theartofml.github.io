@@ -176,7 +176,8 @@ model.compile(loss='binary_crossentropy',
 </code></pre></figure>
 <p>After training the top model, I augmented the image files with <code class='highlighter-rouge'>ImageDataGenerator()</code> along with 
   the default preprocessing function to scale the pixel values. I chose Stochastic Gradient Descend as the optimizer 
-  because that was the optimizer used on the original MobileNet.</p>
+  because that was the optimizer used on the original MobileNet(see complete training <a href='https://github.com/yinniyu/ISIC_melanoma/blob/master/melanoma-mobilenet-tf.py'>
+  code</a>).</p>
 
 <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
 train_datagen = ImageDataGenerator(
