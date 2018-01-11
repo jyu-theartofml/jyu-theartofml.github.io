@@ -235,7 +235,7 @@ model_full=model.fit_generator(train_generator,
    </figure>
   
 <p>While the AUC score was lower than the ones presented by Esteve et al[4], I should point out that this MobileNet model was trained on 
-  a smaller tranining dataset provided by <a href='https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a'> ISIC 2017 Challenge</a>. 
+  a smaller training dataset provided by <a href='https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a'> ISIC 2017 Challenge</a>. 
   I expect that better performance (>90% balanced accuracy) can be achieved with a larger training set, as well as bigger image array. For my own future reference, here are some things to 
   keep in mind when training a deep learning model for image classification:
 <ul>
@@ -244,7 +244,7 @@ model_full=model.fit_generator(train_generator,
   <li>Sanity check: make sure the images in trainnig and test sets have more or less the same distribution.</li>
   <li>Explore augmentation options such as contrasting or adaptive histogram equilization. It is a handy tool especially
     when poor lighting or resolution of the digital image becomes an issue (Note to self: need to  explore this further).</li>
-  <li>Obviously there's room for improvement. For example,the number of filter in each layer and dropout rate can be tuned.
+  <li>Obviously there's room for improvement. For example,the number of filters in each layer and dropout rate can be tuned.
 </ul>  
 
 <p><b>Note: For Fig.1, the center 4 images are melanoma, and the rest are benign. </b></p>       
