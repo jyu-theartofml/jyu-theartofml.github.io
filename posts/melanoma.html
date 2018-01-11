@@ -104,7 +104,8 @@
 <h2>MobileNet - one channel at a time</h2>
   
 <p> With that in mind, I want to train a lightweight deep neural net called  <a href='https://research.googleblog.com/2017/06/mobilenets-open-source-models-for.html'>
-  MobileNet</a> with dermascopic images, and see how it performs as a binary classifier. 
+  MobileNet</a> with dermascopic images, and see how it performs as a binary classifier (see complete training <a href='https://github.com/yinniyu/ISIC_melanoma/blob/master/melanoma-mobilenet-tf.py'>
+  code</a>). 
   What makes MobileNet special is its small and elegant architecture optimized for mobile devices, while not compromising too much in accuracy
   as shown in its <a href='https://keras.io/applications/'>ImageNet performance </a>. Instead of using<a href='https://cdn-images-1.medium.com/max/1600/1*_34EtrgYk6cQxlJ2br51HQ.gif'>
     regular convolution layer</a> to learn image features(i.e., shape, area), it uses depthwise convolution followed by point-wise convolution to dramatically reduce computational cost (Fig.2).</p>
@@ -176,8 +177,7 @@ model.compile(loss='binary_crossentropy',
 </code></pre></figure>
 <p>After training the top model, I augmented the image files with <code class='highlighter-rouge'>ImageDataGenerator()</code> along with 
   the default preprocessing function to scale the pixel values. I chose Stochastic Gradient Descend as the optimizer 
-  because that was the optimizer used on the original MobileNet(see complete training <a href='https://github.com/yinniyu/ISIC_melanoma/blob/master/melanoma-mobilenet-tf.py'>
-  code</a>).</p>
+  because that was the optimizer used on the original MobileNet.</p>
 
 <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
 train_datagen = ImageDataGenerator(
