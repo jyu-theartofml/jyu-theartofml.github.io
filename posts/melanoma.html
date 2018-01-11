@@ -235,8 +235,8 @@ model_full=model.fit_generator(train_generator,
    </figure>
   
 <p>While the AUC score was lower than the ones presented by Esteve et al[4], I should point out that this MobileNet model was trained on 
-  siginificantly less samples as provided by the <a href='https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a'> ISIC 2017 Challenge</a>. 
-  I expect that better performance (>90% balanced accuracy) can be achieved with a larger training set. For my own future reference, here are some things to 
+  a smaller tranining dataset provided by <a href='https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a'> ISIC 2017 Challenge</a>. 
+  I expect that better performance (>90% balanced accuracy) can be achieved with a larger training set, as well as bigger image array. For my own future reference, here are some things to 
   keep in mind when training a deep learning model for image classification:
 <ul>
   <li>Pay attention to preprocessing step for a given deep neural net model. It's NOT always mean centered or standard deviation normalized to 1.
