@@ -114,7 +114,8 @@
   code</a>). 
   What makes MobileNet special is its small and elegant architecture optimized for mobile devices, while not compromising too much in accuracy
   as shown in its <a href='https://keras.io/applications/'>ImageNet performance </a>. Instead of using<a href='https://cdn-images-1.medium.com/max/1600/1*_34EtrgYk6cQxlJ2br51HQ.gif'>
-    regular convolution layer</a> to learn image features(i.e., shape, area), it uses depthwise convolution followed by point-wise convolution to dramatically reduce computational 
+    regular convolution layer</a> to learn image features(i.e., shape, area), it uses depthwise convolution followed by 
+  point-wise convolution to dramatically reduce computational 
   cost (Fig.2). MobileNet is loaded with 4.3M parameters, compare to InceptionV3 which has 23.9M parameters.</p>
 
   <figure>
@@ -125,10 +126,10 @@
    </figcaption>
    </figure>
         
-<p>Unlike a regular convolution, depthwise convolution performs convolution on each channel separately first, 
-  effectively filters and selects features for each channel.  Then the pointwise (1x1) convolution merge the features to 
-  generate a new feature map. The combinaton of the two steps is called depthwise separable convolution, and according to 
-  the Mobilenet paper [2], for a 3×3 kernel depthwise separable convolution is about 9X faster than regular convolution 
+<p>A regular convolution both filters and combines inputs into a feature map
+in one step. In contrast, depthwise separable convolution performs convolution on each channel separately first, 
+  effectively filters and selects features for the channel, then applies pointwise (1x1) convolution to merge the features to 
+  generate a new feature map. According to the Mobilenet paper [2], for a 3×3 kernel depthwise separable convolution is about 9X faster than regular convolution 
   operation. MobileNet has 28 layers, most of which are repeats of depthwise separable convolution,
   and 95% of the total computation is spent on the 1x1 pointwise convolution[2].</p>
 
