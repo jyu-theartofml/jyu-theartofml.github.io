@@ -4,14 +4,14 @@
 <head>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>The Art of Machine Learning</title>
-  <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
+  <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu, denver ">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta property="og:title" content="Regression for taxi data">
+  <meta property="og:title" content="Data imputation">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://yinniyu.github.io/posts/taxi">
+  <meta property="og:url" content="http://yinniyu.github.io/posts/imputation.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
-  <meta property="og:image" content="http://chalk.nielsenramon.com/assets/documentation/sample-image.jpg">
+  <meta property="og:image" content=>
 
  
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -57,9 +57,12 @@
         
         <article class="article appear">
           <header class="article-header">
-            <h1>Data visualization and predicting taxi ride time </h1>
-            <p>This post will cover some data visualization techniques for working with high dimensional dataset. Then I will talk about using 
-            Random Forest and Caret to predict trip duration with cluster computing.</p>
+            <h1>Imputing missing data</h1>
+            <p>Missing data is a familiar nuisance when working with raw dataset. In this post, I will compare three widely used methods for 
+            imputing (a.k.a,estimating) missing values. It's really for my own reference, because I often find myself asking the question "which imputation 
+            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. </p>
+            <p>The three imputation methods I will compare are: K Nearest Neighbor (KNN), Random Forest imputation, and Predictive Mean Matching (PMM). The
+              first two methods work for both categorical and numerical values, and PMM works only for continuous numerical variable.
             
             <div class="article-list-footer">
               <span class="article-list-date">
