@@ -59,14 +59,16 @@
           <header class="article-header">
             <h1>Imputing missing data</h1>
             <p>Missing data is a familiar nuisance when working with raw dataset. In this post, I will compare three widely used methods for 
-            imputing (a.k.a,estimating) missing values. It's really for my own reference, because I often find myself asking the question "which imputation 
-            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. </p>
+            imputing (a.k.a,estimating) missing values. This is really for my own reference, because I often find myself asking the question "which imputation 
+            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. I tend to avoid simply imputing using
+            the mean/median/mode value, because it doesn't take into account possible correlation to other variables and it introduces 
+            bias to the data.</p>
             <p>The three imputation methods I will compare are: K Nearest Neighbor (KNN), Random Forest imputation, and Predictive Mean Matching (PMM). The
               first two methods work for both categorical and numerical values, and PMM works only for continuous numerical variable.
             
             <div class="article-list-footer">
               <span class="article-list-date">
-                October 2, 2017
+                X X, 2018
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
@@ -76,14 +78,15 @@
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
                 
-                <span class="article-list-divider">R, caret, Regression, ggmap, ggplot </span>
+                <span class="article-list-divider">R, imputation</span>
               </div>
             </div>
           </header>
 
           <div class="article-content">
 
-<p>The data set is from the Kaggle taxi ride data, and here's a snapshot:</p>
+<p>For the purpose of this post, I used the Titanic dataset, which contained a mix of categorical, ordinal, and numeric features.
+  Here's what the data looks like: </p>
 <div style="overflow-x:auto;">
 <table >
   <colgroup span="11"></colgroup>
@@ -132,66 +135,28 @@
   </table>
 </div>
  <br>
-<p>Often times, we need to extract time stamp elements from a data frame. In R, the <i> lubridate</i> package 
-              is a fast and simple way to extract those information. This data set contains  data on the scale ranging from
-              hour, weekday, date, and month. A good way to visualize that is using<code class="highlighter-rouge"> geom_tile() </code> function within <i> ggplot </i>:</p>
+ <p> I was interested to see the sensitivity of each imputation algorithm to percentage of missing values. For a given percentage,
+   I randomly sample the row data for features PClass (Passenger Class) and Age, and set those values to NA for downstream imputation.
+    This was done for 10%, 20%, 30%, and 40% missing values for both columns, so the data frame being imputed had missing numeric values as well
+           as categorical value. In evaluating performance, I used (1-accuracy) to represent the error for Pclass imputation,
+             and Mean Absolute Error (MAE) for the Age imputation. I chose MAE after seeing that the distribution of the Age feature was more or less 
+            normal. For non-normal skewed distribution, it's recommended to use Root Mean Square Error (RMSE) instead.</p>
               
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-#Define the axis for each facet element (one facet corresponds to one month)
-p <-ggplot(df,aes(x=pickup_day,y=pickup_hour, fill=total))+
-  geom_tile(color="white", size=0.1) + coord_equal()+
-  scale_fill_viridis(name="Number of rides", option="D")
-#put facet plot in order
-p <-p + facet_grid(.~factor(pickup_month2, levels=c("Jan", "Feb", "March", "April", "May", 'June')))
-p <-p + scale_y_continuous(trans = "reverse", breaks = unique(df$pickup_hour))
-p + labs( x="Pickup Day", y="Pickup Hour")
-</code></pre></figure>
 
- <figure>
-   <img src="images/tile_map.png" alt="tile heat map" >
-   <figcaption>Fig 1. Calendar heat map of taxi pickup data points.
-   </figcaption>
-   </figure>
+<h2 id="KNN">K Nearest Neighbor (KNN) </h2>
+
+<p>Like its classifier counterpart, KNN imputes the missing value by finding the K nearest neighbors in feature space, then 
+            assign the class by majority vote of its K nearest neigbors. For regression, the value is the weighted average of its 
+            k nearest neighbors.</p>
+<p>But how do we measure the distance between samples in feature space? For numeric variables, it's common to use euclidean distance (l2 norm). 
+  However, imputing missing value often requires using information from categorical variables, so Gower's distance is used to accomodate 
+  both numeric and categorical values in measuring <i>dissimilarity</i>. For the knn imputer in R library VIM, the Gower's distance is defined as :
+  
+  
   
 
-<p>Now time for some contour plot, which requires both <i> ggmap</i> and <i> ggplot</i> libraries. <i>ggmap</i> 
-    is used to retrieve the map of a locale using <code class="highlighter-rouge"> get_map()</code></p>
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-p <- get_map("New York City",zoom=14,maptype='toner-lite',source="stamen")
-#select columns with the given pattern with dplyr.
-data_pickup<-data %>% select (starts_with("pickup_l"))
-data_dropoff<-data %>% select (starts_with("dropoff_l"))
-colnames(data_pickup)<-c('lon', 'lat')
-colnames(data_dropoff)<-c('lon', 'lat')
-combo_data<-rbind(data.frame(data_pickup, group="pickup"), data.frame(data_dropoff, group="dropoff"))
-#transparency of the plot (alpha) can be set to level of the sample points (there's 10 levels because there's 10 bins)
-ggmap(p)+ stat_density_2d(data=combo_data, geom ='polygon', bins=10, aes(x=lon, y=lat, fill=group, alpha=..level..))+
-  scale_fill_manual(values=c('pickup'='orchid4', 'dropoff'='darkorange1'))+
-  scale_alpha(guide = FALSE)
-</code></pre></figure> 
- 
-<figure>
-   <img src="images/contour.png" alt="contour map" >
-   <figcaption>Fig 2. Contour map of two groups of data.
-   </figcaption>
-   </figure>
-
-<h2 id="feature engineering">Feature Engineering for Regression</h2>
-
-<p>Most of the time, machine learning workflows can benefit from feature engineering. Here, feature engineering is defined as adding or 
-transforming relevant information/variables 
-to the existing dataset in order to improve the model's learning and its performance. In some situations, feature 
-engineering requires extensive domain knowledge, for this taxi dataset it was pretty straight forward. The new features obtained 
-from the given features are the time stamp element (i.e, month, date, weekday, hour) and the <a href='https://www.r-bloggers.com/great-circle-distance-calculations-in-r/'>
-haversine distance</a> in km. The target variable, <i> trip duration</i> was log transformed since it displayed a highly skewered
-distribution. I generally prefer to have normal-ish distribution when working with continunous variable, because it helps some models to  
-learn better. In fact, you might consider normalization/scaling to be a form of feature engineering because the raw data are transformed to
-optimize distance-based algorithms or gradient descend parameter updates.</p>
-
-<p>There's a useful library called <i> GGally</i>  that offers a simple one-liner function for matrix scatter plots, along with display of
-distribution and correlation values. This is super useful for exploratory data analysis to get a sense of the data I'm working with. 
-As shown in Fig 3 below, the strongest correlation was for one of the 
-feature engineered variables - haversine distance. </p>
+<p>For categorical variable, d_k is 0 when the values between a pair of sample points are the same, otherwise it's 1. 
+   On the other hand, when working with numeric data d_k is calculated as 1-[(x_i-x_j)/(max(x)-min(x)] [1]. </p>
 
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
 library(GGally)
