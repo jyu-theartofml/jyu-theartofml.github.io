@@ -61,7 +61,7 @@
             <p>Missing data is a familiar nuisance when working with raw dataset. In this post, I will compare three widely used methods for 
             imputing (a.k.a,estimating) missing values. This is really for my own reference, because I often find myself asking the question "which imputation 
             algorithm would be most appropriate" while staring at those 'NA's in the dataframe. I tend to avoid simply imputing using
-            the mean/median/mode value, because it doesn't take into account possible correlation to other variables and it introduces 
+            the mean/median/mode value, because it doesn't take into account possible relationships between variables and it introduces 
             bias to the data.</p>
             <p>The three imputation methods I will compare are: K Nearest Neighbor (KNN), Random Forest imputation, and Predictive Mean Matching (PMM). The
               first two methods work for both categorical and numerical values, and PMM works only for continuous numerical variable.
@@ -139,24 +139,28 @@
    I randomly sample the row data for features PClass (Passenger Class) and Age, and set those values to NA for downstream imputation.
     This was done for 10%, 20%, 30%, and 40% missing values for both columns, so the data frame being imputed had missing numeric values as well
            as categorical value. In evaluating performance, I used (1-accuracy) to represent the error for Pclass imputation,
-             and Mean Absolute Error (MAE) for the Age imputation. I chose MAE after seeing that the distribution of the Age feature was more or less 
-            normal. For non-normal skewed distribution, it's recommended to use Root Mean Square Error (RMSE) instead.</p>
+             and Mean Absolute Error (MAE) for the Age imputation. I chose MAE after seeing that the distribution of the Age feature was 
+            normal-ish. For non-normal skewed distribution, it's recommended to use Root Mean Square Error (RMSE) instead.</p>
               
 
 <h2 id="KNN">K Nearest Neighbor (KNN) </h2>
 
-<p>Like its classifier counterpart, KNN imputes the missing value by finding the K nearest neighbors in feature space, then 
+<p>Like its classifier counterpart, KNN is a non-parametric method to estimate missing value by finding the K nearest neighbors in feature space, then 
             assign the class by majority vote of its K nearest neigbors. For regression, the value is the weighted average of its 
             k nearest neighbors.</p>
 <p>But how do we measure the distance between samples in feature space? For numeric variables, it's common to use euclidean distance (l2 norm). 
   However, imputing missing value often requires using information from categorical variables, so Gower's distance is used to accomodate 
-  both numeric and categorical values in measuring <i>dissimilarity</i>. For the knn imputer in R library VIM, the Gower's distance is defined as :
+  both numeric and categorical values in measuring <i>dissimilarity</i>. For the knn imputer in R library VIM, the Gower's distance between a pair of 
+  samples <i>i</i> and <i>j</i> is defined as :
   
-  
+  <fig></fig>
   
 
-<p>For categorical variable, d_k is 0 when the values between a pair of sample points are the same, otherwise it's 1. 
-   On the other hand, when working with numeric data d_k is calculated as 1-[(x_i-x_j)/(max(x)-min(x)] [1]. </p>
+<p> Here, d_k(i,j) denotes distance between the value of variable k between the two samples.
+  For categorical variable, d_k is 0 when the values between a pair of sample points are the same, otherwise it's 1. 
+   On the other hand, when working with numeric data d_k is calculated as 1-[(x_i-x_j)/(max(x)-min(x)] [1]. 
+  The Gower's matrix, d_g(i,j) is used to identifiy the k (default k=5) nearest neighbors to a give sample <i>i</i>.
+            used to </p>
 
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
 library(GGally)
