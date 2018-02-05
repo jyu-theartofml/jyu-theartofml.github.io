@@ -86,15 +86,15 @@
           <div class="article-content">
 
 <p>For the purpose of this post, I used the <a href='https://cran.r-project.org/web/packages/titanic/titanic.pdf'>Titanic dataset</a>, 
-  which contained a mix of categorical, ordinal, and numeric variables. The columns of 
-  interest are <i> Surviviced</i>, <i>Pclass</i>, <i>Sex</i>, <i>Age</i>, <i>SibSp</i>, <i>Parch</i>, <i>Fare</i>, and <i>Embarked</i>. 
+  which contained a mix of categorical, ordinal, and numeric variables. There is 714 rows of samples, and the columns of 
+  interest are <i> Survived</i>, <i>Pclass</i>, <i>Sex</i>, <i>Age</i>, <i>SibSp</i>, <i>Parch</i>, <i>Fare</i>, and <i>Embarked</i>. 
   I wanted to see the sensitivity, if there's any, of each imputation algorithm to percentage of missing values. For a given percentage,
    I randomly sample the row data for features PClass (Passenger Class) and Age, and set those values to NA for downstream imputation.
     This was done for 10%, 20%, 30%, and 40% missing values for both columns, and Fig.1 shows a snapshot of such an example dataframe.</p>
   
    <fig>
      <img src="images/imputation/df_nan.png" alt="example df" >
-      <figcaption>Fig.1. A view of an example data frame with missing (NA) values inserted into columns Pclass and Age.
+      <figcaption>Fig.1. A view of an example data frame with missing (NA) values randomly inserted into columns Pclass and Age.
         </figcaption>
     </fig>  
   
@@ -106,34 +106,64 @@
 
 <h2 id="KNN">K Nearest Neighbor (KNN) </h2>
 
-<p>Like its classifier counterpart, KNN is a non-parametric method to estimate missing value by finding the K nearest neighbors in feature space, then 
-            assign the class by majority vote of its K nearest neigbors. For regression, the value is the weighted average of its 
-            k nearest neighbors.</p>
+<p>Like its classifier counterpart, KNN is a non-parametric method that estimates missing value by finding the K nearest neighbors in feature space, then 
+            assign the class by majority vote of its K nearest neigbors. For regression, the value is the weighted average/median of its 
+            K nearest neighbors.</p>
 <p>But how do we measure the distance between samples in feature space? For numeric variables, it's common to use euclidean distance (l2 norm). 
-  However, imputing missing value often requires using information from categorical variables, so Gower's distance is used to accomodate 
+  However, imputing missing value often requires using information from categorical variables, so Gower's distance is designed to accomodate 
   both numeric and categorical values in measuring <i>dissimilarity</i>. For the knn imputer in R library VIM, the Gower's distance between a pair of 
-  samples <i>i</i> and <i>j</i> is defined as : d(i,j) = sum_k(W_ijk * d_ijk ) / sum_k(W_ijk )
+  samples <i>i</i> and <i>j</i> is defined as : d_g(i,j) = sum_k(W_ijk * d_k(i,j) ) / sum_k(W_ijk).
   
  
-  
-
 <p> Here, d_k(i,j) denotes distance between the value of variable k between the two samples.
   For categorical variable, d_k is 0 when the values between a pair of sample points are the same, otherwise it's 1. 
    On the other hand, when working with numeric data d_k is calculated as 1-[(x_i-x_j)/(max(x)-min(x)] [1]. 
-  The Gower's matrix, d_g(i,j) is used to identifiy the k (default k=5) nearest neighbors to a give sample <i>i</i>.
-            used to </p>
+  The Gower's matrix, d_g(i,j) is used to identifiy the k (default k=5) nearest neighbors for a give sample <i>i</i>. /p>
 
 <figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(GGally)
-#using only 10K data points so it doesn't take too long to plot
-sample_data<-datasets[1:10000,]
-ggpairs(sample_data[, c("passenger_count","pickup_hour","pickup_day", "pickup_month", "pickup_weekday","distance_h", "log_duration")])
-</code></pre></figure>
+library(VIM)
+################ KNN imputation for the 4 percentage values of NA in data frame ###################
+missing_n<-c(0.1,0.2,0.3, 0.4)
+error_val<-matrix(NA, nrow=4, ncol=2)
+
+for (i in 1:length(missing_n)){
+  set.seed(42) 
+  percentage=missing_n[i]
+  select.df<-subset.data ### select.df is the original dataframe for inserting NA values
+  missing.qty<-round((dim(select.df)[1])*percentage)
+  
+  df1<-sample_n(select.df, missing.qty)
+  select.idx1<-row.names(df1)
+  select.df[select.idx1,]$Pclass<-NA
+  
+  set.seed(12) 
+  df2<-sample_n(select.df, missing.qty)
+  select.idx2<-row.names(df2)
+  select.df[select.idx2,]$Age<-NA
+  
+  ####################### knn imputation ###############################
+  imputed.data<-kNN(select.df, variable=c('Pclass','Age'), k=15, weightDist=TRUE)
+  
+  pclass.na.idx<-which(is.na(select.df$Pclass))
+  age.na.idx<-which(is.na(select.df$Age))
+  
+  imputed_pclass<-imputed.data[pclass.na.idx,c("Pclass")]
+  actual_pclass<-subset.data[pclass.na.idx,c("Pclass")]
+  imputed_age<-imputed.data[age.na.idx,c("Age")]
+  actual_age<-subset.data[age.na.idx,c("Age")]
+  
+  missed_pclass<-which(imputed_pclass!=actual_pclass)
+  error_val[i,1]<-length(missed_pclass)/missing.qty
+  
+  age_error<-mae(actual_age,imputed_age)
+  error_val[i,2]<-age_error
+}
+</code></pre>
+</figure>
 
 <figure>
-   <img src="images/scatter_plot_matrix.png" alt="correlation plot" >
-   <figcaption>Fig 3. Scatter plots of variables below the diagonal. The diagonal plots correspond to the distribution of the given variable. For
-   example, for the plot in the 6th row and 3rd column, the x-axis is the pickup calendar day and the y-axis is the haversine distance.
+   <img src="images/imputation/knn_error_k15.png" alt="knn_imputation" >
+   <figcaption>Fig.2. Plot of error metrics for the imputation of Pclass and Age varibles as a function of % of NA.
    </figcaption>
    </figure>
 
