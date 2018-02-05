@@ -85,63 +85,24 @@
 
           <div class="article-content">
 
-<p>For the purpose of this post, I used the Titanic dataset, which contained a mix of categorical, ordinal, and numeric features.
-  Here's what the data looks like: </p>
-<div style="overflow-x:auto;">
-<table >
-  <colgroup span="11"></colgroup>
-  <tr>
-    <th>id</th>
-    <th>vendor_id</th>
-    <th>pickup_datetime</th>
-    <th>dropoff_datetime</th>
-    <th>passenger_count</th>
-    <th>pickup_longitude</th>
-    <th>pickup_latitude</th>
-    <th>dropoff_longitude</th>
-    <th>dropoff_latitude</th>
-    <th>store_and_fwd_flag</th>
-    <th>trip_duration (in seconds)</th>
-    
-  </tr>
-  <tr>
-    <td>id2875421</td>
-    <td>2</td>
-    <td>2016-03-14 17:24:55</td>
-    <td>2016-03-14 17:32:30</td>
-    <td>1</td>
-    <td>-73.98215</td>
-    <td>40.76794</td>
-    <td>-73.96463</td>
-    <td>40.76560</td>
-    <td>N</td>
-    <td>455</td>
-  </tr>
-  
-  <tr>
-    <td>id2377394</td>
-    <td>1</td>
-    <td>2016-06-12 00:43:35</td>
-    <td>2016-06-12 00:54:38</td>
-    <td>1</td>
-    <td>-73.98042</td>
-    <td>40.73856</td>
-    <td>-73.99948</td>
-    <td>40.73115</td>
-    <td>N</td>
-    <td>663</td>
-    </tr>
-  
-  </table>
-</div>
- <br>
- <p> I was interested to see the sensitivity of each imputation algorithm to percentage of missing values. For a given percentage,
+<p>For the purpose of this post, I used the <a href='https://cran.r-project.org/web/packages/titanic/titanic.pdf'>Titanic dataset</a>, 
+  which contained a mix of categorical, ordinal, and numeric variables. The columns of 
+  interest are <i> Surviviced</i>, <i>Pclass</i>, <i>Sex</i>, <i>Age</i>, <i>SibSp</i>, <i>Parch</i>, <i>Fare</i>, and <i>Embarked</i>. 
+  I wanted to see the sensitivity, if there's any, of each imputation algorithm to percentage of missing values. For a given percentage,
    I randomly sample the row data for features PClass (Passenger Class) and Age, and set those values to NA for downstream imputation.
-    This was done for 10%, 20%, 30%, and 40% missing values for both columns, so the data frame being imputed had missing numeric values as well
-           as categorical value. In evaluating performance, I used (1-accuracy) to represent the error for Pclass imputation,
-             and Mean Absolute Error (MAE) for the Age imputation. I chose MAE after seeing that the distribution of the Age feature was 
-            normal-ish. For non-normal skewed distribution, it's recommended to use Root Mean Square Error (RMSE) instead.</p>
-              
+    This was done for 10%, 20%, 30%, and 40% missing values for both columns, and Fig.1 shows a snapshot of such an example dataframe.</p>
+  
+   <fig>
+     <img src="images/imputation/df_nan.png" alt="example df" >
+      <figcaption>Fig.1. A view of an example data frame with missing (NA) values inserted into columns Pclass and Age.
+        </figcaption>
+    </fig>  
+  
+  
+<p>In evaluating performance, I used (1-accuracy) to represent the error for Pclass imputation, 
+  and Mean Absolute Error (MAE) for the Age imputation. I chose MAE after seeing that the distribution of the Age feature was 
+  normal-ish. For non-normal skewed distribution, it's recommended to use Root Mean Square Error (RMSE) instead.</p>
+          
 
 <h2 id="KNN">K Nearest Neighbor (KNN) </h2>
 
@@ -151,9 +112,9 @@
 <p>But how do we measure the distance between samples in feature space? For numeric variables, it's common to use euclidean distance (l2 norm). 
   However, imputing missing value often requires using information from categorical variables, so Gower's distance is used to accomodate 
   both numeric and categorical values in measuring <i>dissimilarity</i>. For the knn imputer in R library VIM, the Gower's distance between a pair of 
-  samples <i>i</i> and <i>j</i> is defined as :
+  samples <i>i</i> and <i>j</i> is defined as : d(i,j) = sum_k(W_ijk * d_ijk ) / sum_k(W_ijk )
   
-  <fig></fig>
+ 
   
 
 <p> Here, d_k(i,j) denotes distance between the value of variable k between the two samples.
