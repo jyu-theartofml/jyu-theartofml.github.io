@@ -60,7 +60,7 @@
             <h1>Imputing missing data</h1>
             <p>Missing data is a familiar nuisance when working with raw dataset. In this post, I will compare three widely used methods for 
             imputing (a.k.a,estimating) missing values. This is really for my own reference, because I often find myself asking the question "which imputation 
-            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. I tend to avoid simply imputing using
+            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. I generally avoid simply imputing using
             the mean/median/mode value, because it doesn't take into account possible relationships between variables and it introduces 
             bias to the data.</p>
             <p>The three imputation methods I will compare are: K Nearest Neighbor (KNN), Random Forest imputation, and Predictive Mean Matching (PMM). The
@@ -108,7 +108,7 @@
 
 <p>Like its classifier counterpart, KNN is a non-parametric method that estimates missing value by finding the K nearest neighbors in feature space, then 
             assign the class by majority vote of its K nearest neigbors. For regression, the value is the weighted average/median of its 
-            K nearest neighbors.</p>
+            K nearest neighbors based on the distance.</p>
 <p>But how do we measure the distance between samples in feature space? For numeric variables, it's common to use euclidean distance (l2 norm). 
   However, imputing missing value often requires using information from categorical variables, so Gower's distance is designed to accomodate 
   both numeric and categorical values in measuring <i>dissimilarity</i>. For the knn imputer in R library VIM, the Gower's distance between a pair of 
@@ -163,58 +163,50 @@ for (i in 1:length(missing_n)){
 
 <figure>
    <img src="images/imputation/knn_error_k15.png" alt="knn_imputation" >
-   <figcaption>Fig.2. Plot of error metrics for the imputation of Pclass and Age varibles as a function of % of NA.
+   <figcaption>Fig.2. Plot of error metrics for the KNN imputation of Pclass and Age varibles as a function of % of NA.
    </figcaption>
    </figure>
 
 
-<h2 id="randomeforest">Caret and the Forest</h2>
+<h2 id="randomeforest">Random Forest Imputation</h2>
 
-<p>After the data are preprocessed, I used the <i> Caret</i>  library to perform grid search with cross validation (CV). I chose 
-<a href="https://databricks.com/blog/2015/01/21/random-forests-and-boosting-in-mllib.html">Random Forest (RF) regressor </a> because it is known to work well with nonlinear data, it selects random 
-subset of features at each node split, and it reduces variance (aka: overfitting) of the model by having independent weak learner trees. </p>
-<p>Since the trees in RF are independent of each other, it is easy to setup parallel computing.
-This is helpful for running RF on large dataset with ~1M samples. On the <i> Caret</i>  documentation, the author only mentioned 
-<i> doMC</i>  for parallel computing but that only works for Macs. I have a windows 10 laptop with 4 cores (8 processors), and found that
-the <i>doParallel</i>  package worked well with the CV workflow.
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(randomForest)
-library(caret)
-library(parallel)
-library(doParallel)
-library(dplyr)
-datasets<- datasets%>% mutate_if(is.integer, as.numeric)
-trainIndex <- createDataPartition(datasets$log_duration, p = .7, 
-                                  list = FALSE, 
-                                  times = 1)
-data_train<-datasets[trainIndex,]
-data_val<-datasets[-trainIndex,]
-#### grid must include mtry for RF model ####
-rfgrid<- expand.grid(mtry=c(6,13))
-set.seed(20)
-cv_control <- trainControl(
-  method = "cv",
-  number = 3)
+<p>Next, I tried imputation on the same data set using Random Forest (RF) algorithm. RF estimates missing value using growing a forest with 
+  a rough fill-in value for missing data, then iteratively updates the proximity matrix to obtain the final imputed value [2]. According to Breiman et al., 
+  the RF imputation steps are as follow:</p>
+  <ol>
+    <li> Replace missing values by average/mode in training data (initial step).</li>
+   
+    <li> Repeat in <i>x</i> iterations</li>
+    <ol>
+            <li>Train RF (including imputed values) on column j with the original missing data.</li>
+            <li>Compute proximity matrix</li>
+            <li>Update the missing value estimate with the proximity matrix as weights - for regression it's weighted average, and for 
+      categorical variables it's the weighted mode</li>
+      </ol>
+    <li> For test data, caculate proximities of test dat w/ respect to the training data.</li>
+    
+    
+    <p>The key of this algorithm lies in proximity matrix  For <i>n</i> number of samples in the training set, it's a nxn matrix that shows how similar 
+      one sample <i> i</i> is to another sample <i>j</i>. In each iteration, if sample X_i and X_j end up in the same terminal node of a tree within the 
+      grown forest, then their proximity value P(i,j) is increased by 1. The matrix is often normalized by dividing by the number of trees, since that's a 
+      tunable parameter. For my code ,the optimal number of trees was 40. In the MICE package, the function <code class="highlighter-rouge"> mice() </code>
+      has the option for multiple imputation datasets (specified by the m variable).
   
-###### NOTE: CV and grid functions has to come before cluster computing setup  ##########
+  
+<figure class="highlight"><pre><code class="language-R" data-lang="R">
+library(mice)
 
-cluster <- makeCluster(detectCores()-3)# leave at least 1 node for operating system 
-registerDoParallel(cluster)
-
-##train function will invoke dummy variables for formula input!
-##but randomForest library itself doesn't do that with formula input
-rfFit <- train(log_duration ~ ., data = data_train, 
-                 method = "rf", ntree=100,
-                 trControl = cv_control, 
-                 tuneGrid=rfgrid,
-                 verbose = FALSE, importance=TRUE)
-
-stopCluster(cluster)
-registerDoSEQ()
-## to see error of the model
-rfFit$results
+###### RF Imputation  ##########
+imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40)) 
 </code></pre></figure>
 
+<figure>
+   <img src="images/imputation/rf_error_n40.png.png" alt="rf_imputation" >
+   <figcaption>Fig.3. Plot of error metrics for the RF imputation of Pclass and Age varibles as a function of % of NA.
+   </figcaption>
+   </figure>
+  
+  
 <p> Running the model fit on only 400K samples (to save time), the average validation RMSE was around 0.4135. There's still 
 room for improvement, especially by running the whole training set. As you can see, it's easy to perform cross validated parameter
 tuning on a Random Forest regressor through <i>Caret</i>, which comes with other widely used models such as SVM, Logistic Regression, 
