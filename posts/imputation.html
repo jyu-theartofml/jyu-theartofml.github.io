@@ -183,7 +183,7 @@ for (i in 1:length(missing_n)){
             <li>Update the missing value estimate with the proximity matrix as weights - for regression it's weighted average, and for 
       categorical variables it's the weighted mode</li>
       </ol>
-    <li> For test data, caculate proximities of test dat w/ respect to the training data.</li>
+    <li> For test data, caculate proximities of test dat w/ respect to the training data.</li></ol>
     
     
     <p>The key of this algorithm lies in proximity matrix  For <i>n</i> number of samples in the training set, it's a nxn matrix that shows how similar 
@@ -201,17 +201,16 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
 </code></pre></figure>
 
 <figure>
-   <img src="images/imputation/rf_error_n40.png.png" alt="rf_imputation" >
+   <img src="images/imputation/rf_error_n40.png" alt="rf_imputation" >
    <figcaption>Fig.3. Plot of error metrics for the RF imputation of Pclass and Age varibles as a function of % of NA.
    </figcaption>
    </figure>
   
   
-<p> Running the model fit on only 400K samples (to save time), the average validation RMSE was around 0.4135. There's still 
-room for improvement, especially by running the whole training set. As you can see, it's easy to perform cross validated parameter
-tuning on a Random Forest regressor through <i>Caret</i>, which comes with other widely used models such as SVM, Logistic Regression, 
-and GLM regression, etc (total of 238).
-        
+<p>It's interesting to see the similar 'neighborhood' scheme for both non-parametric methods KNN and RF. In general, these two algorithms are based on this relationship:
+  
+<figure>
+  <img src="images/imputation/neighborhood.svg" onerror="this.src='neighborhood.png'">.
 
 
           
