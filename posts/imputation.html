@@ -207,19 +207,44 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
    </figure>
   
   
-<p>It's interesting to see the recurring 'neighborhood' scheme for both of the non-parametric methods KNN and RF. In general, 
+<p>Both of the non-parametric methods KNN and RF work using the "neighborhood" scheme. In general, 
   these algorithms are based on this relationship:</p>
   
 <figure>
-  <img src="images/imputation/neighborhood.svg" onerror="this.src='neighborhood.png'">
+  <center><img src="images/imputation/neighborhood.svg" onerror="this.src='neighborhood.png'"></center>
   </figure>
   <p>Here, W(x_i,x') is the similarity/distance matrix relating a new test sample x' to x_i, then estimating y' based on y_i. For RF imputation, 
     the proximity matrix is very sensitive to the complexity of the trees grown, and RF consists of so many hyperparameters (i.e., 
     number of randomly sampled variables, subset sample size, and node size). According to a paper published by Lin and Jeon, the neighborhood mapped out by RF 
-    is largely determined by the local importance of each feature [3]. 
+    is largely determined by the local importance of each feature within a node[3]. What that implies is the RF imputation is 
+    optimized for nonlinear data.</p>
 
 
-          
+<h2 id="pmm">Predictive Mean Matching (PMM)</h2>   
+  
+ <p>The third method I want to explore is Predictive Mean Matching (PMM), which is commonly used for imputing continuous numerical data. 
+   The imputation works by randomly choosing an observed value from a donor pool whose predicted values are close to the predicted 
+   value of the missing case. The regression-based method works as follows to estimate missing values in variable Y:</p>
+  <ol>
+    <li>Use a set of variables X (with no missing data) to fit a linear regression on Y (choose cases of Y with no missing value) with coefficients B.
+    <li>To account for uncertainty of the coefficients, randomly sample for new set of regression coefficients B* by drawing from the 
+      normal distribution with mean of B and variance of B.
+     <li>Predict values for all cases of X using B*. 
+     <li>For every missing case of X, find a group of K non-missing cases whose predicted values are close to the predicted value of the 
+       missing case. This is called the 'donor pool'.
+    <li>Randomly assign the <i>observed </i> value of a donor to replace the missing case.
+  </ol>
+  
+  <p>In theory, PMM works well on skewed distribution
+   
+       
+      
+    
+    
+    
+    
+    
+    
             <div id="disqus_thread" class="article-comments"></div>
             <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
             <noscript>Please enable JavaScript to view the comments.</noscript>
