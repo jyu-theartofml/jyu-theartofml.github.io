@@ -235,10 +235,26 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
     <li>Randomly assign the <i>observed </i> value of a donor to replace the missing case.
   </ol>
   
-  <p>In theory, PMM works well on skewed distribution
+  <p>In theory, PMM works well on skewed data distribution because it's matching observed real value to the missing value. 
+    I tried PMM on the air quality public dataset, where both columns Ozone and Wind contain NA values, and the Ozone 
+    variable has a skewed distribution.</p>
+    
+    <figure>
+      <center><img src="images/imputation/air_quality_df.png" alt="air df" ></center>
+      <center><img src="images/imputation/airquality_feature_dist.png" alt="feature distribution" ></center>
+   <figcaption>Fig.4. Example of the air quality dataset and distribution of the features ozone and wind.
+   </figcaption>
+   </figure>
+    
+    
+    <p>However, as shown in Fig.5. below, the percentage error is bigger and more volatile for the Ozone imputation.</p>
    
        
-      
+    <figure>
+      <center><img src="images/imputation/air_quality_pmm2.png" alt="pmm error" ></center>
+   <figcaption>Fig.5. Comparison of percentage error in imputation of Ozone and Wind.
+   </figcaption>
+   </figure>
     
     
     
