@@ -86,7 +86,8 @@
           <div class="article-content">
 
 <p>For the purpose of this post, I used the <a href='https://cran.r-project.org/web/packages/titanic/titanic.pdf'>Titanic dataset</a>, 
-  which contained a mix of categorical, ordinal, and numeric variables. There is 714 rows of samples, and the columns of 
+  which contained a mix of categorical, ordinal, and numeric variables, and the Air Quality dataset (all numeric values). The 
+  Titanic dataset has 714 rows of samples, and the columns of 
   interest are <i> Survived</i>, <i>Pclass</i>, <i>Sex</i>, <i>Age</i>, <i>SibSp</i>, <i>Parch</i>, <i>Fare</i>, and <i>Embarked</i>. 
   I wanted to see the sensitivity, if there's any, of each imputation algorithm to percentage of missing values. For a given percentage,
    I randomly sample the row data for features PClass (Passenger Class) and Age, and set those values to NA for downstream imputation.
@@ -216,7 +217,7 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
   <p>Here, W(x_i,x') is the similarity/distance matrix relating a new test sample x' to x_i, then estimating y' based on y_i. For RF imputation, 
     the proximity matrix is very sensitive to the complexity of the trees grown, and RF consists of so many hyperparameters (i.e., 
     number of randomly sampled variables, subset sample size, and node size). According to a paper published by Lin and Jeon, the neighborhood mapped out by RF 
-    is largely determined by the local importance of each feature within a node[3]. What that implies is the RF imputation is 
+    is largely determined by the local importance of each feature within a node[3]. This makes sense because RF imputation is 
     optimized for nonlinear data.</p>
 
 
@@ -247,7 +248,10 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
    </figure>
     
     
-    <p>However, as shown in Fig.5. below, the percentage error is bigger and more volatile for the Ozone imputation.</p>
+    <p>However, as shown in Fig.5. below, the percentage error of the Ozone imputation is higher and more volatile than that of the Wind features.
+      And there appears to be a bit of a trade off between the imputation error of the two variables. While the matching of the value preserves the 
+  original distribution of the data, running linear regression on skewed data points has some draw backs in producing reliable predicted 
+      values for downstream matching.</p>
    
        
     <figure>
@@ -256,8 +260,21 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
    </figcaption>
    </figure>
     
-    
-    
+  <h3> Conclusion </h3>
+  <p> After looking at the results from the three methods, it looks like the non-parametric algorithms KNN and RF are very senstive to 
+    % of missing values, where as PMM is less so. For KNN and RF, it's not surprising to see error rate increase as a function of % NA because 
+    they impute based on fiding its neighbors - and the more data observed the better the neighborhood can be mapped. Gower's matrix provided better imputation
+     results for numerical data compared to RF, due to the way dissimilarity distance is calculated. However, RF performed better 
+    in categorical imputation. One way to approach the Titanic dataset is to use RF imputation on categorical variables and use KNN on numerical variables.
+    However, it should be pointed out that RF imputation is computationally expensive. If computation cost is not a big concern, 
+    multiple imputed datasets can be used for model fitting, then average the model output for prediction.
+   <h3> REFERENCES </h3>
+  <p>[1]de Jonge,E., van der Loo, M., <b> An introduction to data cleaning with R</b>. 2013 </p>
+  <p>[2]Breiman, L., Cutler, A.<i> Random Forest</i>. https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm </p>
+  <p>[3]Lin, Yi; Jeon, Yongho (2002). Random forests and adaptive nearest neighbors (Technical report). 
+        Technical Report No. 1055. University of Wisconsin.</p>
+          
+  
     
     
     
@@ -268,10 +285,7 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
         </article>
         <footer class="footer appear">
           
-    <p> Reference</p>
-          [3].Lin, Yi; Jeon, Yongho (2002). Random forests and adaptive nearest neighbors (Technical report). Technical Report No. 1055. University of Wisconsin.
-          
-  <p>
+   
     Chalk is a high quality, completely customizable, performant and 100% free
     blog template for Jekyll built by
     <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
