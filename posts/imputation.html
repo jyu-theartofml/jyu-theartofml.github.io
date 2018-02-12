@@ -58,21 +58,24 @@
         <article class="article appear">
           <header class="article-header">
             <h1>Imputing missing data</h1>
-            <p>Missing data is a familiar nuisance when working with raw dataset. In this post, I will compare three widely used methods for 
-            imputing (a.k.a,estimating) missing values. This is really for my own reference, because I often find myself asking the question "which imputation 
-            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. I generally avoid simply imputing using
-            the mean/median/mode value, because it doesn't take into account possible relationships between variables and it introduces 
-            bias to the data.</p>
-            <p>The three imputation methods I will compare are: K Nearest Neighbor (KNN), Random Forest imputation, and Predictive Mean Matching (PMM). The
-              first two methods work for both categorical and numerical values, and PMM works only for continuous numerical variable.
+            <p>Missing data is a familiar nuisance when working with raw data. In this post, I will compare three widely used methods for 
+            imputing (a.k.a, estimating) missing values. This is really for my own reference, because I often find myself asking the question "which imputation 
+            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. While there is no 'best' way to deal with missing 
+              data because it depends on the type of problems, I usually avoid imputing using
+            the mean/median/mode value. The reason being it doesn't take into account possible relationships between variables and it introduces 
+            bias to the data. As a general rule, I would not include a variable that has more than 50% missing values in building a predictive model.</p>
+            <p>Using R studio, the three methods I will compare are: K Nearest Neighbor (KNN), Random Forest (RF) imputation, and Predictive Mean Matching (PMM). The
+              first two methods work for both categorical and numerical values, and PMM works best for continuous numerical variable. I chose to go with R for this task, 
+              because the last time I checked, Python does not have well-documented, hassle-free packages for these three methods. The closest thing I saw 
+              was <i>fancyimpute0.3</i>, but it did not offer RF and PMM.</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
-                X X, 2018
+                February 12th, 2018
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
-              10 minute read
+              15 minute read
               </span>
               
               <span class="article-list-divider">-</span>
@@ -88,9 +91,10 @@
 <p>For the purpose of this post, I used the <a href='https://cran.r-project.org/web/packages/titanic/titanic.pdf'>Titanic dataset</a>, 
   which contained a mix of categorical, ordinal, and numeric variables, and the Air Quality dataset (all numeric values). The 
   Titanic dataset has 714 rows of samples, and the columns of 
-  interest are <i> Survived</i>, <i>Pclass</i>, <i>Sex</i>, <i>Age</i>, <i>SibSp</i>, <i>Parch</i>, <i>Fare</i>, and <i>Embarked</i>. 
-  I wanted to see the sensitivity, if there's any, of each imputation algorithm to percentage of missing values. For a given percentage,
-   I randomly sample the row data for features PClass (Passenger Class) and Age, and set those values to NA for downstream imputation.
+  interest are <i> Survived</i>, <i>Pclass</i>, <i>Sex</i>, <i>Age</i>, <i>SibSp</i>, <i>Parch</i>, <i>Fare</i>, and 
+  <i>Embarked</i>. I wanted to see the sensitivity, if there's any, of each imputation algorithm to percentage of missing values. For a given percentage,
+   I randomly sample the row data for features PClass (Passenger Class) and Age, and set those values to NA (this would be considered 
+  Missing Not at Random).
     This was done for 10%, 20%, 30%, and 40% missing values for both columns, and Fig.1 shows a snapshot of such an example dataframe.</p>
   
    <fig>
@@ -250,8 +254,11 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
     
     <p>However, as shown in Fig.5. below, the percentage error of the Ozone imputation is higher and more volatile than that of the Wind features.
       And there appears to be a bit of a trade off between the imputation error of the two variables. While the matching of the value preserves the 
-  original distribution of the data, running linear regression on skewed data points has some draw backs in producing reliable predicted 
-      values for downstream matching.</p>
+  original distribution of the data, running linear regression on skewed data has some draw backs in producing reliable predicted 
+      values for downstream matching. Another issue is that the optimal k (number of donors) needs to be tuned because it varies
+      depending on the dataset and number of samples (I used the default 5)[4]. The general rule of thumb is that with larger 
+      dataset, the imputation can benefit from a larger number of k.
+  </p>
    
        
     <figure>
@@ -261,18 +268,21 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
    </figure>
     
   <h3> Conclusion </h3>
-  <p> After looking at the results from the three methods, it looks like the non-parametric algorithms KNN and RF are very senstive to 
-    % of missing values, where as PMM is less so. For KNN and RF, it's not surprising to see error rate increase as a function of % NA because 
-    they impute based on fiding its neighbors - and the more data observed the better the neighborhood can be mapped. Gower's matrix provided better imputation
-     results for numerical data compared to RF, due to the way dissimilarity distance is calculated. However, RF performed better 
+  <p> After looking at the results from the three methods, it looks like the performances of KNN and RF are very sensitive to 
+    % of missing values. This is not surprising because 
+    these non-parametric algorithms impute based on finding its neighbors - and the more data observed the better the neighborhood can be mapped. 
+    Gower's matrix provided better imputation results for numerical data compared to RF, due to the way dissimilarity distance is calculated. However, RF performed better 
     in categorical imputation. One way to approach the Titanic dataset is to use RF imputation on categorical variables and use KNN on numerical variables.
-    However, it should be pointed out that RF imputation is computationally expensive. If computation cost is not a big concern, 
-    multiple imputed datasets can be used for model fitting, then average the model output for prediction.
-   <h3> REFERENCES </h3>
+    However, it should be noted that RF imputation is computationally expensive. If computation cost is not a big concern, 
+    one way to account for uncertainty is to have multiple imputed datasets for model fitting, where the model outputs are averaged for prediction.
+   
+  
+  <h3> REFERENCES </h3>
   <p>[1]de Jonge,E., van der Loo, M., <b> An introduction to data cleaning with R</b>. 2013 </p>
   <p>[2]Breiman, L., Cutler, A.<i> Random Forest</i>. https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm </p>
   <p>[3]Lin, Yi; Jeon, Yongho (2002). Random forests and adaptive nearest neighbors (Technical report). 
         Technical Report No. 1055. University of Wisconsin.</p>
+  <p>[4]Allison, <b>Imputation by predictive mean matching:promise & perils</b>.Statistical Horizons Blog (https://statisticalhorizons.com/predictive-mean-matching) 
           
   
     
