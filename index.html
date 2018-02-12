@@ -63,6 +63,33 @@
 </nav>
 
         <ul class="article-list">
+          <li class="article-list-item appear">   
+              <a href="/posts/imputation" title="Imputing Missing Data">
+                <h5>Imputing missing data</h5>
+                  <p>Missing data is a familiar problem when working with raw data. In this post, I will compare three widely used methods for 
+            imputing (a.k.a, estimating) missing values. This is really for my own reference, because I often find myself asking the question "which imputation 
+            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. While there is no 'best' way to deal with missing 
+              data because it depends on the type of problems, I usually avoid imputing using
+            the mean/median/mode value. The reason being it doesn't take into account possible relationships between variables and it introduces 
+            bias to the data. As a general rule, I would not include a variable that has more than 50% missing values in building a predictive model.</p>
+            <span class="icon icon-arrow-right"></span>
+           </a>
+      
+      <div class="article-list-footer">
+        <span class="article-list-date">
+          Februaru 12th, 2018
+        </span>
+        <span class="article-list-divider">-</span>
+        <span class="article-list-minutes">
+          15 minute read
+          
+        </span>
+        <span class="article-list-divider">-</span>
+        <div class="article-list-tags">
+        <span class="article-list-divider">R, imputation, missing data </span>
+      </div>
+    </li>
+
         <li class="article-list-item appear">
           <a href="/posts/melanoma" title="Binary Classifier for Melanoma Using MobileNet">
             <h5>Binary Classifier for Melanoma Using MobileNet</h5>
@@ -71,12 +98,10 @@
                 Deep Learning model(InceptionV3) to detect melanoma, showing promising results toward automated medical diagnostic 
                 application. CDC reports that in the year 2014, there were 76,665 Americans diagnosed with melanoma resulting in 9,324 deaths.
                 Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry, 
-              Border irregularity, Color variation, Diameter and Evolving shape (aka, ABCDE) [1].
-            In case if you are wondering how well your eyes can detect malignant lesion, 
+              Border irregularity, Color variation, Diameter and Evolving shape (aka, ABCDE)[1]. In case if you are wondering how well your eyes can detect malignant lesion, 
               here's a sample collage of pictures (I will admit that when I tried, it was as good as tossing a coin).</p>
               <span class="icon icon-arrow-right"></span>
-            
-          </a>
+            </a>
       
       <div class="article-list-footer">
         <span class="article-list-date">
@@ -92,7 +117,7 @@
         <span class="article-list-divider">Python, Image Classification, MobilNet, DeepLearning </span>
       </div>
     </li>
-     
+            
           
         <li class="article-list-item appear">
           <a href="/posts/tumor_rna" title="Sparse PCA and XGboost">
