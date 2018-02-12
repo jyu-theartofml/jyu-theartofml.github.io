@@ -58,16 +58,12 @@
         <article class="article appear">
           <header class="article-header">
             <h1>Imputing missing data</h1>
-            <p>Missing data is a familiar nuisance when working with raw data. In this post, I will compare three widely used methods for 
+            <p>Missing data is a familiar problem when working with raw data. In this post, I will compare three widely used methods for 
             imputing (a.k.a, estimating) missing values. This is really for my own reference, because I often find myself asking the question "which imputation 
             algorithm would be most appropriate" while staring at those 'NA's in the dataframe. While there is no 'best' way to deal with missing 
               data because it depends on the type of problems, I usually avoid imputing using
             the mean/median/mode value. The reason being it doesn't take into account possible relationships between variables and it introduces 
             bias to the data. As a general rule, I would not include a variable that has more than 50% missing values in building a predictive model.</p>
-            <p>Using R studio, the three methods I will compare are: K Nearest Neighbor (KNN), Random Forest (RF) imputation, and Predictive Mean Matching (PMM). The
-              first two methods work for both categorical and numerical values, and PMM works best for continuous numerical variable. I chose to go with R for this task, 
-              because the last time I checked, Python does not have well-documented, hassle-free packages for these three methods. The closest thing I saw 
-              was <i>fancyimpute0.3</i>, but it did not offer RF and PMM.</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -87,7 +83,10 @@
           </header>
 
           <div class="article-content">
-
+  <p>Using R studio, the three methods I will compare are: K Nearest Neighbor (KNN), Random Forest (RF) imputation, and Predictive Mean Matching (PMM). The
+              first two methods work for both categorical and numerical values, and PMM works best for continuous numerical variable. I chose to go with R for this task, 
+              because the last time I checked, Python does not have well-documented, hassle-free packages for these three methods. The closest thing I saw 
+              was <i>fancyimpute0.3</i>, but it did not offer RF and PMM.</p>
 <p>For the purpose of this post, I used the <a href='https://cran.r-project.org/web/packages/titanic/titanic.pdf'>Titanic dataset</a>, 
   which contained a mix of categorical, ordinal, and numeric variables, and the Air Quality dataset (all numeric values). The 
   Titanic dataset has 714 rows of samples, and the columns of 
