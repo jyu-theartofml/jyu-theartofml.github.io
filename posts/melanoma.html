@@ -96,7 +96,11 @@
    (Source: isic-archive.com)</figcaption>
 </figure>  
 
-
+<p><b>UPDATE: After playing around with MobileNet and DenseNet, I've come to the conclusion that DenseNet had better and more robust performance
+  in terms of log-loss, AUC(90% val/92% test), and F1 score(86% val/88% test). I updated my <a href='https://github.com/yinniyu/ISIC_melanoma'>
+  github repo </a>with the codes for training a 3-class classification model. 
+  The final metrics were calculated only based on the melanoma class as if it's a binary classifier.<b>
+  
 <p>The largest public collection of dermoscopic images of skin lesions is maintained by International Skin 
   Imaging Collaboration (ISIC). The images were collected from established clinical centers worldwide, and they were 
   captured by various devices within each center. The goal of ISIC's collaboration effort can be summed up in this statement:
@@ -136,7 +140,8 @@ in one step. In contrast, depthwise separable convolution performs convolution o
 <h2>Data Processing </h2>
     <p>The dermoscopic images had many distracting artifacts (e.g, vignette borders, measurement scale, hair, etc) that can possilby interfere with the model learning. 
       Instead of writing a code for each type of artifacts to clean up the image,
-      I realize it's more efficient to apply binary segmentation mask to select for the general lesion area.</p>
+      I realize it's more efficient to apply binary segmentation mask to select for the general lesion area. For segmentation, I used the SegNet autoencoder 
+  model where it achieved a Dice coefficient (metric of overlap) of 78% on validation data.</p>
 
     <p>Another issue is that the malignant category was underpresented (20%), and it's difficult to  train a deep neural net 
       model with fewer than 1,000 pictures per class(yes, I did try). I used augmentation (rotation and translation)
