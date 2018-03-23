@@ -11,14 +11,51 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="http://yinniyu.github.io/posts/taxi">
   <meta property="og:site_name" content="The Art of Machine Learning">
-  <meta property="og:image" content="http://chalk.nielsenramon.com/assets/documentation/sample-image.jpg">
+  <meta property="og:image" content="">
 
  
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
 
     <link rel="stylesheet" href="/assets/light.css">
+<!-- D3.js -->
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <!--script src="http://d3js.org/d3.v2.min.js?2.8.1"></script>-->
+	<!-- jQuery -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+	<!-- Open Sans & CSS -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300' rel='stylesheet' type='text/css'>
+	  <style>
+
+    body{
+      font-family: 'Open Sans', sans-serif;
+      font-size:10px;
+      text-align: center;
+    }
+    @import url(style.css);
+
+    #circle circle {
+    fill: none;
+    pointer-events: all;
+    }
+
+    .group path {
+    fill-opacity: .5;
+    }
+
+    path.chord {
+    stroke: #000;
+    stroke-width: .05px;
+  }
+
+    #circle:hover path.fade {
+    display: none;
+    }
+
+
+	  </style>
+  
  </head>
 
 
