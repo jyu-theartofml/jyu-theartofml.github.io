@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>The Art of Machine Learning</title>
+  <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Regression for taxi data">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://yinniyu.github.io/posts/taxi">
+  <meta property="og:site_name" content="The Art of Machine Learning">
+  <meta property="og:image" content="http://chalk.nielsenramon.com/assets/documentation/sample-image.jpg">
+
+ 
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
+
+    <link rel="stylesheet" href="/assets/light.css">
+
+ </head>
+
+<!-- D3.js -->
+    <!-- <script src="http://d3js.org/d3.v3.js"></script> -->
+    <script src="http://d3js.org/d3.v2.min.js?2.8.1"></script>
+	<!-- jQuery -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+	<!-- Open Sans & CSS -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300' rel='stylesheet' type='text/css'>
+	  <style>
+
+    body{
+      font-family: 'Open Sans', sans-serif;
+      font-size:10px;
+      text-align: center;
+    }
+    @import url(style.css);
+
+    #circle circle {
+    fill: none;
+    pointer-events: all;
+    }
+
+    .group path {
+    fill-opacity: .5;
+    }
+
+    path.chord {
+    stroke: #000;
+    stroke-width: .05px;
+  }
+
+    #circle:hover path.fade {
+    display: none;
+    }
+
+
+	  </style>
+
+  </head>
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav appear">
+  <a href="/" class="header-logo" title="The Art of Machine Learning">The Art of Machine Learning</a>
+  <ul class="header-links">
+       <li>
+        <a href="https://yinniyu.github.io/about">About Me
+        </a>
+      </li>
+    
+     <li>
+        <a href="https://yinniyu.github.io/toolbox">My Toolbox</a>
+      </li>
+    
+     <li>
+        <a href="https://github.com/yinniyu" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <span class="icon icon-github"></span>
+        </a>
+      </li>
+    
+    
+      <li>
+        <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+          <span class="icon icon-linkedin"></span>
+        </a>
+      </li>   
+  </ul>
+</nav>
+
+        
+        <article class="article appear">
+          <header class="article-header">
+            <h1 id="circos">Circos plot for taxi rides </h1>
+            
+            <div id="chart"></div>
+        <script src="https://github.com/yinniyu/kaggle_taxi/blob/master/geomap_visual/chord.js"></script>
+            
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                November 2, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+              10 minute read
+              </span>
+              
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                <span class="article-list-divider">Python, LSTM, Deep Learning, Kaggle </span>
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+
+<p>The training data for this project was very straightforward - one column for each question, and another 
+  column that states whether the pair was a duplicate (1 is duplicate, 0 is no). There're two things that make
+  this dataset different than the vanilla binary classification problem. First, these are sequential data which means
+  the context of a particular word depends on the preceeding word(s). Second, the sentences have varied lengths so
+  the input data do not have fixed size. Recurrent Neural Net (RNN) is designed to tackle problems with these characteristics, so
+  let's delve into more details about this model.</p>
+
+<h2 id="LSTM">Choosing the model</h2>
+ <p>No single machine learning/deep learning method is silver bullet, and it's 
+   important to compare methods to find the most efficient way to solve the problem. Often times, Natural Language Processing (NLP)
+   is used for semantic/sentiment analysis of text data, this normally means preprocessing the data into a matrix suitable for machine learning
+   algorithm like Random Forest or Naive Bayesian. However, since those ML models don't take word or sentence as input, it is necessary to 
+   tokenize the words in the corpus, then convert the data into numerical feature vectors . You end up with a sparse matrix that contains a normalized numerical vector corresponding to word/n-gram frequency 
+     using Tf-idf weighting (for more details, see this <a href="http://scikit-learn.org/stable/modules/feature_extraction.html">
+     link</a>). This approach works well with small text data set or a corpus that has consistent content info. A disadvantage of this approach
+   is that when you get test data that contain new words or new n-grams, the tokenized matrix used to train the model would not be applicable 
+   because the new words effectively expanded the feature vector space. To get around this issue, word vectors and RNN can be used.
+
+   <p> <a href='https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/'>Word vectors </a>
+     refer to distributed word vectorization that encapsulates the semantics of each word. The dimension for the 
+     vector is fixed, and it corresponds to different semantic categories. For a sentence, we can embed a word vector to each word, 
+     cap the number of words to a given length before feeding it to the RNN model (this will determine the size of the model and numbers 
+     of parameters). Recurrent neural network has chain like structure composed of repeating units, and each unit (after time 0) accepts the data 
+     point AND the output of the previous unit as the input. Long Short Term Memory (LSTM) neural net is a recurrent network with 
+     individual unit that contains a memory cell which runs through the entire chain (see Fig 1 below). This memory cell works with other elements in the unit, such as forget-gate and 
+    input-gate, to decide what information/feature to keep, thus learning the semantic relevance of each word in the case of 
+     sentence input. This architecture allows LSTM to capture information few units prior and the memory 
+     cell avoids the vanishing-gradient problem, which kills off the gradient during backpropagation and diminishes the model's ability to learn. 
+     The down side of using LSTM is the computation cost - the longer the sentence/input, the more parameters the model has to learn.
+     For instance, a <code class="highlighter-rouge"> LSTM(128)</code> means for every temporal unit (in this case each word) there's 128 output from the nonlinear 
+     processing of the input using tanh as the activation step. 
+
+ 
+<figure>
+   <img src="images/LSTM3-chain.png" alt="LSTM schematic" >
+   <figcaption>Fig 1. Design of LSTM neural network(source: http://colah.github.io/posts/2015-08-Understanding-LSTMs). For the input of this data set, 
+     X_t corresponds to the word at t position of the sentence, and X_t+1 is the next word and so on.
+   </figcaption>
+   </figure>
+
+<h2 id="LSTM model">Implementing LSTM</h2>
+
+<p>This code is similar to one of the models suggested in Nikhil Dandekar's blog [1] - 
+  the model input would be a pair of questions and it outputs a prediction where 1 is duplicate. 
+  Each question is embedded using Stanford's NLP <a href='https://nlp.stanford.edu/projects/glove/'>GloVe </a>pretrained word vector, and each embedded vector is fed to a LSTM network [2]. 
+  Then the representation output from the LSTM layer is combined to calculate the distance (the sum of the squared difference between 
+  the two representation vectors), and that goes through two dense layers with sigmoid functions. This model architecture is similar 
+  to Siamese network, except there's the final sigmoid function to predict a binary outcome, and the model is trained by minimizing 
+  log loss. </p>
+   
+   <figure>
+   <img src="images/lstm_quora.png" alt="model layout" >
+   <figcaption>Fig 2. Schematic of workflow for classifier model, the final output is a 1D vector with values from 0 - 1 corresponding to the probability that they are duplicate questions.
+   </figcaption>
+   </figure>
+  
+ <p>Two codes are shown in my <a href='https://github.com/yinniyu/kaggle_quora'>github repository</a> - 
+  the first one is the preprocessing step to build the embedding matrix, and the second code is for model training and tuning. 
+In short the LSTM architecture is shown in the code snippet below</p>
+</body>
+</html>
