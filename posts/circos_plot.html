@@ -17,11 +17,10 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
 
-   <link rel="stylesheet" href="/assets/light.css">
+    <link rel="stylesheet" href="/assets/light.css">
 
+ </head>
 
-	
-  </head>
 
 <body>
   <main>
@@ -57,8 +56,13 @@
         
         <article class="article appear">
           <header class="article-header">
-            <h1 id="circos">Circos plot for taxi rides </h1>
-            
+            <h1 id="quora duplicate quesitons">Designing a classifier to detect duplicate questions </h1>
+            <p>For this Kaggle competition that took place 6 months ago, the goal is to compile a model to identify if a pair of questioins is asking the same thing. 
+              Quora provided 400K+ question pairs for the training set, and the final test data set has 2,345,796 question pairs (that's alot of data!). 
+              Many Kagglers have tried techniques such as Xgboost and feature extraction such as TF-IDF, ratio of matching words, and weighted word2vec. 
+              I wanted to learn how recurrent neural network works, and explore its potential in solving this problem and others (i.e., 
+              genomic functional prediction). The final 
+              ranking for this submission was top 37% on Kaggle's private LB.</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -79,9 +83,13 @@
 
           <div class="article-content">
 
- 
-		  
-		  
+<p>The training data for this project was very straightforward - one column for each question, and another 
+  column that states whether the pair was a duplicate (1 is duplicate, 0 is no). There're two things that make
+  this dataset different than the vanilla binary classification problem. First, these are sequential data which means
+  the context of a particular word depends on the preceeding word(s). Second, the sentences have varied lengths so
+  the input data do not have fixed size. Recurrent Neural Net (RNN) is designed to tackle problems with these characteristics, so
+  let's delve into more details about this model.</p>
+
 <h2 id="LSTM">Choosing the model</h2>
  <p>No single machine learning/deep learning method is silver bullet, and it's 
    important to compare methods to find the most efficient way to solve the problem. Often times, Natural Language Processing (NLP)
@@ -133,7 +141,94 @@
   
  <p>Two codes are shown in my <a href='https://github.com/yinniyu/kaggle_quora'>github repository</a> - 
   the first one is the preprocessing step to build the embedding matrix, and the second code is for model training and tuning. 
-In short the LSTM architecture is shown in the code snippet below</p>
-		  
+  In short the LSTM architecture is shown in the code snippet below</p>
+
+            
+            
+<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+#setup the word vector embedding
+from keras.layers.embeddings import Embedding
+
+nb_words=137077+1 #unique words in corpus (training and test sets)
+max_sentence_len=25
+embedding_layer = Embedding(nb_words,300,
+        weights=[embedding_matrix],
+        input_length=max_sentence_len,trainable=False)
+#############  LSTM model using functional API  ######################
+lstm_layer =LSTM(128)
+
+sequence_1_input = Input(shape=(max_sentence_len,), dtype='int32')
+embedded_sequences_1 = embedding_layer(sequence_1_input)
+x1 = lstm_layer(embedded_sequences_1)
+
+sequence_2_input = Input(shape=(max_sentence_len,), dtype='int32')
+embedded_sequences_2 = embedding_layer(sequence_2_input)
+y1 = lstm_layer(embedded_sequences_2)
+
+distance=Lambda(vec_distance, output_shape=vec_output_shape)([x1, y1])
+dense1=Dense(16, activation='sigmoid')(distance)
+dense1 = Dropout(0.3)(dense1)
+
+bn2 = BatchNormalization()(dense1)
+prediction=Dense(1, activation='sigmoid')(bn2)
+
+model = Model(input=[sequence_1_input, sequence_2_input], output=prediction)
+</code></pre></figure>
+
+<h2 id="results">Performance</h2>
+
+<p> With <code class="highlighter-rouge"> BatchNormalization()</code> and <code class="highlighter-rouge">Dropout(0.3)</code> applied to reduce overfitting,
+  the LB log loss score was 0.32650. For this project, the number of training data was significantly lower than test data (400K vs. 2M).
+  Collecting more training data can siginificantly boost model performance, as well as trying pretrained word vectors from different sources. </p> 
+
+            <br>          
+<h4 id="reference">REFERENCE</h4>
+<p>[1] Semantic Question Matching with Deep Learning, https://engineering.quora.com/Semantic-Question-Matching-with-Deep-Learning
+<br>
+[2] Using pre-trained word embeddings in a Keras model, https://blog.keras.io/using-pre-trained-word-embeddings-in-a-keras-model.html
+            </p>
+        
+
+          
+            <div id="disqus_thread" class="article-comments"></div>
+            <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+          
+        </article>
+        <footer class="footer appear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script>
+    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+    ga('create','UA-28631876-6','auto');ga('send','pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
 </body>
 </html>
