@@ -6,7 +6,7 @@
 
 	<!-- D3.js -->
     
-    	<script src="http://d3js.org/d3.v2.min.js?2.8.1"></script>
+    	<script src="https://d3js.org/d3.v5.min.js"></script>
 	<!-- jQuery -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
@@ -45,10 +45,8 @@
   </head>
   <body>
 
-
-
-	  
-    <script type="text/javascript">
+ <div id="example"></div>	  
+   <script type="text/javascript">
 var screenWidth=$(window).width();
 
 var margin = {left: 10, top: 5, right: 10, bottom: 5},
@@ -82,8 +80,8 @@ var svg = d3.select("div#example").append("svg")
 svg.append("circle")
 .attr("r", outerRadius);
 
-d3.csv("/cities2.csv", function(cities) {
-d3.json("/location_matrix.json", function(matrix) {
+d3.csv("cities2.csv", function(cities) {
+d3.json("location_matrix.json", function(matrix) {
 
 // Compute the chord layout as nxn matrix.
 layout.matrix(matrix);
@@ -157,7 +155,7 @@ return p.source.index != i
 }
 });
 });
-	    <div id="example"></div>
+	   
 
 </script>
 
