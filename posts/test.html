@@ -46,14 +46,11 @@
   <body>
 
 
-    <iframe src="/mbostock/raw/4061502/0a200ddf998aa75dfdb1ff32e16b680a15e5cb01/" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-
 
 	  
-    <div id="chart"></div>
+    <div id="example"></div>
     <script type="text/javascript">
 var screenWidth=$(window).width();
-
 
 var margin = {left: 10, top: 5, right: 10, bottom: 5},
 	  width = Math.min(screenWidth, 700) - margin.left - margin.right,
@@ -76,7 +73,7 @@ var layout = d3.layout.chord()
 var path = d3.svg.chord()
 .radius(innerRadius);
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("div#example").append("svg")
 .attr("width", (width+margin.left+margin.right))
 .attr("height", (height+margin.top+margin.bottom))
 .append("g")
@@ -86,8 +83,8 @@ var svg = d3.select("body").append("svg")
 svg.append("circle")
 .attr("r", outerRadius);
 
-d3.csv("cities2.csv", function(cities) {
-d3.json("location_matrix.json", function(matrix) {
+d3.csv("/cities2.csv", function(cities) {
+d3.json("/location_matrix.json", function(matrix) {
 
 // Compute the chord layout as nxn matrix.
 layout.matrix(matrix);
