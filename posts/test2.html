@@ -5,9 +5,9 @@
     <title> Chord to show Flows</title>
 
 	<!-- D3.js -->
+  <script src="http://d3js.org/d3.v3.js"></script>
+  <!--script src="https://d3js.org/d3.v5.min.js"></script>
 
-    	<script src="https://d3js.org/d3.v5.min.js"></script>
-    
 	<!-- jQuery -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
@@ -39,8 +39,8 @@
   </head>
   <body>
 
-    <div id="chart"></div>
-    <script type="text/javascript">
+<div id="chart"></div>
+ <script>
 var screenWidth=$(window).width();
 var margin = {left: 10, top: 5, right: 10, bottom: 5},
 	  width = Math.min(screenWidth, 700) - margin.left - margin.right,
@@ -57,7 +57,7 @@ var layout = d3.layout.chord()
 .sortChords(d3.ascending);
 var path = d3.svg.chord()
 .radius(innerRadius);
-var svg = d3.select("div#chart").append("svg")
+var svg = d3.select("body").append("svg")
 .attr("width", (width+margin.left+margin.right))
 .attr("height", (height+margin.top+margin.bottom))
 .append("g")
