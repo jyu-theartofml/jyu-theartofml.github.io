@@ -65,8 +65,8 @@ var svg = d3.select("body").append("svg")
 .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 svg.append("circle")
 .attr("r", outerRadius);
-d3.csv("cities2.csv", function(cities) {
-d3.json("location_matrix.json", function(matrix) {
+d3.csv("/cities2.csv", function(cities) {
+d3.json("/location_matrix.json", function(matrix) {
 // Compute the chord layout as nxn matrix.
 layout.matrix(matrix);
 // Add a group per neighborhood.
