@@ -98,7 +98,7 @@
 		    paper "Circos: an Information Aesthetic for Comparative Genomics.", it has become widely used and appreciated outside of the genomic/bioinformatic
 		    community. Its aesthetics and features effectively display relationships between different entities or patterns in periodic data.
 		  For the taxi data, it's actually quite simple to produce a circos Chord diagram by tweaking existing codes 
-		    shared by others on https://bl.ocks.org/, plus I will demonstrate the essential elements of the chord diagram.</p>
+		    shared by users (i.e, AndrewRP, nbremer) on https://bl.ocks.org/ , plus I will break down the essential elements of the chord diagram.</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -124,20 +124,20 @@
 
 <h2 id="LSTM">Chord Diagram</h2>
  <p>There are <a href='https://github.com/nicgirault/circosJS'> many flavors of circos diagram </a> depending on the application. To show the flow and magnitude of
-	 traffic of the taxi ride data, chord diagam is the most appropriate. The each chord displays the flow or relatinship(e.g., correlation)
+	 of the taxi ride data, chord diagam is the most appropriate. The each chord displays the flow or relatinship(e.g., correlation)
 	 between different entities, and the metric of interest can be visualized by the width of each chord. The input for the chord diagram is a standard matrix 
 	 called the 'Adjacency matrix' [1], in which a nxn matrix quantifies the flow from X to Y. In this matrix, the row names and columns names are identical and in the 
-	 same order. For the taxi data, the row names and columns names represent the pick up location and dropoff location, respectively.
+	 same order. For the taxi data, the rows(i) and columns(j) represent the pick up location and dropoff location, respectively.
+	 The matrix value(i,j) is the number of people going from location i to location j, and it determines the thickness of the corresponding chord. To retrieve neighbourhood names from the raw data, I used the Python packages <i>geopy</i> and <i>pygeocoder</i> to extract the neighbourhood information using 
+	 GPS coordinates for the pickup and dropoff locations.The codes are available <a href= 'https://github.com/yinniyu/kaggle_taxi/blob/master/geomap_visual'> here</a>,
+	 and the outputs are the matrix json file, and a .csv file with row names and html color codes.
 
 
 
  
-<figure>
-   <img src="images/LSTM3-chain.png" alt="LSTM schematic" >
-   <figcaption>Fig 1. Design of LSTM neural network(source: http://colah.github.io/posts/2015-08-Understanding-LSTMs). For the input of this data set, 
-     X_t corresponds to the word at t position of the sentence, and X_t+1 is the next word and so on.
-   </figcaption>
-   </figure>
+
+ <p align=center> Fig 1. Backbone of the chord diagram- define outer and inner radii.
+ 
 
 <h2 id="LSTM model">Implementing LSTM</h2>
 
