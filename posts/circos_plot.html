@@ -93,17 +93,16 @@
         
         <article class="article appear">
           <header class="article-header">
-            <h1 id="quora duplicate quesitons">Designing a classifier to detect duplicate questions </h1>
-            <p>For this Kaggle competition that took place 6 months ago, the goal is to compile a model to identify if a pair of questioins is asking the same thing. 
-              Quora provided 400K+ question pairs for the training set, and the final test data set has 2,345,796 question pairs (that's alot of data!). 
-              Many Kagglers have tried techniques such as Xgboost and feature extraction such as TF-IDF, ratio of matching words, and weighted word2vec. 
-              I wanted to learn how recurrent neural network works, and explore its potential in solving this problem and others (i.e., 
-              genomic functional prediction). The final 
-              ranking for this submission was top 37% on Kaggle's private LB.</p>
+            <h1 id="circos plot">Plotting chord diagram in D3 </h1>
+            <p>This post revisits the taxi ride data to make an interactive circos diagram in D3. Originally presented in 2009 by Martin Krzywinsk in his 
+		    paper "Circos: an Information Aesthetic for Comparative Genomics.", it has become widely used and appreciated outside of the genomic/bioinformatic
+		    community. Its aesthetics and features effectively display relationships between different entities or patterns in periodic data.
+		  For the taxi data, it's actually quite simple to produce a circos Chord diagram by tweaking existing codes 
+		    shared by others on https://bl.ocks.org/, plus I will demonstrate the essential elements of the chord diagram.</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
-                November 2, 2017
+                March 26, 2018
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
@@ -113,41 +112,24 @@
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
                 
-                <span class="article-list-divider">Python, LSTM, Deep Learning, Kaggle </span>
+                <span class="article-list-divider">D3,Data visualization, Chord diagram </span>
               </div>
             </div>
           </header>
 
           <div class="article-content">
 
-<p>place holder...2</p>
 	<div id="chart">
 		<script src="chord.js"></script></div>
 
-<h2 id="LSTM">Choosing the model</h2>
- <p>No single machine learning/deep learning method is silver bullet, and it's 
-   important to compare methods to find the most efficient way to solve the problem. Often times, Natural Language Processing (NLP)
-   is used for semantic/sentiment analysis of text data, this normally means preprocessing the data into a matrix suitable for machine learning
-   algorithm like Random Forest or Naive Bayesian. However, since those ML models don't take word or sentence as input, it is necessary to 
-   tokenize the words in the corpus, then convert the data into numerical feature vectors . You end up with a sparse matrix that contains a normalized numerical vector corresponding to word/n-gram frequency 
-     using Tf-idf weighting (for more details, see this <a href="http://scikit-learn.org/stable/modules/feature_extraction.html">
-     link</a>). This approach works well with small text data set or a corpus that has consistent content info. A disadvantage of this approach
-   is that when you get test data that contain new words or new n-grams, the tokenized matrix used to train the model would not be applicable 
-   because the new words effectively expanded the feature vector space. To get around this issue, word vectors and RNN can be used.
+<h2 id="LSTM">Chord Diagram</h2>
+ <p>There are <a href='https://github.com/nicgirault/circosJS'> many flavors of circos diagram </a> depending on the application. To show the flow and magnitude of
+	 traffic of the taxi ride data, chord diagam is the most appropriate. The each chord displays the flow or relatinship(e.g., correlation)
+	 between different entities, and the metric of interest can be visualized by the width of each chord. The input for the chord diagram is a standard matrix 
+	 called the 'Adjacency matrix' [1], in which a nxn matrix quantifies the flow from X to Y. In this matrix, the row names and columns names are identical and in the 
+	 same order. For the taxi data, the row names and columns names represent the pick up location and dropoff location, respectively.
 
-   <p> <a href='https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/'>Word vectors </a>
-     refer to distributed word vectorization that encapsulates the semantics of each word. The dimension for the 
-     vector is fixed, and it corresponds to different semantic categories. For a sentence, we can embed a word vector to each word, 
-     cap the number of words to a given length before feeding it to the RNN model (this will determine the size of the model and numbers 
-     of parameters). Recurrent neural network has chain like structure composed of repeating units, and each unit (after time 0) accepts the data 
-     point AND the output of the previous unit as the input. Long Short Term Memory (LSTM) neural net is a recurrent network with 
-     individual unit that contains a memory cell which runs through the entire chain (see Fig 1 below). This memory cell works with other elements in the unit, such as forget-gate and 
-    input-gate, to decide what information/feature to keep, thus learning the semantic relevance of each word in the case of 
-     sentence input. This architecture allows LSTM to capture information few units prior and the memory 
-     cell avoids the vanishing-gradient problem, which kills off the gradient during backpropagation and diminishes the model's ability to learn. 
-     The down side of using LSTM is the computation cost - the longer the sentence/input, the more parameters the model has to learn.
-     For instance, a <code class="highlighter-rouge"> LSTM(128)</code> means for every temporal unit (in this case each word) there's 128 output from the nonlinear 
-     processing of the input using tanh as the activation step. 
+
 
  
 <figure>
@@ -217,7 +199,7 @@ model = Model(input=[sequence_1_input, sequence_2_input], output=prediction)
 
             <br>          
 <h4 id="reference">REFERENCE</h4>
-<p>[1] Semantic Question Matching with Deep Learning, https://engineering.quora.com/Semantic-Question-Matching-with-Deep-Learning
+<p>[1] https://medium.com/@Marianattestad/a-treatise-on-making-circos-plots-from-genomic-data-7ff496849e0
 <br>
 [2] Using pre-trained word embeddings in a Keras model, https://blog.keras.io/using-pre-trained-word-embeddings-in-a-keras-model.html
             </p>
