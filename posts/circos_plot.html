@@ -119,10 +119,10 @@
 
           <div class="article-content">
 
-	<div id="chart">
-		<script src="chord.js"></script></div>
+		  <div id="chart"></div>
+		<script src="chord.js"></script>
 
-<h2 id="LSTM">Chord Diagram</h2>
+<h2 id="chord background">Chord Diagram</h2>
  <p>There are <a href='https://github.com/nicgirault/circosJS'> many flavors of circos diagram </a> depending on the application. To show the flow and magnitude of
 	 of the taxi ride data, chord diagam is the most appropriate. The each chord displays the flow or relatinship(e.g., correlation)
 	 between different entities, and the metric of interest can be visualized by the width of each chord. The input for the chord diagram is a standard matrix 
@@ -130,13 +130,17 @@
 	 same order. For the taxi data, the rows(i) and columns(j) represent the pick up location and dropoff location, respectively.
 	 The matrix value(i,j) is the number of people going from location i to location j, and it determines the thickness of the corresponding chord. To retrieve neighbourhood names from the raw data, I used the Python packages <i>geopy</i> and <i>pygeocoder</i> to extract the neighbourhood information using 
 	 GPS coordinates for the pickup and dropoff locations.The codes are available <a href= 'https://github.com/yinniyu/kaggle_taxi/blob/master/geomap_visual'> here</a>,
-	 and the outputs are the matrix json file, and a .csv file with row names and html color codes.
-
-
+	 and the outputs are the matrix json file, and a .csv file with row names and html color codes.</p>
+	 
+<h2 id="step1">Part  I. Donut Chart</h2>
+ <p>The Donut Chart (Fig.1) serves as the backbone of the chord diagram. To make the donut, define the layout with <code class="highlighter-rouge"> d3.layout.chord() </code> 
+	 and <code class="highlighter-rouge">d3.svg.arc() </code>. See complete codes <a href='https://github.com/yinniyu/yinniyu.github.io/blob/master/posts/chord_test1.js'>here 
+	 </a></p>
 
  
-
-		  <p align=center> Fig 1. Backbone of the chord diagram- define outer and inner radii.</p>
+		 <div id="test1"></div>
+		<script src="chord_test1.js"></script>
+		  <p align=center> Fig.1. Donut chart -  outer and inner radii.</p>
  
 
 <h2 id="LSTM model">Implementing LSTM</h2>
