@@ -71,11 +71,11 @@ group.append("svg:text")
 
 // Add the chords.
 var chord = svg.selectAll(".chord")
-    .data(layout.chords)
-		.enter().append("path")
-		.attr("class", "chord")
-		.style("fill", function(d) { return cities[d.source.index].color; })
-		.attr("d", path);
+	.data(layout.chords)
+	.enter().append("path")
+	.attr("class", "chord")
+	.style("fill", function(d) { return cities[d.source.index].color; })
+	.attr("d", path);
 
 
 // tool tip info for the chords
