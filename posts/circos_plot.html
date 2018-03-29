@@ -176,7 +176,7 @@ var chord = svg.selectAll(".chord")
    
    <figure>
    <img src="https://raw.githubusercontent.com/yinniyu/kaggle_taxi/master/geomap_visual/Screenshot-2018-3-23%20Chord%20to%20show%20Flows.png" 
-	alt="full chord" width=85%, height=85%>
+	alt="full chord" width=90%, height=90%>
    <figcaption>Fig.2. Chord diagram (no tooltip and no fading with mouseover).
    </figcaption>
    </figure>
@@ -185,7 +185,9 @@ var chord = svg.selectAll(".chord")
 <h2 id="final chord">Mouseover tool tip and fading</h2>
 
 <p> To add tool tips showing the number of people coming in and leaving the neighbourhood, a text function is appended to the 
-	variable chord. And to apply fading affects, go back to the variable "group" to add the functionality. The codes are added to the ones above.</p>
+	variable chord. And to apply fading affects, go back to the variable "group" to add the functionality. 
+	The codes shown below are added to the ones above, and the complete .js code (for the first interactive graph) can be found <a href='chord.js'>
+	here.</a></p>
 		  
 <figure class="highlight"><pre><code class="language-Javascript" data-lang="Javascript">
 //add name of the groups
@@ -211,14 +213,13 @@ return p.source.index != i
 && p.target.index != i;
 });
 }
-
 </code></pre></figure>
 	
 <h4 id="reference">REFERENCE</h4>
 <p>[1] https://medium.com/@Marianattestad/a-treatise-on-making-circos-plots-from-genomic-data-7ff496849e0
 <br>
-[2] Using pre-trained word embeddings in a Keras model, https://blog.keras.io/using-pre-trained-word-embeddings-in-a-keras-model.html
-            </p>
+<p>[2] <b>How to create a Flow diagram with a circular Twist</b>, Visual Cinnamon, https://www.visualcinnamon.com/2015/08/stretched-chord.html
+       </p>
         
 
           
