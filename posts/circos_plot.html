@@ -134,12 +134,16 @@
 	 
 <h2 id="step1">Part  I. Donut Chart</h2>
  <p>The Donut Chart (Fig.1) serves as the backbone of the chord diagram. To make the donut, define the layout with <code class="highlighter-rouge"> d3.layout.chord() </code> 
-	 and <code class="highlighter-rouge">d3.svg.arc() </code>. See complete codes <a href='https://github.com/yinniyu/yinniyu.github.io/blob/master/posts/chord_test1.js'>here 
+	 and <code class="highlighter-rouge">d3.svg.arc() </code>. A mouseover function is added to show how many people are leaving that neighborhood.
+	 See complete codes <a href='https://github.com/yinniyu/yinniyu.github.io/blob/master/posts/chord_test1.js'>here 
 	 </a></p>
 
- 
-		
-		  <p align=center> Fig.1. Donut chart -  outer and inner radii.</p>
+ <figure>
+   <img src="images/d3/test1.png" alt="donut" >
+   <figcaption>Fig.1. Donut chart showing the arcs corresponding to the groups. The size of each arc is determined by the sum of the values of that group (
+	   summing along the columns for row i). 
+   </figcaption>
+   </figure>
  
 
 <h2 id="LSTM model">Implementing LSTM</h2>
