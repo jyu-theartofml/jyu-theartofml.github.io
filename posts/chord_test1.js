@@ -31,7 +31,7 @@ var svg = d3.select("div#test1").append("svg")
 
 svg.append("circle")
 .attr("r", outerRadius);
-
+// import the two external files and apply function 
 d3.csv("neighborhoods.csv", function(cities) {
 d3.json("pickup_matrix.json", function(matrix) {
 
@@ -48,18 +48,12 @@ var group = svg.selectAll(".group")
 group.append("title").text(function(d, i) {
  return Math.round(d.value) + "people in " +  cities[i].name;});
 
-
 //// Add the group arc.
 var groupPath = group.append("path")
 .attr("id", function(d, i) { return "group" + i; })
 .attr("d", arc)
 .style("fill", function(d, i) { return cities[i].color; });
 ///this gives just the arcs corresponding to each group
-
-
-
-
-
 
 });
 });
