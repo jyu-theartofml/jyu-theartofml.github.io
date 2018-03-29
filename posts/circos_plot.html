@@ -135,7 +135,7 @@
 	 GPS coordinates for the pickup and dropoff locations.The codes are available <a href= 'https://github.com/yinniyu/kaggle_taxi/blob/master/geomap_visual'> here</a>,
 	 and the outputs are the matrix json file, and a .csv file with row names and html color codes.</p>
 	 
-<h2 id="step1">Part  I. Donut Chart</h2>
+<h2 id="step1">Step  I. Donut Chart</h2>
  <p>The Donut Chart (Fig.1) serves as the backbone of the chord diagram. To make the donut, define the layout with <code class="highlighter-rouge"> d3.layout.chord() </code> 
 	 and <code class="highlighter-rouge">d3.svg.arc() </code>. A mouseover function is added to show how many people are leaving that neighborhood.
 	 See complete donut codes <a href='https://github.com/yinniyu/yinniyu.github.io/blob/master/posts/chord_test1.js'>here 
@@ -149,9 +149,9 @@
    </figure>
  
 
-<h2 id="full chord">Adding chords and text labels</h2>
+<h2 id="full chord">Step II: Adding chords and text labels</h2>
 
-<p>Chords and text labels (Fig.2) are added to the donut with the following additional code:</p>
+<p>After getting the donut chart, chords and text labels (Fig.2) can be added, with the following additional code:</p>
 		  
 <figure class="highlight"><pre><code class="language-Javascript" data-lang="Javascript">
 //add name of the groups, style it perpendicular to the arc
@@ -185,10 +185,11 @@ var chord = svg.selectAll(".chord")
    </figure>
   
  
-<h2 id="final chord">Mouseover tool tip and fading</h2>
+<h2 id="final chord">Step III: Mouseover tool tip and fading</h2>
 
-<p> To add tool tips showing the number of people coming in and leaving the neighbourhood, a text function is appended to the 
-	variable chord. And to apply fading affects, go back to the variable "group" to add the functionality. 
+<p> Finally, interactive features are what makes D3 graphics so appealing. To add tool tips showing the number of people coming in 
+	and leaving the neighbourhood, a text function is appended to the 
+	variable chord. And to apply fading affects with mouseover, go back to the variable "group" to add the functionality. 
 	The codes shown below are added to the ones above, and the complete .js code (for the first interactive graph) can be found <a href='chord.js'>
 	here.</a></p>
 		  
