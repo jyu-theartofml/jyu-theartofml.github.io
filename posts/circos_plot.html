@@ -146,19 +146,37 @@
    </figure>
  
 
-<h2 id="LSTM model">Implementing LSTM</h2>
+<h2 id="full chord">Adding chords and text labels</h2>
 
-<p>This code is similar to one of the models suggested in Nikhil Dandekar's blog [1] - 
-  the model input would be a pair of questions and it outputs a prediction where 1 is duplicate. 
-  Each question is embedded using Stanford's NLP <a href='https://nlp.stanford.edu/projects/glove/'>GloVe </a>pretrained word vector, and each embedded vector is fed to a LSTM network [2]. 
-  Then the representation output from the LSTM layer is combined to calculate the distance (the sum of the squared difference between 
-  the two representation vectors), and that goes through two dense layers with sigmoid functions. This model architecture is similar 
-  to Siamese network, except there's the final sigmoid function to predict a binary outcome, and the model is trained by minimizing 
-  log loss. </p>
+<p>Chords and text labels (Fig.2) are added to the donut with the following additional code:</p>
+		  
+<figure class="highlight"><pre><code class="language-javascript" data-lang="Javascript">
+//add name of the groups
+group.append("svg:text")
+  	.each(function(d) { d.angle = ((d.startAngle + d.endAngle) / 2);})
+  	.attr("dy", ".25em")
+  	.attr("class", "titles")
+  	.attr("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
+  	.attr("transform", function(d,i) {
+  		var c = arc.centroid(d);
+  		return "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
+  		+ "translate(" + (innerRadius + 15) + ")" //how close the labels are to the outer arc
+  		+ (d.angle > Math.PI ? "rotate(180)" : "")
+  	})
+  	.text(function(d,i) { return cities[i].name; });
+
+// Add the chords.
+var chord = svg.selectAll(".chord")
+    .data(layout.chords)
+		.enter().append("path")
+		.attr("class", "chord")
+		.style("fill", function(d) { return cities[d.source.index].color; })
+		.attr("d", path);
+</code></pre></figure>
    
    <figure>
-   <img src="images/lstm_quora.png" alt="model layout" >
-   <figcaption>Fig 2. Schematic of workflow for classifier model, the final output is a 1D vector with values from 0 - 1 corresponding to the probability that they are duplicate questions.
+   <img src="https://raw.githubusercontent.com/yinniyu/kaggle_taxi/master/geomap_visual/Screenshot-2018-3-23%20Chord%20to%20show%20Flows.png" alt="full chord" width=65%, height=65%>
+   <figcaption>Fig.2. Chord diagram (no fading with mouseover).
    </figcaption>
    </figure>
   
