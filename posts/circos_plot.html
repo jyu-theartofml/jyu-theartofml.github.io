@@ -214,6 +214,18 @@ return p.source.index != i
 });
 }
 </code></pre></figure>
+
+<p>To embed the D3 javascript into the html, simply call the .js file with the <code class="highlighter-rouge"> script </code> function. In practice, 
+	it's common to use <code class="highlighter-rouge"> div </code> to define the area for D3 effects. For example, in this html 
+	web page, I inserted the D3 script using the following snippets. The div id of "chart" can be callled in the chord.js file to select 
+	the div element by specifying d3.select("div#chart").append("svg"). </p>
+<figure class="highlight"><pre><code class="language-HTML" data-lang="HTML">
+<div id="chart">
+<script src="chord.js"></script></div>
+</code></pre></figure>	
+
+<p>I found that the fastest way to hack D3 is by looking at well-annotated codes (I love the ones written by <a href='https://www.visualcinnamon.com/about'>
+	Nadieh Bremer </a>) AND using <a href='http://jsfiddle.net/wQXCL/2782/'> JSFiddle interactive tool </a> to test out different javascript and see its effect.
 	
 <h4 id="reference">REFERENCE</h4>
 <p>[1] https://medium.com/@Marianattestad/a-treatise-on-making-circos-plots-from-genomic-data-7ff496849e0
