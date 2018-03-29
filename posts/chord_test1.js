@@ -46,7 +46,7 @@ var group = svg.selectAll(".group")
 
 // Add a mouseover title.
 group.append("title").text(function(d, i) {
- return Math.round(d.value) + "people in " +  cities[i].name;});
+ return Math.round(d.value) + "people leaving " +  cities[i].name;});
 
 //// Add the group arc.
 var groupPath = group.append("path")
