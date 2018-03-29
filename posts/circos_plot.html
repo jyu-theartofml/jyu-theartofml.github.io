@@ -168,10 +168,10 @@ group.append("svg:text")
 // Add the chords.
 var chord = svg.selectAll(".chord")
     .data(layout.chords)
-		.enter().append("path")
-		.attr("class", "chord")
-		.style("fill", function(d) { return cities[d.source.index].color; })
-		.attr("d", path);
+    .enter().append("path")
+    .attr("class", "chord")
+    .style("fill", function(d) { return cities[d.source.index].color; })
+    .attr("d", path);
 </code></pre></figure>
    
    <figure>
@@ -190,14 +190,14 @@ var chord = svg.selectAll(".chord")
 	here.</a></p>
 		  
 <figure class="highlight"><pre><code class="language-Javascript" data-lang="Javascript">
-//add name of the groups
+//Modify the existing var group
 var group = svg.selectAll(".group")
 .data(layout.groups)
 .enter().append("g")
 .attr("class", "group")
 .on("mouseover", mouseover);
   	
-// tool tip info for the chords
+// Add tool tip info for the chords
 chord.append("title").text(function(d) {
  return cities[d.source.index].name
  + " → " + cities[d.target.index].name
@@ -206,7 +206,8 @@ chord.append("title").text(function(d) {
  + " → " + cities[d.source.index].name
  + ": " + (d.target.value);
  });
-
+ 
+//Add function for mouseover fading
 function mouseover(d, i) {
 chord.classed("fade", function(p) {
 return p.source.index != i
