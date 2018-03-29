@@ -150,8 +150,8 @@
 
 <p>Chords and text labels (Fig.2) are added to the donut with the following additional code:</p>
 		  
-<figure class="highlight"><pre><code class="language-javascript" data-lang="Javascript">
-//add name of the groups
+<figure class="highlight"><pre><code class="language-Javascript" data-lang="Javascript">
+//add name of the groups, style it perpendicular to the arc
 group.append("svg:text")
   	.each(function(d) { d.angle = ((d.startAngle + d.endAngle) / 2);})
   	.attr("dy", ".25em")
@@ -175,54 +175,45 @@ var chord = svg.selectAll(".chord")
 </code></pre></figure>
    
    <figure>
-   <img src="https://raw.githubusercontent.com/yinniyu/kaggle_taxi/master/geomap_visual/Screenshot-2018-3-23%20Chord%20to%20show%20Flows.png" alt="full chord" width=65%, height=65%>
+   <img src="https://raw.githubusercontent.com/yinniyu/kaggle_taxi/master/geomap_visual/Screenshot-2018-3-23%20Chord%20to%20show%20Flows.png" 
+	alt="full chord" width=85%, height=85%>
    <figcaption>Fig.2. Chord diagram (no fading with mouseover).
    </figcaption>
    </figure>
   
- <p>Two codes are shown in my <a href='https://github.com/yinniyu/kaggle_quora'>github repository</a> - 
-  the first one is the preprocessing step to build the embedding matrix, and the second code is for model training and tuning. 
-  In short the LSTM architecture is shown in the code snippet below</p>
+ 
+<h2 id="final chord">Mouseover tool tip and fading</h2>
 
-            
-            
-<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-#setup the word vector embedding
-from keras.layers.embeddings import Embedding
+<p> To add tool tips showing the number of people coming in and leaving the neighbourhood, a text function is appended to the 
+	variable chord. And to apply fading affects, go back to the variable "group" to add the functionality. The codes are added to the ones above.</p>
+		  
+<figure class="highlight"><pre><code class="language-Javascript" data-lang="Javascript">
+//add name of the groups
+var group = svg.selectAll(".group")
+.data(layout.groups)
+.enter().append("g")
+.attr("class", "group")
+.on("mouseover", mouseover);
+  	
+// tool tip info for the chords
+chord.append("title").text(function(d) {
+ return cities[d.source.index].name
+ + " → " + cities[d.target.index].name
+ + ": " + (d.source.value)
+ + "\n" + cities[d.target.index].name
+ + " → " + cities[d.source.index].name
+ + ": " + (d.target.value);
+ });
 
-nb_words=137077+1 #unique words in corpus (training and test sets)
-max_sentence_len=25
-embedding_layer = Embedding(nb_words,300,
-        weights=[embedding_matrix],
-        input_length=max_sentence_len,trainable=False)
-#############  LSTM model using functional API  ######################
-lstm_layer =LSTM(128)
+function mouseover(d, i) {
+chord.classed("fade", function(p) {
+return p.source.index != i
+&& p.target.index != i;
+});
+}
 
-sequence_1_input = Input(shape=(max_sentence_len,), dtype='int32')
-embedded_sequences_1 = embedding_layer(sequence_1_input)
-x1 = lstm_layer(embedded_sequences_1)
-
-sequence_2_input = Input(shape=(max_sentence_len,), dtype='int32')
-embedded_sequences_2 = embedding_layer(sequence_2_input)
-y1 = lstm_layer(embedded_sequences_2)
-
-distance=Lambda(vec_distance, output_shape=vec_output_shape)([x1, y1])
-dense1=Dense(16, activation='sigmoid')(distance)
-dense1 = Dropout(0.3)(dense1)
-
-bn2 = BatchNormalization()(dense1)
-prediction=Dense(1, activation='sigmoid')(bn2)
-
-model = Model(input=[sequence_1_input, sequence_2_input], output=prediction)
 </code></pre></figure>
-
-<h2 id="results">Performance</h2>
-
-<p> With <code class="highlighter-rouge"> BatchNormalization()</code> and <code class="highlighter-rouge">Dropout(0.3)</code> applied to reduce overfitting,
-  the LB log loss score was 0.32650. For this project, the number of training data was significantly lower than test data (400K vs. 2M).
-  Collecting more training data can siginificantly boost model performance, as well as trying pretrained word vectors from different sources. </p> 
-
-            <br>          
+	
 <h4 id="reference">REFERENCE</h4>
 <p>[1] https://medium.com/@Marianattestad/a-treatise-on-making-circos-plots-from-genomic-data-7ff496849e0
 <br>
