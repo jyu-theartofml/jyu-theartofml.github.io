@@ -67,7 +67,7 @@
             neural network or deep learning building blocks, which makes model interpretability a challenging task. While the 
             stakes are low if a convolutional neural net misclassifies a Shar Pei for a bath towel, it's a different realm if AI is 
             performing automated medical diagnostics, making decisions on credit applications, or even finding <a href='https://en.wikipedia.org/wiki/Person_of_Interest_(TV_series)'>
-            'Person of Interest' </a>. The new EU general data protection 
+              <u>'Person of Interest' </u></a>. The new EU general data protection 
             regulation (GDPR), effective May 25th, 2018, requires a "right to explanation" for human subjects of AI/automated system. 
             This means a subject/consumer has the right to obtain an explanation of the automated decision, and the right to opt out of 
             a decision based solely on AI/automated algorithm that produces legal effects on them (i.e, job recruiting,
@@ -108,21 +108,15 @@ a separate interpretable model locally around the prediction. To quote the lead 
   Lime is able to explain any model without needing to 'peek' into it, so it is <b>model-agnostic</b>."
 </blockquote> 
   
-  <figure>
-   <img src="images/melanoma/depth_pointwise.jpg" alt="illustration of depthwise conv" >
-          <center><img src="images/melanoma/mobilenet_structure.png" alt="model component" ></center>  
-   <figcaption>Fig.2.Top drawing illustrates the concept of depthwise + pointwise convolution. Bottom schematic shows the
-     building block unit of the MobileNet, which consists of repeating depthwise separable convolutions and full-connected layers at the end.
-   </figcaption> 
-   </figure>
+  The picture at the top of this post illustrates fitting a localized linear model for a given prediction. For image classification, LIME
+            will perturbe the original image to generate a set of data. For each perturbed sample, it calculates the 
+            probability that the image belongs to a given class according to the model. Then it learns a locally faithful linear model,
+            giving weights to perturbed data points by their proximity to the original image (Fig.1.).
         
-<p>A regular convolution both filters and combines inputs into a feature map
-in one step. In contrast, depthwise separable convolution performs convolution on each channel separately first, 
-  effectively filters and selects features for the channel, then applies pointwise (1x1) convolution to merge the features to 
-  generate a new feature map. According to the Mobilenet paper [2], for a 3×3 kernel depthwise separable convolution is about 9X faster than regular convolution 
-  operation. MobileNet has 28 layers, most of which are repeats of depthwise separable convolution,
-  and 95% of the total computation is spent on the 1x1 pointwise convolution[2].</p>
-
+<figure>
+    <center><img src="images/melanoma/LIME_example.jpg" alt="frog and lime" ></center>
+   <figcaption>Fig.1.Explaining feature importance of a frog using LIME. (source:https://www.kdnuggets.com/2016/08/introduction-local-interpretable-model-agnostic-explanations-lime.html)  </figcaption>
+   </figure>
 <h2>Data Processing </h2>
     <p>The dermoscopic images had many distracting artifacts (e.g, vignette borders, measurement scale, hair, etc) that can possilby interfere with the model learning. 
       Instead of writing a code for each type of artifacts to clean up the image,
