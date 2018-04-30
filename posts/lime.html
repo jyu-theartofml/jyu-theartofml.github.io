@@ -114,22 +114,30 @@ This post won't delve into the mathematical details (they are in the published p
             would perturbe the original image to generate a set of data. For each perturbed sample, it calculates the 
             probability that the image belongs to a given class according to the model. Then it learns a locally faithful 
             linear model,
-            giving weights to perturbed data points by their proximity to the original image (Fig.1.).
+            giving weights to perturbed data points by their proximity to the original image (Fig.1.). It's important to stress that LIME
+            generates a separate model that attempts to explain the prediction of the original model. The LIME model
+            approximates a local linear model around the vicinity of the original sample being explained.
         
 <figure>
     <center><img src="images/lime/LIME_example.jpg" alt="frog and lime" ></center>
    <figcaption>Fig.1.Explaining feature importance of a frog using LIME. (source:https://www.kdnuggets.com/2016/08/introduction-local-interpretable-model-agnostic-explanations-lime.html)  </figcaption>
    </figure>
-<h2>Data Processing </h2>
-    <p>The dermoscopic images had many distracting artifacts (e.g, vignette borders, measurement scale, hair, etc) that can possilby interfere with the model learning. 
-      Instead of writing a code for each type of artifacts to clean up the image,
-      I realize it's more efficient to apply binary segmentation mask to select for the general lesion area. For segmentation, I used the SegNet autoencoder 
-  model where it achieved a Dice coefficient (metric of overlap) of 78% on validation data.</p>
 
-    <p>Another issue is that the malignant category was underpresented (20%), and it's difficult to  train a deep neural net 
-      model with fewer than 1,000 pictures per class(yes, I did try). I used augmentation (rotation and translation)
-      to produce copies of the original malignant images to mitigate the under-representation. No other augmentation methods were used at this stage. </p>   
+  <h2>Evaluation of the Melanoma classifier </h2>
+    <p>After importing the trained DenseNet model and test images, I used LIME to evalute the model and generate a heat map image 
+      superimposed on the original image. 
+            The code is show below:</p>
 
+<p> As shown in Fig.2, withine each class the green pixels represent features that are for the prediction of that class, and red pixels means it's 
+  against the prediction. After looking through a group of misclassifies images, I noticed that they are mostly images of
+  smaller lesions. Without any zoom-in effect, the model seems to struggle to learn relevant features such as edges and uneven
+            colorations. It also seems to think that the black background pixel is somehow associated with the actual lesion.</p>
+  
+  <figure>
+    <center><img src="images/lime/LIME_features.png" alt="melanoma and lime" ></center>
+   <figcaption>Fig.2. Explanation of the image prediction shows that DenseNet model overfits by learning on irrelevant background pixels. </figcaption>
+   </figure>
+  
  <h2>Transfer the learning with Bottleneck </h2>  
         <p>There's a wonderful <a href='https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html'>
            tutorial</a> by the creator of Keras illustrating transfer learning for deep neural net. What it means is that you take 
