@@ -67,14 +67,14 @@
             neural network or deep learning building blocks, which makes model interpretability a challenging task. While the 
             stakes are low if a convolutional neural net misclassifies a Shar Pei for a bath towel, it's a different realm if AI is 
             performing automated medical diagnostics, making decisions on credit applications, or even finding <a href='https://en.wikipedia.org/wiki/Person_of_Interest_(TV_series)'>
-              <u>'Person of Interest' </u></a>. The new EU general data protection 
-            regulation (GDPR), effective May 25th, 2018, requires a "right to explanation" for human subjects of AI/automated system. 
+              <u> 'Person of Interest' </u></a>. The new EU general data protection 
+            regulation (GDPR), effective May 25th, 2018, requires a "right to explanation" for human subjects of AI/automated system[1]. 
             This means a subject/consumer has the right to obtain an explanation of the automated decision, and the right to opt out of 
             a decision based solely on AI/automated algorithm that produces legal effects on them (i.e, job recruiting,
             loan applications) without human intervention. Back in 2016, researchers (Ribeiro et al) from University of 
             Washington published an algorithm called LIME that addresses the need for model interpretability and evaluation by 
               explaining the predictions of any classifier in an 
-            intuitive manner. In this post, I will apply LIME to assess the DenseNet melanoma model by visualizing feature importance.
+            intuitive manner. In this post, I will apply LIME to assess the DenseNet melanoma classifier by visualizing feature importance.
           
             
             <div class="article-list-footer">
@@ -100,7 +100,7 @@
 <h2>LIME - a model of a model</h2>
   
 <p> Local Interpretable Model-Agnostic Explanations (LIME) is an algorithm that explains a given prediction by approximating 
-a separate interpretable model locally around the prediction. To quote the lead author Marco Ribeiro:
+a separate interpretable model locally around the prediction[2]. To quote the lead author Marco Ribeiro:
   
 <blockquote class="w3-panel w3-leftbar w3-light-grey">
   " <b>Local </b>refers to local fidelity - i.e., we want the explanation to really reflect the behaviour of the classifier 
@@ -112,7 +112,7 @@ a separate interpretable model locally around the prediction. To quote the lead 
 This post won't delve into the mathematical details (they are in the published paper if you are interested). The picture at 
             the top illustrates fitting a localized weighted linear model for a given prediction. 
             For image classification, LIME
-            would perturbe the original image to generate a set of data. For each perturbed sample, it calculates the 
+            would perturb the original image to generate a data set. For each perturbed sample, it calculates the 
             probability that the image belongs to a given class according to the model. Then it learns a locally faithful 
             linear model,
             giving weights to perturbed data points by their proximity to the original image (Fig.1.). It's important to stress that LIME
@@ -121,11 +121,11 @@ This post won't delve into the mathematical details (they are in the published p
         
 <figure>
     <center><img src="images/lime/LIME_example.jpg" alt="frog and lime" ></center>
-   <figcaption>Fig.1.Explaining feature importance of a frog using LIME. (source:https://www.kdnuggets.com/2016/08/introduction-local-interpretable-model-agnostic-explanations-lime.html)  </figcaption>
+   <figcaption>Fig.1.Explaining feature importance of a frog thru LIME. (source:https://www.kdnuggets.com/2016/08/introduction-local-interpretable-model-agnostic-explanations-lime.html)  </figcaption>
    </figure>
 
-  <h2>Evaluation of the Melanoma classifier </h2>
-    <p>After importing the trained DenseNet model and test images, I used LIME to evalute the model and generate a heat map image 
+  <h2>What did the model learn? </h2>
+    <p>After importing the <a href='https://github.com/yinniyu/ISIC_melanoma'>trained DenseNet model </a> and test images, I used LIME to evalute the model and generate a heat map image 
       superimposed on the original image. 
             The code is show below:</p>
             
@@ -144,140 +144,38 @@ explanation = explainer.explain_instance(test_preprocessed[2], model.predict, la
 temp, mask = explanation.get_image_and_mask(0, positive_only=False, num_features=10, hide_rest=False)
 plt.imshow(mark_boundaries(array_to_img(temp), mask))
 </code></pre></figure>
-
-            
-            
-            
-<p> As shown in Fig.2, withine each class the green pixels represent features that are for the prediction of that class, and red pixels means it's 
-  against the prediction. After looking through a group of misclassifies images, I noticed that they are mostly images of
-  smaller lesions. Without any zoom-in effect, the model seems to struggle to learn relevant features such as edges and uneven
-            colorations. It also seems to think that the black background pixel is somehow associated with the actual lesion classification.</p>
+      
+               
+<p> As shown in Fig.2., within each class the green pixels represent features that are for the prediction of that class, and red 
+  pixels means they are
+  against the prediction. After looking through some misclassified samples, I noticed that they are similar to the right side image in
+  Fig.2.(false negative) - they consist of smaller lesions relative to the rest. This suggests that the model struggled to learn 
+  relevant features such as edges and uneven
+  colorations (perhaps due to the resolution of such small region of interest). It also seems to think that the black background pixel is 
+  somehow associated with a benign prediction.</p>
   
   <figure>
     <center><img src="images/lime/LIME_features.png" alt="melanoma and lime" ></center>
-   <figcaption>Fig.2. Explanation of the image prediction shows that DenseNet model overfits by learning on irrelevant background pixels. </figcaption>
+   <figcaption>Fig.2. Explanation of the prediction shows that DenseNet model overfits by learning on background pixels. </figcaption>
    </figure>
   
- <h2>Transfer the learning with Bottleneck </h2>  
-        <p>There's a wonderful <a href='https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html'>
-           tutorial</a> by the creator of Keras illustrating transfer learning for deep neural net. What it means is that you take 
-          advantage of fine-tuned model trained on large datasets, 
-          and start training new data with the pre-trained weights to save time and computational cost. One common way to do that is 
-          using 'bottleneck' features - output of the 'bottom' part of a deep learning model, essentially it's all the convolutional layers (everything up to the fully-connected layers ). I saved the bottleneck features as 
-          numpy array, then train a customized 'top' part of the model for a binary classifier (see code below). Training the top part separately ensures that the 
-          top model weight provides a consistent and smooth training when it's attached to the bottom model later on.</p>
+ <h2>Potential ways to improve</h2>  
+   <p>One way to help the DenseNet model learn better is by training on more images of small melanoma lesions (distribution of data 
+     matters), and trying different augmentation techniques for preprocessing. LIME has provided interesting insights into the
+    flaws of the melanoma classifier, allowing the user to evaluate and improve 'black box' model with an intuitive understanding. 
+     Besides image prediction, 
+     LIME also works with text or categorical data for explaining classifier models (but not regression). And it's also 
+     <a href='https://www.data-imaginist.com/2017/announcing-lime/'>available in R</a>. Check out the video below if you are interested in learning more.</p>
 
-<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-base_model = MobileNet(input_shape=(192,192,3), include_top=False,weights='imagenet')
-
-def Top_model(input_dim):
-    top_model = Sequential()
-    top_model.add(Flatten(input_shape=input_dim))
-    top_model.add(Dense(512, activation='relu'))
-    top_model.add(Dropout(0.6))
-    top_model.add(Dense(512, activation='relu'))
-    top_model.add(Dropout(0.6))
-    top_model.add(Dense(1, activation='sigmoid'))
-   
-    return top_model
-
-model2=Top_model(train_data.shape[1:])
-model2.compile(optimizer=RMSprop(lr=0.0001), loss='binary_crossentropy', metrics=['accuracy',f1])
-
-model2.fit(train_data, train_labels,
-              epochs=5, batch_size=32,verbose=1,
-              validation_data=(validation_data, validation_labels))
-
-################# Use functional API to  create the full model#############
-top_model2 = Top_model(base_model.output_shape[1:])
-top_model2.load_weights('bottleneck_fc_model(3layer)_512size_mobilenet.h5')
-model = Model(input=base_model.input, output=top_model2(base_model.output))
-
-for layer in model.layers[:4]:
-    layer.trainable=False
-model.compile(loss='binary_crossentropy',
-              optimizer=SGD(lr=1e-3, momentum=0.9),
-              metrics=['accuracy',f1])
-</code></pre></figure>
-<p>After training the top model, I augmented the image files with <code class='highlighter-rouge'>ImageDataGenerator()</code> along with 
-  the default preprocessing function to scale the pixel values. I chose Stochastic Gradient Descend as the optimizer 
-  because that was the optimizer used on the original MobileNet.</p>
-
-<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-train_datagen = ImageDataGenerator(
-        height_shift_range=0.2,
-        shear_range=0.4,
-        rotation_range=40,
-        preprocessing_function=preprocess_input)
-
-validation_datagen=ImageDataGenerator(preprocessing_function=preprocess_input)
-
-ROWS=192
-COLS=192
-train_generator = train_datagen.flow_from_directory(
-            train_data_dir,
-            classes=['benign_masked','malignant_masked'],
-            target_size=(ROWS, COLS),
-            batch_size=32,
-            class_mode='binary',
-            shuffle='True')
-
-validation_generator = validation_datagen.flow_from_directory(
-            validation_data_dir,
-            classes=['benign_masked','malignant_masked'],
-            target_size=(ROWS, COLS),
-            batch_size=32,
-            class_mode='binary',
-            shuffle='True')
-
-from sklearn.utils import class_weight
-class_weight = class_weight.compute_class_weight('balanced', np.unique(train_labels), train_labels)
-
-early_stopping =EarlyStopping(monitor='val_loss', patience=4)
-model_checkpoint = ModelCheckpoint('training_weights_mobilenet_bottlneck.h5',
-                                    monitor='val_loss', save_best_only=True,save_weights_only=True)
-
-model_full=model.fit_generator(train_generator,
-                           steps_per_epoch=86,
-                           validation_data=validation_generator,
-                           validation_steps=1,
-                           class_weight=class_weight,
-                           callbacks=[early_stopping, model_checkpoint],
-                           epochs=20,verbose=1)  
-</code></pre></figure>
-  
-        
-  
-        <p>Binary cross entropy was a loss function used to optimize the model(the lower the score the better), it takes into account <i>confidence</i> of the prediction along with 
-          accuracy. The validation binary cross entropy was <b>0.43</b>, F1 score (balanced accuracy accounting for imbalanced 
-          class distribution) was <b>86%</b>, and AUC for ROC was <b>0.89 </b>(1 being the best).</p>
-  
-
-  <figure>
-    <center><img src="images/melanoma/roc.png" alt="ROC of validation" ></center>
-   <figcaption>Fig.3. ROC of the validation dataset showing the trade-off between sensitivity (True Positive) and specificity (1-False Positive). 
-     Area under the curve is the overall performance metric.
-   </figcaption>
-   </figure>
-  
-<p>While the AUC score was lower than the ones presented by Esteve et al[4], I should point out that this MobileNet model was trained on 
-  a smaller training dataset provided by <a href='https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a'> ISIC 2017 Challenge</a>. 
-  I expect that better performance (>90% balanced accuracy) can be achieved with a larger training set, as well as bigger image array. For my own future reference, here are some things to 
-  keep in mind when training a deep learning model for image classification:
-<ul>
-  <li>Pay attention to preprocessing step for a given deep neural net model. It's NOT always mean centered or standard deviation normalized to 1.
-</li>
-  <li>Sanity check: make sure the images in trainnig and test sets have more or less the same distribution.</li>
-  <li>Explore augmentation options such as contrasting or adaptive histogram equilization. It is a handy tool especially
-    when poor lighting or resolution of the digital image becomes an issue (Note to self: need to  explore this further).</li>
-  <li>Obviously there's room for improvement. For example,the number of filters in each layer and dropout rate can be tuned.
-</ul>  
-
-<p><b>Note: For Fig.1, the center 4 images are melanoma, and the rest are benign. </b></p>       
+ <div class="embed-responsive embed-responsive-16by9">
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/hUnRCxnydCc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>           
           
 <h3> REFERENCES </h3>
-  <p>[1]Ribeiro et al. <b>Why should I trust you? Explaining the predictions of any classifier</b>, https://arxiv.org/pdf/1602.04938.pdf </p>  
-<div id="disqus_thread" class="article-comments"></div>
+            <p>[1]Wu, P., <i>GDPR and its impacts on machine learning applications </i>, Medium.com (https://medium.com/trustableai/gdpr-and-its-impacts-on-machine-learning-applications-d5b5b0c3a815) </p>       
+  <p>[2]Ribeiro et al. <b>Why should I trust you? Explaining the predictions of any classifier</b>, https://arxiv.org/pdf/1602.04938.pdf </p>  
+
+ <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
 <noscript>Please enable JavaScript to view the comments.</noscript>
           
