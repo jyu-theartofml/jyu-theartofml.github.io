@@ -125,7 +125,8 @@ This post won't delve into the mathematical details (they are in the published p
    </figure>
 
   <h2>What did the model learn? </h2>
-    <p>After importing the <a href='https://github.com/yinniyu/ISIC_melanoma'>trained DenseNet model </a> and test images, I used LIME to evalute the model and generate a heat map image 
+    <p>After importing the <a href='https://github.com/yinniyu/ISIC_melanoma'>trained DenseNet model </a> and test images, I used 
+      LIME to evaluate the model and generate a heat map image 
       superimposed on the original image. 
             The code is show below:</p>
             
@@ -146,9 +147,10 @@ plt.imshow(mark_boundaries(array_to_img(temp), mask))
 </code></pre></figure>
       
                
-<p> As shown in Fig.2., within each class the green pixels represent features that are for the prediction of that class, and red 
+<p> The image output from the codes are shown in Fig.2. The green pixels represent features that are <i>for </i>
+  the prediction of that class, and red 
   pixels means they are
-  against the prediction. After looking through some misclassified samples, I noticed that they are similar to the right side image in
+  <i>against</i> the prediction. After looking through some misclassified samples, I noticed that they are similar to the right side image in
   Fig.2.(false negative) - they consist of smaller lesions relative to the rest. This suggests that the model struggled to learn 
   relevant features such as edges and uneven
   colorations (perhaps due to the resolution of such small region of interest). It also seems to think that the black background pixel is 
@@ -165,7 +167,8 @@ plt.imshow(mark_boundaries(array_to_img(temp), mask))
     flaws of the melanoma classifier, allowing the user to evaluate and improve 'black box' model with an intuitive understanding. 
      Besides image prediction, 
      LIME also works with text or categorical data for explaining classifier models (but not regression). And it's also 
-     <a href='https://www.data-imaginist.com/2017/announcing-lime/'>available in R</a>. Check out the video below if you are interested in learning more.</p>
+     <a href='https://www.data-imaginist.com/2017/announcing-lime/'>available in R </a>. Check out the video below if you are 
+     interested in learning more.</p>
 
  <div class="embed-responsive embed-responsive-16by9">
    <iframe width="560" height="315" src="https://www.youtube.com/embed/hUnRCxnydCc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
