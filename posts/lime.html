@@ -108,13 +108,16 @@ a separate interpretable model locally around the prediction. To quote the lead 
   Lime is able to explain any model without needing to 'peek' into it, so it is <b>model-agnostic</b>."
 </blockquote> 
   
-  The picture at the top of this post illustrates fitting a localized linear model for a given prediction. For image classification, LIME
-            will perturbe the original image to generate a set of data. For each perturbed sample, it calculates the 
-            probability that the image belongs to a given class according to the model. Then it learns a locally faithful linear model,
+This post won't delve into the mathematical details (they are in the published paper if you are interested). The picture at 
+            the top illustrates fitting a localized weighted linear model for a given prediction. 
+            For image classification, LIME
+            would perturbe the original image to generate a set of data. For each perturbed sample, it calculates the 
+            probability that the image belongs to a given class according to the model. Then it learns a locally faithful 
+            linear model,
             giving weights to perturbed data points by their proximity to the original image (Fig.1.).
         
 <figure>
-    <center><img src="images/melanoma/LIME_example.jpg" alt="frog and lime" ></center>
+    <center><img src="images/lime/LIME_example.jpg" alt="frog and lime" ></center>
    <figcaption>Fig.1.Explaining feature importance of a frog using LIME. (source:https://www.kdnuggets.com/2016/08/introduction-local-interpretable-model-agnostic-explanations-lime.html)  </figcaption>
    </figure>
 <h2>Data Processing </h2>
