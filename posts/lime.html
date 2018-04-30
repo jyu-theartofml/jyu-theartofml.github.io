@@ -127,11 +127,31 @@ This post won't delve into the mathematical details (they are in the published p
     <p>After importing the trained DenseNet model and test images, I used LIME to evalute the model and generate a heat map image 
       superimposed on the original image. 
             The code is show below:</p>
+            
+ <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+#### After loading the model and import the test image array #####
+import lime
+from lime import lime_image
+from skimage.segmentation import mark_boundaries
+import skimage
+from keras.preprocessing.image import ImageDataGenerator,array_to_img, img_to_array, load_img, array_to_img
+from keras.applications.densenet import preprocess_input
 
+explainer = lime_image.LimeImageExplainer()
+
+###num_samples – size of the neighborhood (perturbed instances) to learn an interpretable model
+explanation = explainer.explain_instance(test_preprocessed[2], model.predict, labels=['benign','melanoma','sk'], top_labels=3, hide_color=0, num_samples=200)
+temp, mask = explanation.get_image_and_mask(0, positive_only=False, num_features=10, hide_rest=False)
+plt.imshow(mark_boundaries(array_to_img(temp), mask))
+</code></pre></figure>
+
+            
+            
+            
 <p> As shown in Fig.2, withine each class the green pixels represent features that are for the prediction of that class, and red pixels means it's 
   against the prediction. After looking through a group of misclassifies images, I noticed that they are mostly images of
   smaller lesions. Without any zoom-in effect, the model seems to struggle to learn relevant features such as edges and uneven
-            colorations. It also seems to think that the black background pixel is somehow associated with the actual lesion.</p>
+            colorations. It also seems to think that the black background pixel is somehow associated with the actual lesion classification.</p>
   
   <figure>
     <center><img src="images/lime/LIME_features.png" alt="melanoma and lime" ></center>
