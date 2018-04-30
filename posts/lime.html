@@ -72,10 +72,9 @@
             This means a subject/consumer has the right to obtain an explanation of the automated decision, and the right to opt out of 
             a decision based solely on AI/automated algorithm that produces legal effects on them (i.e, job recruiting,
             loan applications) without human intervention. Back in 2016, researchers (Ribeiro et al) from University of 
-            Washington published a novel explanation technique called LIME that explains the predictions of any classifier in an 
+            Washington published an explanation technique called LIME that explains the predictions of any classifier in an 
             interpretable manner. The output of LIME can be used to assess trustworthiness of models by visualizing feature importance. In this post,
             I will apply LIME to evaluate the DenseNet melanoma model.
-            <
             
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -100,7 +99,14 @@
 <h2>LIME - a model of a model</h2>
   
 <p> Local Interpretable Model-Agnostic Explanations (LIME) is an algorithm that explains a given prediction by approximating 
-a separate interpretable model locally around the prediction.  
+a separate interpretable model locally around the prediction. To quote the lead author Marco Ribeiro:
+  
+<blockquote class="w3-panel w3-leftbar w3-light-grey">
+  " <b>Local </b>refers to local fidelity - i.e., we want the explanation to really reflect the behaviour of the classifier 
+  'around' the instance being predicted. This explanation is useless unless it is <b>interpretable</b> - that is, 
+  unless a human can make sense of it. 
+  Lime is able to explain any model without needing to 'peek' into it, so it is <b>model-agnostic</b>."
+</blockquote> 
   
   <figure>
    <img src="images/melanoma/depth_pointwise.jpg" alt="illustration of depthwise conv" >
