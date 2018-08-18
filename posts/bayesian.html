@@ -86,33 +86,32 @@
           <div class="article-content">
   <p>To better understand Bayesian I recommend this great 'laymen' <a href='https://www.nytimes.com/2014/09/30/science/the-odds-continually-updated.html'> 
     article </a>published in New York Times. The gist of the article can be 
-            captured by this quote <i> "The essence of the frequentist technique is to apply probability to data. If you suspect your friend has a weighted coin, for example, and you observe that it came up heads nine times out of 10, a frequentist would calculate the probability of getting such a result with an unweighted coin [null hypothesis]. The answer (about 1 percent) is not a direct measure of the probability that the coin is weighted; it’s a measure of how improbable the nine-in-10 result is — a piece of information that can be useful in investigating your suspicion. 
+            captured by this quote <i> "The essence of the frequentist technique is to apply probability to data. If you suspect your friend has a weighted coin, 
+    for example, and you observe that it came up heads nine times out of 10, a frequentist would calculate the probability of 
+    getting such a result with an unweighted coin [null hypothesis]. The answer (about 1 percent) is not a direct measure of the 
+    probability that the coin is weighted; it’s a measure of how improbable the nine-in-10 result is — a piece of information that can be useful in investigating your suspicion. 
 By contrast, Bayesian calculations go straight for the probability of the hypothesis, factoring in not just the data from the coin-toss experiment but any other relevant information —
-    including whether you have previously seen your friend use a weighted coin." </i></p>
+    including whether you have previously seen your friend use a weighted coin." </i>In a mathematical sense, frequentist does repeated sampling 
+    to estimate an underlying parameter, and treats that parameter as fixed. In the Baysian world, the parameter can be updated with new information at each event,
+    and be described probabilistically as a degree of belief. In this case, it's the data that is fixed (you're concerned with the probability 
+    of the outcome of one event).</p>
 
-  
-   <fig>
-     <img src="images/imputation/df_nan.png" alt="example df" >
-      <figcaption>Fig.1. A view of an example data frame with missing (NA) values randomly inserted into columns Pclass and Age.
-        </figcaption>
-    </fig>  
-  
-  
-<p>In evaluating performance, I used (1-accuracy) to represent the error for Pclass imputation, 
-  and Mean Absolute Error (MAE) for the Age imputation. I chose MAE after seeing that the distribution of the Age feature was 
-  normal-ish. For non-normal skewed distribution, it's recommended to use Root Mean Square Error (RMSE) instead.</p>
-          
 
-<h2 id="KNN">K Nearest Neighbor (KNN) </h2>
+<h2 id="pymc3">Probabilistic Programming </h2>
 
-<p>Like its classifier counterpart, KNN is a non-parametric method that estimates missing value by finding the K nearest neighbors in feature space, then 
-            assign the class by majority vote of its K nearest neigbors. For regression, the value is the weighted average/median of its 
-            K nearest neighbors based on the distance.</p>
-<p>But how do we measure the distance between samples in feature space? For numeric variables, it's common to use euclidean distance (l2 norm). 
-  However, imputing missing value often requires using information from categorical variables, so Gower's distance is designed to accomodate 
-  both numeric and categorical values in measuring <i>dissimilarity</i>. For the knn imputer in R library VIM, the Gower's distance between a pair of 
-  samples <i>i</i> and <i>j</i> is defined as : d_g(i,j) = sum_k(W_ijk * d_k(i,j) ) / sum_k(W_ijk).
-  
+<p>Bayesian theory is the foundation for Probabilistic Programming, which 'learns' the parameters of interest using sophisticated sampling techniques (as 
+            oppose to solving linear equation using OLS), and returns a probability distribution of the parameters. To give a concrete 
+            example, suppose you have a linear equation y=w1*x+w0 and the goal is to find the weights (w0, w1). In order to estimate these
+            parameters, you will need a sampling algorithm to search for the parameter value within a distribution that's updated in every iteration.
+  One of the most common algorithms used is -Markov-Chain Monte-Carlo (MCMC) sampling.  The general steps are outlined below:</p>
+            <li>set up prior distributions for weights w0, w1. </li>
+            <li>sample from the probability distribution to get a vector of values for the weights.</li>
+            <li>Generate prediction values(y^), and calculate the loss term using training ground truth values (y) and pre-defined loss function.</li>
+            <li>Update the weights distribution using the loss function.</li>
+            <li>Repeat the sampling process to get better estimation of the weights. </li>
+              
+              
+
  
 <p> Here, d_k(i,j) denotes distance between the value of variable k between the two samples.
   For categorical variable, d_k is 0 when the values between a pair of sample points are the same, otherwise it's 1. 
