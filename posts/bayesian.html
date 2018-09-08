@@ -113,161 +113,34 @@
               The MCMC method moves along the joint distribution according to some pre-defined threshold values.</li>
               
    <p> The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
-     Hamiltonian Monte Carlo method(HMC), which takes advantage of the gradient of the log posterior-density.  No-U-Turn Sampler (NUTS) was 
-            a more recent improvement on top of HMC, it has an adaptative tuning of a hyperparameter value for determining number of iterations/jumps
-            to make.</li>
-              
-              
+     Hamiltonian Monte Carlo method(HMC), which takes advantage of the gradient of the log posterior-density to guide the sampling toward 
+     region of higher likelihood.  No-U-Turn Sampler (NUTS) was 
+     a more recent improvement on top of HMC, it has an adaptative tuning of a hyperparameter value for determining number of iterations/jumps
+       to make.</p>
 
- 
-<p> Here, d_k(i,j) denotes distance between the value of variable k between the two samples.
-  For categorical variable, d_k is 0 when the values between a pair of sample points are the same, otherwise it's 1. 
-   On the other hand, when working with numeric data d_k is calculated as 1-[(x_i-x_j)/(max(x)-min(x)] [1]. The weight W_ijk=1 when values of kth variable 
-  are present in both samples, otherwise it's 0.
-  The Gower's matrix, d_g(i,j) is used to identifiy the k (default k=5) nearest neighbors for a give sample <i>i</i>. /p>
 
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(VIM)
-################ KNN imputation for the 4 percentage values of NA in data frame ###################
-missing_n<-c(0.1,0.2,0.3, 0.4)
-error_val<-matrix(NA, nrow=4, ncol=2)
 
-for (i in 1:length(missing_n)){
-  set.seed(42) 
-  percentage=missing_n[i]
-  select.df<-subset.data ### select.df is the original dataframe for inserting NA values
-  missing.qty<-round((dim(select.df)[1])*percentage)
-  
-  df1<-sample_n(select.df, missing.qty)
-  select.idx1<-row.names(df1)
-  select.df[select.idx1,]$Pclass<-NA
-  
-  set.seed(12) 
-  df2<-sample_n(select.df, missing.qty)
-  select.idx2<-row.names(df2)
-  select.df[select.idx2,]$Age<-NA
-  
-  ####################### knn imputation ###############################
-  imputed.data<-kNN(select.df, variable=c('Pclass','Age'), k=15, weightDist=TRUE)
-  
-  pclass.na.idx<-which(is.na(select.df$Pclass))
-  age.na.idx<-which(is.na(select.df$Age))
-  
-  imputed_pclass<-imputed.data[pclass.na.idx,c("Pclass")]
-  actual_pclass<-subset.data[pclass.na.idx,c("Pclass")]
-  imputed_age<-imputed.data[age.na.idx,c("Age")]
-  actual_age<-subset.data[age.na.idx,c("Age")]
-  
-  missed_pclass<-which(imputed_pclass!=actual_pclass)
-  error_val[i,1]<-length(missed_pclass)/missing.qty
-  
-  age_error<-mae(actual_age,imputed_age)
-  error_val[i,2]<-age_error
-}
-</code></pre>
-</figure>
+<h2 id="pymc3">PyMC3</h2>
 
-<figure>
-   <img src="images/imputation/knn_error_k15.png" alt="knn_imputation" >
-   <figcaption>Fig.2. Plot of error metrics for the KNN imputation of Pclass and Age varibles as a function of % of NA.
+<p>As stated in the PyMC3 tutorial, NUTS is best used for continuous parameter sampling, and Metropolis for categroical parameter. 
+            In the figure below, I share an example of running a logistic model consists of both continuous and categorical inputs to 
+            produce a binary outcome value. I find that the easiest way to incorporate mixed data type in PyMC3 is to define your own 
+            function (instead of using the default pm.glm.GLM function, or ).</p>
+     <figure>
+      <center><img src="images/bayesian/pymc3_lr.png" alt="pymc3_lr" ></center>
+   <figcaption>Fig.1. Example of training a probilistic programming model using PyMC3 sampling.
    </figcaption>
    </figure>
-
-
-<h2 id="randomeforest">Random Forest Imputation</h2>
-
-<p>Next, I tried imputation on the same data set using Random Forest (RF) algorithm. RF estimates missing value using growing a forest with 
-  a rough fill-in value for missing data, then iteratively updates the proximity matrix to obtain the final imputed value [2]. According to Breiman et al., 
-  the RF imputation steps are as follow:</p>
-  <ol>
-    <li> Replace missing values by average/mode in training data (initial step).</li>
    
-    <li> Repeat in <i>x</i> iterations</li>
-    <ol>
-            <li>Train RF (including imputed values) on column j with the original missing data.</li>
-            <li>Compute proximity matrix</li>
-            <li>Update the missing value estimate with the proximity matrix as weights - for regression it's weighted average, and for 
-      categorical variables it's the weighted mode</li>
-      </ol>
-    <li> For test data, caculate proximities of test dat w/ respect to the training data.</li></ol>
-    
-    
-    <p>The key of this algorithm lies in the proximity matrix. For <i>n</i> number of samples in the training set, it's a nxn matrix that shows how similar 
-      one sample <i> i</i> is to another sample <i>j</i>. In each iteration, if sample X_i and X_j end up in the same terminal node of a tree within the 
-      grown forest, then their proximity value P(i,j) is increased by 1. The matrix is often normalized by dividing by the number of trees, since that's a 
-      tunable parameter. For my code ,the optimal number of trees was 40. In the MICE package, the function <code class="highlighter-rouge"> mice() </code>
-      has the option for multiple imputation datasets (specified by the m variable).
   
+<p>In defining the distribution of the categorical variables (there were 7), either Bernoulli or Binomial distributions can be used.
+  With <code class="highlighter-rouge">pm.Binomial()</code>, user must enter number of trials (e.g., n=10) since Binomial function 
+            is concerned with number of trials. Another useful feature of PyMC3 is that user can define multiple steps to assign 
+            different sampling method to the desired variable(s). It's also helpful to use the <code class="highlighter-rouge">
+  share()</code> function from PyMC3 to later share the out-of-sample test data in order to run inference on the trained modl.</p>
   
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(mice)
-
-###### RF Imputation  ##########
-imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40)) 
-</code></pre></figure>
-
-<figure>
-   <img src="images/imputation/rf_error_n40.png" alt="rf_imputation" >
-   <figcaption>Fig.3. Plot of error metrics for the RF imputation of Pclass and Age varibles as a function of % of NA.
-   </figcaption>
-   </figure>
-  
-  
-<p>Both of the non-parametric methods KNN and RF work using the "neighborhood" scheme. In general, 
-  these algorithms are based on this relationship:</p>
-  
-<figure>
-  <center><img src="images/imputation/neighborhood.svg" onerror="this.src='neighborhood.png'"></center>
-  </figure>
-  <p>Here, W(x_i,x') is the similarity/distance matrix relating a new test sample x' to x_i, then estimating y' based on y_i. For RF imputation, 
-    the proximity matrix is very sensitive to the complexity of the trees grown, and RF consists of so many hyperparameters (i.e., 
-    number of randomly sampled variables, subset sample size, and node size). According to a paper published by Lin and Jeon, the neighborhood mapped out by RF 
-    is largely determined by the local importance of each feature within a node[3]. This makes sense because RF imputation is 
-    optimized for nonlinear data.</p>
 
 
-<h2 id="pmm">Predictive Mean Matching (PMM)</h2>   
-  
- <p>The third method I want to explore is Predictive Mean Matching (PMM), which is commonly used for imputing continuous numerical data. 
-   The imputation works by randomly choosing an observed value from a donor pool whose predicted values are close to the predicted 
-   value of the missing case. The regression-based method works as follows to estimate missing values in variable Y:</p>
-  <ol>
-    <li>Use a set of variables X (with no missing data) to fit a linear regression on Y (choose cases of Y with no missing value) with coefficients B.
-    <li>To account for uncertainty of the coefficients, randomly sample for new set of regression coefficients B* by drawing from the 
-      normal distribution with mean of B and variance of B.
-     <li>Predict values for all cases of X using B*. 
-     <li>For every missing case of X, find a group of K non-missing cases whose predicted values are close to the predicted value of the 
-       missing case. This is called the 'donor pool'.
-    <li>Randomly assign the <i>observed </i> value of a donor to replace the missing case.
-  </ol>
-  
-  <p>In theory, PMM works well on skewed data distribution because it's matching observed real value to the missing value. 
-    I tried PMM on the air quality public dataset, where both columns Ozone and Wind contain NA values, and the Ozone 
-    variable has a skewed distribution.</p>
-    
-    <figure>
-      <center><img src="images/imputation/air_quality_df.png" alt="air df" ></center>
-      <center><img src="images/imputation/airquality_feature_dist.png" alt="feature distribution" ></center>
-   <figcaption>Fig.4. Example of the air quality dataset and distribution of the features ozone and wind.
-   </figcaption>
-   </figure>
-    
-    
-    <p>However, as shown in Fig.5. below, the percentage error of the Ozone imputation is higher and more volatile than that of the Wind features.
-      And there appears to be a bit of a trade off between the imputation error of the two variables. While the matching of the value preserves the 
-  original distribution of the data, running linear regression on skewed data has some draw backs in producing reliable predicted 
-      values for downstream matching. Another issue is that the optimal k (number of donors) needs to be tuned because it varies
-      depending on the dataset and number of samples (I used the default 5)[4]. The general rule of thumb is that with larger 
-      dataset, the imputation can benefit from a larger number of k.
-  </p>
-   
-       
-    <figure>
-      <center><img src="images/imputation/air_quality_pmm2.png" alt="pmm error" ></center>
-   <figcaption>Fig.5. Comparison of percentage error in imputation of Ozone and Wind.
-   </figcaption>
-   </figure>
-    
   <h3> Conclusion </h3>
   <p> After looking at the results from the three methods, it looks like the performances of KNN and RF are very sensitive to 
     % of missing values. This is not surprising because 
@@ -280,10 +153,8 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
   
   <h3> REFERENCES </h3>
   <p>[1]Sedar, J.,<i> Bayesian Inference with PyMC3 - Part 1</i>. https://blog.applied.ai/bayesian-inference-with-pymc3-part-1/</p>
-  <p>[3]Lin, Yi; Jeon, Yongho (2002). Random forests and adaptive nearest neighbors (Technical report). 
-        Technical Report No. 1055. University of Wisconsin.</p>
-  <p>[4]Allison,P., <b>Imputation by predictive mean matching:promise & perils</b>.Statistical Horizons Blog (https://statisticalhorizons.com/predictive-mean-matching) 
-          
+  <p>[2]Hoffman, M.D., Gelman, A. (2011).
+
   
     
     
