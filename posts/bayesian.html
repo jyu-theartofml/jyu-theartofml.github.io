@@ -61,8 +61,8 @@
             <figure>
               <p align='center'><img src='images/bayesian/bayesian_joke(xkcd).png' alt="bayes" ></p>
                <figcaption>Source:XKCD comic.</figcaption></figure>
-            <p>Most people working with statistics have heard of Bayes Theorem, but in doing probilistic programming there's a lot of nuances
-              in implementing Bayes theorem. In this post I'll briefly summarize the Bayesian approach and show an example of working with mixed type
+            <p>Most people working with statistics have heard of Bayes Theorem, but in doing probilistic programming there's a lot of 
+              nuances in implementing Bayes theorem. In this post I'll briefly summarize the Bayesian approach and show an example of working with mixed type
               of data (continuous and categorical) using Python's PYMC3 package. While there're many tutorials out there, it was not straightforward 
             to figure out how to deal with categorical/dummy variables in PYMC3.</p>
             
@@ -90,10 +90,11 @@
     for example, and you observe that it came up heads nine times out of 10, a frequentist would calculate the probability of 
     getting such a result with an unweighted coin [null hypothesis]. The answer (about 1 percent) is not a direct measure of the 
     probability that the coin is weighted; it’s a measure of how improbable the nine-in-10 result is — a piece of information that can be useful in investigating your suspicion. 
-By contrast, Bayesian calculations go straight for the probability of the hypothesis, factoring in not just the data from the coin-toss experiment but any other relevant information —
-    including whether you have previously seen your friend use a weighted coin." </i>In a mathematical sense, frequentist does repeated sampling 
-    to estimate an underlying parameter, and treats that parameter as fixed. In the Baysian world, the parameter can be updated with new information at each event,
-    and be described probabilistically as a degree of belief. In this case, it's the data that is fixed (you're concerned with the probability 
+    By contrast, <b>Bayesian calculations go straight for the probability of the hypothesis</b>, factoring in not just the data from the coin-toss experiment but any other relevant information —
+    including whether you have previously seen your friend use a weighted coin." </i>In a mathematical sense, frequentist does repeated 
+    sampling to estimate an underlying parameter, and treats that parameter as fixed. In the Bayesian world, the parameter can be
+    updated with new information at each event, and be described probabilistically as a degree of belief. 
+    In this case, it's the data that is fixed (i.e., you're concerned with the probability 
     of the outcome of one event).</p>
 
 
@@ -103,12 +104,18 @@ By contrast, Bayesian calculations go straight for the probability of the hypoth
             oppose to solving linear equation using OLS), and returns a probability distribution of the parameters. To give a concrete 
             example, suppose you have a linear equation y=w1*x+w0 and the goal is to find the weights (w0, w1). In order to estimate these
             parameters, you will need a sampling algorithm to search for the parameter value within a distribution that's updated in every iteration.
-  One of the most common algorithms used is -Markov-Chain Monte-Carlo (MCMC) sampling.  The general steps are outlined below:</p>
+  One of the most common algorithms used is Markov-Chain-Monte-Carlo (MCMC) sampling.  The general steps are outlined below [1]:</p>
             <li>set up prior distributions for weights w0, w1. </li>
             <li>sample from the probability distribution to get a vector of values for the weights.</li>
             <li>Generate prediction values(y^), and calculate the loss term using training ground truth values (y) and pre-defined loss function.</li>
             <li>Update the weights distribution using the loss function.</li>
-            <li>Repeat the sampling process to get better estimation of the weights. </li>
+            <li>Repeat the sampling process to get better estimation of the weights by proposing new value of theta close to the previous value. 
+              The MCMC method moves along the joint distribution according to some pre-defined threshold values.</li>
+              
+   <p> The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
+     Hamiltonian Monte Carlo method(HMC), which takes advantage of the gradient of the log posterior-density.  No-U-Turn Sampler (NUTS) was 
+            a more recent improvement on top of HMC, it has an adaptative tuning of a hyperparameter value for determining number of iterations/jumps
+            to make.</li>
               
               
 
@@ -272,8 +279,7 @@ imputed.data<-complete(mice(select.df, method='rf',m=1,ntree=40))
    
   
   <h3> REFERENCES </h3>
-  <p>[1]de Jonge,E., van der Loo, M., <b> An introduction to data cleaning with R</b>. 2013 </p>
-  <p>[2]Breiman, L., Cutler, A.<i> Random Forest</i>. https://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm </p>
+  <p>[1]Sedar, J.,<i> Bayesian Inference with PyMC3 - Part 1</i>. https://blog.applied.ai/bayesian-inference-with-pymc3-part-1/</p>
   <p>[3]Lin, Yi; Jeon, Yongho (2002). Random forests and adaptive nearest neighbors (Technical report). 
         Technical Report No. 1055. University of Wisconsin.</p>
   <p>[4]Allison,P., <b>Imputation by predictive mean matching:promise & perils</b>.Statistical Horizons Blog (https://statisticalhorizons.com/predictive-mean-matching) 
