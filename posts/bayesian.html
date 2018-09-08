@@ -110,7 +110,7 @@
             <li>Generate prediction values(y^), and calculate the loss term using training ground truth values (y) and pre-defined loss function.</li>
             <li>Update the weights distribution using the loss function.</li>
             <li>Repeat the sampling process to get better estimation of the weights by proposing new value of theta close to the previous value. The MCMC method moves along the joint distribution according to some pre-defined threshold values.</li>
-              
+  <br>            
    <p>The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
      Hamiltonian Monte Carlo method(HMC), which takes advantage of the gradient of the log posterior-density to guide the sampling toward 
      region of higher likelihood.  No-U-Turn Sampler (NUTS) was 
