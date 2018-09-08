@@ -91,7 +91,7 @@
     getting such a result with an unweighted coin [null hypothesis]. The answer (about 1 percent) is not a direct measure of the 
     probability that the coin is weighted; it’s a measure of how improbable the nine-in-10 result is — a piece of information that can be useful in investigating your suspicion. 
     By contrast, <b>Bayesian calculations go straight for the probability of the hypothesis</b>, factoring in not just the data from the coin-toss experiment but any other relevant information —
-    including whether you have previously seen your friend use a weighted coin." </i>In a mathematical sense, frequentist does repeated 
+    including whether you have previously seen your friend use a weighted coin." </i> In a mathematical sense, frequentist does repeated 
     sampling to estimate an underlying parameter, and treats that parameter as fixed. In the Bayesian world, the parameter can be
     updated with new information at each event, and be described probabilistically as a degree of belief. 
     In this case, it's the data that is fixed (i.e., you're concerned with the probability 
@@ -109,10 +109,9 @@
             <li>sample from the probability distribution to get a vector of values for the weights.</li>
             <li>Generate prediction values(y^), and calculate the loss term using training ground truth values (y) and pre-defined loss function.</li>
             <li>Update the weights distribution using the loss function.</li>
-            <li>Repeat the sampling process to get better estimation of the weights by proposing new value of theta close to the previous value. 
-              The MCMC method moves along the joint distribution according to some pre-defined threshold values.</li>
+            <li>Repeat the sampling process to get better estimation of the weights by proposing new value of theta close to the previous value. The MCMC method moves along the joint distribution according to some pre-defined threshold values.</li>
               
-   <p> The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
+   <p>The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
      Hamiltonian Monte Carlo method(HMC), which takes advantage of the gradient of the log posterior-density to guide the sampling toward 
      region of higher likelihood.  No-U-Turn Sampler (NUTS) was 
      a more recent improvement on top of HMC, it has an adaptative tuning of a hyperparameter value for determining number of iterations/jumps
