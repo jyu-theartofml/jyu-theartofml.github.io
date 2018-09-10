@@ -149,18 +149,30 @@
   With <code class="highlighter-rouge">pm.Binomial()</code>, user must enter number of trials (e.g., n=10) since Binomial function 
             is concerned with number of trials. Another useful feature of PyMC3 is that user can define multiple steps to assign 
             different sampling method to the desired variable(s). It's also helpful to use the <code class="highlighter-rouge">
-  share()</code> function from PyMC3 to later share the out-of-sample test data in order to run inference on the trained modl.</p>
+  share()</code> function from PyMC3 to later share the out-of-sample test data in order to run inference on the trained model(see code below).
+  
+         </p>
+            
+ <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+############### after model is trained #############
+
+#switch variable values to predictors_out_of_sample data, then run model by sampling 200 times for each data point
+predictors_shared.set_value(predictors_out_of_sample)
+ppc = pm.sample_ppc(trace_bern, model=model, samples=200)
+
+# To generate a final prediction value, use beta function to characterize the prediction distribution.
+# beta distribution is frequently used in Bayesian statistics, empirical Bayes methods and classical statistics to 
+#capture overdispersion in binomial type distributed data. when n(number of samples in code above) =1, then 
+#it's bernoulli distribution
+β = st.beta((ppc['outcomes'] == 1).sum(axis=0), (ppc['outcomes'] == 0).sum(axis=0))
+pred_eval=pd.DataFrame({'ppc_pred':β.mean(), 'actual_value':y_test.values})
+
+</code></pre></figure>         
   
 
 
   <h3> Conclusion </h3>
-  <p> After looking at the results from the three methods, it looks like the performances of KNN and RF are very sensitive to 
-    % of missing values. This is not surprising because 
-    these non-parametric algorithms impute based on finding its neighbors - and the more data observed the better the neighborhood can be mapped. 
-    Gower's matrix provided better imputation results for numerical data compared to RF, due to the way dissimilarity distance is calculated. However, RF performed better 
-    in categorical imputation. One way to approach the Titanic dataset is to use RF imputation on categorical variables and use KNN on numerical variables.
-    However, it should be noted that RF imputation is computationally expensive. If computation cost is not a big concern, 
-    one way to account for uncertainty is to have multiple imputed datasets for model fitting, where the model outputs are averaged for prediction.
+  <p> With sufficient sampling iterations, Bayesian modeling outperformed regular logistic regression fitting. 
    
   
   <h3> REFERENCES </h3>
