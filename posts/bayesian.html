@@ -107,8 +107,8 @@
   One of the most common algorithms used is Markov-Chain-Monte-Carlo (MCMC) sampling.  The general steps are outlined below [1]:</p>
             <li>set up prior distributions for weights w0, w1. </li>
             <li>sample from the probability distribution to get a vector of values for the weights.</li>
-            <li>Generate prediction values(y^), and calculate the loss term using training ground truth values (y) and pre-defined loss function.</li>
-            <li>Update the weights distribution using the loss function.</li>
+            <li>Generate prediction values(y^), and calculate the loss term using the negative log of the likelihood distribution.</li>
+            <li>Update the weights distribution through minimization of the loss function.</li>
             <li>Repeat the sampling process to get better estimation of the weights by proposing new value of theta close to the previous value. The MCMC method moves along the joint distribution according to some pre-defined threshold values.</li>
   <br>            
    <p>The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
@@ -152,7 +152,8 @@
   
   <h3> REFERENCES </h3>
   <p>[1]Sedar, J.,<i> Bayesian Inference with PyMC3 - Part 1</i>. https://blog.applied.ai/bayesian-inference-with-pymc3-part-1/</p>
-  <p>[2]Hoffman, M.D., Gelman, A. (2011).
+  <p>[2]Hoffman, M.D., Gelman, A. (2011). <b>The No-U-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian 
+    Monte Carlo </b>.</p>
 
   
     
