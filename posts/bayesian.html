@@ -92,8 +92,10 @@
     probability that the coin is weighted; it’s a measure of how improbable the nine-in-10 result is — a piece of information that can be useful in investigating your suspicion. 
     By contrast, <b>Bayesian calculations go straight for the probability of the hypothesis</b>, factoring in not just the data from the coin-toss experiment but any other relevant information —
     including whether you have previously seen your friend use a weighted coin." </i> In a mathematical sense, frequentist does repeated 
-    sampling to estimate an underlying parameter, and treats that parameter as fixed. In the Bayesian world, the parameter can be
-    updated with new information at each event, and be described probabilistically as a degree of belief. 
+    sampling to estimate an underlying parameter, and treats that parameter as fixed. In the Bayesian world, you can parameterize 
+    prior belief and the underlying distribution of observed data, and that belief can be
+    <a href="https://www.analyticsvidhya.com/wp-content/uploads/2016/06/12-768x475.jpg>updated</a> 
+             with each new observation (posterior probability), and be described as a degree of belief. 
     In this case, it's the data that is fixed (i.e., you're concerned with the probability 
     of the outcome of one event).</p>
 
@@ -103,21 +105,32 @@
 <p>Bayesian theory is the foundation for Probabilistic Programming, which 'learns' the parameters of interest using sophisticated sampling techniques (as 
             oppose to solving linear equation using OLS), and returns a probability distribution of the parameters. To give a concrete 
             example, suppose you have a linear equation y=w1*x+w0 and the goal is to find the weights (w0, w1). In order to estimate these
-            parameters, you will need a sampling algorithm to search for the parameter value within a distribution that's updated in every iteration.
+            parameters, you will need a sampling algorithm to search for the parameter value within a distribution 
+              that's updated in every iteration.
   One of the most common algorithms used is Markov-Chain-Monte-Carlo (MCMC) sampling.  The general steps are outlined below [1]:</p>
             <li>set up prior distributions for weights w0, w1. </li>
-            <li>sample from the probability distribution to get a vector of values for the weights.</li>
+            <li>sample from the probability distribution to get a vector of values for the weights (<b>w</b>).</li>
             <li>Generate prediction values(y^), and calculate the loss term using the negative log of the likelihood distribution.</li>
             <li>Update the weights distribution through minimization of the loss function.</li>
-            <li>Repeat the sampling process to get better estimation of the weights by proposing new value of theta close to the previous value. The MCMC method moves along the joint distribution according to some pre-defined threshold values.</li>
+            <li>Repeat the sampling process to get better estimation of the weights by proposing 
+              new values of vector <b>w</b> close to the previous values. The MCMC method moves along the joint distribution according to some pre-defined threshold values.</li>
   <br>            
    <p>The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
      Hamiltonian Monte Carlo method(HMC), which takes advantage of the gradient of the log posterior-density to guide the sampling toward 
      region of higher likelihood.  No-U-Turn Sampler (NUTS) was 
      a more recent improvement on top of HMC, it has an adaptive tuning of a hyperparameter values fordetermining number of iterations/jumps
        to make.</p>
+    <p>To better understand how loss term is related to the log likelihood, I found a ppt lecture given by Dr. Piyush Rai for 
+              CS5350/6350 at the University of Utah. The takeaway is that log of posterior distribution (P(<b>w</b>|D)) is maximized by looking for the 
+              optimal <b>w</b>, and argmax(log P(<b>w</b>|D) is equivalent to  argmin of (-log P(D|<b>w</b>) + -log(P(<b>w</b>)). This set up
+              showes that negative log of the likelihood function is the loss term, and negative log of <b>w</b> serves as regularization term.
+              With auto differentiation, the gradient of the -log P(D|<b>w</b>) can be found to faciliate more efficient sampling for <b>w</b>.
 
-
+       <figure>
+      <center><img src="images/bayesian/log_likelihood.png" alt="log_likelihood" ></center>
+   <figcaption>Fig.1. Finding Maximum-a-Posteriori solution for <b>w</b>. 
+   </figcaption>
+   </figure>            
 
 <h2 id="pymc3">PyMC3</h2>
 
@@ -127,7 +140,7 @@
             function (instead of using the default pm.glm.GLM function, or ).</p>
      <figure>
       <center><img src="images/bayesian/pymc3_lr.png" alt="pymc3_lr" ></center>
-   <figcaption>Fig.1. Example of training a probilistic programming model using PyMC3 sampling.
+   <figcaption>Fig.2. Example of training a probilistic programming model using PyMC3 sampling, and generating the sampling results (trace plot).
    </figcaption>
    </figure>
    
