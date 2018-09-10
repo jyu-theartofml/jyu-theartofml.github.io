@@ -121,8 +121,8 @@
      a more recent improvement on top of HMC, it has an adaptive tuning of a hyperparameter values fordetermining number of iterations/jumps
        to make.</p>
     <p>To better understand how loss term is related to the log likelihood, I found a ppt lecture given by Dr. Piyush Rai for 
-              CS5350/6350 at the University of Utah. The takeaway is that log of posterior distribution (P(<b>w</b>|D)) is maximized by looking for the 
-              optimal <b>w</b>, and argmax(log P(<b>w</b>|D) is equivalent to  argmin of (-log P(D|<b>w</b>) + -log(P(<b>w</b>)). This set up
+              CS5350/6350 at the University of Utah. As shown in Fig.1., the takeaway is that log of posterior distribution (P(<b>w</b>|D)) is maximized by looking for the 
+              optimal <b>w</b>, and argmax(log P(<b>w</b>|D) is equivalent to  argmin of (-log P(D|<b>w</b>)-log(P(<b>w</b>)). This set up
               showes that negative log of the likelihood function is the loss term, and negative log of <b>w</b> serves as regularization term.
               With auto differentiation, the gradient of the -log P(D|<b>w</b>) can be found to faciliate more efficient sampling for <b>w</b>.
 
@@ -137,7 +137,7 @@
 <p>As stated in the PyMC3 tutorial, NUTS is best used for continuous parameter sampling, and Metropolis for categroical parameter. 
             In the figure below, I share an example of running a logistic model consists of both continuous and categorical inputs to 
             produce a binary outcome value. I find that the easiest way to incorporate mixed data type in PyMC3 is to define your own 
-            function (instead of using the default pm.glm.GLM function, or ).</p>
+            function (instead of using the default pm.glm.GLM() function).</p>
      <figure>
       <center><img src="images/bayesian/pymc3_lr.png" alt="pymc3_lr" ></center>
    <figcaption>Fig.2. Example of training a probilistic programming model using PyMC3 sampling, and generating the sampling results (trace plot).
