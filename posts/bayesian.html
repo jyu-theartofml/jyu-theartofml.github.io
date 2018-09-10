@@ -149,9 +149,7 @@
   With <code class="highlighter-rouge">pm.Binomial()</code>, user must enter number of trials (e.g., n=10) since Binomial function 
             is concerned with number of trials. Another useful feature of PyMC3 is that user can define multiple steps to assign 
             different sampling method to the desired variable(s). It's also helpful to use the <code class="highlighter-rouge">
-  share()</code> function from PyMC3 to later share the out-of-sample test data in order to run inference on the trained model(see code below).
-  
-         </p>
+  share()</code> function from PyMC3 to later share the out-of-sample test data in order to run inference on the trained model(see code below).</p>
             
  <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
 ############### after model is trained #############
@@ -173,7 +171,7 @@ pred_eval=pd.DataFrame({'ppc_pred':β.mean(), 'actual_value':y_test.values})
 
   <h3> Conclusion </h3>
   <p> With sufficient sampling iterations, Bayesian modeling outperformed regular logistic regression fitting by a slight margin in the F1 score
-    . Given the computational cost, it's more appropriate to apply probabilistic programming to more complex model with higher dimensions.
+    . Given the computational cost, it's more appropriate to apply probabilistic programming to more complex model with higher dimensions.</p>
     
    
   
