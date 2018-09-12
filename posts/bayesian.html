@@ -174,11 +174,11 @@ pred_eval=pd.DataFrame({'ppc_pred':β.mean(), 'actual_value':y_test.values})
     slight margin in F1 score. Given the computational cost, it would be more efficient to apply probabilistic programming 
     to complex model with higher dimensions than the dataset used for the code presented here. Currently there's great interest
     in training models with Bayesian Neural Network that is capable of generating prediction/posterior distributions, and 
-    yielding higher accuracy. However, within PyMC3 there's been some issues with saving the model and the 
+    yielding higher accuracy[3]. However, within PyMC3 there's been some issues with saving the model and the 
     trace file - when user reloads it to run on 
     new dataset it <a href='https://discourse.pymc.io/t/out-of-sample-predictions-from-a-pickled-model/956'> doesn't accept </a>
     the new data (i.e., failing due to broadcasting different sample length). Hopefully PyMC3 and other packages like Edward 
-    would roll out more improvements for backend support.
+    would roll out more improvements for more robust backend support.
             </p>
     
    
@@ -187,6 +187,7 @@ pred_eval=pd.DataFrame({'ppc_pred':β.mean(), 'actual_value':y_test.values})
   <p>[1]Sedar, J.,<i> Bayesian Inference with PyMC3 - Part 1</i>. https://blog.applied.ai/bayesian-inference-with-pymc3-part-1/</p>
   <p>[2]Hoffman, M.D., Gelman, A. (2011). <b>The No-U-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian 
     Monte Carlo </b>.</p>
+  p>[3]Mullachery, V., Khera,A., Husain, A. (2018). <i>Bayesian Neural Networks.</p>
 
   
     
