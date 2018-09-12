@@ -68,7 +68,7 @@
             
             <div class="article-list-footer">
               <span class="article-list-date">
-                , 2018
+                September 8th, 2018
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
@@ -78,7 +78,7 @@
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
                 
-                <span class="article-list-divider">Python, probabilistic programming, PYMC3</span>
+                <span class="article-list-divider">Python, Bayesian, probabilistic programming, PYMC3</span>
               </div>
             </div>
           </header>
@@ -170,7 +170,7 @@ pred_eval=pd.DataFrame({'ppc_pred':β.mean(), 'actual_value':y_test.values})
   
 
   <h3> Conclusion </h3>
-  <p> With sufficient sampling iterations, Bayesian modeling outperformed regular logistic regression fitting by a 
+  <p> With sufficient samplings, Bayesian modeling outperformed regular logistic regression fitting by a 
     slight margin in F1 score. Given the computational cost, it would be more efficient to apply probabilistic programming 
     to complex model with higher dimensions than the dataset used for the code presented here. Currently there's great interest
     in training models with Bayesian Neural Network that is capable of generating prediction/posterior distributions, and 
@@ -178,7 +178,7 @@ pred_eval=pd.DataFrame({'ppc_pred':β.mean(), 'actual_value':y_test.values})
     trace file - when user reloads it to run on 
     new dataset it <a href='https://discourse.pymc.io/t/out-of-sample-predictions-from-a-pickled-model/956'> doesn't accept </a>
     the new data (i.e., failing due to broadcasting different sample length). Hopefully PyMC3 and other packages like Edward 
-    would roll out more improvements for more robust backend support.
+    would roll out improvements for more robust backend support.
             </p>
     
    
