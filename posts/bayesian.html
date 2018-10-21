@@ -114,7 +114,8 @@
             <li>Generate prediction values(y^), and calculate the loss term using the negative log of the likelihood distribution.</li>
             <li>Update the weights distribution through minimization of the loss function.</li>
             <li>Repeat the sampling process to get better estimation of the weights by proposing 
-              new values of vector <b>w</b> close to the previous values. The MCMC method moves along the joint distribution according to some pre-defined threshold values.</li>
+              new values of vector <b>w</b> close to the previous values. The MCMC method moves along the joint distribution according to 
+              some pre-defined threshold values (e.g., current loss/previous loss ratio <1).</li>
   <br>            
    <p>The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
      Hamiltonian Monte Carlo method(HMC), which takes advantage of the gradient of the log posterior-density to guide the sampling toward 
