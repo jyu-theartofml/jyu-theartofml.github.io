@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="http://yinniyu.github.io/posts/bayesian.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
-  <meta property="og:image" content="images/bayesian/bayesian_joke(xkcd).png">
+  <meta property="og:image" content="images/retinanet/true positive.png">
 
  
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -57,18 +57,27 @@
         
         <article class="article appear">
           <header class="article-header">
-            <h1>Bayesian approach and probabilistic programming</h1>
+            <h1>RetinaNet lung opacity detection (with meta data)</h1>
             <figure>
-              <p align='center'><img src='images/bayesian/bayesian_joke(xkcd).png' alt="bayes" ></p>
-               <figcaption>Source:XKCD comic.</figcaption></figure>
-            <p>Most people working with statistical analysis are familiar with Bayes Theorem, but in doing probabilistic programming there's a lot of 
-              nuances in implementing Bayes theorem. In this post I'll briefly summarize the Bayesian approach and show an example of working with mixed type
-              of data (continuous and categorical) using Python's PYMC3 package (and there will be NO coin-flipping example). While there're many tutorials out there, it was not straightforward 
-            to figure out how to deal with categorical/dummy variables in PYMC3.</p>
+              <p align='center'><img src='images/retinanet/true positive.png' alt="dicom_bbox" ></p>
+            </figure>
+            <p>The Radiological Society of North America (RSNA) recently hosted a Kaggle competition, where Kagglers are asked to 
+              build a model to screen for pneumonia by detecting lung opacities on chest radiographs. The standard practice for 
+             diagnosis of pneumonia is time consuming, requiring review of radiographs by trained professional, vital sign, and clinical 
+            history of the individual patient. The quality of the chest radiograph (CXR) also makes accurate diagnosis a challenging task,
+           because the opaque features can be caused by from pulmonary edema, bleeding, lung cancer, or fluid in the 
+              pleural space (pleural effusion). To quote the RSNA:</p>
+            <blockquote class="w3-panel w3-leftbar w3-light-grey">
+                <i>"They see the potential for ML to automate initial detection 
+       (imaging screening) of potential pneumonia cases in order to prioritize and expedite their review."</i>
+            </blockquote> 
+
+            
+            </p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
-                September 8th, 2018
+                Nov 3th, 2018
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
@@ -78,7 +87,7 @@
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
                 
-                <span class="article-list-divider">Python, Bayesian, probabilistic programming, PYMC3</span>
+                <span class="article-list-divider">Keras, RetinaNet, Object Detection</span>
               </div>
             </div>
           </header>
