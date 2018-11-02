@@ -119,41 +119,18 @@
    </figcaption>
    </figure>  
 
-<h2 id="pymc3">PyMC3</h2>
+<h2 id="preprocessing">Image Contrasting</h2>
 
-<p>As stated in the PyMC3 tutorial, NUTS is best used for continuous parameter sampling, and Metropolis for categroical parameter. 
-            In the figure below, I share an example of running a logistic model consists of both continuous and categorical inputs to 
-            produce a binary outcome value. I find that the easiest way to incorporate mixed data type in PyMC3 is to define your own 
-            function (instead of using the default pm.glm.GLM() function).</p>
+<p>The size of the original dicom image is 1024x1024, which is too expensive for most deep learning models. Another issue is that the 
+  the RetinaNet model takes 3-channel image (i.e., RGB). So in preprocessing the pictures, several steps take place. </p>
      <figure>
-      <center><img src="images/bayesian/pymc3_lr.png" alt="pymc3_lr" ></center>
-   <figcaption>Fig.2. Example of training a probilistic programming model using PyMC3 sampling, and generating the sampling results (trace plot).
+      <center><img src="images/retinanet/dicom_contrast.png" alt="dicom_contrast" ></center>
+   <figcaption>Fig.3. Example of image contrasts applied, where the 3-channel image at the bottom would be used for training RetinaNet.
    </figcaption>
    </figure>
    
   
-<p>In defining the distribution of the categorical variables (there were 7), either Bernoulli or Binomial distributions can be used.
-  With <code class="highlighter-rouge">pm.Binomial()</code>, user must enter number of trials (e.g., n=10) since Binomial function 
-            is concerned with number of trials. Another useful feature of PyMC3 is that user can define multiple steps to assign 
-            different sampling method to the desired variable(s). It's also helpful to use the <code class="highlighter-rouge">
-  share()</code> function from PyMC3 to later share the out-of-sample test data in order to run inference on the trained model(see code below).</p>
-            
- <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-############### after model is trained #############
 
-#switch variable values to predictors_out_of_sample data, then run model by sampling 200 times for each data point
-predictors_shared.set_value(predictors_out_of_sample)
-ppc = pm.sample_ppc(trace_bern, model=model, samples=200)
-
-# To generate a final prediction value, use beta function to characterize the prediction distribution.
-# beta distribution is frequently used in Bayesian statistics, empirical Bayes methods and classical statistics to 
-#capture overdispersion in binomial type distributed data. when n(number of samples in code above) =1, then 
-#it's bernoulli distribution
-β = st.beta((ppc['outcomes'] == 1).sum(axis=0), (ppc['outcomes'] == 0).sum(axis=0))
-pred_eval=pd.DataFrame({'ppc_pred':β.mean(), 'actual_value':y_test.values})
-
-</code></pre></figure>         
-  
 
   <h3> Conclusion </h3>
   <p> With sufficient samplings, Bayesian modeling outperformed regular logistic regression fitting by a 
