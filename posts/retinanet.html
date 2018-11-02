@@ -72,7 +72,7 @@
        (imaging screening) of potential pneumonia cases in order to prioritize and expedite their review."</i>
             </blockquote> 
 
-            <p>I tried out the <a href='https://github.com/fizyr/keras-retinanet'> RetinaNet object detector </a>
+            <p>I tried out the <a href='https://github.com/fizyr/keras-retinanet'><u> RetinaNet object detector</u> </a>
               (implemented in Keras by Fizyr) on the image dataset, but ran out of time to submit before the deadline. For this 
               post, I will focus mostly on model performance and tradeoff associated with using meta data from the dicom image 
               files. But before going into that, I will explain why I chose RetinaNet.
@@ -102,33 +102,26 @@
 
 <p>RetinaNet is a single-stage object detector proposed in the paper 
   <a href='https://arxiv.org/abs/1708.02002'><b>Focal Loss for Dense Object Detection</b></a> 
-  by Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He and Piotr Dollár.
-
-  One of the most common algorithms used is Markov-Chain-Monte-Carlo (MCMC) sampling.  The general steps are outlined below [1]:</p>
-            <li>set up prior distributions for weights w0, w1. </li>
-            <li>sample from the probability distribution to get a vector of values for the weights (<b>w</b>).</li>
-            <li>Generate prediction values(y^), and calculate the loss term using the negative log of the likelihood distribution.</li>
-            <li>Update the weights distribution through minimization of the loss function.</li>
-            <li>Repeat the sampling process to get better estimation of the weights by proposing 
-              new values of vector <b>w</b> close to the previous values. The MCMC method moves along the joint distribution according to 
-              some pre-defined threshold values (e.g., current loss/previous loss ratio <1).</li>
-  <br>            
-   <p>The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
-     Hamiltonian Monte Carlo method(HMC), which takes advantage of the gradient of the log posterior-density to guide the sampling toward 
-     region of higher likelihood.  No-U-Turn Sampler (NUTS) was 
-     a more recent improvement on top of HMC, it offers adaptive tuning of hyperparameter values for determining number of 
-     steps and step size[2].</p>
-    <p>To better understand how loss term is related to the log likelihood, I found a ppt lecture given by Dr. Piyush Rai for 
-              CS5350/6350 at the University of Utah. As shown in Fig.1., the takeaway is that log of posterior distribution (P(<b>w</b>|D)) is maximized by looking for the 
-              optimal <b>w</b>, and argmax(log P(<b>w</b>|D) is equivalent to  argmin of (-log P(D|<b>w</b>)-log(P(<b>w</b>)). This set up
-              showes that negative log of the likelihood function is the loss term, and negative log of <b>w</b> serves as regularization term.
-              With auto differentiation, the gradient of the -log P(D|<b>w</b>) can be found to faciliate more efficient sampling for <b>w</b>.
+  by Tsung-Yi Lin, Priya Goyal, et al. In addition to having faster processing speed,
+  it offers higher accuracy in small object detection compared to YOLO and even SSD, thanks to Feature Pyramid Network (FPN) (Fig. 1).
+  
+  
+  
+  
+  
 
        <figure>
-      <center><img src="images/bayesian/log_likelihood.png" alt="log_likelihood" ></center>
-   <figcaption>Fig.1. Finding Maximum-a-Posteriori solution for <b>w</b>. 
+      <center><img src="images/retinanet/retinanet_schema.png" alt="retina architecture" ></center>
+   <figcaption>Fig.1. RetinaNet(Source:https://arxiv.org/pdf/1708.02002.pdf). 
    </figcaption>
-   </figure>            
+   </figure>      
+  
+  
+  <figure>
+      <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
+   <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </i>of performance on COCO dataset. 
+   </figcaption>
+   </figure>  
 
 <h2 id="pymc3">PyMC3</h2>
 
