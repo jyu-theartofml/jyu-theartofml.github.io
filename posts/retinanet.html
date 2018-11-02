@@ -62,11 +62,11 @@
               <p align='center'><img src='images/retinanet/true positive.png' alt="dicom_bbox" ></p>
             </figure>
             <p>The Radiological Society of North America (RSNA) recently hosted a Kaggle competition, where Kagglers are asked to 
-              build a model to screen for pneumonia by detecting lung opacities on chest radiographs. The standard practice for 
-             diagnosis of pneumonia is time consuming, requiring review of radiographs by trained professional, vital sign, and clinical 
+              build a model to screen for marker of pneumonia by detecting lung opacity on chest radiographs. The standard practice for 
+             diagnosis of pneumonia is time consuming - requiring review of radiographs by trained professional, vital sign, and clinical 
             history of the individual patient. The quality of the chest radiograph (CXR) also makes accurate diagnosis a challenging task,
-           because the opaque features can be caused by from pulmonary edema, bleeding, lung cancer, or fluid in the 
-              pleural space (pleural effusion). To quote the RSNA:</p>
+           because the opaque features can be caused by pulmonary edema, bleeding, lung cancer, or fluid in the 
+              pleural space (pleural effusion)[1]. To quote the RSNA:</p>
             <blockquote class="w3-panel w3-leftbar w3-light-grey">
                 <i>"They see the potential for ML to automate initial detection 
        (imaging screening) of potential pneumonia cases in order to prioritize and expedite their review."</i>
@@ -194,7 +194,7 @@ pred_eval=pd.DataFrame({'ppc_pred':β.mean(), 'actual_value':y_test.values})
    
   
   <h3> REFERENCES </h3>
-  <p>[1]Sedar, J.,<i> Bayesian Inference with PyMC3 - Part 1</i>. https://blog.applied.ai/bayesian-inference-with-pymc3-part-1/</p>
+  <p>[1]RSNA Pneumonia Detection Challenge, https://www.kaggle.com/c/rsna-pneumonia-detection-challenge</p>
   <p>[2]Hoffman, M.D., Gelman, A. (2011). <b>The No-U-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian 
     Monte Carlo </b>.</p>
   <p>[3]Mullachery, V., Khera,A., Husain, A. (2018). <i>Bayesian Neural Networks.</p>
