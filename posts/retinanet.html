@@ -98,17 +98,13 @@
           <div class="article-content">
   
 
-<h2 id="background">RetinaNet</h2>
+<h2 id="background">What's special in RetinaNet?</h2>
 
 <p>RetinaNet is a single-stage object detector proposed in the paper 
   <a href='https://arxiv.org/abs/1708.02002'><b>Focal Loss for Dense Object Detection</b></a> 
   by Tsung-Yi Lin, Priya Goyal, et al. In addition to having faster processing speed,
-  it offers higher accuracy in small object detection compared to YOLO and even SSD, thanks to Feature Pyramid Network (FPN) (Fig. 1).
-  
-  
-  
-  
-  
+  it offers higher accuracy in small object detection compared to YOLO and even SSD [2], thanks to Feature Pyramid Network (FPN) design (Fig. 1).
+ 
 
        <figure>
       <center><img src="images/retinanet/retinanet_schema.png" alt="retina architecture" ></center>
@@ -119,7 +115,7 @@
   
   <figure>
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
-   <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </i>of performance on COCO dataset. 
+   <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </a> of performance on COCO dataset. 
    </figcaption>
    </figure>  
 
@@ -175,8 +171,7 @@ pred_eval=pd.DataFrame({'ppc_pred':β.mean(), 'actual_value':y_test.values})
   
   <h3> REFERENCES </h3>
   <p>[1]RSNA Pneumonia Detection Challenge, https://www.kaggle.com/c/rsna-pneumonia-detection-challenge</p>
-  <p>[2]Hoffman, M.D., Gelman, A. (2011). <b>The No-U-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian 
-    Monte Carlo </b>.</p>
+  <p>[2]Hui, J. 2018, Medium.com <b>Object detection: speed and accuracy comparison (Faster R-CNN, R-FCN, SSD, FPN, RetinaNet and YOLOv3) </b></p>
   <p>[3]Mullachery, V., Khera,A., Husain, A. (2018). <i>Bayesian Neural Networks.</p>
 
   
