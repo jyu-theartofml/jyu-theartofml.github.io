@@ -72,7 +72,10 @@
        (imaging screening) of potential pneumonia cases in order to prioritize and expedite their review."</i>
             </blockquote> 
 
-            
+            <p>I tried out the <a href='https://github.com/fizyr/keras-retinanet'> RetinaNet object detector </a>
+              (implemented in Keras by Fizyr) on the image dataset, but ran out of time to submit before the deadline. For this 
+              post, I will focus mostly on model performance and tradeoff associated with using meta data from the dicom image 
+              files. But before going into that, I will explain why I chose RetinaNet.
             </p>
             
             <div class="article-list-footer">
@@ -93,30 +96,14 @@
           </header>
 
           <div class="article-content">
-  <p>To better understand Bayesian statistics I recommend this great 'laymen' <a href='https://www.nytimes.com/2014/09/30/science/the-odds-continually-updated.html'> 
-    article </a>published in New York Times. The gist can be 
-            captured by this quote <i> "The essence of the frequentist technique is to apply probability to data. If you suspect your friend has a weighted coin, 
-    for example, and you observe that it came up heads nine times out of 10, a frequentist would calculate the probability of 
-    getting such a result with an unweighted coin [null hypothesis]. The answer (about 1 percent) is not a direct measure of the 
-    probability that the coin is weighted; it’s a measure of how improbable the nine-in-10 result is — a piece of information that can be useful in investigating your suspicion. 
-    By contrast, <b>Bayesian calculations go straight for the probability of the hypothesis</b>, factoring in not just the data from the coin-toss experiment but any other relevant information —
-    including whether you have previously seen your friend use a weighted coin." </i> In a mathematical sense, frequentist does repeated 
-    sampling to estimate an underlying parameter, and treats that parameter as fixed. In the Bayesian world, you can parameterize 
-    prior belief and the underlying distribution of observed data, and that belief 
-    can be <a href="https://www.vosesoftware.com/riskwiki/images/image15_456.gif">
-      updated</a> with each new observation (posterior probability), and be described as a degree of belief. 
-    In this case, it's the data that is fixed (i.e., you're concerned with the probability 
-    of the outcome of one event).</p>
+  
 
+<h2 id="background">RetinaNet</h2>
 
-<h2 id="pymc3">Probabilistic Programming </h2>
+<p>RetinaNet is a single-stage object detector proposed in the paper 
+  <a href='https://arxiv.org/abs/1708.02002'><b>Focal Loss for Dense Object Detection</b></a> 
+  by Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He and Piotr Dollár.
 
-<p>Bayesian theory is the foundation for Probabilistic Programming, which 'learns' the parameters of interest using sophisticated sampling techniques (as 
-            oppose to solving linear equation using OLS), and returns a probability distribution of the parameters. To give a concrete 
-            example, suppose you have a linear equation y=w1*x+w0 and the goal is to find the weights (w0, w1). In order to estimate these
-            parameters, you will need a sampling algorithm to search for the parameter value within a distribution
-              that's updated throughout iterations. In the end, the weights(w0, w1) will be in the form of probability distributions, and
-  predicted values will be derived from sampling of those distributions.
   One of the most common algorithms used is Markov-Chain-Monte-Carlo (MCMC) sampling.  The general steps are outlined below [1]:</p>
             <li>set up prior distributions for weights w0, w1. </li>
             <li>sample from the probability distribution to get a vector of values for the weights (<b>w</b>).</li>
