@@ -18,7 +18,32 @@
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
 
     <link rel="stylesheet" href="/assets/light.css">
+<style>
+table.customTable {
+  width: 20%;
+  background-color: #FFFFFF;
+  border-collapse: collapse;
+  border-width: 2px;
+  border-color: #7DD6E8;
+  border-style: solid;
+  margin-left:auto; 
+   margin-right:auto;
+  color: #666666;
+}
 
+
+table.customTable td, table.customTable th {
+  border-width: 2px;
+  border-color: #7DD6E8;
+  border-style: solid;
+  padding: 10px;
+}
+
+table.customTable thead {
+  background-color: #7DD6E8;
+}
+  </style>
+  
   
 </head>
 
@@ -132,19 +157,35 @@
   
 
 
-  <h3> Conclusion </h3>
-  <p> With sufficient samplings, Bayesian modeling outperformed regular logistic regression fitting by a 
-    slight margin in F1 score. Given the computational cost, it would be more efficient to apply probabilistic programming 
-    to complex model with higher dimensions than the dataset used for the code presented here. Currently there's great interest
-    in training models with Bayesian Neural Network that is capable of generating prediction/posterior distributions, and 
-    yielding higher accuracy[3]. However, within PyMC3 there's been some issues with saving the model and the 
-    trace file - when user reloads it to run on 
-    new dataset it <a href='https://discourse.pymc.io/t/out-of-sample-predictions-from-a-pickled-model/956'> doesn't accept </a>
-    the new data (i.e., failing due to broadcasting different sample length). Hopefully PyMC3 and other packages like Edward 
-    would roll out improvements for more robust backend support.
+  <h3> Results </h3>
+  <p> 
             </p>
     
-   
+            
+   <table class="customTable">
+  <thead>
+    <tr>
+      <th>Model Name</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>mAP (validation data)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ResNet50_1</td>
+      <td>0.753</td>
+      <td>0.619</td>
+      <td>0.427</td>
+    </tr>
+    <tr>
+      <td>ResNet50_2</td>
+      <td>0.656</td>
+      <td>0.736</td>
+      <td>0.464</td>
+    </tr>
+  </tbody>
+</table
   
   <h3> REFERENCES </h3>
   <p>[1]RSNA Pneumonia Detection Challenge, https://www.kaggle.com/c/rsna-pneumonia-detection-challenge</p>
