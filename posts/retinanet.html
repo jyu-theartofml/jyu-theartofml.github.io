@@ -169,7 +169,7 @@
 <p>The size of the original dicom image is 1024x1024, which is too expensive for most deep learning models. Another issue is that the 
   RetinaNet model takes 3-channel pixel array (i.e., RGB). So in preprocessing the data, several steps take place. Fig.3 shows an example of the image prepocesing. </p>
             <ol>
-              <li> Apply gamma correction and CLAHE (Contrast Limited Adaptive Histogram Equilization) to the image separately.</li>
+              <li> Apply gamma correction[5] and CLAHE (Contrast Limited Adaptive Histogram Equilization) to the image separately.</li>
                <li>Stack the two contrasted images onto the original image to have a 3-channel numpy array suitable for the model.</li>
               <li>Resize the image to 256X256, save them in the proper directory.</li>
                 <li> Based on the resize factor, adjust bounding box coordinates in the annotation .csv file. </li>
@@ -190,8 +190,7 @@
          such as children.</p>
          <p>After seeing this trend, I wanted to incorporate the available meta data, age and gender, with the correpsonding image to help the model
        learn better. One crude way to do this is by padding the input pixel array with a vector for age and another 
-           vector for values mapped to the gender variable. In the end, a new RetinaNet model (Resnet50_2) was trained on 
-           input pixel array with size 257x257x3. 
+           vector for values mapped to the gender variable. And a new RetinaNet model (Resnet50_2) was trained on these data.
 
 
   <h3>Results (No meta data vs. Meta data)</h3>
@@ -231,13 +230,16 @@
      and recall values correpsond to confidence score threshold of 0.35.</font></p>
             
     The mAP values don't differ significantly for the two models, however it's clear that there's a trade off between false negative
-            and false positive. With meta data padding, RetinaNet does seem to be do a better job in capturing the bounding box regions.
+            and false positive. With meta data padding, RetinaNet does seem to do a better job in capturing opaque
+            regions (higher recall). It is possible that these two models can work together to identify prediction outputs that 
+            are likely to be false negative or false positive.
             
   <h3> REFERENCES </h3>
   <p>[1]RSNA Pneumonia Detection Challenge, https://www.kaggle.com/c/rsna-pneumonia-detection-challenge</p>
   <p>[2]Hui, J. 2018, Medium.com <b>Object detection: speed and accuracy comparison (Faster R-CNN, R-FCN, SSD, FPN, RetinaNet and YOLOv3). </b></p>
   <p>[3]Hui, J. 2018, Medium.com <b>What do we learn from single shot object detectors (SSD, YOLOv3), FPN & Focal loss (RetinaNet)?</b>.</p>
-  <p>[4]Tsung-Yi Lin, Priya Goyal, et al, Feb 2018, <i>Focal Loss for Dense Object Detection</i>, ArVix:1708.02002</p>
+  <p>[4]Lin T., Goyal, P., et al, Feb 2018, <i>Focal Loss for Dense Object Detection</i>, ArVix:1708.02002</p>
+  <p>[5]Ikhsan I.A., Hussain A.,et al, Mar 2014, <i>An analysis of x-ray image enhancement methods for vertebral bone segmentation</i>, 2014 IEEE 10th International Colloquium on Signal Processing and its Applications </p>
 
   
     
