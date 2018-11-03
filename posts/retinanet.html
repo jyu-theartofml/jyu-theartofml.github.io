@@ -150,10 +150,10 @@
     Super Resolution GAN</a>).</p>
     <p>Each of the pyramid feature maps is attached to two subnets, one for classification and one for bounding box 
       regression. Within a task, for example classification, the subnet parameters are shared across the pyramid levels, but 
-      the paramesters for
+      the parameters for
       classification  and bbox regression are NOT shared, and each pyramid level will have its own prediction to derive the final prediction. In contrast 
-      with Region Proposal Network (RPN), each 
-      task subnet is independent from each other.</p>
+      with Region Proposal Network (RPN), the 
+      task subnets are independent from each other.</p>
        <p>Finally, focal loss function is simply a modified form of Cross Entropy loss function. It gives less weight 
          to the loss value 
          of well trained class (i.e., background), while giving more weight to under-represented, poorly trained class to 
