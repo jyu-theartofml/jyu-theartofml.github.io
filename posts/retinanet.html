@@ -186,7 +186,7 @@
          After looking at some validation inference by this model (Resnet50_1), I notice that it's very sensitive to the 
          confidence score threshold, and it ended up capturing more opacity (true positive) at a lower threshold value.
          The model at this point also struggled to predict bounding box for smaller opaque regions, that means it had higher
-         number of false negatives than false positives, especially in radiographs of smaller stature patients 
+         number of false negatives, especially in radiographs of smaller stature patients 
          such as children.</p>
          <p>After seeing this trend, I wanted to incorporate the available meta data, age and gender, with the correpsonding image to help the model
        learn better. One crude way to do this is by padding the input pixel array with a vector for age and another 
