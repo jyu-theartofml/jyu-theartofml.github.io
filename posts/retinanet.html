@@ -128,15 +128,18 @@
 <p>RetinaNet is a single-stage object detector proposed in the paper 
   <a href='https://arxiv.org/abs/1708.02002'><b>Focal Loss for Dense Object Detection</b></a> 
   by Tsung-Yi Lin, Priya Goyal, et al. In addition to having faster processing speed,
-  it offers higher accuracy in small object detection compared to YOLO and even SSD [2], thanks to Feature Pyramid Network (FPN) design (Fig. 1).
+  it offers higher accuracy in small object detection compared to YOLO and even Single Shot Detector (SSD) [2], 
+  thanks to Feature Pyramid Network (FPN) (Fig. 1) and Focal Loss function.</p>
  
 
        <figure>
       <center><img src="images/retinanet/retinanet_schema.png" alt="retina architecture" ></center>
    <figcaption>Fig.1. RetinaNet(Source:https://arxiv.org/pdf/1708.02002.pdf). 
    </figcaption>
-   </figure>      
-  
+   </figure>  
+            
+  <p>Like other object detectors, RetinaNet is comprised of a backbone model (in this example it's ResNet50) to extract
+    features. As it goes through the convolutional layers
   
   <figure>
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
