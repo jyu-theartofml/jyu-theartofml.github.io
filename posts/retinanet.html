@@ -156,7 +156,8 @@
       task subnet is independent from each other.</p>
        <p>Finally, focal loss function is simply a modified form of Cross Entropy loss function. It gives less weight 
          to the loss value 
-         of well trained class (i.e., background), while giving more weight to under-represented, poorly trained class[4]. 
+         of well trained class (i.e., background), while giving more weight to under-represented, poorly trained class to 
+         help the model 'learn' more efficiently [4].
   <figure> 
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
    <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </a> of performance on COCO dataset. 
@@ -180,17 +181,21 @@
    </figcaption>
    </figure>
    
-  <h3>Performance</h3>
+  <h3>Model Performance</h3>
        <p>Following the documentation on Fizyr's git repo, it was very straightforward to train RetinaNet until the losses plateau. 
          After looking at some validation inference by this model (Resnet50_1), I notice that it's very sensitive to the 
          confidence score threshold, and it ended up capturing more opacity (true positive) at a lower threshold value.
-         The model at this point also struggled to predict bounding box for smaller opaque region, and that means it had higher
-         number of false negatives than false positives, especially in radiographs of smaller stature such as children.</p>
+         The model at this point also struggled to predict bounding box for smaller opaque regions, that means it had higher
+         number of false negatives than false positives, especially in radiographs of smaller stature patients 
+         such as children.</p>
+         <p>After seeing this trend, I wanted to incorporate the available meta data, age and gender, with the correpsonding image to help the model
+       learn better. One crude way to do this is by padding the input pixel array with a vector for age and another 
+           vector for values mapped to the gender variable. In the end, a new RetinaNet model (Resnet50_2) was trained on 
+           input pixel array with size 257x257x3. 
 
 
-  <h3>No meta vs. Meta data </h3>
-  <p> 
-            </p>
+  <h3>Results (No meta data vs. Meta data)</h3>
+      <p>After training, evaluation was done for the two models (see Table 1)</p>
     
             
    <table class="customTable">
@@ -217,7 +222,8 @@
     </tr>
   </tbody>
 </table
-  
+  <p aligh='center'>Table 1. Comparison of performance metrics between RetinaNet with no meta data and RetinaNet with meta data. The precision 
+     and recall values correpsond to confidence score threshold of 0.35.
   <h3> REFERENCES </h3>
   <p>[1]RSNA Pneumonia Detection Challenge, https://www.kaggle.com/c/rsna-pneumonia-detection-challenge</p>
   <p>[2]Hui, J. 2018, Medium.com <b>Object detection: speed and accuracy comparison (Faster R-CNN, R-FCN, SSD, FPN, RetinaNet and YOLOv3). </b></p>
