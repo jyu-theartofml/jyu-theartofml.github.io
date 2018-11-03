@@ -139,8 +139,15 @@
    </figure>  
             
   <p>Like other object detectors, RetinaNet is comprised of a backbone model (in this example it's ResNet50) to extract
-    features. As it goes through the convolution layers in the downsampling path, the features become increasingly higher 
-    level abstractions. Unlike most other object detector, the FPN 
+    features. As it goes through the convolution layers, the  the features become increasingly higher 
+    level abstractions (SSD uses the features from this downsampling path). Unlike most other object detectors, 
+    there's also an upsampling/upconvolution path in the FPN, and it has
+    skipped connections with the backbone features. In essence, this is a U-Net! It improves upon SSD by merging 
+    high resolution 
+    features together with finer contextual abstractions from the downsampling path. I can't help but notice that 
+    skipped connection design
+    has been dominating many recent DL developments (e.g., DenseNet, <a href='https://medium.com/@jonathan_hui/gan-super-resolution-gan-srgan-b471da7270ec'>
+    Super Resolution GAN</a>).
   
   <figure>
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
