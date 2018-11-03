@@ -139,7 +139,7 @@
    </figure>  
             
   <p>Like other object detectors, RetinaNet is comprised of a backbone model (in this example it's ResNet50) to extract
-    features. As it goes through the convolution layers, the  the features become increasingly higher 
+    features. As it goes through the convolution layers, the features become increasingly higher 
     level abstractions (SSD uses the features from this downsampling path). Unlike most other object detectors, 
     there's also an upsampling/upconvolution path in the FPN, and it has
     skipped connections with the backbone features. In essence, this is a U-Net! It improves upon SSD by merging 
@@ -147,8 +147,13 @@
     features together with finer contextual abstractions from the downsampling path. I can't help but notice that 
     skipped connection design
     has been dominating many recent DL developments (e.g., DenseNet, <a href='https://medium.com/@jonathan_hui/gan-super-resolution-gan-srgan-b471da7270ec'>
-    Super Resolution GAN</a>).
-  
+    Super Resolution GAN</a>).</p>
+    <p>Each of the pyramid feature maps is attached to two subnets, one for classification and one for bounding box 
+      regression. Within a task, for example classification, the subnet parameters are shared across the pyramid levels, but 
+      the paramesters for
+      classification  and bbox regression are NOT shared, and each pyramid level will have its own prediction. In contrast 
+      with Region Proposal Network (RPN),this means each 
+      task subnet is independent from each other.</p>
   <figure>
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
    <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </a> of performance on COCO dataset. 
