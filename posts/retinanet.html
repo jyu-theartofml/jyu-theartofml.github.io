@@ -183,14 +183,14 @@
    
   <h3>Model Performance</h3>
        <p>Following the documentation on Fizyr's git repo, it was very straightforward to train RetinaNet until the losses plateau. 
-         After looking at some validation inference by this model (Resnet50_1), I notice that it's very sensitive to the 
+         After looking at some validation inference by this model (RetinaNet50_1), I notice that it's very sensitive to the 
          confidence score threshold, and it ended up capturing more opacity (true positive) at a lower threshold value.
          The model at this point also struggled to predict bounding box for smaller opaque regions, that means it had higher
          number of false negatives, especially in radiographs of smaller stature patients 
          such as children.</p>
          <p>After seeing this trend, I wanted to incorporate the available meta data, age and gender, with the correpsonding image to help the model
        learn better. One crude way to do this is by padding the input pixel array with a vector for age and another 
-           vector for values mapped to the gender variable. And a new RetinaNet model (Resnet50_2) was trained on these data.
+           vector for values mapped to the gender variable. And a new RetinaNet model (RetinaNet50_2) was trained on these data.
 
 
   <h3>Results (No meta data vs. Meta data)</h3>
@@ -213,20 +213,21 @@
   </thead>
   <tbody>
     <tr>
-      <td>ResNet50_1</td>
+      <td>RetinaNet50_1</td>
       <td>0.753</td>
       <td>0.619</td>
       <td>0.427</td>
     </tr>
     <tr>
-      <td>ResNet50_2</td>
+      <td>RetinaNet50_2</td>
       <td>0.656</td>
       <td>0.736</td>
       <td>0.464</td>
     </tr>
   </tbody>
 </table
-  <p align='center'><small>Table 1. Comparison of performance metrics between ResNet50_1 with no meta data and ResNet50_2 with meta data.</small></p>
+  <p align='center'><small>Table 1. Comparison of performance metrics between RetinaNet50_1 with no meta data and 
+     RetinaNet50_2 with meta data.</small></p>
             
     <p>The mAP values don't differ significantly for the two models, however it's clear that there's a trade off between false negative
             and false positive. With meta data padding, RetinaNet does seem to do a better job in capturing opaque
