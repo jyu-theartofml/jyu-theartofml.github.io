@@ -144,16 +144,17 @@
     there's also an upsampling/upconvolution path in the FPN, and it has
     skipped connections with the backbone features. In essence, this is a U-Net! It improves upon SSD by merging 
     high resolution 
-    features together with finer contextual abstractions from the downsampling path. I can't help but notice that 
+    features together with finer semantic abstractions from the downsampling path. I can't help but notice that 
     skipped connection design
     has been dominating many recent DL developments (e.g., DenseNet, <a href='https://medium.com/@jonathan_hui/gan-super-resolution-gan-srgan-b471da7270ec'>
     Super Resolution GAN</a>).</p>
     <p>Each of the pyramid feature maps is attached to two subnets, one for classification and one for bounding box 
       regression. Within a task, for example classification, the subnet parameters are shared across the pyramid levels, but 
       the paramesters for
-      classification  and bbox regression are NOT shared, and each pyramid level will have its own prediction. In contrast 
-      with Region Proposal Network (RPN),this means each 
+      classification  and bbox regression are NOT shared, and each pyramid level will have its own prediction to derive the final prediction. In contrast 
+      with Region Proposal Network (RPN), each 
       task subnet is independent from each other.</p>
+       <p>Focal loss function is a modified
   <figure>
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
    <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </a> of performance on COCO dataset. 
@@ -163,7 +164,14 @@
 <h2 id="preprocessing">Image Contrasting</h2>
 
 <p>The size of the original dicom image is 1024x1024, which is too expensive for most deep learning models. Another issue is that the 
-  RetinaNet model takes 3-channel pixel array (i.e., RGB). So in preprocessing the pictures, several steps take place. </p>
+  RetinaNet model takes 3-channel pixel array (i.e., RGB). So in preprocessing the data, several steps take place. </p>
+            <ol>
+              <li> Apply gamma correction and CLAHE (Contrast Limited Adaptive Histogram Equilization) to the image separately.</li>
+               <li>Stack the two contrasted images onto the original image to have a 3-channel numpy array suitable for the model.</li>
+              <li>Resize the image to 256X256, save them in the proper directory.</li>
+                <li> Based on the resize factor, adjust bounding box coordinates in the annotation .csv file. </li>
+            </ol>
+      Fig.3 shows an example of the image prepocesing.
      <figure>
       <center><img src="images/retinanet/dicom_contrast.png" alt="dicom_contrast" ></center>
    <figcaption>Fig.3. Example of image contrasts applied, where the 3-channel image at the bottom would be used for training RetinaNet.
