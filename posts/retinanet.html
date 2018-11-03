@@ -154,15 +154,16 @@
       classification  and bbox regression are NOT shared, and each pyramid level will have its own prediction to derive the final prediction. In contrast 
       with Region Proposal Network (RPN), each 
       task subnet is independent from each other.</p>
-       <p>Focal loss function is a modified form of Cross Entropy loss function. It gives less weight to the loss value 
-         of well trained class (i.e., background), and gives more weight to under-represented, poorly trained class[4]. 
+       <p>Finally, focal loss function is simply a modified form of Cross Entropy loss function. It gives less weight 
+         to the loss value 
+         of well trained class (i.e., background), while giving more weight to under-represented, poorly trained class[4]. 
   <figure> 
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
    <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </a> of performance on COCO dataset. 
    </figcaption>
    </figure>  
 
-<h2 id="preprocessing">Image Contrasting</h2>
+<h2 id="preprocessing">Data Preprocessing</h2>
 
 <p>The size of the original dicom image is 1024x1024, which is too expensive for most deep learning models. Another issue is that the 
   RetinaNet model takes 3-channel pixel array (i.e., RGB). So in preprocessing the data, several steps take place. Fig.3 shows an example of the image prepocesing. </p>
@@ -179,10 +180,15 @@
    </figcaption>
    </figure>
    
-  
+  <h3>Performance</h3>
+       <p>Following the documentation on Fizyr's git repo, it was very straightforward to train RetinaNet until the losses plateau. 
+         After looking at some validation inference by this model (Resnet50_1), I notice that it's very sensitive to the 
+         confidence score threshold, and it ended up capturing more opacity (true positive) at a lower threshold value.
+         The model at this point also struggled to predict bounding box for smaller opaque region, and that means it had higher
+         number of false negatives than false positives, especially in radiographs of smaller stature such as children.</p>
 
 
-  <h3> Results </h3>
+  <h3>No meta vs. Meta data </h3>
   <p> 
             </p>
     
