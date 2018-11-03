@@ -227,8 +227,11 @@
     </tr>
   </tbody>
 </table
-  <p aligh='center'>Table 1. Comparison of performance metrics between RetinaNet with no meta data and RetinaNet with meta data. The precision 
-     and recall values correpsond to confidence score threshold of 0.35.</p>
+  <p aligh='center'><font size="6">Table 1. Comparison of performance metrics between RetinaNet with no meta data and RetinaNet with meta data. The precision 
+     and recall values correpsond to confidence score threshold of 0.35.</font></p>
+            
+    The mAP values don't differ significantly for the two models, however it's clear that there's a trade off between false negative
+            and false positive. With meta data padding, RetinaNet does seem to be do a better job in capturing the bounding box regions.
             
   <h3> REFERENCES </h3>
   <p>[1]RSNA Pneumonia Detection Challenge, https://www.kaggle.com/c/rsna-pneumonia-detection-challenge</p>
