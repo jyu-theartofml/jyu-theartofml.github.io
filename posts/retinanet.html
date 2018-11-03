@@ -154,8 +154,9 @@
       classification  and bbox regression are NOT shared, and each pyramid level will have its own prediction to derive the final prediction. In contrast 
       with Region Proposal Network (RPN), each 
       task subnet is independent from each other.</p>
-       <p>Focal loss function is a modified
-  <figure>
+       <p>Focal loss function is a modified form of Cross Entropy loss function. It gives less weight to the loss value 
+         of well trained class (i.e., background), and gives more weight to under-represented, poorly trained class[4]. 
+  <figure> 
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
    <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </a> of performance on COCO dataset. 
    </figcaption>
@@ -164,14 +165,14 @@
 <h2 id="preprocessing">Image Contrasting</h2>
 
 <p>The size of the original dicom image is 1024x1024, which is too expensive for most deep learning models. Another issue is that the 
-  RetinaNet model takes 3-channel pixel array (i.e., RGB). So in preprocessing the data, several steps take place. </p>
+  RetinaNet model takes 3-channel pixel array (i.e., RGB). So in preprocessing the data, several steps take place. Fig.3 shows an example of the image prepocesing. </p>
             <ol>
               <li> Apply gamma correction and CLAHE (Contrast Limited Adaptive Histogram Equilization) to the image separately.</li>
                <li>Stack the two contrasted images onto the original image to have a 3-channel numpy array suitable for the model.</li>
               <li>Resize the image to 256X256, save them in the proper directory.</li>
                 <li> Based on the resize factor, adjust bounding box coordinates in the annotation .csv file. </li>
             </ol>
-      Fig.3 shows an example of the image prepocesing.
+      
      <figure>
       <center><img src="images/retinanet/dicom_contrast.png" alt="dicom_contrast" ></center>
    <figcaption>Fig.3. Example of image contrasts applied, where the 3-channel image at the bottom would be used for training RetinaNet.
@@ -215,6 +216,7 @@
   <p>[1]RSNA Pneumonia Detection Challenge, https://www.kaggle.com/c/rsna-pneumonia-detection-challenge</p>
   <p>[2]Hui, J. 2018, Medium.com <b>Object detection: speed and accuracy comparison (Faster R-CNN, R-FCN, SSD, FPN, RetinaNet and YOLOv3). </b></p>
   <p>[3]Hui, J. 2018, Medium.com <b>What do we learn from single shot object detectors (SSD, YOLOv3), FPN & Focal loss (RetinaNet)?</b>.</p>
+  <p>[4]Tsung-Yi Lin, Priya Goyal, et al, Feb 2018, <i>Focal Loss for Dense Object Detection</i>, ArVix:1708.02002</p>
 
   
     
