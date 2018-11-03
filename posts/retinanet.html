@@ -139,7 +139,8 @@
    </figure>  
             
   <p>Like other object detectors, RetinaNet is comprised of a backbone model (in this example it's ResNet50) to extract
-    features. As it goes through the convolutional layers
+    features. As it goes through the convolution layers in the downsampling path, the features become increasingly higher 
+    level abstractions. Unlike most other object detector, the FPN 
   
   <figure>
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
