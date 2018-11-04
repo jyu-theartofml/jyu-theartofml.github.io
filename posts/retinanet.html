@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="http://yinniyu.github.io/posts/retinanet.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
-  <meta property="og:image" content="images/retinanet/true positive.png">
+  <meta property="og:image" content="images/retinanet/example_tp.png">
 
  
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -84,7 +84,7 @@
           <header class="article-header">
             <h1>RetinaNet lung opacity detection (with meta data)</h1>
             <figure>
-              <p align='center'><img src='images/retinanet/true positive.png' alt="dicom_bbox" ></p>
+              <p align='center'><img src='images/retinanet/example_tp.png' alt="dicom_bbox" ></p>
             </figure>
             <p>The Radiological Society of North America (RSNA) recently hosted a Kaggle competition, where Kagglers are asked to 
               build a model to screen for marker of pneumonia by detecting lung opacity on chest radiographs. The standard practice for 
@@ -181,7 +181,7 @@
    </figcaption>
    </figure>
    
-  <h3>Model Performance</h3>
+  <h3>Model Performance (No meta data vs. Meta data)</h3>
        <p>Following the documentation on Fizyr's git repo, it was very straightforward to train RetinaNet until the losses plateau. 
          After looking at some validation inference by this model (RetinaNet50_1), I notice that it's very sensitive to the 
          confidence score threshold, and it ended up capturing more opacity (true positive) at a lower threshold value.
@@ -190,10 +190,17 @@
          such as children.</p>
          <p>After seeing this trend, I wanted to incorporate the available meta data, age and gender, with the correpsonding image to help the model
        learn better. One crude way to do this is by padding the input pixel array with a vector for age and another 
-           vector for values mapped to the gender variable. And a new RetinaNet model (RetinaNet50_2) was trained on these data.
+           vector for values mapped to the gender variable. And a new RetinaNet model (RetinaNet50_2) was trained on 
+           these data, Fig.4 shows an example of how the two models perform.</p>
+            <figure>
+      <center><img src="images/retinanet/comparison_bbox.png" alt="model comparisons" ></center>
+   <figcaption>Fig.4. The prediction on the left missed one bounding box, while prediction with meta data on the right
+     captured the second box but at a low confidence score.
+   </figure>
+           
 
 
-  <h3>Results (No meta data vs. Meta data)</h3>
+  
       <p>After training, evaluation was done for the two models (see Table 1). mAP is a standard metric for object detection task, 
             it calculates the average pixel-wise precision in each image and takes the mean across all images in the dataset. 
             On the other hand, precision and recall values were calculated based on whether or not it correctly generated a 
