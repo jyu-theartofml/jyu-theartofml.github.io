@@ -1,4 +1,3 @@
-
 function buildChords(y) {
 
     states=statesGrouped[y].values;
