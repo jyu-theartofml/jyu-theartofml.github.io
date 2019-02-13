@@ -1,7 +1,7 @@
 
 
 function fetchData() {
-    d3.csv("drate_unemp_merged.csv", function(csv) {
+    d3.csv("raw_data/drate_unemp_merged.csv", function(csv) {
 
         var normalized=[];
 
