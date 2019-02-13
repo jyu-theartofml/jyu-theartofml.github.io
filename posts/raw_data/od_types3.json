@@ -1,0 +1,6338 @@
+[
+{
+  "State": "Arizona",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 327
+},
+{
+  "State": "California",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 1063
+},
+ {
+  "State": "Colorado",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 135
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 41
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 47
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 1169
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 305
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 175
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 140
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 436
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 68
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 205
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 170
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 244
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 100
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 248
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 300
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 61
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 173
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 114
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 526
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 428
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 516
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 135
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 328
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 146
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 422
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 540
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 222
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 196
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 293
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 342
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Natural",
+  "year": 2010,
+  "od_counts": 228
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 68
+ },
+ {
+  "State": "California",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 205
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 58
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 22
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 14
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 146
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 103
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 115
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 49
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 53
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 21
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 51
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 68
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 85
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 37
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 92
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 39
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 22
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 35
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 20
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 173
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 170
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 175
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 27
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 98
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 58
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 72
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 156
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 50
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 87
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 65
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 102
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Synthetic",
+  "year": 2010,
+  "od_counts": 66
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 106
+ },
+ {
+  "State": "California",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 456
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 48
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 43
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 20
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 439
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 150
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 79
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 62
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 118
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 18
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 172
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 83
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 158
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 62
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 78
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 99
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 31
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 47
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 29
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 263
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 190
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 175
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 105
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 110
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 73
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 127
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 180
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 62
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 108
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 229
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 69
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Methadone",
+  "year": 2010,
+  "od_counts": 85
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 90
+ },
+ {
+  "State": "California",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 326
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 46
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 77
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 16
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 51
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 10
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 150
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 56
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 37
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 14
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 94
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 68
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 215
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 16
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 183
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 19
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 13
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 97
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 21
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 193
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 39
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 355
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 81
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 131
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 15
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 17
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 260
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 55
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 45
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 60
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 28
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Heroin",
+  "year": 2010,
+  "od_counts": 92
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 313
+ },
+ {
+  "State": "California",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 1167
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 198
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 44
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 64
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 1062
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 327
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 165
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 173
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 469
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 58
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 238
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 168
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 221
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 100
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 222
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 302
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 65
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 220
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 127
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 621
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 439
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 582
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 159
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 325
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 144
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 451
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 521
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 280
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 319
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 325
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 442
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Natural",
+  "year": 2011,
+  "od_counts": 232
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 40
+ },
+ {
+  "State": "California",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 164
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 78
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 13
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 13
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 138
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 86
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 86
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 40
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 76
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 20
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 56
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 64
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 89
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 31
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 66
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 45
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 27
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 31
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 20
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 155
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 155
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 162
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 29
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 111
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 47
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 64
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 114
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 56
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 77
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 53
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 99
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Synthetic",
+  "year": 2011,
+  "od_counts": 60
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 55
+ },
+ {
+  "State": "California",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 406
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 61
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 32
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 23
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 458
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 141
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 84
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 57
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 103
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 14
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 167
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 68
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 147
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 58
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 73
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 96
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 31
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 61
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 31
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 301
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 204
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 163
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 98
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 86
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 61
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 87
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 179
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 75
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 156
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 236
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 59
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Methadone",
+  "year": 2011,
+  "od_counts": 78
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 117
+ },
+ {
+  "State": "California",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 364
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 79
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 85
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 15
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 62
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 30
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 168
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 68
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 55
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 17
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 103
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 144
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 267
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 44
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 250
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 40
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 42
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 131
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 68
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 334
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 82
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 438
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 133
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 240
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 12
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 19
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 368
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 73
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 103
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 148
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 34
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Heroin",
+  "year": 2011,
+  "od_counts": 135
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 326
+ },
+ {
+  "State": "California",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 965
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 223
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 38
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 37
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 850
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 300
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 175
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 136
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 391
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 75
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 258
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 171
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 274
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 108
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 203
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 305
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 56
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 217
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 179
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 616
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 410
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 499
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 145
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 358
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 148
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 491
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 480
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 328
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 276
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 332
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 348
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Natural",
+  "year": 2012,
+  "od_counts": 229
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 36
+ },
+ {
+  "State": "California",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 146
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 52
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 15
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 17
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 162
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 61
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 84
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 43
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 70
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 19
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 52
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 67
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 72
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 40
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 56
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 27
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 24
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 38
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 37
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 164
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 141
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 139
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 31
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 99
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 46
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 77
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 121
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 59
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 89
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 59
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 89
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Synthetic",
+  "year": 2012,
+  "od_counts": 56
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 50
+ },
+ {
+  "State": "California",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 342
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 43
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 24
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 11
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 337
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 161
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 105
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 46
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 79
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 26
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 170
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 86
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 130
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 67
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 62
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 71
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 27
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 68
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 35
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 328
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 184
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 136
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 84
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 87
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 37
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 104
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 142
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 53
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 104
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 180
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 67
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Methadone",
+  "year": 2012,
+  "od_counts": 62
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 101
+ },
+ {
+  "State": "California",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 362
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 91
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 98
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 20
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 101
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 40
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 269
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 114
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 143
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 51
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 173
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 246
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 263
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 46
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 210
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 45
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 39
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 304
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 104
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 516
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 152
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 696
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 129
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 323
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 19
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 50
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 367
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 84
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 121
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 177
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 63
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Heroin",
+  "year": 2012,
+  "od_counts": 185
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 253
+ },
+ {
+  "State": "California",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 1039
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 221
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 144
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 35
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 751
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 309
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 185
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 111
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 349
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 86
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 304
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 179
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 283
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 111
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 237
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 242
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 62
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 231
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 209
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 644
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 397
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 518
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 119
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 406
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 144
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 524
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 452
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 358
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 297
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 269
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 341
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Natural",
+  "year": 2013,
+  "od_counts": 277
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 52
+ },
+ {
+  "State": "California",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 176
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 67
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 53
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 22
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 200
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 80
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 87
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 34
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 76
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 26
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 93
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 98
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 86
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 33
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 97
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 26
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 30
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 57
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 23
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 210
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 116
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 167
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 27
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 108
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 50
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 99
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 112
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 58
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 125
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 59
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 98
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Synthetic",
+  "year": 2013,
+  "od_counts": 81
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 64
+ },
+ {
+  "State": "California",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 343
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 41
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 49
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 21
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 271
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 110
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 92
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 34
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 70
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 20
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 138
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 94
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 163
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 76
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 54
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 70
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 14
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 67
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 28
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 274
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 164
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 116
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 66
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 82
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 50
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 86
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 128
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 59
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 96
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 156
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 54
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Methadone",
+  "year": 2013,
+  "od_counts": 76
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 146
+ },
+ {
+  "State": "California",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 486
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 120
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 227
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 39
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 181
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 67
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 583
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 160
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 215
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 121
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 217
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 288
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 421
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 92
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 261
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 48
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 67
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 383
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 89
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 666
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 189
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 998
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 103
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 409
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 32
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 68
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 369
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 122
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 206
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 205
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 144
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Heroin",
+  "year": 2013,
+  "od_counts": 232
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 290
+ },
+ {
+  "State": "California",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 1047
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 259
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 157
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 38
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 697
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 388
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 253
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 149
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 344
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 93
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 388
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 178
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 328
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 102
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 237
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 224
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 81
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 245
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 223
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 608
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 462
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 618
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 137
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 411
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 319
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 554
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 471
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 367
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 323
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 288
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 363
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Natural",
+  "year": 2014,
+  "od_counts": 279
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 57
+ },
+ {
+  "State": "California",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 194
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 80
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 94
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 29
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 343
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 174
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 127
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 83
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 179
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 29
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 230
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 453
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 178
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 44
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 109
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 32
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 151
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 111
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 66
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 294
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 217
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 590
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 33
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 217
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 110
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 132
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 157
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 68
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 176
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 62
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 122
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Synthetic",
+  "year": 2014,
+  "od_counts": 90
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 62
+ },
+ {
+  "State": "California",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 337
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 51
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 50
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 24
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 227
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 124
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 106
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 37
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 59
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 20
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 153
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 88
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 146
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 81
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 53
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 64
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 29
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 50
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 45
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 231
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 131
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 107
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 59
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 81
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 77
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 71
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 116
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 47
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 105
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 115
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 35
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Methadone",
+  "year": 2014,
+  "od_counts": 78
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 197
+ },
+ {
+  "State": "California",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 561
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 156
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 299
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 54
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 344
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 153
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 711
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 173
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 228
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 107
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 313
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 469
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 525
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 100
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 334
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 64
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 98
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 424
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 139
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 825
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 266
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 1208
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 124
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 503
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 64
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 148
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 425
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 110
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 253
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 289
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 163
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Heroin",
+  "year": 2014,
+  "od_counts": 270
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 298
+ },
+ {
+  "State": "California",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 1019
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 259
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 183
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 36
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 789
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 435
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 271
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 146
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 382
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 108
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 398
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 225
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 380
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 125
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 237
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 259
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 63
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 237
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 160
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 705
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 554
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 690
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 150
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 460
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 322
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 643
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 473
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 357
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 276
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 261
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 356
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Natural",
+  "year": 2015,
+  "od_counts": 249
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 72
+ },
+ {
+  "State": "California",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 229
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 64
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 211
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 38
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 610
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 284
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 278
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 120
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 323
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 38
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 357
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 949
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 457
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 55
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 183
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 32
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 285
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 243
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 42
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 668
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 300
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 1234
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 34
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 429
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 161
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 251
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 186
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 62
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 270
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 65
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 217
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Synthetic",
+  "year": 2015,
+  "od_counts": 112
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 75
+ },
+ {
+  "State": "California",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 291
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 34
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 72
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 14
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 210
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 115
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 99
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 36
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 60
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 16
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 182
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 82
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 171
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 55
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 62
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 57
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 25
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 55
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 33
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 246
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 108
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 109
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 70
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 89
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 57
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 67
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 144
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 45
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 67
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 111
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 29
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Methadone",
+  "year": 2015,
+  "od_counts": 73
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 247
+ },
+ {
+  "State": "California",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 593
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 159
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 390
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 64
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 567
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 222
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 844
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 240
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 310
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 126
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 405
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 634
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 646
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 115
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 303
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 82
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 78
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 508
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 156
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 1058
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 393
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 1444
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 102
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 663
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 100
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 205
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 523
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 127
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 353
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 303
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 194
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Heroin",
+  "year": 2015,
+  "od_counts": 287
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 326
+ },
+ {
+  "State": "California",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 955
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 212
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 206
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 31
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 1030
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 455
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 378
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 231
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 403
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 111
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 666
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 267
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 560
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 137
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 231
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 235
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 69
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 346
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 153
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 892
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 611
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 785
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 128
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 634
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 342
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 679
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 501
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 322
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 343
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 292
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 322
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Natural",
+  "year": 2016,
+  "od_counts": 328
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 123
+ },
+ {
+  "State": "California",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 355
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 72
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 500
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 79
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 1566
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 277
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 907
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 304
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 465
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 89
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 1091
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 1550
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 921
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 99
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 441
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 53
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 363
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 689
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 78
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 1641
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 601
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 2296
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 43
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 1309
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 237
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 395
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 250
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 72
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 648
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 93
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 435
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Synthetic",
+  "year": 2016,
+  "od_counts": 288
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 75
+ },
+ {
+  "State": "California",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 281
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 58
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 72
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 11
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 203
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 115
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 123
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 34
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 48
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 16
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 197
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 95
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 149
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 67
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 41
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 53
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 29
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 84
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 41
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 289
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 118
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 96
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 46
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 113
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 56
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 83
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 139
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 40
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 77
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 122
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 27
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Methadone",
+  "year": 2016,
+  "od_counts": 67
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 299
+ },
+ {
+  "State": "California",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 587
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 234
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 450
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 56
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 669
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 226
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 1040
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 297
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 311
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 149
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 650
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 630
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 727
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 149
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 380
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 86
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 34
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 850
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 161
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 1307
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 544
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 1478
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 114
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 926
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 115
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 260
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 530
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 166
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 450
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 283
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 235
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Heroin",
+  "year": 2016,
+  "od_counts": 389
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 349
+ },
+ {
+  "State": "California",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 973
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 254
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 188
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 64
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 1133
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 513
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 494
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 390
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 399
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 161
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 524
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 254
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 510
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 150
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 226
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 239
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 51
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 424
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 144
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 821
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 573
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 854
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 124
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 564
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 312
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 592
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 535
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 290
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 336
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 250
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 279
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Natural",
+  "year": 2017,
+  "od_counts": 318
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 267
+ },
+ {
+  "State": "California",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 536
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 112
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 686
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 178
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 2126
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 419
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 1251
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 649
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 780
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 156
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 1542
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 1649
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 1368
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 184
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 618
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 66
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 374
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 1376
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 75
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 2238
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 1285
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 3523
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 85
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 1982
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 404
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 590
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 348
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 92
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 829
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 143
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 618
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Synthetic",
+  "year": 2017,
+  "od_counts": 466
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 83
+ },
+ {
+  "State": "California",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 253
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 58
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 95
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 15
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 175
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 83
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 155
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 49
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 49
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 10
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 241
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 79
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 148
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 50
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 32
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 46
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 15
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 82
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 33
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 283
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 103
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 106
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 38
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 64
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 45
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 69
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 129
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 46
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 83
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 119
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 35
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Methadone",
+  "year": 2017,
+  "od_counts": 58
+ },
+ {
+  "State": "Arizona",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 334
+ },
+ {
+  "State": "California",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 715
+ },
+ {
+  "State": "Colorado",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 224
+ },
+ {
+  "State": "Connecticut",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 425
+ },
+ {
+  "State": "Delaware",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 121
+ },
+ {
+  "State": "Florida",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 707
+ },
+ {
+  "State": "Georgia",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 263
+ },
+ {
+  "State": "Illinois",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 1187
+ },
+ {
+  "State": "Indiana",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 327
+ },
+ {
+  "State": "Kentucky",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 269
+ },
+ {
+  "State": "Louisiana",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 162
+ },
+ {
+  "State": "Maryland",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 522
+ },
+ {
+  "State": "Massachusetts",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 466
+ },
+ {
+  "State": "Michigan",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 783
+ },
+ {
+  "State": "Minnesota",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 111
+ },
+ {
+  "State": "Missouri",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 299
+ },
+ {
+  "State": "Nevada",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 94
+ },
+ {
+  "State": "New Hampshire",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 28
+ },
+ {
+  "State": "New Jersey",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 1085
+ },
+ {
+  "State": "New Mexico",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 144
+ },
+ {
+  "State": "New York",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 1356
+ },
+ {
+  "State": "North Carolina",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 537
+ },
+ {
+  "State": "Ohio",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 1000
+ },
+ {
+  "State": "Oregon",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 124
+ },
+ {
+  "State": "Pennsylvania",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 819
+ },
+ {
+  "State": "South Carolina",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 153
+ },
+ {
+  "State": "Tennessee",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 311
+ },
+ {
+  "State": "Texas",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 569
+ },
+ {
+  "State": "Utah",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 147
+ },
+ {
+  "State": "Virginia",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 556
+ },
+ {
+  "State": "Washington",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 306
+ },
+ {
+  "State": "West Virginia",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 244
+ },
+ {
+  "State": "Wisconsin",
+  "opioid_type": "Heroin",
+  "year": 2017,
+  "od_counts": 414
+ }
+]
