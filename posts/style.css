@@ -290,3 +290,10 @@ text.secondLabel {
     font-size: 10px;
 }
 
+text.thirdLabel {
+    font-family: Myriad, Arial;
+    font-style: italic;
+    fill: #888888;
+    font-size: 10px;
+}
+
