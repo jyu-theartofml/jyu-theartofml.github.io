@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path {
+    stroke: #ccc;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+.dot {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+}
+
+
+#legendContainer{
+	position:absolute;
+	top:60px;
+	left:10px;
+	overflow: auto;
+	height:490px;
+	width:110px;
+}
+#legend{
+	width:90px;
+	height:200px;
+}
+.legend {
+    font-size: 12px;
+    font-weight: normal;
+    text-anchor: left;
+}
+.legendcheckbox{
+	cursor: pointer;
+}
+#showAll{
+	position:absolute;
+	top:600px;
+	left:880px;
+}
+#clearAll{
+	position:absolute;
+	top:600px;
+	left:950px;
+}
+input{
+	border-radius:5px;
+	padding:5px 10px;
+	background:#999;
+	border:0;
+	color:#fff;
+}
+#inds{
+	position:absolute;
+	top:10px;
+	left:10px;
+}
+</style>
+<body>
+
+<!-- load the d3.js library -->
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<!--<script src="//code.jquery.com/jquery-1.10.2.js"></script> -->
+<select id="inds">
+		<option value="Arizona" selected="selected">Arizona</option>
+		<option value="California">California</option>
+		<option value="Colorado">Colorado</option>
+    <option value="Connecticut">Connecticut</option>
+    <option value="Delaware">Delaware</option>
+    <option value="Florida">Florida</option>
+    <option value="Georgia">Georgia</option>
+    <option value="Illinois">Illinois</option>
+    <option value="Indiana">Indiana</option>
+    <option value="Kentucky">Kentucky</option>
+    <option value="Louisiana">Louisiana</option>
+    <option value="Maryland">Maryland</option>
+    <option value="Massachusetts">Massachusetts</option>
+    <option value="Michigan">Michigan</option>
+    <option value="Minnesota">Minnesota</option>
+    <option value="Missouri">Missouri</option>
+    <option value="Nevada">Nevada</option>
+    <option value="New Hampshire">New Hampshire</option>
+    <option value="New Jersey">New Jersey</option>
+    <option value="New Mexico">New Mexico</option>
+    <option value="New York">New York</option>
+    <option value="North Carolina">North Carolina</option>
+    <option value="Ohio">Ohio</option>
+    <option value="Oregon">Oregon</option>
+    <option value="Pennsylvania">Pennsylvania</option>
+    <option value="Oregon">Oregon</option>
+    <option value="South Carolina">South Carolina</option>
+    <option value="Tennessee">Tennessee</option>
+    <option value="Texas">Texas</option>
+    <option value="Utah">Utah</option>
+    <option value="Virginia">Virginia</option>
+    <option value="Washington">Washington</option>
+    <option value="West Virginia">West Virginia</option>
+    <option value="Wisconsin">Wisconsin</option>
+
+</select>
+
+<div id="legendContainer" class="legendContainer">
+	<svg id="legend"></svg>
+</div>
+<div id="showAll">
+	<input name="showAllButton"
+	 type="button"
+	 value="Show All"
+	 onclick="showAll()" />
+</div>
+<div id="clearAll">
+	<input name="clearAllButton"
+	 type="button"
+	 value="Clear All"
+	 onclick="clearAll()" />
+</div>
+<script>
+
+function filterJSON(json, key, value) {
+  var result = [];
+  json.forEach(function(val,idx,arr){
+    if(val[key] == value){
+
+      result.push(val)
+    }
+  })
+  return result;
+}
+
+// Set the dimensions of the canvas / graph
+var margin = {top: 50, right: 20, bottom: 30, left: 160},
+    width = 800 - margin.left - margin.right,
+    height = 450 - margin.top - margin.bottom,
+    padding = 100;
+
+var formatYear = d3.format("d");
+// Set the ranges
+//var x = d3.time.scale().domain([format1("2010"), format1("2017")]).range([0, width]);
+var x = d3.scale.linear()
+    .range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+
+// Define the axes
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .tickFormat(formatYear);
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
+
+// Define the line
+var opioid_typeline = d3.svg.line()
+    .x(function(d) { return x(d.year); })
+    .y(function(d) { return y(d.od_counts); });
+// Define tool tip
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+var xValue = function(d) { return d.year;}, // data -> value
+    xMap = function(d) { return x(xValue(d));};
+
+var yValue = function(d) { return d.od_counts;}, // data -> value
+    yMap = function(d) { return y(yValue(d));}; // data -> display
+
+var cValue = function(d) { return d.key;};
+var color = d3.scale.ordinal().range(["#FF5C55",  "#FFCB57", "#54C6EB",'587291']);
+// Adds the svg canvas
+var svg = d3.select("body")
+    .append("svg")
+        .attr("width", width+ margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+var data=[];
+// Get the data
+d3.json("/summary_data/od_types3.json", function(error, json) {
+  console.log(json)
+
+  json.forEach(function(d) {
+		d.od_counts = +d.od_counts;
+  });
+
+	d3.select('#inds')
+			           .on("change", function () {
+				         var sect = document.getElementById("inds");
+				         var section = sect.options[sect.selectedIndex].value; //this returns the value of the section, not od_counts
+
+				data = filterJSON(json, 'State', section);
+        //console.log(data)
+	      //debugger
+
+		    data.forEach(function(d) {
+    			d.od_counts = +d.od_counts;
+    			d.active = true;
+      // this removes scatter dots when plot is updated !
+       svg.selectAll(".dot").remove();
+    		});
+
+		    //debugger
+				updateGraph(data);
+
+				jQuery('h1.page-header').html(section);
+			});
+
+	// generate initial graph
+	data = filterJSON(json, 'State', 'Arizona');
+	updateGraph(data);
+
+});
+
+function updateGraph(data) {
+
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.year; }));
+    y.domain([d3.min(data, function(d) { return d.od_counts; }), d3.max(data, function(d) { return d.od_counts; })]);
+
+
+    // Nest the entries by opioid_type
+    dataNest = d3.nest()
+        .key(function(d) {return d.opioid_type;})
+        .entries(data);
+
+ 		var result = dataNest.filter(function(val,idx, arr){
+				  return $("." + val.key).attr("fill") != "#ccc"
+				  // matching the data with selector status
+				})
+
+ 		var opioid_type = svg.selectAll(".line")
+      .data(result, function(d){return d.key});
+
+		opioid_type.enter().append("path")
+			.attr("class", "line");
+
+      // draw dots
+  	 svg.selectAll(".dot")
+  		  .data(data)
+  		.enter().append("circle")
+  		  .attr("class", "dot")
+  		  .attr("r", 3.5)
+  		  .attr("cx", xMap)
+  		  .attr("cy", yMap)
+  		  .attr("fill", function(d){
+ 			    if(d3.select(this).attr("fill")  == "#ccc"){
+ 			      return color(cValue(d));
+ 			    }else {
+ 			      return "#ccc";
+ 			    }
+ 			  })
+  		  .on("mouseover", function(d) {
+  			  tooltip.transition()
+  				   .duration(200)
+  				   .style("opacity", .9);
+  			  tooltip.html("OD cases: " + d.od_counts )
+  				   .style("left", (d3.event.pageX + 10) + "px")
+  				   .style("top", (d3.event.pageY - 28) + "px");
+  		  })
+  		  .on("mouseout", function(d) {
+  			  tooltip.transition()
+  				   .duration(500)
+  				   .style("opacity", 0);
+           })
+
+
+		opioid_type.transition()
+			.style("stroke", function(d,i) { return d.color = color(d.key); })
+			.attr("id", function(d){ return 'tag'+d.key.replace(/\s+/g, '');}) // assign ID
+			.attr("d", function(d){
+				return opioid_typeline(d.values)
+			});
+
+		opioid_type.exit().remove();
+
+    //
+
+		var legend = d3.select("#legend")
+			.selectAll("text")
+			.data(dataNest, function(d){return d.key});
+
+		//checkboxes
+		legend.enter().append("rect")
+		  .attr("width", 10)
+		  .attr("height", 10)
+		  .attr("x", 0)
+		  .attr("y", function (d, i) { return 0 +i*15; })  // spacing
+      .attr("fill",function(d) {
+		    return color(d.key);
+		  })
+		  .attr("class", function(d,i){return "legendcheckbox " + d.key})
+			.on("click", function(d){
+			  d.active = !d.active;
+
+			  d3.select(this).attr("fill", function(d){
+			    if(d3.select(this).attr("fill")  == "#ccc"){
+			      return color(d.key);
+			    }else {
+			      return "#ccc";
+			    }
+			  })
+
+
+			 var result = dataNest.filter(function(val,idx, arr){
+         return $("." + val.key).attr("fill") != "#ccc"
+       // matching the data with selector status
+      })
+
+       // Hide or show the lines based on the ID
+       svg.selectAll(".line").data(result, function(d){return d.key})
+         .enter()
+         .append("path")
+         .attr("class", "line")
+         .style("stroke", function(d,i) { return d.color = color(d.key); })
+        .attr("d", function(d){
+                return opioid_typeline(d.values);
+         });// break point
+
+
+      svg.selectAll(".line").data(result, function(d){return d.key}).exit().remove()
+      // try remove data_dot
+
+			})
+
+    // Add the Legend text
+    legend.enter().append("text")
+      .attr("x", 15)
+      .attr("y", function(d,i){return 10 +i*15;})
+      .attr("class", "legend");
+
+		legend.transition()
+      .style("fill", "#777" )
+      .text(function(d){return d.key;});
+
+		legend.exit().remove();
+		svg.selectAll(".axis").remove();
+
+    // Add the X Axis
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    // Add the Y Axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+};
+
+function clearAll(){
+  d3.selectAll(".line")
+	.transition().duration(100)
+			.attr("d", function(d){
+        return null;
+      });
+  d3.select("#legend").selectAll("rect")
+  .transition().duration(100)
+      .attr("fill", "#ccc");
+};
+
+function showAll(){
+  d3.selectAll(".line")
+	.transition().duration(100)
+			.attr("d", function(d){
+        return opioid_typeline(d.values);
+      });
+  d3.select("#legend").selectAll("rect")
+  .attr("fill",function(d) {
+    if (d.active == true){
+       return color(d.key);
+     }
+   })
+};
+// now add titles to the axes
+svg.append("text")
+            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+            .attr("y", 0-margin.left/2)
+            .attr("transform", "translate("+ (margin.top/2) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+            .text("Number of overdose deaths");
+
+svg.append("text")
+            .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+            .attr("transform", "translate(" + (width /2) +  " ," + (height + margin.bottom) + ")")
+            .text("Year");
+
+</script>
+</body>
