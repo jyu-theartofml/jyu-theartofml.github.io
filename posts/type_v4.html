@@ -193,7 +193,7 @@ var svg = d3.select("body")
               "translate(" + margin.left + "," + margin.top + ")");
 var data=[];
 // Get the data
-d3.json("/summary_data/od_types3.json", function(error, json) {
+d3.json("raw_data/od_types3.json", function(error, json) {
   console.log(json)
 
   json.forEach(function(d) {
