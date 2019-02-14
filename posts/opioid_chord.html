@@ -7,11 +7,11 @@
   <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta property="og:title" content="Regression for taxi data">
+  <meta property="og:title" content="Opiod Epidemic">
   <meta property="og:type" content="website">
   <meta property="og:url" content="http://yinniyu.github.io/posts/taxi">
   <meta property="og:site_name" content="The Art of Machine Learning">
-  <meta property="og:image" content="">
+  <meta property="og:image" content="images/opioid_chord/opiod_chords.png">
 
  
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -23,18 +23,13 @@
     <link type="text/css" rel="stylesheet" href="style.css">
 
      <script type="text/javascript" src="scripts/d3/math/trigonometry.js"></script>
-
      <script type="text/javascript" src="scripts/d3/svg/arc.js"></script>
-
      <script type="text/javascript" src="scripts/d3/core/functor.js"></script>
      <script type="text/javascript" src="scripts/d3/core/source.js"></script>
      <script type="text/javascript" src="scripts/d3/core/target.js"></script>
-
      <script type="text/javascript" src="scripts/d3/layout/arc-chord.js"></script>
      <script type="text/javascript" src="scripts/d3/svg/arc-chord.js"></script>
-
      <script type="text/javascript" src="scripts/graphic/gradients.js"></script>
-
 
  </head>
 
@@ -69,41 +64,48 @@
   </ul>
 </nav>
 
-        
         <article class="article appear">
           <header class="article-header">
-            <h1 id="circos plot">Interactive chord diagram in D3 </h1>
-            <p>This post revisits the taxi ride data to make an interactive circos diagram in D3. Originally presented in 2009 by Martin Krzywinsk in his 
-		    paper "Circos: an Information Aesthetic for Comparative Genomics.", it has become widely used and appreciated outside of the genomic/bioinformatic
-		    community. Its aesthetics and features effectively display relationships between different entities or patterns in periodic data.
-		  For the taxi data, it's actually quite simple to create a circos Chord diagram by tweaking existing codes 
-		    shared by users (i.e, AndrewRP, nbremer) on https://bl.ocks.org/ , plus I will break down the essential elements of the chord diagram.</p>
-		  <p><b>Note:If you cannot see the interactive chart after this paragraph, it means the browser is blocking the javascript from being loaded.
-			  You can remove the block temporarily by adjusting the security setting on the browser tool bar or location/title bar.
-			  If you need help, refer to <a href="http://kb.mcgill.ca/?portalid=2&articleid=5128#tab:homeTab:crumb:8:artId:5128:src:article">
-			  this link</a>.</b></p>
+            <h1 id="opioid viz">The opioid epidemic in pictures</h1>
+            <p>During the past few years, there has been increasing media coverage of the opioid crisis in the U.S., especially focusing 
+		    on synthetic variety such 
+		  as fentanyl. The CDC estimates that the potency of the synthetic opioid is about 50-100 times as much as morphine, 
+		  and it has been a lucrative merchandise for the cartel, leading up to the biggest <a href='https://www.denverpost.com/2019/01/31/u-s-border-biggest-ever-fentanyl-bust/'>
+		    fentanyl bust </a> recently at the
+		    Arizona order. </p>
+		  <p>I came across some opioid datasets from the <i> Henry J Kaiser Family Foundation </i> 
+			  website, and using these data
+		  I wanted to examine the potential relationship betwee opioid death rate and economic downturn (i.e, unemployment rate)
+		  for each state. Furthermore, the interactive line plot shows that every state has its own trends of deaths from 
+			  different opioid types.</p>
             
             <div class="article-list-footer">
               <span class="article-list-date">
-                March 26, 2018
+                February, 2018
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
-              10 minute read
+              5 minute read
               </span>
               
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
                 
-                <span class="article-list-divider">D3, Data visualization, Chord diagram </span>
+                <span class="article-list-divider">D3, interactive visualization, opioid epidemic </span>
               </div>
             </div>
           </header>
 
           <div class="article-content">
 
-		  <div id="chart">
-			  
+<div id="chart">
+<h2 id="chord plot">Opioid death and Unemployment </h1>
+	<p>The animated chord diagram below is composed from data from 2010-2017, and it's based on an example I found from 
+		the <a href='https://github.com/d3/d3/wiki/Gallery'>D3 gallery page </a>. I've made changes to it to accomodate my dataset and structure.
+		The top chords display the ranking of death rate in each state
+		as number of deaths 
+		per 100,000 with age adjustment, while the bottom chords correspond to the ranking of unemployment rate. The figure only shows the 
+		top 25 states.
        <div id="mainDiv">
          <div id="imgDiv" style="width:400px; margin:0px auto; margin-top:10px">
              <img id="playPause" src="images/pause_bw.png" width="24" height="24" style="float:left"/>
@@ -154,13 +156,19 @@
 
      </script>
 
- 
-     
+    <p align='center'>Fig.1. Animated chord diagram for opioid death rate (age-adjusted) and unemployment rate.</p>
       
-<p>To embed the D3 javascript into the html, simply call the .js file with the <code class="highlighter-rouge"> script src =""</code> function. In practice, 
-	it's common to use <code class="highlighter-rouge"> div </code> to define the area for D3 effects. For example, in this html 
-	web page, I inserted the D3 script in between a div element with id called "chart" . The id is called in the chord.js file to 
-	select that element by specifying d3.select("div#chart").append("svg"). </p>
+<p>I also created an interactive scatter line plot for the different opioid deaths by the number. Some states had too many 
+	missing values especially early on, so I selected states with complete data from 2010-2017 and that returned 33 states. </p>
+<figure>
+   <img src="images/opioid_chord/chrome-type_capture.gif" alt="screen capture" >
+   <figcaption>Fig.2. Scatter line plot of opioid deaths from 2010-2017 in each state. 
+   </figcaption>
+</figure>
+	
+	<p>For clarity, 
+	this plot is displayed 
+ <a href='https://yinniyu.github.io/posts/type_v4.html'>here </a>. </p>
 		  
 
 <p>I found that the fastest way to hack D3 is by looking at well-annotated codes (I love the ones written by <a href='https://www.visualcinnamon.com/about'>
