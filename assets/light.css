@@ -853,7 +853,7 @@ img {
 .article-list-item p {
   display: block;
   margin: 12px 0 10px;
-  font-size: 15px;
+  font-size: 16px;
   color: #615b5b; }
 
 .article-list-footer {
@@ -898,7 +898,7 @@ img {
   .article-header p {
     display: block;
     margin: 12px 0 10px;
-    font-size: 15px;
+    font-size: 16px;
     color: #615b5b; }
   .article-header a {
     text-decoration: none; }
@@ -1037,7 +1037,7 @@ img {
 
 .highlighter-rouge {
   padding: 2px 4px;
-  font-size: 14px;
+  font-size: 15px;
   color: #d14;
   background: #faf9f9;
   border: 1px solid #ebeaea;
