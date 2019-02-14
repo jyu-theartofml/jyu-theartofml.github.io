@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<style> /* set the CSS */
-
+<style> 
 body { font: 12px Arial;}
 
 path {
@@ -75,7 +74,7 @@ input{
 <body>
 
 <!-- load the d3.js library -->
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script> -->
@@ -153,7 +152,6 @@ var margin = {top: 50, right: 20, bottom: 30, left: 160},
 
 var formatYear = d3.format("d");
 // Set the ranges
-//var x = d3.time.scale().domain([format1("2010"), format1("2017")]).range([0, width]);
 var x = d3.scale.linear()
     .range([0, width]);
 var y = d3.scale.linear().range([height, 0]);
