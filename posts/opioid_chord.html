@@ -67,9 +67,9 @@
             <h1 id="opioid viz">The opioid epidemic in pictures</h1>
             <p>During the past few years, there has been increasing media coverage of the opioid crisis in the U.S., especially focusing 
 		    on synthetic variety such 
-		  as fentanyl. The CDC estimates that the potency of the synthetic opioid is about 50-100 times as much as morphine, 
+		  as Fentanyl. The CDC estimates that the potency of the synthetic opioid is about 50-100 times as much as morphine, 
 		  and it has been a lucrative merchandise for the cartel, leading up to the biggest <u><a href='https://www.denverpost.com/2019/01/31/u-s-border-biggest-ever-fentanyl-bust/'>
-		    fentanyl bust </a></u> recently at the
+		    Fentanyl bust </a></u> recently at the
 		    Arizona order. </p>
 		  <p>I came across some opioid datasets from the <i> Henry J Kaiser Family Foundation </i> 
 			  website, and using these data
@@ -98,7 +98,8 @@
 
 <h2 id="chord plot">Opioid death and Unemployment </h2>
 	<p>The animated chord diagram below is composed of data from 2010-2017, and it's based on an example I found in 
-		the <a href='https://github.com/d3/d3/wiki/Gallery'>D3 gallery page </a>. I've made changes to it to accomodate my dataset and structure.
+		the <a href='https://github.com/d3/d3/wiki/Gallery'>D3 gallery page </a>,  changes were made to accomodate 
+		my dataset and structure.
 		The top chords display the ranking of death rate in each state
 		as number of deaths 
 		per 100,000 with age adjustment, while the bottom chords correspond to the ranking of unemployment rate. 
@@ -163,25 +164,32 @@
     <p align='center'>Fig.1. Animated chord diagram for opioid death rate (age-adjusted) and unemployment rate.</p>
       
 <p>I also created an interactive scatter line <a href='https://yinniyu.github.io/posts/type_v4.html'> plot </a>
-	for the different opioid deaths by the number. Some states had too many 
+	for the different opioid deaths by the number. Here, Natural opioid refers to Morphine, codeine and semisynthetic;
+	Synethetic refers to prescription narcotics like Fentanyl and Oxycodon (except Methadone). Some states had too many 
 	missing values especially early on, so I selected states with complete data from 2010-2017 and that 
-	returned 33 states. </p>
+	returned 33 states. <b>For clarity, the plot is displayed 
+ <a href='https://yinniyu.github.io/posts/type_v4.html'>HERE </a><b>.</p>
 <figure>
    <img src="images/opioid_chord/chrome-type_capture.gif" alt="screen capture" >
    <figcaption>Fig.2. Scatter line plot of opioid deaths from 2010-2017 in each state. 
    </figcaption>
 </figure>
-	
-	<p>For clarity, 
-	this plot is displayed 
- <a href='https://yinniyu.github.io/posts/type_v4.html'>here </a>. </p>
-		  
 
-		  <p> </p>
+		  
+<p>Some interesting facts that emerged from the visualization,:
+<ul>
+  <li>
+</li>
+  <li>Sanity check: make sure the images in trainnig and test sets have more or less the same distribution.</li>
+  <li>Explore augmentation options such as contrasting or adaptive histogram equilization. It is a handy tool especially
+    when poor lighting or resolution of the digital image becomes an issue (Note to self: need to  explore this further).</li>
+  <li>Obviously there's room for improvement. For example,the number of filters in each layer and dropout rate can be tuned.
+</ul>  
+
+
 	
 <h4 id="reference">REFERENCE</h4>
-<p>[1] https://medium.com/@Marianattestad/a-treatise-on-making-circos-plots-from-genomic-data-7ff496849e0</p>
-<p>[2] <b>How to create a Flow diagram with a circular Twist</b>, Visual Cinnamon, https://www.visualcinnamon.com/2015/08/stretched-chord.html</p>
+<p>[1] <b>How to create a Flow diagram with a circular Twist</b>, Visual Cinnamon, https://www.visualcinnamon.com/2015/08/stretched-chord.html</p>
 		  <p>[3] <i>Andrew's Chord Example </i> http://bl.ocks.org/AndrewRP/7468330 </p>
         
 
