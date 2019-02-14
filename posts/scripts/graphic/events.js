@@ -33,13 +33,12 @@ function node_onMouseOver(d) {
 
     toolTip.transition()
         .duration(250)
-        .style("opacity", ".7");
+        .style("opacity", ".85");
     header.text((d.index+1) + ". " + d.label);
     header1.text((baseYear+year));
     header2.text(t);
     toolTip.style("left", (d3.event.pageX+15) + "px")
         .style("top", (d3.event.pageY-75) + "px");
-
 
 }
 
