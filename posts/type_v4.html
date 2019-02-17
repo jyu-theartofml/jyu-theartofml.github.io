@@ -182,7 +182,7 @@ var yValue = function(d) { return d.od_counts;}, // data -> value
     yMap = function(d) { return y(yValue(d));}; // data -> display
 
 var cValue = function(d) { return d.key;};
-var color = d3.scale.ordinal().range(["#FF5C55",  "#FFCB57", "#54C6EB",'587291']);
+var color = d3.scale.ordinal().range(["#FF5C55",  "#FFCB57", "#54C6EB",'#587291']);
 // Adds the svg canvas
 var svg = d3.select("body")
     .append("svg")
