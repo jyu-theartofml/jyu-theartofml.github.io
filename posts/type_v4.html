@@ -259,13 +259,8 @@ function updateGraph(data) {
   		  .attr("r", 3.5)
   		  .attr("cx", xMap)
   		  .attr("cy", yMap)
-  		  .attr("fill", function(d){
- 			    if(d3.select(this).attr("fill")  == "#ccc"){
- 			      return color(cValue(d));
- 			    }else {
- 			      return "#ccc";
- 			    }
- 			  })
+  		  .style("stroke", "#d1d1d1")
+  		  .attr("fill", "#d1d1d1")
   		  .on("mouseover", function(d) {
   			  tooltip.transition()
   				   .duration(200)
