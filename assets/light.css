@@ -54,15 +54,14 @@ h1 {
 figcaption,
 figure,main {
   /* 1 */
-  display: table; } /** was block
+  display: block; } /** was block
 
 /**
  * Add the correct margin in IE 8.
  */
 figure {
   display: table;
-  margin: 1em;
-  text-align: center;}
+  margin: 1em;}
 figcaption {
    font-size:smaller;
    font-style: italic;
