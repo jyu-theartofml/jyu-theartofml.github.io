@@ -60,11 +60,13 @@ figure,main {
  * Add the correct margin in IE 8.
  */
 figure {
+  display: table;
   margin: 1em; }
 figcaption {
    font-size:smaller;
    font-style: italic;
-   text-align: center;}
+   text-align: center;
+   display: table-row;}
 /** table*/
 
 table {
@@ -647,9 +649,9 @@ hr {
   border-left: 0; }
 
 img {
-  display: block;
   max-width: 100%;
-  margin: 0; }
+  margin: 0;
+  display: table-row;}
 
 ::-moz-selection {
   color: #fff;
