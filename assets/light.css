@@ -107,6 +107,8 @@ hr {
 pre {
   font-family: monospace, monospace;
   overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
   /* 1 */
   font-size: 1em;
   /* 2 */ }
