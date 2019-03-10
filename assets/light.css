@@ -654,12 +654,12 @@ img {
   display: table-row;}
 
 ::-moz-selection {
-  color: #fff;
-  background-color: #121111; }
+  color: #121111;
+  background-color: #cec6e3; }
 
 ::selection {
-  color: #fff;
-  background-color: #121111; }
+  color: #121111;
+  background-color: #cec6e3;; }
 
 .footer {
   display: block;
