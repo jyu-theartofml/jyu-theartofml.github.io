@@ -108,6 +108,7 @@
               that's updated throughout iterations. In the end, the weights(w0, w1) will be in the form of probability distributions, and
   predicted values will be derived from sampling of those distributions.
   One of the most common algorithms used is Markov-Chain-Monte-Carlo (MCMC) sampling.  The general steps are outlined below [1]:</p>
+         <ul>   
             <li>set up prior distributions for weights w0, w1. </li>
             <li>sample from the probability distribution to get a vector of values for the weights (<b>w</b>).</li>
             <li>Generate prediction values(y^), and calculate the loss term using the negative log of the likelihood distribution.</li>
@@ -115,6 +116,7 @@
             <li>Repeat the sampling process to get better estimation of the weights by proposing 
               new values of vector <b>w</b> close to the previous values. The MCMC method moves along the joint distribution according to 
               some pre-defined threshold values (e.g., current loss/previous loss ratio <1).</li>
+            </ul>
   <br>            
    <p>The MCMC method is very computationally expensive. To make it more efficient, an improvement was made in the form of 
      Hamiltonian Monte Carlo method(HMC), which takes advantage of the gradient of the log posterior-density to guide the sampling toward 
