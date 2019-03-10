@@ -63,12 +63,12 @@ figure {
   display: table;
   text-align: center;
   margin: 1em;}
+
 figcaption {
    font-size:smaller;
    font-style: italic;
-   display: table-caption;
-  /**text-align: center;*/
-   /**display: table-row;*/ }
+   text-align: center;
+   display: table-row;}
 
 /** table*/
 
