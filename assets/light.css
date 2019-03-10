@@ -1041,9 +1041,11 @@ img {
   overflow: auto;
   font-weight: 400;
   background: #faf9f9;
+  text-align: left;
   border-radius: 4px; }
   .highlight pre {
-    margin: 0; }
+     text-align: left;
+     margin: 0; }
 
 .highlighter-rouge {
   padding: 2px 4px;
