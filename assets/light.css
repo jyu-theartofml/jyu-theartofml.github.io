@@ -66,8 +66,10 @@ figure {
 figcaption {
    font-size:smaller;
    font-style: italic;
-   text-align: center;
-   display: table-row;}
+   display: table-caption;
+  /**text-align: center;*/
+   /**display: table-row;*/ }
+
 /** table*/
 
 table {
