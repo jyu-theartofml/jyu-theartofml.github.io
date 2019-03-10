@@ -1045,8 +1045,13 @@ img {
   border-radius: 4px; }
   .highlight pre {
      text-align: left;
-     overflow-x: scroll;
      margin: 0; }
+  .hightlight pre code {
+        overflow-x: scroll;
+        display: block;
+        text-align: left;
+        margin: 0;
+        word-wrap: normal;}
 
 .highlighter-rouge {
   padding: 2px 4px;
