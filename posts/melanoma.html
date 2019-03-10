@@ -124,8 +124,8 @@
 
   <figure>
    <img src="images/melanoma/depth_pointwise.jpg" alt="illustration of depthwise conv" >
-          <center><img src="images/melanoma/mobilenet_structure.png" alt="model component" ></center>  
-   <figcaption>Fig.2.Top drawing illustrates the concept of depthwise + pointwise convolution. Bottom schematic shows the
+    <img src="images/melanoma/mobilenet_structure.png" alt="model component" > 
+   <figcaption>Fig.2. Top drawing illustrates the concept of depthwise + pointwise convolution. Bottom schematic shows the
      building block unit of the MobileNet, which consists of repeating depthwise separable convolutions and full-connected layers at the end.
    </figcaption>
    </figure>
@@ -244,10 +244,8 @@ model_full=model.fit_generator(train_generator,
 
   <figure>
     <img src="images/melanoma/roc.png" alt="ROC of validation" width="125%"/>
-   <figcaption>Fig.3. ROC of the validation dataset showing the trade-off between sensitivity (True Positive) 
-     and specificity (False Positive). 
-   </figcaption>
-   </figure>
+   <figcaption>Fig.3. ROC of the validation dataset showing the trade-off between sensitivity (True Positive) and specificity (False Positive). 
+   </figcaption></figure>
   
 <p>While the AUC score was lower than the ones presented by Esteve et al[4], I should point out that this MobileNet model was trained on 
   a smaller training dataset provided by <a href='https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a'> ISIC 2017 Challenge</a>. 
