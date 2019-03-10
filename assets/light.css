@@ -1046,7 +1046,7 @@ img {
   .highlight pre {
      text-align: left;
      margin: 0; }
-  .hightlight pre code {
+  pre code {
         overflow-x: scroll;
         display: block;
         text-align: left;
