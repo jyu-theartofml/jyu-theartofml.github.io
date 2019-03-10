@@ -1046,6 +1046,7 @@ img {
   border-radius: 4px; }
   .highlight pre {
      text-align: left;
+     overflow: auto;
      margin: 0; }
   
 .highlighter-rouge {
