@@ -228,10 +228,14 @@ audio:not([controls]) {
  * Remove the border on images inside links in IE 10-.
  */
 img {
+  border-style: none; }
+
+.center {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  border-style: none; }
+  width: 95%;
+}
 
 /**
  * Hide the overflow in IE.
@@ -663,10 +667,10 @@ hr {
   border-bottom: 1px solid #ebeaea;
   border-left: 0; }
 
-/* img {
+img {
   max-width: 100%;
   margin: 0;
-  display: table-row;} */
+  display: table-row;} 
 
 
 ::-moz-selection {
