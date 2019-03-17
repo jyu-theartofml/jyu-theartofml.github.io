@@ -61,12 +61,6 @@ figure,main {
  * Add the correct margin in IE 8.
  */
 
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 figure {
   display: table;
   text-align: center;
@@ -234,6 +228,9 @@ audio:not([controls]) {
  * Remove the border on images inside links in IE 10-.
  */
 img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   border-style: none; }
 
 /**
