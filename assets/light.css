@@ -107,7 +107,7 @@ hr {
 pre {
   font-family: monospace, monospace;
   overflow: auto;
-  width: 750px;
+  width: 550px;
   word-wrap: normal;
   white-space: pre;
   /* 1 */
@@ -763,7 +763,7 @@ img {
     vertical-align: bottom; }
 
 .grid-centered {
-  max-width: 750px;
+  max-width: 700px;
   margin-right: auto;
   margin-left: auto; }
 
