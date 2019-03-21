@@ -597,7 +597,7 @@ h6 {
   text-rendering: optimizeLegibility; }
 
 h1 {
-  font-size: 25.6px;
+  font-size: 20px;
   font-weight: 400;
   letter-spacing: -.03em;
   color: #121111; }
@@ -1012,7 +1012,7 @@ img {
 .header-logo {
   display: inline-block;
   font-family: "Cormorant Garamond", Courier, serif;
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 700;
   color: #000;
   text-decoration: none; }
