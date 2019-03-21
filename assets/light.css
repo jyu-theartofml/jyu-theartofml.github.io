@@ -597,17 +597,17 @@ h6 {
   text-rendering: optimizeLegibility; }
 
 h1 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 400;
   letter-spacing: -.03em;
   color: #121111; }
 
 h2 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 400; }
 
 h3 {
-  font-size: 20.8px;
+  font-size: 18px;
   font-weight: 500; }
 
 h4 {
