@@ -9,7 +9,7 @@
 
   <meta property="og:title" content="Regression for taxi data">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://yinniyu.github.io/posts/taxi">
+  <meta property="og:url" content="http://jyu-theartofml.github.io/posts/taxi">
   <meta property="og:site_name" content="The Art of Machine Learning">
   <meta property="og:image" content="">
 
@@ -22,7 +22,7 @@
      <script src="http://d3js.org/d3.v3.js"></script>
     <!--script src="http://d3js.org/d3.v2.min.js?2.8.1"></script>-->
 	<!-- jQuery -->
-   <script src="https://yinniyu.github.io/posts/jquery.min.js"></script>
+   <script src="https://jyu-theartofml.github.io/posts/jquery.min.js"></script>
 
 	<!-- Open Sans & CSS -->
 	<!--link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300' rel='stylesheet' type='text/css'-->
@@ -67,20 +67,20 @@
   <a href="/" class="header-logo" title="The Art of Machine Learning">The Art of Machine Learning</a>
   <ul class="header-links">
        <li>
-        <a href="https://yinniyu.github.io/about">About Me
+        <a href="https://jyu-theartofml.github.io/about">About Me
         </a>
       </li>
     
      <li>
-        <a href="https://yinniyu.github.io/toolbox">My Toolbox</a>
+        <a href="https://jyu-theartofml.github.io/toolbox">My Toolbox</a>
       </li>
     
     <li>
-        <a href="https://yinniyu.github.io/ai_art">AiArt
+        <a href="https://jyu-theartofml.github.io/ai_art">AiArt
         </a>
       </li>
      <li>
-        <a href="https://github.com/yinniyu" rel="noreferrer noopener" target="_blank" title="GitHub">
+        <a href="https://github.com/jyu-theartofml" rel="noreferrer noopener" target="_blank" title="GitHub">
           <span class="icon icon-github"></span>
         </a>
       </li>
@@ -137,13 +137,13 @@
 	 called the 'Adjacency matrix' [1], in which a nxn matrix quantifies the flow from X to Y. In this matrix, the row names and columns names are identical and in the 
 	 same order. For the taxi data, the rows(i) and columns(j) represent the pick up location and dropoff location, respectively.
 	 The matrix value(i,j) is the number of people going from location i to location j, and it determines the thickness of the corresponding chord. To retrieve neighbourhood names from the raw data, I used the Python packages <i>geopy</i> and <i>pygeocoder</i> to extract the neighbourhood information using 
-	 GPS coordinates for the pickup and dropoff locations.The codes are available <a href= 'https://github.com/yinniyu/kaggle_taxi/blob/master/geomap_visual'> here</a>,
+	 GPS coordinates for the pickup and dropoff locations.The codes are available <a href= 'https://github.com/jyu-theartofml/kaggle_taxi/blob/master/geomap_visual'> here</a>,
 	 and the outputs are the matrix json file, and a .csv file with row names and html color codes.</p>
 	 
 <h2 id="step1">Step  I. Donut Chart</h2>
  <p>The Donut Chart (Fig.1) serves as the backbone of the chord diagram. To make the donut, define the layout with <code class="highlighter-rouge"> d3.layout.chord() </code> 
 	 and <code class="highlighter-rouge">d3.svg.arc() </code>. A mouseover function is added to show how many people are leaving that neighborhood.
-	 See complete donut codes <a href='https://github.com/yinniyu/yinniyu.github.io/blob/master/posts/chord_test1.js'>here 
+	 See complete donut codes <a href='https://github.com/jyu-theartofml/jyu-theartofml.github.io/blob/master/posts/chord_test1.js'>here 
 	 </a></p>
 
  <figure>
