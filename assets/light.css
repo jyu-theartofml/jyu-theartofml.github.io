@@ -670,7 +670,7 @@ hr {
 img {
   max-width: 100%;
   margin: 0;
-  display: table-row;} 
+  display: table-row;}
 
 
 ::-moz-selection {
@@ -1059,7 +1059,7 @@ img {
      text-align: left;
      overflow: auto;
      margin: 0; }
-  
+
 .highlighter-rouge {
   padding: 2px 4px;
   font-size: 15px;
@@ -1322,3 +1322,48 @@ img {
   opacity: 1;
   -webkit-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out; }
+
+  table.paleBlueRows {
+    border: 1px solid #FFFFFF;
+    width: 400px;
+    height: 250px;
+    text-align: center;
+    border-collapse: collapse;
+  }
+  table.paleBlueRows td, table.paleBlueRows th {
+    border: 1px solid #FFFFFF;
+    padding: 3px 2px;
+  }
+  table.paleBlueRows caption {
+    font-size: 15px;
+  }
+
+  table.paleBlueRows tbody td {
+    font-size: 13px;
+  }
+  table.paleBlueRows tr:nth-child(even) {
+    background: #D0E4F5;
+  }
+  table.paleBlueRows thead {
+    background: #0B6FA4;
+    border-bottom: 5px solid #FFFFFF;
+  }
+  table.paleBlueRows thead th {
+    font-size: 17px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    border-left: 2px solid #FFFFFF;
+  }
+  table.paleBlueRows thead th:first-child {
+    border-left: none;
+  }
+
+  table.paleBlueRows tfoot {
+    font-size: 14px;
+    font-weight: normal;
+    color: #333333;
+  }
+  table.paleBlueRows tfoot td {
+    font-size: 14px;
+  }
