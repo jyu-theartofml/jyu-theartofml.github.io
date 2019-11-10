@@ -9,7 +9,7 @@
 
   <meta property="og:title" content="How to deploy a Flask app with ease">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://yinniyu.github.io/posts/melanoma.html">
+  <meta property="og:url" content="http://yinniyu.github.io/posts/lesion_app.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
   <meta property="og:image" content="images/lesion_app/tech_stack.png">
 
@@ -17,7 +17,7 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
 
-    <link rel="stylesheet" href="/assets/light.css">
+  <link rel="stylesheet" href="/assets/light.css">
 
 
 </head>
@@ -63,7 +63,7 @@
           <header class="article-header">
             <h1>How to deploy a Flask app with ease</h1>
              <figure>
-              <img src='images/lesion_app/tech_stack.png' alt="tech_stack" >
+              <img src='images/lesion_app/tech_stack.png' alt="tech_stack" width="60%" height="60%">
                </figure>
             <p>As a Data Scientist, I spend alot of time training, validating, and optimizing models. For a side project,
               I wanted to try deploying a Deep Learning (DL) classifier model to get my hands on the other layers of the
@@ -79,7 +79,7 @@
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
-              5 minute read
+              10 minute read
               </span>
 
               <span class="article-list-divider">-</span>
@@ -101,7 +101,7 @@
   an extension of a project I've done previously developing a melanoma classifier (see <a href ='https://jyu-theartofml.github.io/posts/melanoma'>
     blog post</a>). <u>Please note this is NOT a diagnostic tool</u>, therefore the output of the model is not to be interpreted as an actual diagnosis.
     The potential of this model lies in the monitoring of skin lesions (especially for patients with family history), and encouraging the user
-    to seek medical attention more efficiently.</p>
+    to seek medical attention more efficiently. The web app is hosted at this link [insert url link].</p>
 
   Tables 1 and 2 below are the performance metrics of the baseline model (no meta data) and the final model (with meta data), respectively.</p>
 
@@ -257,52 +257,97 @@
 <p></p>
 
 <h2>Flask app</h2>
-    <p></p>
+    <p>Flask requires a general directory <a href='https://www.digitalocean.com/community/tutorials/how-to-structure-large-flask-applications'>
+      structure</a> such that html, css, and executable files are kept in separate folders as shown in Fig.1. It works with WTForms to pass user defined values/parameters[1]. </p>
+
+    <figure>
+      <img src='images/lesion_app/flask_dir.png'>
+      <figcaption>Fig.1. The layout of the app directory.</figcaption>
+    </figure>
+    <p>To save the model weights downloaded from Pytorch, I overrode the default <code class='highlighter-rouge'>$TORCH_HOME</code> environment
+      variable to store the file in the same root directory as the app.py. This way it doesn't need to spend the extra time
+      downloading the pretrained weights when it runs for the first time.</p>
+
  <h2>Docker container</h2>
-        <p></p>
+ <p>A <code class='highlighter-rouge'>Dockerfile</code> is the bare minimum for building a docker image. In addition,
+   the file <code class='highlighter-rouge'>requirements.txt</code> lists all of the packages needed.</p>
+        <p>I've learned a few things about building images from the Dockerfile. <b>1)</b>Don't try to run a Linux-based
+        Docker image on a MacOS host machine (unless you want to lose your sanity)! When I ran the Ubuntu-based container on my
+         Mac the png image failed to display on the html file and the container crashed. <b>2)</b>Keep it simple - go
+      through the code base to figure out the packages needed to include in
+      <code class='highlighter-rouge'>requirements.txt</code>. Docker will automatically download the dependencies.
+     <b>3)</b>Be mindful of the default Python in a given operating system. For example, Ubuntu 16.04 comes with Python 2.7 and
+   Python 3.5, so the <code class='highlighter-rouge'>python</code> command runs version 2.7, and <code class='highlighter-rouge'>python3</code>
+ runs 3.5. To install packages in Python 3.5 environment, the user needs to use <code class='highlighter-rouge'>pip3</code>. To get a higher version
+  of Python, you can install it through a third-party PPA. But I have found that it's more trouble than it's worth, so I upgraded to a newer Ubuntu OS.</p>
 
 <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-base_model = MobileNet(input_shape=(192,192,3), include_top=False,weights='imagenet')
+  FROM ubuntu:18.04
 
-def Top_model(input_dim):
-    top_model = Sequential()
-    top_model.add(Flatten(input_shape=input_dim))
-    top_model.add(Dense(512, activation='relu'))
-    top_model.add(Dropout(0.6))
-    top_model.add(Dense(512, activation='relu'))
-    top_model.add(Dropout(0.6))
-    top_model.add(Dense(1, activation='sigmoid'))
+  MAINTAINER Jenny Yu
 
-    return top_model
+  RUN apt-get update -y && \
+      apt-get install -y python3 python3-dev python3-pip
 
-model2=Top_model(train_data.shape[1:])
-model2.compile(optimizer=RMSprop(lr=0.0001), loss='binary_crossentropy', metrics=['accuracy',f1])
+  COPY . /app
 
-model2.fit(train_data, train_labels,
-              epochs=5, batch_size=32,verbose=1,
-              validation_data=(validation_data, validation_labels))
+  WORKDIR /app
 
-################# Use functional API to  create the full model#############
-top_model2 = Top_model(base_model.output_shape[1:])
-top_model2.load_weights('bottleneck_fc_model(3layer)_512size_mobilenet.h5')
-model = Model(input=base_model.input, output=top_model2(base_model.output))
+  RUN mkdir img_storage
 
-for layer in model.layers[:4]:
-    layer.trainable=False
-model.compile(loss='binary_crossentropy',
-              optimizer=SGD(lr=1e-3, momentum=0.9),
-              metrics=['accuracy',f1])
+  RUN pip3 install -r requirements.txt
+  RUN pip3 install torch==1.3.1+cpu torchvision==0.4.2+cpu -f https://download.pytorch.org/whl/torch_stable.html
+
+  EXPOSE 5000
+
+  ENTRYPOINT [ "python3" ]
+
+  CMD [ "app.py" ]
 </code></pre></figure>
-<p>After training the top model, I augmented the image files with <code class='highlighter-rouge'>ImageDataGenerator()</code> along with
-  the default preprocessing function to scale the pixel values. I chose Stochastic Gradient Descend as the optimizer
-  because that was the optimizer used on the original MobileNet.</p>
 
 
+<p>The folder img_storage is created inside the directory /app after WORKDIR sets it as the default. To build an image from the <code class='highlighter-rouge'>Dockerfile</code>,
+  enter the local projects directory
+ and execute <code class='highlighter-rouge'>docker build -t [image_name]:latest .</code>. The flag -t is for tagging the image.
+ To run the image on your local computer, execute <code class='highlighter-rouge'>docker run -p 5000:5000 [image_name]:latest</code>
+and it will show the url that is running the container. The -p flag should match the EXPOSE parameter in the <code class='highlighter-rouge'>Dockerfile</code>.
+ </p>
+
+ <h2>Elastic Beanstalk (EB)</h2>
+ <p>After checking that the Docker container is working locally, it's easy to deploy it via AWS's EB platform. </p>
+ <p>First, enter the local project directory and select all files to compress to a .zip file (make sure Dockerfile is there). Don't zip
+   from the parent directory (outside of the app folder) because EB won't be able to find the Dockerfile.</p>
+
+<ul>
+      <li>Log into the console and find the EB page under the "Services" dropdown menu.</li>
+      <li>In the upper right corner click <i>Create New Application</i>, complete the prompt for the App name.</li>
+      <li>Next create a new environment by clicking <i>Create one now</i> --> Select "Web server environment".</li>
+      <li>Select "Docker" under "Platform" specification, and "Upload your code" under "Application code" (see Fig.2). Upload of the zip file will take some time.</li>
+      <li>Before hitting the <i>Create environment</i> button, note that default Instance type(t2.micro) and other settings can be
+        changed by clicking <i>Configure more options</i> to modify and apply the change.</li>
+        <li>After clicking <i>Create environment</i>, be patient as it will take some time to deploy the app.</li>
+      <figure>
+        <img src='images/lesion_app/EB_env_config.png'>
+        <figcaption>Fig.2. Configuration of the environment. Instance and security specifications can be changed by using "Configure more options".</figcaption>
+      </figure>
+
+ </p>Once EB finishes the deployment (with an Ok Health check), the web app will be available in the url provided!</p>
+ <p>To change the instance after deployment, it can be done under the <i>Configuration</i> tab. If there's a health warning or issue,
+    you may need to reboot the instance by going to <i>Health</i> --><i>Instance Actions</i>.
+ <p>Miscellaneous facts - After the app is deployed, if you stop or terminate the running ec2 instance(s) EB will automatically start a new instance of the same type.
+  If the app is still under testing and not ready to be deployed, you can terminate the environment by going to the environment dashboard, and under <i>Actions</i>
+ select <i>Terminate environment</i>. There's an option
+to rebuild terminated environment within 6 weeks of its termination. In the <i>Environments</i> page,
+go to <i>Actions</i>--><i>Restore terminated environment</i>. This will create resources that have the same
+configuration as the old version but data stored in the terminated environment will not be restored.</p>
 
 
-        <p>Binary cross entropy was a loss function used to optimize the model(the lower the score the better), it takes into account <i>confidence</i> of the prediction along with
-          accuracy. The validation binary cross entropy was <b>0.43</b>, F1 score (balanced accuracy accounting for imbalanced
-          class distribution) was <b>86%</b>, and AUC for ROC was <b>0.89 </b>(1 being the best).</p>
+<p>You can learn more about EB's available features (e.g. Load balancing, Auto Scaling) by visiting this <a href='https://aws.amazon.com/elasticbeanstalk/'>page</a>. </p>
+
+<p>Despite the little hiccups I encountered in developing this app, I find that Flask provides a quick and straightforward way
+  to build a web app. In comparison to Django, another open source framework for Python, Flask is lightweight and more suitable
+   for simple websites. Whereas Django is a full-stack framework geared towards more complex web app and sites, and it provides
+   more structures with built-in templates and tools[2].
 
 
 
@@ -310,12 +355,8 @@ model.compile(loss='binary_crossentropy',
 
 
 <h3> REFERENCES </h3>
-  <p>[1]Herman, C. <b>Emerging Technologies for the Detection of Melanoma: Achieving Better Outcomes.</b>
-    <i>Clinical, Cosmetic and Investigational Dermatology</i> 5 (2012): 195–212.</p>
-  <p>[2]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications(https://arxiv.org/pdf/1704.04861.pdf)</p>
-  <p>[3]Keras Documentation: https://keras.io/applications/</p>
-  <p>[4]Esteva, A.,Kuprel, B., et al. <b>Dermatologist-level classification of skin cancer with deep neural networks</b>.
-    <i>Nature</i> 542(2017): 115–118.</p>
+  <p>[1]Bonner, A. <b>The brilliant beginner's guild to model deployment.</b> https://heartbeat.fritz.ai/brilliant-beginners-guide-to-model-deployment-133e158f6717</p>
+  <p>[2]Mindfire Solutions, <b>Flaks vs Django</b>.http://www.mindfiresolutions.com/blog/2018/05/flask-vs-django/
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
 <noscript>Please enable JavaScript to view the comments.</noscript>
