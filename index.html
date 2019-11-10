@@ -17,10 +17,10 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
 
-  
+
     <link rel="stylesheet" href="/assets/light.css">
 
-  
+
 </head>
 
 <body>
@@ -30,44 +30,77 @@
         <nav class="header-nav appear">
   <a href="/" class="header-logo" title="BlogTitle">The Art of Machine Learning</a>
   <ul class="header-links">
-    
-    
+
+
       <li>
         <a href="about">About Me
         </a>
       </li>
-      
+
       <li>
         <a href="toolbox">My Toolbox
         </a>
       </li>
-	
+
      <li>
         <a href="https://jyu-theartofml.github.io/ai_art/">AiArt
         </a>
       </li>
-    
+
       <li>
         <a href="https://github.com/jyu-theartofml" rel="noreferrer noopener" target="_blank" title="GitHub">
           <span class="icon icon-github"></span>
         </a>
       </li>
-    
+
       <li>
         <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
           <span class="icon icon-linkedin"></span>
         </a>
       </li>
-    
+
   </ul>
 </nav>
 
-        <ul class="article-list">
-	<li class="article-list-item appear"> 
+    <ul class="article-list">
+          <li class="article-list-item appear">
+                      <a href="/posts/lesion_app" title="How to deploy a Flask app with ease">
+                    <h5>How to deploy a Flask app with ease</h5>
+                    <figure><img src='posts/images/lesion_app/tech_stack.png' alt="tech_stack" width="60%" height="60%" />
+                    </figure>
+                    <p>As a Data Scientist, I spend alot of time training, validating, and optimizing models. For a side project,
+                      I wanted to try deploying a Deep Learning (DL) classifier model to get my hands on the other layers of the
+                    Machine Learning tech stack. Building a web app is a great way to evaluate the feasibilty of the model
+                    design and work flow, while showing the value of the machine learning system. For this project, a DenseNet model
+                  was trained to predict 8 categories of skin lesions using dermascopic images <i>and</i> meta data (e.g., age, gender).
+              The web app was build in Flask, wrapped in Docker, and deployed via AWS Elastic Beanstalk (EB). In this blog post, I will
+              share the things I learned about the deployment process.</p>
+
+        		 <span class="icon icon-arrow-right"></span>
+        		 </a>
+
+                    <div class="article-list-footer">
+                      <span class="article-list-date">
+                          November 10th, 2019
+                      </span>
+                      <span class="article-list-divider">-</span>
+                      <span class="article-list-minutes">
+                      10 minute read
+                      </span>
+
+                      <span class="article-list-divider">-</span>
+                      <div class="article-list-tags">
+
+                      <span class="article-list-divider">PyTorch, Docker, Flask, Elastic Beanstalk</span>
+                      </div>
+                    </div>
+        </li>
+
+	<li class="article-list-item appear">
               <a href="/posts/feature_eng" title="Feature Engineering - getting the most out of your data">
             <h5>Feature Engineering - getting the most out of your data</h5>
             <figure><img src='posts/images/feature_eng/feat_eng.jpg' alt="feature_eng representation" />
-	<figcaption>Feature Engineering for Machine Learning (source: <u>Udemy</u>).</figcaption>   
+	<figcaption>Feature Engineering for Machine Learning (source: <u>Udemy</u>).</figcaption>
             </figure>
             <p>Throughout my experience in Data Science, I think feature engineering is the one practical skill that didn't receive enough emphasis in textbook or
               other formal channel of learning (Docker is the other one). It wasn't until I started participating in Kaggle competitions when I realize the value of feature engineering in building
@@ -78,7 +111,7 @@ that I found to be useful.</p>
 
 		 <span class="icon icon-arrow-right"></span>
 		 </a>
-            
+
             <div class="article-list-footer">
               <span class="article-list-date">
                 May 1st, 2019
@@ -87,36 +120,36 @@ that I found to be useful.</p>
               <span class="article-list-minutes">
               10 minute read
               </span>
-              
+
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
-                
+
                 <span class="article-list-divider">R, Python, Feature Engineering</span>
               </div>
             </div>
-</li>	
-		
-	<li class="article-list-item appear"> 
+</li>
+
+	<li class="article-list-item appear">
               <a href="/posts/opioid_chord" title="A data sketch of the opioid epidemic">
             <h5>A data sketch of the opioid epidemic</h5>
             <figure><img src='posts/images/opioid_chord/opioids-aarp.jpg' alt="opioid_aarp" />
-	<figcaption>Photo Courtesy of AARP</figcaption>	    
+	<figcaption>Photo Courtesy of AARP</figcaption>
             </figure>
-            <p>During the past few years, there has been exponentially increasing media coverage of the opioid crisis in the U.S., especially focusing 
-		    on synthetic variety such 
-		  as Fentanyl. The CDC estimates that the potency of the synthetic opioid is about 50-100 times as much as morphine, 
+            <p>During the past few years, there has been exponentially increasing media coverage of the opioid crisis in the U.S., especially focusing
+		    on synthetic variety such
+		  as Fentanyl. The CDC estimates that the potency of the synthetic opioid is about 50-100 times as much as morphine,
 		  and it has been a lucrative merchandise for the cartel, leading up to the biggest
 		    Fentanyl bust recently at the
 		    Arizona border. </p>
-		  <p>I came across opioid datasets from the <i> Henry J Kaiser Family Foundation </i> 
+		  <p>I came across opioid datasets from the <i> Henry J Kaiser Family Foundation </i>
 			  and economic data from the <i>Bureau of Labor Statistics</i>. Using these resources
 		  I wanted to examine the potential relationship betwee opioid death rate and economic downturn (i.e, unemployment rate)
-		  for each state[1]. Furthermore, the interactive line plot shows that every state has its own trends of mortality from 
+		  for each state[1]. Furthermore, the interactive line plot shows that every state has its own trends of mortality from
 different types of opioid.</p>
 
 		 <span class="icon icon-arrow-right"></span>
 		 </a>
-            
+
             <div class="article-list-footer">
               <span class="article-list-date">
                 February 16th, 2019
@@ -125,37 +158,37 @@ different types of opioid.</p>
               <span class="article-list-minutes">
               5 minute read
               </span>
-              
+
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
-                
+
                 <span class="article-list-divider">D3, interactive visualization, opioid epidemic</span>
               </div>
             </div>
-</li>	
-		
-	 <li class="article-list-item appear"> 
+</li>
+
+	 <li class="article-list-item appear">
               <a href="/posts/retinanet" title="RetinaNet lung opacity detection">
             <h5>RetinaNet lung opacity detection (with meta data)</h5>
             <figure><img src='posts/images/retinanet/example_tp_resize2.png' alt="dicom_bbox" /></figure>
-            <p>The Radiological Society of North America (RSNA) recently hosted a Kaggle competition, where Kagglers are asked to 
-              build a model to screen for marker of pneumonia by detecting lung opacity on chest radiographs. The standard practice for 
-             diagnosis of pneumonia is time consuming - requiring review of radiographs by trained professional, vital sign, and clinical 
+            <p>The Radiological Society of North America (RSNA) recently hosted a Kaggle competition, where Kagglers are asked to
+              build a model to screen for marker of pneumonia by detecting lung opacity on chest radiographs. The standard practice for
+             diagnosis of pneumonia is time consuming - requiring review of radiographs by trained professional, vital sign, and clinical
             history of the individual patient. The quality of the chest radiograph (CXR) also makes accurate diagnosis a challenging task,
-           because the opaque features can be caused by pulmonary edema,bleeding, or fluid in the 
+           because the opaque features can be caused by pulmonary edema,bleeding, or fluid in the
               pleural space [1]. To quote the RSNA:</p>
             <blockquote class="w3-panel w3-leftbar w3-light-grey">
-                <i>"They see the potential for ML to automate initial detection 
+                <i>"They see the potential for ML to automate initial detection
        (imaging screening) of potential pneumonia cases in order to prioritize and expedite their review."</i>
-            </blockquote> 
+            </blockquote>
 
             <p>I tried out the <u> RetinaNet object detector </u>
-              (implemented in Keras by Fizyr) on the image dataset, but unfortunately ran out of time to submit before the deadline. For this 
-              post, I will focus mostly on model performance and tradeoff associated with using meta data from the dicom image 
+              (implemented in Keras by Fizyr) on the image dataset, but unfortunately ran out of time to submit before the deadline. For this
+              post, I will focus mostly on model performance and tradeoff associated with using meta data from the dicom image
 		    files. But before going into that, I will explain why I chose RetinaNet.</p>
 		 <span class="icon icon-arrow-right"></span>
 		 </a>
-            
+
             <div class="article-list-footer">
               <span class="article-list-date">
                 November 3th, 2018
@@ -164,28 +197,28 @@ different types of opioid.</p>
               <span class="article-list-minutes">
               15 minute read
               </span>
-              
+
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
-                
+
                 <span class="article-list-divider">Keras, RetinaNet, Object Detection</span>
               </div>
             </div>
-</li>	
+</li>
 
-			
-	
-	  <li class="article-list-item appear"> 
+
+
+	  <li class="article-list-item appear">
               <a href="/posts/bayesian" title="Bayesian approach">
                 <h5>Bayesian approach and probabilistic programming</h5>
 		   <figure><img src='posts/images/bayesian/bayesian_joke(xkcd)_resize2.png' alt="bayes" />
 		    <figcaption>Source:XKCD comic.</figcaption></figure>
-                  <p>Most people working with statistical analysis are familiar with Bayes Theorem, but in doing probilistic programming there's a lot of 
+                  <p>Most people working with statistical analysis are familiar with Bayes Theorem, but in doing probilistic programming there's a lot of
               nuances in implementing Bayes theorem. In this post I'll briefly summarize the Bayesian approach and show an example of working with mixed type
               of data (continuous and categorical) using Python's PYMC3 package (and there will be NO coin-flipping example).</p>
             <span class="icon icon-arrow-right"></span>
            </a>
-      
+
       <div class="article-list-footer">
         <span class="article-list-date">
            September 8th, 2018
@@ -199,26 +232,26 @@ different types of opioid.</p>
         <span class="article-list-divider">Python, Bayesian, probabilistic programming, PYMC3</span>
       </div>
     </li>
-		    	
-          <li class="article-list-item appear"> 
+
+          <li class="article-list-item appear">
               <a href="/posts/lime" title="Looking Deeper with LIME">
                 <h5>Looking Deeper with LIME</h5>
 		   <figure><img src='posts/images/lime/localized_linear.png' alt="lime local model" width='80%' height='80%'></figure>
                   <p>Many machine learning 'black boxes' are based on some flavors of
-            neural network or deep learning building blocks, which makes model interpretability a challenging task. While the 
-            stakes are low if a convolutional neural net misclassifies a Shar Pei for a bath towel, it's a different beast if AI is 
+            neural network or deep learning building blocks, which makes model interpretability a challenging task. While the
+            stakes are low if a convolutional neural net misclassifies a Shar Pei for a bath towel, it's a different beast if AI is
             performing automated medical diagnostics, making decisions on credit applications, or even finding
-              <u> 'Person of Interest' </u>. The new EU general data protection 
-            regulation (GDPR), effective May 25th, 2018, requires a "right to explanation" for human subjects of AI/automated system[1]. 
-            This means a subject/consumer has the right to obtain an explanation of the automated decision, and the right to opt out of 
+              <u> 'Person of Interest' </u>. The new EU general data protection
+            regulation (GDPR), effective May 25th, 2018, requires a "right to explanation" for human subjects of AI/automated system[1].
+            This means a subject/consumer has the right to obtain an explanation of the automated decision, and the right to opt out of
             a decision based solely on AI/automated algorithm that produces legal effects on them (i.e, job recruiting,
-            loan applications) without human intervention. Back in 2016, researchers (Ribeiro et al) from University of 
-            Washington published an algorithm called LIME that addresses the need for model interpretability and evaluation by 
-              explaining the predictions of any classifier in an 
+            loan applications) without human intervention. Back in 2016, researchers (Ribeiro et al) from University of
+            Washington published an algorithm called LIME that addresses the need for model interpretability and evaluation by
+              explaining the predictions of any classifier in an
             intuitive manner. In this post, I will apply LIME to assess the DenseNet melanoma classifier by visualizing feature importance.</p>
             <span class="icon icon-arrow-right"></span>
            </a>
-      
+
       <div class="article-list-footer">
         <span class="article-list-date">
            April 30th, 2018
@@ -226,27 +259,27 @@ different types of opioid.</p>
         <span class="article-list-divider">-</span>
         <span class="article-list-minutes">
           10 minute read
-          
+
         </span>
         <span class="article-list-divider">-</span>
         <div class="article-list-tags">
         <span class="article-list-divider">Python, Model Evaluation, LIME, DeepLearning</span>
       </div>
     </li>
-		    
-		  
-		  
- <li class="article-list-item appear">   
+
+
+
+ <li class="article-list-item appear">
               <a href="/posts/circos_plot" title="chord diagram in D3">
                 <h5>Interactive chord diagram in D3</h5>
-                  <p>This post revisits the taxi ride data to make an interactive circos diagram in D3. Originally presented in 2009 by Martin Krzywinsk in his 
+                  <p>This post revisits the taxi ride data to make an interactive circos diagram in D3. Originally presented in 2009 by Martin Krzywinsk in his
 		    paper "Circos: an Information Aesthetic for Comparative Genomics.", it has become widely used and appreciated outside of the genomic/bioinformatic
 		    community. Its aesthetics and features effectively display relationships between different entities or patterns in periodic data.
-		  For the taxi data, it's actually quite simple to create a circos Chord diagram by tweaking existing codes 
+		  For the taxi data, it's actually quite simple to create a circos Chord diagram by tweaking existing codes
 		    shared by users (i.e, AndrewRP, nbremer) on https://bl.ocks.org/ , plus I will break down the essential elements of the chord diagram.</p>
             <span class="icon icon-arrow-right"></span>
            </a>
-      
+
       <div class="article-list-footer">
         <span class="article-list-date">
            March 26, 2018
@@ -254,30 +287,30 @@ different types of opioid.</p>
         <span class="article-list-divider">-</span>
         <span class="article-list-minutes">
           10 minute read
-          
+
         </span>
         <span class="article-list-divider">-</span>
         <div class="article-list-tags">
         <span class="article-list-divider">D3, Data visualization, Chord diagram</span>
       </div>
     </li>
-            
-          
-          <li class="article-list-item appear">   
+
+
+          <li class="article-list-item appear">
               <a href="/posts/imputation" title="Imputing Missing Data">
                 <h5>Imputing missing data</h5>
-		 <figure><img src="https://image.freepik.com/free-vector/character-couple-solving-puzzle-pieces-illustration_53876-32627.jpg" alt="impute missing" 
+		 <figure><img src="https://image.freepik.com/free-vector/character-couple-solving-puzzle-pieces-illustration_53876-32627.jpg" alt="impute missing"
 			      width='80%' height='80%'>
 	        <figcaption><i>People vector created by rawpixel.com - www.freepik.com</i></figcaption></figure>
-                  <p>Missing data is a familiar problem when working with raw data. In this post, I will compare three widely used methods for 
-            imputing (a.k.a, estimating) missing values. This is really for my own reference, because I often find myself asking the question "which imputation 
-            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. While there is NO 'best' way to deal with missing 
+                  <p>Missing data is a familiar problem when working with raw data. In this post, I will compare three widely used methods for
+            imputing (a.k.a, estimating) missing values. This is really for my own reference, because I often find myself asking the question "which imputation
+            algorithm would be most appropriate" while staring at those 'NA's in the dataframe. While there is NO 'best' way to deal with missing
               data because it depends on the type of problems, I usually avoid imputing using
-            the mean/median/mode value. The reason being it doesn't take into account possible relationships between variables and it introduces 
+            the mean/median/mode value. The reason being it doesn't take into account possible relationships between variables and it introduces
             bias to the data. As a general rule, I would not include a variable that has more than 40% missing values in building a predictive model.</p>
             <span class="icon icon-arrow-right"></span>
            </a>
-      
+
       <div class="article-list-footer">
         <span class="article-list-date">
           Februaru 12th, 2018
@@ -285,7 +318,7 @@ different types of opioid.</p>
         <span class="article-list-divider">-</span>
         <span class="article-list-minutes">
           15 minute read
-          
+
         </span>
         <span class="article-list-divider">-</span>
         <div class="article-list-tags">
@@ -298,14 +331,14 @@ different types of opioid.</p>
             <h5>Binary Classifier for Melanoma Using MobileNet</h5>
               <figure><img src="posts/images/melanoma/melanoma_skin.jpg" alt="skin" ></figure>
               <p>I recently read an article about a team of researchers (led by Dr. Andre Esteva) tuning a
-                Deep Learning model(InceptionV3) to detect melanoma, showing promising results toward automated medical diagnostic 
+                Deep Learning model(InceptionV3) to detect melanoma, showing promising results toward automated medical diagnostic
                 application. CDC reports that in the year 2014, there were 76,665 Americans diagnosed with melanoma resulting in 9,324 deaths.
-                Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry, 
-              Border irregularity, Color variation, Diameter and Evolving shape (aka, ABCDE)[1]. In case if you are wondering how well your eyes can detect malignant lesion, 
+                Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry,
+              Border irregularity, Color variation, Diameter and Evolving shape (aka, ABCDE)[1]. In case if you are wondering how well your eyes can detect malignant lesion,
               here's a sample collage of pictures (I will admit that when I tried, it was as good as tossing a coin).</p>
               <span class="icon icon-arrow-right"></span>
             </a>
-      
+
       <div class="article-list-footer">
         <span class="article-list-date">
           January 10th, 2018
@@ -313,31 +346,31 @@ different types of opioid.</p>
         <span class="article-list-divider">-</span>
         <span class="article-list-minutes">
           10 minute read
-          
+
         </span>
         <span class="article-list-divider">-</span>
         <div class="article-list-tags">
         <span class="article-list-divider">Python, Image Classification, MobilNet, DeepLearning </span>
       </div>
     </li>
-            
-          
+
+
         <li class="article-list-item appear">
           <a href="/posts/tumor_rna" title="Sparse PCA and XGboost">
             <h5>Sparse PCA and XGboost for predicting tumor type</h5>
               <figure><img src="posts/images/rna_seq/xgb_multi_tree.png" alt="xgb" ></figure>
-              <p>The Pan-Cancer intiative at <a href="https://portal.gdc.cancer.gov/">The Cancer Genome Atlas (TCGA) Research Network </a>  
+              <p>The Pan-Cancer intiative at <a href="https://portal.gdc.cancer.gov/">The Cancer Genome Atlas (TCGA) Research Network </a>
               has analyzed numerous types of tumor using different technologies to profile the genomic, transcriptomic and epigenomic landscapes.
-              This body of work represents an approach to study cancers not only based on the organ of origin, but also the broader biomarker 
+              This body of work represents an approach to study cancers not only based on the organ of origin, but also the broader biomarker
               profiles [1]. For this post, high-throughput gene expression data are used to build a classifier for 5 tumor types: breast cancer, lung cancer,
-                colorectal cancer, kidney cancer and prostate cancer. The public data was provided and maintained by TCGA, the raw RNA sequence data were 
+                colorectal cancer, kidney cancer and prostate cancer. The public data was provided and maintained by TCGA, the raw RNA sequence data were
               normalized to Fragment per kilobase transcript per million mapped reads (FPKM) to adjust for differences in transcript lengths.
-              The normalized data are compiled and hosted by <a href="https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq#">UCI Machine Learning Repository</a>. 
+              The normalized data are compiled and hosted by <a href="https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq#">UCI Machine Learning Repository</a>.
             </p>
               <span class="icon icon-arrow-right"></span>
-            
+
           </a>
-      
+
       <div class="article-list-footer">
         <span class="article-list-date">
           December 4th, 2017
@@ -345,31 +378,31 @@ different types of opioid.</p>
         <span class="article-list-divider">-</span>
         <span class="article-list-minutes">
           15 minute read
-          
+
         </span>
         <span class="article-list-divider">-</span>
         <div class="article-list-tags">
         <span class="article-list-divider">R, Sparse PCA, XGBoost, Cancer Research </span>
       </div>
     </li>
-            
-          
+
+
         <li class="article-list-item appear">
           <a href="/posts/WMH" title="White matter hyperintensities segmentation">
             <h5>Segmentation of white matter hyperintensities using 3D U-net </h5>
               <figure><img src="posts/images/WMH/mask overlay.png" ></figure>
-              <p>White Matter Hyperintensities (aka., leukoaraiosis) is often linked to high risk of stroke and dementia in 
-            older patients[1]. While image segmentation is critical for timely diagnosis and evaluation of treatments, 
-            automated segmentation of medical images remains a challenging task. In this post, a deep learning network called U-net 
-            is evaluated on brain MRIs for segmentation of White Matter Hyperintensities (WMH). The dataset was obtained from the 
-            WMH Segmentation Challenge, which's organized by UMC Utrecht, VU Amsterdam, and NUHS Singapore. The goal is to train the 
-            deep learning model to generate binary mask that corresponds to WMH region of the brain MRI. This kind of deep learning 
-            model has great potential for automated medical diagnostic applications. 
+              <p>White Matter Hyperintensities (aka., leukoaraiosis) is often linked to high risk of stroke and dementia in
+            older patients[1]. While image segmentation is critical for timely diagnosis and evaluation of treatments,
+            automated segmentation of medical images remains a challenging task. In this post, a deep learning network called U-net
+            is evaluated on brain MRIs for segmentation of White Matter Hyperintensities (WMH). The dataset was obtained from the
+            WMH Segmentation Challenge, which's organized by UMC Utrecht, VU Amsterdam, and NUHS Singapore. The goal is to train the
+            deep learning model to generate binary mask that corresponds to WMH region of the brain MRI. This kind of deep learning
+            model has great potential for automated medical diagnostic applications.
             In fact, commercial models have been developed for heart and breast imaging [2].</p>
              <span class="icon icon-arrow-right"></span>
-        
+
       </a>
-      
+
       <div class="article-list-footer">
         <span class="article-list-date">
           November 5, 2017
@@ -377,64 +410,64 @@ different types of opioid.</p>
         <span class="article-list-divider">-</span>
         <span class="article-list-minutes">
           15 minute read
-          
+
         </span>
         <span class="article-list-divider">-</span>
         <div class="article-list-tags">
         <span class="article-list-divider">Python, Convolutional Neural Net, Segmentation </span>
       </div>
     </li>
-          
-          
-          
+
+
+
      <li class="article-list-item appear">
       <a href="/posts/quora" title="Detecting duplicate question pair">
         <h5>
            Designing a classifier to detect duplicate questions
-          <p>For this Kaggle competition that took place 6 months ago, the goal is to compile a model to identify if a pair of questioins is asking the same thing. Quora provided 400K+ question pairs for the training set, and the final test data set has 2,345,796 question pairs (that's alot of data!). Many Kagglers have tried techniques such as Xgboost and feature extraction such as TF-IDF, ratio of matching words, and weighted word2vec. I wanted to learn how recurrent neural network works, and explore its potential in solving this problem and others (i.e., genomic functional prediction). 
+          <p>For this Kaggle competition that took place 6 months ago, the goal is to compile a model to identify if a pair of questioins is asking the same thing. Quora provided 400K+ question pairs for the training set, and the final test data set has 2,345,796 question pairs (that's alot of data!). Many Kagglers have tried techniques such as Xgboost and feature extraction such as TF-IDF, ratio of matching words, and weighted word2vec. I wanted to learn how recurrent neural network works, and explore its potential in solving this problem and others (i.e., genomic functional prediction).
             The final ranking for this submission was top 37% on Kaggle's private LB.</p>
           <span class="icon icon-arrow-right"></span>
         </h5>
       </a>
-      
+
       <div class="article-list-footer">
         <span class="article-list-date">
           November 2, 2017
         </span>
         <span class="article-list-divider">-</span>
         <span class="article-list-minutes">
-          
-          
+
+
             10 minute read
-          
+
         </span>
         <span class="article-list-divider">-</span>
         <div class="article-list-tags">
         <span class="article-list-divider">Python, Keras, LSTM, WordVec </span>
       </div>
     </li>
-  
-  
+
+
     <li class="article-list-item appear">
       <a href="/posts/taxi" title="Predicting trip duration for NY taxis">
         <h5>
           Data visualization and predicting taxi ride time
-          <p>This post will cover some data visualization techniques for working with high dimensional dataset. 
+          <p>This post will cover some data visualization techniques for working with high dimensional dataset.
             Then I will talk about using Random Forest and Caret to predict trip duration with cluster computing.</p>
           <span class="icon icon-arrow-right"></span>
         </h5>
       </a>
-      
+
       <div class="article-list-footer">
         <span class="article-list-date">
           October 2, 2017
         </span>
         <span class="article-list-divider">-</span>
         <span class="article-list-minutes">
-          
-          
+
+
             10 minute read
-          
+
         </span>
         <span class="article-list-divider">-</span>
         <div class="article-list-tags">
@@ -449,7 +482,7 @@ different types of opioid.</p>
       </div>
     </div>
   </main>
-  
+
   <script>
     window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
     ga('create','UA-28631876-6','auto');ga('send','pageview')

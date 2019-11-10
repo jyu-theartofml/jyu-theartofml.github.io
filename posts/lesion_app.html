@@ -71,7 +71,7 @@
             design and work flow, while showing the value of the machine learning system. For this project, a DenseNet model
           was trained to predict 8 categories of skin lesions using dermascopic images <i>and</i> meta data (e.g., age, gender).
       The web app was build in Flask, wrapped in Docker, and deployed via AWS Elastic Beanstalk(EB). In this blog post, I will
-     focus on the deployment process and share the things I learned along the way.</p>
+    share the things I learned about the deployment process.</p>
 
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -85,7 +85,7 @@
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
 
-                <span class="article-list-divider">PyTorch, Docker, Flask, ElasticBeanstalk </span>
+                <span class="article-list-divider">PyTorch, Docker, Flask, Elastic Beanstalk </span>
               </div>
             </div>
           </header>
@@ -279,7 +279,7 @@
      <b>3)</b>Be mindful of the default Python in a given operating system. For example, Ubuntu 16.04 comes with Python 2.7 and
    Python 3.5, so the <code class='highlighter-rouge'>python</code> command runs version 2.7, and <code class='highlighter-rouge'>python3</code>
  runs 3.5. To install packages in Python 3.5 environment, the user needs to use <code class='highlighter-rouge'>pip3</code>. To get a higher version
-  of Python, you can install it through a third-party PPA. But I have found that it's more trouble than it's worth, so I upgraded to a newer Ubuntu OS.</p>
+  of Python than the sytem default, you can install it through a third-party PPA. But I have found that it's more trouble than it's worth, so I upgraded to a newer Ubuntu OS.</p>
 
 <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
   FROM ubuntu:18.04
@@ -346,10 +346,8 @@ configuration as the old version but data stored in the terminated environment w
 
 <p>Despite the little hiccups I encountered in developing this app, I find that Flask provides a quick and straightforward way
   to build a web app. In comparison to Django, another open source framework for Python, Flask is lightweight and more suitable
-   for simple websites. Whereas Django is a full-stack framework geared towards more complex web app and sites, and it provides
+   for simple websites. Whereas Django is a full-stack framework geared towards more complex development, and it provides
    more structures with built-in templates and tools[2].
-
-
 
 
 
