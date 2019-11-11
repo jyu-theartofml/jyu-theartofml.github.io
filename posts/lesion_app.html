@@ -12,7 +12,7 @@
   <meta property="og:url" content="https://jyu-theartofml.github.io/posts/lesion_app.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
   <meta property="og:image" content="images/lesion_app/tech_stack.png">
-
+  <meta charset="UTF-8">
 
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
@@ -331,16 +331,22 @@ and it will show the url that is running the container. The -p flag should match
         <figcaption>Fig.2. Configuration of the environment. Instance and security specifications can be changed by using "Configure more options".</figcaption>
       </figure>
 
- </p>Once EB finishes the deployment (with an Ok Health check), the web app will be available in the url provided!</p>
+ </p>Once EB finishes the deployment (with an Ok Health check), the web app will be available in the url provided!🎊</p>
  <p>To change the instance after deployment, it can be done under the <i>Configuration</i> tab. If there's a health warning or issue,
-    you may need to reboot the instance by going to <i>Health</i> --><i>Instance Actions</i>.
- <p>Miscellaneous facts - After the app is deployed, if you stop or terminate the running ec2 instance(s) EB will automatically start a new instance of the same type.
- You can terminate the environment by going to the environment dashboard, and under <i>Actions</i>
- select <i>Terminate environment</i>. There's an option
-to rebuild terminated environment within 6 weeks of its termination. In the <i>Environments</i> page,
-go to <i>Actions</i>--><i>Restore terminated environment</i>. This will create resources that have the same
-configuration as the old version but any data stored in the terminated environment will not be restored.</p>
+    you may need to reboot the instance by going to <i>Health</i> --><i>Instance Actions</i>.</p>
 
+<p>To reduce cost of running the EB app, there's a <a href='https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-autoscaling-scheduledactions.html'>way</a>
+  to schedule the EC2 instance. Go to <i>Configuration</i>--><i>Scaling</i>--><i>Time-based scaling</i>,
+  and specify each scheduled action (e.g, start and stop).
+  For recurrent action, it is scheduled using cron expression. This set up won't terminate the environment, it is designed to stop and restart
+  the EC2 instance(s).</p>
+
+<p>Miscellaneous facts - After the app is deployed, if you stop or terminate the running ec2 instance(s) EB will automatically start a new instance of the same type.
+  You can terminate the environment by going to the environment dashboard, and under <i>Actions</i>
+  select <i>Terminate environment</i>. There's an option
+  to rebuild terminated environment within 6 weeks of its termination. In the <i>Environments</i> page,
+  go to <i>Actions</i>--><i>Restore terminated environment</i>. This will create resources that have the same
+  configuration as the old version but any data stored in the terminated environment will not be restored.</p>
 
 <p>You can learn more about EB's available features (e.g. Load balancing, Auto Scaling) by visiting this <a href='https://aws.amazon.com/elasticbeanstalk/'>page</a>. </p>
 
@@ -348,8 +354,6 @@ configuration as the old version but any data stored in the terminated environme
   to build a web app. In comparison to Django, another open source framework for Python, Flask is lightweight and more suitable
    for simple websites. Whereas Django is a full-stack framework geared towards more complex development, and it provides
    more structures with built-in templates and tools[2].
-
-
 
 
 <h3> REFERENCES </h3>
