@@ -335,11 +335,11 @@ and it will show the url that is running the container. The -p flag should match
  <p>To change the instance after deployment, it can be done under the <i>Configuration</i> tab. If there's a health warning or issue,
     you may need to reboot the instance by going to <i>Health</i> --><i>Instance Actions</i>.
  <p>Miscellaneous facts - After the app is deployed, if you stop or terminate the running ec2 instance(s) EB will automatically start a new instance of the same type.
-  If the app is still under testing and not ready to be deployed, you can terminate the environment by going to the environment dashboard, and under <i>Actions</i>
+ You can terminate the environment by going to the environment dashboard, and under <i>Actions</i>
  select <i>Terminate environment</i>. There's an option
 to rebuild terminated environment within 6 weeks of its termination. In the <i>Environments</i> page,
 go to <i>Actions</i>--><i>Restore terminated environment</i>. This will create resources that have the same
-configuration as the old version but data stored in the terminated environment will not be restored.</p>
+configuration as the old version but any data stored in the terminated environment will not be restored.</p>
 
 
 <p>You can learn more about EB's available features (e.g. Load balancing, Auto Scaling) by visiting this <a href='https://aws.amazon.com/elasticbeanstalk/'>page</a>. </p>
