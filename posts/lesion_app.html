@@ -101,7 +101,9 @@
   an extension of a project I've done previously developing a melanoma classifier (see <a href ='https://jyu-theartofml.github.io/posts/melanoma'>
     blog post</a>). <u>Please note this is NOT a diagnostic tool</u>, therefore the output of the model is not to be interpreted as an actual diagnosis.
     The potential of this model lies in the monitoring of skin lesions (especially for patients with family history), and encouraging the user
-    to seek medical attention more efficiently. The web app is hosted at this link [insert url link].</p>
+    to seek medical attention more efficiently. <b>The web app is hosted at this
+       <a href='http://lesionapp-env.g3kv73ujqj.us-west-2.elasticbeanstalk.com/'>link</a></b>
+    (it is scheduled to run from 8am-6pm MST).</p>
 
   Tables 1 and 2 below are the performance metrics of the baseline model (no meta data) and the final model (with meta data), respectively.</p>
 
@@ -337,9 +339,14 @@ and it will show the url that is running the container. The -p flag should match
 
 <p>To reduce cost of running the EB app, there's a <a href='https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-autoscaling-scheduledactions.html'>way</a>
   to schedule the EC2 instance. Go to <i>Configuration</i>--><i>Scaling</i>--><i>Time-based scaling</i>,
-  and specify each scheduled action (e.g, start and stop).
+  and specify each scheduled action (see Fig.3).
   For recurrent action, it is scheduled using cron expression. This set up won't terminate the environment, it is designed to stop and restart
   the EC2 instance(s).</p>
+
+  <figure>
+    <img src='images/lesion_app/time_scaling.png'>
+    <figcaption>Fig.3. Recurrent setting for scheduling the backend EC2 instance.</figcaption>
+  </figure>
 
 <p>Miscellaneous facts - After the app is deployed, if you stop or terminate the running ec2 instance(s) EB will automatically start a new instance of the same type.
   You can terminate the environment from the Environment console, and have the option
