@@ -112,8 +112,8 @@
       </figure>
 
 <h2>The types of API </h2>
-<p> The AWS document labyrinth for SM made it difficult to piece things together in a cohesive fashion (the same thing can be said for all of their documentation). So I did some
-  digging around and found some useful literature with clear high-level description. In essense, the API
+<p> The AWS document labyrinth made it difficult to piece things together in a cohesive fashion. So I did some
+  digging around and found some useful literature with clear description of the SM system. In essense, the API
   has three tiers: Amazon SageMaker SDK (high-level), AWS SDK for Python (Boto3), and awscli & Docker (low-level)[2].</p>
 
 <p> The high-level Amazon SageMaker SDK is the most common, especially for beginners. It is hosted in a Jupyter Notebook IDE, and the user
@@ -166,8 +166,8 @@ the model or algorithm you want to use is not supported by SageMaker.</p>
    </code></pre></figure>
 
   <p>At this point, the model object is ready for training by calling <code class='highlighter-rouge'>xgb.fit({'train':'s3://my-bucket/training', 'validation':'s3://my-bucket/validation})</code>.
-    An alternative is to perform hyperparameter tuning by setting up the parameter ranges as show below. Here, max_jobs refers to the number of sampling points from the grid range, and
-    <code class='highlighter-rouge'>HyperparameterTuningJobAnalytics</code> returns a table showing the status of the training jobs and the objective metric used to evaluated the model on
+    An alternative is to perform hyperparameter tuning by setting up the parameter ranges as show below. Here, max_jobs refers to the number of sampling points from the grid range, and <code class='highlighter-rouge'>HyperparameterTuningJobAnalytics </code> returns
+    a table showing the status of the training jobs and the objective metric used to evaluated the model on
    the validation set (under <i>FinalObjectiveValue</i>).</p>
 
   <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
@@ -192,12 +192,12 @@ the model or algorithm you want to use is not supported by SageMaker.</p>
 
  </code></pre></figure>
 
-<p>As show in Fig.3., the SM console shows a comprehensive activity status while the notebook is running. On the left panel,
- you can go to <i> Hyperparameter turning</i> under <i>Training</i> to view the progress of the model training. Not only can
- you see the training and validation errors, but it also shows the CPU and memory utilization.</p>
+<p>As show in Fig.3., the SM console shows the comprehensive activity status while the notebook is running. On the left panel,
+ you can go to <i> Hyperparameter tuning jobs</i> under <i>Training</i> to view the progress of the training. Not only can
+ you see the training and validation errors, but it also shows the CPU and memory utilization metrics.</p>
  <figure>
-  <center><img src='images/sagemaker/SM_job_status.png' alt="sagemaker status" width="80%" height="80%"> </center>
-  <figcaption><i>Fig.3. SageMaker overall status update.</i>
+  <center><img src='images/sagemaker/SM_job_status.png' alt="sagemaker status" width="85%" height="85%"> </center>
+  <figcaption><i>Fig.3. SageMaker provides overall status update.</i>
    </figure>
 
 
@@ -229,12 +229,44 @@ the model or algorithm you want to use is not supported by SageMaker.</p>
   pred_result=endpt_predictor.predict(arr_val).decode("utf-8").split(',')
  </code></pre></figure>
 
+<p>Keep in mind that charges will incure while the endpoint is being hosted and the notebook instance
+   is running. You can delete the endpoint from the console by going to <i>Endpoints</i> under <i>Inference</i>,
+   and you can stop or delete the notebook by going to the <i> Notebook instances</i>. </p>
+
+<h2>Invoking the endpoint</h2>
+<p>If you are working in a team and would like to share access to the model endpoint for future development and/or updating,
+ it's best practice to assign permission based on a policy and IAM role. To invoke the endpoint,I
+ followed a similar approach as this <a href='https://towardsdatascience.com/sharing-your-sagemaker-model-eaa6c5d9ecb5'> article</a> by Zak Jost.
+ I first had to set up a custom policy for a specific role ("Version" of policy should be "2012-10-17"). Then
+  I created a third party account (child account) with a new user. The child account id is required in order
+  for the parent account to grant the permission to the child. For this to work,
+the child account must have a user that will assume the role with its attached policy, for some reason using the root does *not* work.
+
+</p>
+
+<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+# after calling the client with boto3, invoke endpoint.
+endpoint_name='sagemaker-xgboost-200204-1841-002-fc901d44'
+
+# payload_file is StringIO class that writes out strings
+response = client.invoke_endpoint(
+    EndpointName= endpoint_name,
+    Body= payload_file.getvalue(),
+    ContentType = 'text/csv')
+
+str_result = response['Body'].read().decode()
+</code></pre></figure>
+
+<p>For more details on compiling the codes, I've uploaded my notebooks at this <a href='https://github.com/jyu-theartofml/kaggle_SFCrime/tree/master/sagemaker'> link</a>.
+The notebook "xgboost_sm_train" should be run as a SM notebook instance, and "xgboost_sm_inference" can be run on a local computer with the
+ right awscli <a href='https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html'> configuration</a>. You
+ will also need the parent account ID (the account that grants the policy) for assuming the role.</p>
 
 
 <h3> REFERENCES </h3>
-<p>[1]https://aws.amazon.com/blogs/aws/sagemaker/</p>
+<p>[1]<b>Amazon SageMaker – Accelerating Machine Learning</b>, AWS News Blog, https://aws.amazon.com/blogs/aws/sagemaker/</p>
 <p>[2]X, Guang. <i>Start Your Machine Learning on AWS SageMaker</i>, https://medium.com/weareservian/machine-learning-on-aws-sagemaker-53e1a5e218d9</p>
- <p>[3]<i> Dependencies are not completely specified #509 </i>, https://github.com/aws/sagemaker-python-sdk/issues/509 </p>
+<p>[3]<i> Dependencies are not completely specified #509 </i>, https://github.com/aws/sagemaker-python-sdk/issues/509 </p>
 
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
