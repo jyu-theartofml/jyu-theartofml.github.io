@@ -63,10 +63,10 @@
           <header class="article-header">
             <h1>Getting started with AWS SageMaker</h1>
              <figure>
-              <img src='images/sagemaker/SM_Flowchart.png' alt="sagemaker design" width="80%" height="80%">
+              <img src='images/sagemaker/SM_Flowchart.png' alt="sagemaker design" width="90%" height="90%">
                </figure>
             <p>Recently I have seen AWS Sagemaker popping up a lot in the DS community. Out of curiosity, I wanted
-            to see what the hype was all about, and how easy it would be to adopt SageMaker. This blog post is for anyone who
+            to see what the hype was all about, and how easy it would be to adopt the platform. This blog post is for anyone who
           wonders about the use cases for SageMaker and its advantages. </p>
 
             <div class="article-list-footer">
@@ -94,45 +94,104 @@
 
 <p>In a nut shell, SageMaker(SM) is a cloud platform designed to quickly and seamlessly build, train and deploy ML models. The user
   can write and run ML/DL models, and SM will provision the necessary compute resources on the backend (e.g. EC2 instance, GPUs), and
-  automatically spin up Docker containers. It's great for software developers and Data Scientist who don't want to be bothered
-  with system configurations and want to focus on development of ML model[1]. Other reasons for using SM:
+  automatically spin up Docker containers. It's great for software developers and Data Scientists who don't want to be bogged down
+  by system configurations and just want to focus on development of ML model[1]. Other reasons for using SM:
 
 </p>
     <ul>
       <li> Scikit-learn models are fully integrated into SageMaker in the form of <code class='highlighter-rouge'>Scikit-learn Estimators</code>.
       <li> SageMaker Python SDK offers managed Jupyter notebook instance to support ML model training and execution. It also
         comes with APIs that support common Deep Learning (DL) backend such as Tensorflow, MXNet, and PyTorch.
-      <li> Deployment to endpoint allows frictionless integration into other application stacks.
+      <li> Deployment to endpoint faciliates frictionless integration into other application stacks.
         <li> Endpoint object and model artifacts allow for efficient management and update of the model in a team environment.
     </ul>
 
     <figure>
-     <img src='images/sagemaker/sagemaker-architecture.png' alt="sagemaker tech stacks" width="60%" height="50%">
+     <img src='images/sagemaker/sagemaker-architecture.png' alt="sagemaker tech stacks" width="75%" height="75%">
      <figcaption><i>Fig.1. A full stack schematic of an application that runs on SageMaker, which executes the containerized tasks on EC2 instances.</i>
       </figure>
 
 <h2>The types of API </h2>
-<p> The AWS document labyrinth for SM made it difficult to piece things together in a cohesive fashion. So I did some
+<p> The AWS document labyrinth for SM made it difficult to piece things together in a cohesive fashion (the same thing can be said for all of their documentation). So I did some
   digging around and found some useful literature with clear high-level description. In essense, the API
   has three tiers: Amazon SageMaker SDK (high-level), AWS SDK for Python (Boto3), and awscli & Docker (low-level)[2].</p>
 
 <p> The high-level Amazon SageMaker SDK is the most common, especially for beginners. It is hosted in a Jupyter Notebook IDE, and the user
-  trains the model by specifying the instance types, and number of distributed workers. The SageMaker SDK will
-  automate the training jobs and the subsequent deployment to an endpoint. However, SageMaker SDK does not work within an event-driven Lambda function, and that's
-  where Boto3 comes in [3]. The Boto3 API requires that the source code be uploaded to S3, and specifying the relevant configurations. It has more low-level features
-since Boto3 is the SDK for all of the AWS ecosystem. On the other hand, the awscli & docker API offers more ways to customize codes and system configuration. It's ideal for
- for situations where the model or algorithm you want to use is not supported by the SageMaker SDK.</p>
+  trains the model by specifying the instance types, and number of distributed workers. The SageMaker SDK will then
+  automate the training jobs and the subsequent deployment to an endpoint. However, SageMaker SDK does not work with event-driven Lambda functions, and that's
+  where Boto3 comes in [3]. The Boto3 API requires that the source code be uploaded to S3, and specifying the relevant configurations for SageMaker to run. It has more low-level features
+since Boto3 is the SDK for all of the AWS ecosystem. On the other hand, the awscli & docker API offers more ways to customize codes and system configuration. It's ideal for situations where
+the model or algorithm you want to use is not supported by SageMaker.</p>
  <p> This blog post will focus only on the Amazon SageMaker SDK, because it's more user friendly and intuitive. By using the San Francisco crime dataset, I will
-    walk through a straight forward tutorial on training a Xgboost regressor with hyperparameter search. I chose this after realizing that most SageMaker tutorials for xgboost are only for classifier, and doesn't
+    walk through a straight forward tutorial on training a Xgboost classifier with hyperparameter search. I chose this after realizing that most SageMaker tutorials for xgboost are only for <i>binary</i> classifier and not multiclass, and doesn't
     offer more in depth details on the hyperparameter tuning API. </p>
 
 <h2>Training with SageMaker</h2>
 <p>To get started, head to the Amazon SageMaker Dashboard. On the left menu, select <i>Notebook instances</i>. To create a new notebook, click on
   <i>Create notebook instance</i> (see Fig.2). At a minimum, it expects an instance type of ml.t2.medium.</p>
-  <figure>
-   <img src='images/sagemaker/notebook_instance_sm.png' alt="sagemaker new notebook instance" width="60%" height="50%">
+
+   <img src='images/sagemaker/notebook_instance_sm.png' alt="sagemaker new notebook instance" width="80%" height="80%">
    <figcaption><i>Fig.2. Setting up a notebook instance. Under "Additional configuration" the user can specify the volume size of the SM notebook.</i>
     </figure>
+
+<p>To train models in SM notebook, the datasets need to be stored in S3, and its path need to be established using <code class='highlighter-rouge'>sagemaker.s3_input</code>.
+    To instantiate the xgboost model, you need to call the docker image for SM xgboost as shown in the code below. The output_path is the S3 bucket that stores the trained model as .tar.gz file.</p>
+    <figure>
+    <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+   sess = sagemaker.Session()
+   container = get_image_uri(region, 'xgboost', '0.90-1')
+   role = get_execution_role()
+   bucket = 'kaggle.sf.crime'
+
+   xgb = sagemaker.estimator.Estimator(container,
+                                       role,
+                                       train_instance_count=1,
+                                       train_instance_type='ml.m4.xlarge',
+                                       output_path='s3://{}/output/'.format(bucket),
+                                       sagemaker_session=sess)
+
+  # for multiclass target the user needs to specify num_class, otherwise it won't work, for some reason, can't change learning rate
+
+  xgb.set_hyperparameters(
+  objective='multi:softmax',
+  eval_metric='merror',
+  num_round=100,
+  colsample_bytree=1,
+  gamma=1.2,
+  seed=2,
+  num_class=len(concat_df['crime'].unique().tolist())
+  )
+  objective_metric_name = 'validation:merror'
+   </code></pre></figure>
+
+  <p>At this point, the model object is ready for training by calling <code class='highlighter-rouge'>xgb.fit({'train':'s3://my-bucket/training', 'validation':'s3://my-bucket/validation})</code>.
+  An alternative is to perform hyperparameter tuning by setting up the parameter ranges as show below. Here, max_jobs refers to the number of sampling points from the grid range.</p>
+
+  <figure>
+  <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+  hyperparameter_ranges = {
+       'subsample': ContinuousParameter(0.5, 1),
+       'max_depth': IntegerParameter(3, 10)
+   }
+
+   gridsearch= HyperparameterTuner(
+       xgb,
+       objective_metric_name,
+       hyperparameter_ranges,
+       objective_type='Minimize',
+       max_jobs=5,
+       max_parallel_jobs=10,
+       early_stopping_type='Auto',
+       strategy='Random')
+
+   gridsearch.fit({'train': s3_input_train, 'validation': s3_input_validation}, include_cls_metadata=False)
+
+   sagemaker.HyperparameterTuningJobAnalytics(gridsearch.latest_tuning_job.job_name).dataframe()
+
+ </code></pre></figure>
+
+
+
 
 
 <h3> REFERENCES </h3>
