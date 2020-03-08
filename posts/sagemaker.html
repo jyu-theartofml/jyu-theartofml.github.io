@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>The Art of Machine Learning</title>
+  <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Getting started with SageMaker">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jyu-theartofml.github.io/posts/lesion_app.html">
+  <meta property="og:site_name" content="The Art of Machine Learning">
+  <meta property="og:image" content=" ">
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
+
+  <link rel="stylesheet" href="/assets/light.css">
+
+
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav appear">
+  <a href="/" class="header-logo" title="The Art of Machine Learning">The Art of Machine Learning</a>
+  <ul class="header-links">
+
+    <li>
+        <a href="https://jyu-theartofml.github.io/about">About Me
+        </a>
+      </li>
+
+    <li>
+        <a href="https://jyu-theartofml.github.io/toolbox">My Toolbox</a>
+     </li>
+     <li>
+        <a href="https://jyu-theartofml.github.io/ai_art">AiArt
+        </a>
+      </li>
+
+    <li>
+        <a href="https://github.com/jyu-theartofml" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <span class="icon icon-github"></span>
+        </a>
+      </li>
+
+
+      <li>
+        <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+          <span class="icon icon-linkedin"></span>
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+        <article class="article appear">
+          <header class="article-header">
+            <h1>Getting started with AWS SageMaker</h1>
+             <figure>
+              <img src='images/sagemaker/SM_Flowchart.png' alt="sagemaker design" width="60%" height="60%">
+               </figure>
+            <p>Recently I have seen AWS Sagemaker popping up a lot in the DS community. Out of curiosity, I wanted
+            to see what the hype was all about, and how easy it would be to adopt SageMaker. This blog post is for anyone who
+          wonders about the use cases for SageMaker and its advantages. </p>
+
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March x, 2020
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+              15 minute read
+              </span>
+
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+
+                <span class="article-list-divider">AWS, Sagemaker, Xgboost </span>
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+
+
+
+<h2>When to use SageMaker</h2>
+
+<p>In a nut shell, SageMaker(SM) is a cloud platform designed to quickly and seamlessly build, train and deploy ML models. The user
+  can write and run ML/DL models, and SM will provision the necessary compute resources on the backend (e.g. EC2 instance, GPUs), and
+  automatically spin up Docker containers. It's great for software developers and Data Scientist who don't want to be bothered
+  with system configurations and want to focus on development of ML model[1]. Other reasons for using SM:
+
+</p>
+    <ul>
+      <li> Scikit-learn models are fully integrated into SageMaker in the form of <code class='highlighter-rouge'>Scikit-learn Estimators</code>.
+      <li> SageMaker Python SDK offers managed Jupyter notebook instance to support ML model training and execution. It also
+        comes with APIs that support common Deep Learning (DL) backend such as Tensorflow, MXNet, and PyTorch.
+      <li> Deployment to endpoint allows frictionless integration into other application stacks.
+        <li> Endpoint object and model artifacts allow for efficient management and update of the model in a team environment.
+    </ul>
+
+    <figure>
+     <img src='images/sagemaker/sagemaker-architecture.png' alt="sagemaker tech stacks" width="60%" height="50%">
+     <figcaption><i>Fig.1. A full stack schematic of an application that runs on SageMaker, which executes the containerized tasks on EC2 instances.</i>
+      </figure>
+
+<h2>The types of API </h2>
+<p> The AWS document labyrinth for SM made it difficult to piece things together in a cohesive fashion. So I did some
+  digging around and found some useful literature with clear high-level description. In essense, the API
+  has three tiers: Amazon SageMaker SDK (high-level), AWS SDK for Python (Boto3), and awscli & Docker (low-level)[2].</p>
+
+<p> The high-level Amazon SageMaker SDK is the most common, especially for beginners. It is hosted in a Jupyter Notebook IDE, and the user
+  trains the model by specifying the instance types, and number of distributed workers. The SageMaker SDK will
+  automate the training jobs and the subsequent deployment to an endpoint. However, SageMaker SDK does not work within an event-driven Lambda function, and that's
+  where Boto3 comes in [3]. The Boto3 API requires that the source code be uploaded to S3, and specifying the relevant configurations. It has more low-level features
+since Boto3 is the SDK for all of the AWS ecosystem. On the other hand, the awscli & docker API offers more ways to customize codes and system configuration. It's ideal for
+ for situations where the model or algorithm you want to use is not supported by the SageMaker SDK.</p>
+ <p> This blog post will focus only on the Amazon SageMaker SDK, because it's more user friendly and intuitive. By using the San Francisco crime dataset, I will
+    walk through a straight forward tutorial on training a Xgboost regressor with hyperparameter search. I chose this after realizing that most SageMaker tutorials for xgboost are only for classifier, and doesn't
+    offer more in depth details on the hyperparameter tuning API. </p>
+
+<h2>Training with SageMaker</h2>
+<p>To get started, head to the Amazon SageMaker Dashboard. On the left menu, select <i>Notebook instances</i>. To create a new notebook, click on
+  <i>Create notebook instance</i> (see Fig.2). At a minimum, it expects an instance type of ml.t2.medium.</p>
+  <figure>
+   <img src='images/sagemaker/notebook_instance_sm.png' alt="sagemaker new notebook instance" width="60%" height="50%">
+   <figcaption><i>Fig.2. Setting up a notebook instance. Under "Additional configuration" the user can specify the volume size of the SM notebook.</i>
+    </figure>
+
+
+<h3> REFERENCES </h3>
+<p>[1]https://aws.amazon.com/blogs/aws/sagemaker/
+  <p>[2]X, Guang. <i>Start Your Machine Learning on AWS SageMaker</i>, https://medium.com/weareservian/machine-learning-on-aws-sagemaker-53e1a5e218d9</p>
+ <p>[3]<i> Dependencies are not completely specified #509 </i>, https://github.com/aws/sagemaker-python-sdk/issues/509
+
+<div id="disqus_thread" class="article-comments"></div>
+<script src="https://chalk-1.disqus.com/embed.js" async defer></script>
+<noscript>Please enable JavaScript to view the comments.</noscript>
+
+</article>
+<footer class="footer appear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+    ga('create','UA-28631876-6','auto');ga('send','pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>
