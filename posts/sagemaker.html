@@ -65,8 +65,9 @@
              <figure>
               <center><img src='images/sagemaker/SM_Flowchart.png' alt="sagemaker design" width="100%" height="100%"></center>
                </figure>
-            <p>Recently I have seen AWS Sagemaker popping up a lot in the DS community. Out of curiosity, I wanted
-            to see what the hype was all about, and how easy it would be to adopt the platform. This blog post is for anyone who
+            <p>The AWS Sagemaker is a crucial component for implementing Machine Learning as a Service, and it's a big part of
+              the AWS Machine Learning Certificate program. Out of curiosity, I wanted
+            to see how it works in practice, and how easy it would be to adopt the platform. This blog post is for anyone who
           wonders about the use cases for SageMaker and its advantages. </p>
 
             <div class="article-list-footer">
@@ -229,13 +230,13 @@ the model or algorithm you want to use is not supported by SageMaker.</p>
   pred_result=endpt_predictor.predict(arr_val).decode("utf-8").split(',')
  </code></pre></figure>
 
-<p>Keep in mind that charges will incure while the endpoint is being hosted and the notebook instance
+<p>Keep in mind that <b>charges will incur</b> while the endpoint is being hosted and the notebook instance
    is running. You can delete the endpoint from the console by going to <i>Endpoints</i> under <i>Inference</i>,
    and you can stop or delete the notebook by going to the <i> Notebook instances</i>. </p>
 
 <h2>Invoking the endpoint</h2>
 <p>If you are working in a team and would like to share access to the model endpoint for future development and/or updating,
- it's best practice to assign permission based on a policy and IAM role. To invoke the endpoint,I
+ it's best practice to assign permission based on a policy and IAM role. To invoke the endpoint, I
  followed a similar approach as this <a href='https://towardsdatascience.com/sharing-your-sagemaker-model-eaa6c5d9ecb5'> article</a> by Zak Jost.
  I first had to set up a custom policy for a specific role ("Version" of policy should be "2012-10-17"). Then
   I created a third party account (child account) with a new user. The child account id is required in order
