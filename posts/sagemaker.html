@@ -63,7 +63,7 @@
           <header class="article-header">
             <h1>Getting started with AWS SageMaker</h1>
              <figure>
-              <img src='images/sagemaker/SM_Flowchart.png' alt="sagemaker design" width="100%" height="100%">
+              <center><img src='images/sagemaker/SM_Flowchart.png' alt="sagemaker design" width="100%" height="100%"></center>
                </figure>
             <p>Recently I have seen AWS Sagemaker popping up a lot in the DS community. Out of curiosity, I wanted
             to see what the hype was all about, and how easy it would be to adopt the platform. This blog post is for anyone who
@@ -99,7 +99,7 @@
 
 </p>
     <ul>
-      <li> Scikit-learn models are fully integrated into SageMaker in the form of <code class='highlighter-rouge'>Scikit-learn Estimators</code>.
+      <li> Scikit-learn models are fully integrated into SageMaker in the form of <code class='highlighter-rouge'>Scikit-learn Estimators</code>, with support for scalable and elastic training jobs.
       <li> SageMaker Python SDK offers managed Jupyter notebook instance to support ML model training and execution. It also
         comes with APIs that support common Deep Learning (DL) backend such as Tensorflow, MXNet, and PyTorch.
       <li> Deployment to endpoint faciliates frictionless integration into other application stacks.
@@ -107,7 +107,7 @@
     </ul>
 
     <figure>
-     <img src='images/sagemaker/sagemaker-architecture.png' alt="sagemaker tech stacks" width="75%" height="75%">
+     <center><img src='images/sagemaker/sagemaker-architecture.png' alt="sagemaker tech stacks" width="80%" height="80%"> </center>
      <figcaption><i>Fig.1. A full stack schematic of an application that runs on SageMaker, which executes the containerized tasks on EC2 instances.</i>
       </figure>
 
@@ -127,16 +127,17 @@ the model or algorithm you want to use is not supported by SageMaker.</p>
     offer more in depth details on the hyperparameter tuning API. </p>
 
 <h2>Training with SageMaker</h2>
+
 <p>To get started, head to the Amazon SageMaker Dashboard. On the left menu, select <i>Notebook instances</i>. To create a new notebook, click on
   <i>Create notebook instance</i> (see Fig.2). At a minimum, it expects an instance type of ml.t2.medium.</p>
   <figure>
-   <img src='images/sagemaker/notebook_instance_sm.png' alt="sagemaker new notebook instance" width="80%" height="80%">
+   <center><img src='images/sagemaker/notebook_instance_sm.png' alt="sagemaker new notebook instance" width="80%" height="80%"></center>
    <figcaption><i>Fig.2. Setting up a notebook instance. Under "Additional configuration" the user can specify the volume size of the SM notebook.</i>
     </figure>
 
 <p>To train models in SM notebook, the datasets need to be stored in S3, and its path need to be established using <code class='highlighter-rouge'>sagemaker.s3_input</code>.
     To instantiate the xgboost model, you need to call the docker image for SM xgboost as shown in the code below. The output_path is the S3 bucket that stores the trained model as .tar.gz file.</p>
-    <figure>
+
     <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
    sess = sagemaker.Session()
    container = get_image_uri(region, 'xgboost', '0.90-1')
@@ -165,9 +166,10 @@ the model or algorithm you want to use is not supported by SageMaker.</p>
    </code></pre></figure>
 
   <p>At this point, the model object is ready for training by calling <code class='highlighter-rouge'>xgb.fit({'train':'s3://my-bucket/training', 'validation':'s3://my-bucket/validation})</code>.
-  An alternative is to perform hyperparameter tuning by setting up the parameter ranges as show below. Here, max_jobs refers to the number of sampling points from the grid range.</p>
+    An alternative is to perform hyperparameter tuning by setting up the parameter ranges as show below. Here, max_jobs refers to the number of sampling points from the grid range, and
+    <code class='highlighter-rouge'>HyperparameterTuningJobAnalytics</code> returns a table showing the status of the training jobs and the objective metric used to evaluated the model on
+   the validation set (under <i>FinalObjectiveValue</i>).</p>
 
-  <figure>
   <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
   hyperparameter_ranges = {
        'subsample': ContinuousParameter(0.5, 1),
@@ -190,13 +192,48 @@ the model or algorithm you want to use is not supported by SageMaker.</p>
 
  </code></pre></figure>
 
+<p>As show in Fig.3., the SM console shows a comprehensive activity status while the notebook is running. On the left panel,
+ you can go to <i> Hyperparameter turning</i> under <i>Training</i> to view the progress of the model training. Not only can
+ you see the training and validation errors, but it also shows the CPU and memory utilization.</p>
+ <figure>
+  <center><img src='images/sagemaker/SM_job_status.png' alt="sagemaker status" width="80%" height="80%"> </center>
+  <figcaption><i>Fig.3. SageMaker overall status update.</i>
+   </figure>
 
+
+<h2>Endpoint deployment</h2>
+<p>When the model is ready for deployment after parameter tuning, the best parameter can be automatically attached to the model Estimator.
+ The user needs to specify the number of instance and type of instance for deploying the model. The endpoint is an object identifiable
+   by an Amazon Resource Name(ARN) and defaults to private setting (keep reading to see how to share this resouce with IAM role permission).
+  </p>
+
+  <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
+  # Attach to an existing hyperparameter tuning job, which consists of multiple training job tasks
+  xgb_tuning_job_name = gridsearch.latest_tuning_job.job_name
+  xgb_tuner = HyperparameterTuner.attach(xgb_tuning_job_name)
+
+  # Get the best XGBoost training job name from thejob
+  xgb_best_job = xgb_tuner.best_training_job()
+  xgb_tuned = sagemaker.estimator.Estimator.attach(xgb_best_job)
+
+  # to deploy and then invoke the endpoint to make inference
+  xgb_tuned.deploy(initial_instance_count=1, instance_type='ml.t2.medium')
+
+  endpt_predictor=sagemaker.predictor.RealTimePredictor(endpoint=xgb_best_job)
+  endpt_predictor.content_type='text/csv'
+  endpt_predictor.serializer=csv_serializer
+  endpt_predictor.deserializer= None
+
+  select_cols=cols[1:]
+  arr_val=validation[select_cols][-10:].values
+  pred_result=endpt_predictor.predict(arr_val).decode("utf-8").split(',')
+ </code></pre></figure>
 
 
 
 <h3> REFERENCES </h3>
 <p>[1]https://aws.amazon.com/blogs/aws/sagemaker/
-  <p>[2]X, Guang. <i>Start Your Machine Learning on AWS SageMaker</i>, https://medium.com/weareservian/machine-learning-on-aws-sagemaker-53e1a5e218d9</p>
+<p>[2]X, Guang. <i>Start Your Machine Learning on AWS SageMaker</i>, https://medium.com/weareservian/machine-learning-on-aws-sagemaker-53e1a5e218d9</p>
  <p>[3]<i> Dependencies are not completely specified #509 </i>, https://github.com/aws/sagemaker-python-sdk/issues/509
 
 <div id="disqus_thread" class="article-comments"></div>
