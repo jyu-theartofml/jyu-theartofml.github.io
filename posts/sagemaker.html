@@ -72,7 +72,7 @@
 
             <div class="article-list-footer">
               <span class="article-list-date">
-                March x, 2020
+                March 11, 2020
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
@@ -262,6 +262,12 @@ str_result = response['Body'].read().decode()
 The notebook "xgboost_sm_train" should be run as a SM notebook instance, and "xgboost_sm_inference" can be run on a local computer with the
  right awscli <a href='https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html'> configuration</a>. You
  will also need the parent account ID (the account that grants the policy) for assuming the role.</p>
+
+ <h2>Beyond the basics</h2>
+ <p>The material in this post covers the fundamentals to get started with AWS SageMaker, but there's more to it!
+  If you want to retrain the model with new data on a schedule, and automatically push the updated model to the endpoint,
+ then you need tools like Step Function or Lambda. Lambda function can be managed by AWS CloudWatch to set up resources and schedules.
+ For future project, I'd like to turn the current endpoint I have into a public API using Lambda and API Gateway.
 
 
 <h3> REFERENCES </h3>
