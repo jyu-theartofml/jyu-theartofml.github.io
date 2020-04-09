@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>The Art of Machine Learning</title>
+  <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu, denver ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="covid19 data">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://jyu-theartofml.github.io/posts/bayesian.html">
+  <meta property="og:site_name" content="The Art of Machine Learning">
+  <meta property="og:image" content=" ">
+
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
+
+    <link rel="stylesheet" href="/assets/light.css">
+
+
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav appear">
+  <a href="/" class="header-logo" title="The Art of Machine Learning">The Art of Machine Learning</a>
+  <ul class="header-links">
+
+    <li>
+        <a href="https://jyu-theartofml.github.io/about">About Me
+        </a>
+      </li>
+
+    <li>
+        <a href="https://jyu-theartofml.github.io/toolbox">My Toolbox</a>
+      </li>
+    <li>
+        <a href="https://jyu-theartofml.github.io/ai_art/">AiArt</a>
+      </li>
+
+     <li>
+        <a href="https://github.com/jyu-theartofml" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <span class="icon icon-github"></span>
+        </a>
+      </li>
+
+
+      <li>
+        <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+          <span class="icon icon-linkedin"></span>
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+        <article class="article appear">
+          <header class="article-header">
+            <h1>Handle with caution - making sense of the pandemic data</h1>
+            <figure>
+              <center><img src='https://multimedia.scmp.com/infographics/news/china/article/3075382/decoding-coronavirus-covid-19/img/cover.jpg' width=40% heigh=40% alt="covid19" /></center>
+               <figcaption>Source:Southern China Morning Post.</figcaption></figure>
+            <p>In the span of the past month, the American public has been bombarded with numbers, charts, maps...and more charts on the spread of the Covid19 outbreak.
+              While these metrics are helpful in providing an overview for a given region (e.g. county), the nature of the data and <i>how</i>
+              they are collected makes it infeasible in coming up with accurate estimate or forecast of the infection curve. So it was surprising to hear that today Dr.Fauci
+              changed the <a href='https://www.npr.org/2020/04/09/830664814/fauci-says-u-s-coronavirus-deaths-may-be-more-like-60-000-antibody-tests-on-way'>projection </a>of the U.S.
+              dealth toll to "more like 60,000", which is a big departure from the estimate of 100,000-200,000 he made
+              just 11 days ago. It makes you wonder how they come up with that projection at the Institue of Health Metrics and Evaluation (which was used to support Fauci's forecast).
+            </p>
+          <p> Let's take a closer look into the limitation of the data available and shed light on why they are not meant to be used for modeling or forecasting.</p>
+
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                April 9th, 2020
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+              10 minute read
+              </span>
+
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+
+                <span class="article-list-divider">Data analytics, pandemic data</span>
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+  <p>
+
+
+<h2>Inconsistency in testing</h2>
+
+<p>The biggest shortcoming of Covid19 data stems from inconsistent testing policies between the states. The map
+  compiled by CNBC in Fig.1 shows the range of testing efforts by reporting testing per 100,000 population.
+ The top three states are New York, Louisiana and Washington; the ones lagging behind are Texas, South Carolina, California and Oklahoma. </p>
+
+
+       <figure>
+      <center><img src="images/pandemic_data/covid_testing_map.png" width=40% height=40% ></center>
+   <figcaption>Fig.1. Testing implementation in the U.S.
+   </figcaption>
+   </figure>
+
+
+<p>The number of confirmed cases depend on the number of people being tested, <b>therefore access to testing becomes a bottleneck in collecting
+ data that reflects reality</b>. To compound the problem, some states have shifted back and forth in its testing policy, and that has
+ resulted in backlog jams. A prime example is California, which is still working on its backlog, and has tested less than 0.5% of the state's residents at the time of this writing.
+ In terms of public data released, there is no way to separate the backlogged test results from the other results. All of that means
+ the number that gets reported is skewed as a function of resources and turn around time,
+ and there is no reliable measure of incidence rate to get a sense of how fast the infections is spreading. Here, incidence rate is defined as
+ the number of NEW cases that develop (or gets detected) in a given time period.
+ As a result, media outlets can only report total number of cases and deaths in a given population.
+</p>
+
+<h2>Distribution of prevalence rate</h2>
+<p>Most of the hospitalization rate and fatality rate quoted in news report are averaged estimate across the country or just a few states[1]. All of the demographic data released by the CDC
+  are based on patients who tested positive and showed up at the hospital site.
+ We know that older patients, and those with underlying medical conditions, are more likely to be hospitalized and have higher fatality rate.
+However, any attempt to project hospitalization or fatality number at a given locality is thwarted by the lack of
+prevalence data for the demographic group of interest. For clarity, prevalence rate is defined as this:</p>
+<pre stype="text-align: center">
+                           # of disease cases in sample
+Prevalence rate  =  ━━━━━━━━━━━━━━━━━━━━━━━
+                    Total # of people in sample
+</pre>
+<p>The public data set that I have come across are only reporting the numerator and not the denominator, which is the total number of people tested for Covid19 in the study.
+Currently, there's no data gathered for the total number of people tested within each age group, or each comorbidity group. That is the missing link in estimating the numbers
+on a granular administrative level, which has its own distinct demographic makeup that can vary significantly from the CDC study data. At best, only some state health department
+are keeping track of the number of cases broken down by age groups.</p>
+
+<h2>System vulnerabilities</h2>
+<p>There is an thoughtful <a href='https://medium.com/@robertbracco1/the-ihme-covid19-model-is-dangerously-flawed-c19928464db1'>
+  article </a>writtein by Robert Bracco on why the current model used by public policymakers is deeply flawed. One of the flaws
+  is that the model does not take into account the increase of mortality rate for patients when the local healthcare system is overloaded (think Italy).
+It is reported that the virus has recently started to spread quickly into <a href='https://www.cnbc.com/2020/03/31/coronavirus-closures-could-ruin-rural-hospitals-medical-practices.html'>
+  rural America</a>, where the population tends to be older and poorer,
+and local hospitals have scarce resources to handle Covid19 patients. Some of the local clinics have already closed their doors, so it's expected that
+mortality rate for rural population would be higher compared to its urban counterpart. And it doesn't help that there's currently 7 states that refuse to issue a stay-at-home order, creating a loophole in the containment effort.</p>
+<p>Since testing is limited or discouraged for individuals with mild or no symptoms, it is uncertain if there will be a second wave of infection if the governement ease up on the quarantine.
+  Until there are test kits readily available to the masses, the number of death cases serves as the most practical indicator of the impact and scope of Covid19.</p>
+
+
+
+
+
+
+
+
+
+  <h3> REFERENCES </h3>
+  <p>[1]Garg S, Kim L, Whitaker M, et al. Hospitalization Rates and Characteristics of Patients Hospitalized with Laboratory-Confirmed Coronavirus Disease 2019 — COVID-NET, 14 States, March 1–30, 2020. MMWR Morb Mortal Wkly Rep. ePub: 8 April 2020. DOI: http://dx.doi.org/10.15585/mmwr.mm6915e3external icon.
+
+
+
+
+
+            <div id="disqus_thread" class="article-comments"></div>
+            <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+
+        </article>
+        <footer class="footer appear">
+
+
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+    ga('create','UA-28631876-6','auto');ga('send','pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>
