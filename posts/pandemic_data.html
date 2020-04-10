@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="http://jyu-theartofml.github.io/posts/bayesian.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
-  <meta property="og:image" content=" ">
+  <meta property="og:image" content="https://multimedia.scmp.com/infographics/news/china/article/3075382/decoding-coronavirus-covid-19/img/cover.jpg ">
 
 
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -67,8 +67,8 @@
             <p>In the span of the past month, the American public has been bombarded with numbers, charts, maps...and more charts on the spread of the Covid19 outbreak.
               While these metrics are helpful in providing an overview for a given region (e.g. county), the nature of the data and <i>how</i>
               they are collected makes it infeasible in coming up with accurate estimate or forecast of the infection curve. So it was surprising to hear that today Dr.Fauci
-              changed the <a href='https://www.npr.org/2020/04/09/830664814/fauci-says-u-s-coronavirus-deaths-may-be-more-like-60-000-antibody-tests-on-way'>projection </a>of the U.S.
-              dealth toll to "more like 60,000", which is a big departure from the estimate of 100,000-200,000 he made
+              changed the <a href='https://www.npr.org/2020/04/09/830664814/fauci-says-u-s-coronavirus-deaths-may-be-more-like-60-000-antibody-tests-on-way'><u>projection </a></u>of the U.S.
+              death toll to "more like 60,000", which is a big departure from the estimate of 100,000-200,000 he made
               just 11 days ago. It makes you wonder how they come up with that projection at the Institue of Health Metrics and Evaluation (which was used to support Fauci's forecast)?
             </p>
           <p> Let's examine the limitation of the data available and shed light on why they are not meant to be used for modeling or forecasting the spread of the virus.</p>
@@ -102,7 +102,7 @@
 
 
        <figure>
-      <center><img src="images/pandemic_data/covid_testing_map.png" width=45% height=45% ></center>
+      <center><img src="images/pandemic_data/covid_testing_map.png" width=50% height=50% ></center>
    <figcaption>Fig.1. Testing implementation in the U.S.
    </figcaption>
    </figure>
@@ -125,14 +125,14 @@
 However, any attempt to project hospitalization or fatality number at a given locality is thwarted by the lack of
 prevalence data for the demographic group of interest. For clarity, prevalence rate is defined as this:</p>
 <pre stype="text-align: center">
-                           # of disease cases in sample
+                       # of disease cases in sample
 Prevalence rate  =  ━━━━━━━━━━━━━━━━━━━━━━━
-                    Total # of people in sample
+                       Total # of people in sample
 </pre>
 
-<p>The public data set that I have come across are only reporting the numerator and not the denominator, which is the total number of people tested for Covid19 in the study.
+<p>The public data set that I have come across are only reporting the numerator and <b>not the denominator</b>, which is the total number of people tested for Covid19 in the study.
 Currently, there's no data gathered for the total number of people tested within each age group, or each comorbidity group. That is the missing link in estimating the numbers
-on a granular administrative level, which has its own distinct demographic makeup that can vary significantly from the published CDC study. At best, only some state health department
+on a granular administrative level, which has its own distinct demographic makeup that can vary significantly from the published CDC study. At best, only some state health departments
 are keeping track of the number of cases broken down by age groups.</p>
 
 <h2>System vulnerabilities</h2>
