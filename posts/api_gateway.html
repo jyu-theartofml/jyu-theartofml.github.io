@@ -173,19 +173,53 @@ if necessary. Once testing has been passed, move on to the API Gateway.</p>
 
 
 
-
 <h2>API Gateway integration</h2>
-<p>In the Gateway console, choose RESTful API to create a new API.
+<p>In the Gateway console, choose REST API type to start developing an API. In the next page, it will ask for
+  some basic setting. The only thing to fill out on that page is the API name. Next, on the <i>Resources</i>
+  page, create a <i>Resource</i> from the <i>Actions</i> drop-down. Assign a name to the resource (I named mine test), then return to the
+  same drop-down and select <i>Create Method</i> to creat a <i>ANY</i> method. Contrary to example tutorials [1], a POST
+   method will not work.
   </p>
+  <p>Fig.2. below shows the setting parameters I applied to this resource method.
+    Note that the <i>Lambda Function</i> refers to the name of the earlier lambda function.</p>
+  <figure>
+   <center><img src='images/API_gateway/method_setup.png' alt="method initial setup" ></center>
+   <figcaption><i>Fig.2. Setting API method with lambda integration</i></figcaption>
+    </figure>
 
+<p>Click on the method, and it will lead to a screen showing <i>Method Execution</i> and the accommpanied flow chart.
+Choose <i>Method Request</i> to specify the Query String Parameters, since the lambda function was writtent to read data
+from this field (Fig.3).</p>
 
- 
+<figure>
+ <center><img src='images/API_gateway/method_any_setting.png' alt="method any setup" ></center>
+ <figcaption><i>Fig.3. Specifying the query parameter name.</i></figcaption>
+  </figure>
+<p>Before deploying the API, there is an option to test it. Return to the previous screen for <i>Method Execution</i>,
+  go to <i>Test</i>. The <i>Method</i> should be POST, and for the <i>Query Strings</i>, enter the parameter name
+  followed by = <values> (separated by comma), then run Test. On the right side of the page, you should see a status of 200
+    and a response body. This means the API successfully passed the test! If there was any error, carefully look through the logs
+    to identify the cause.</p>
+
+    <figure>
+     <center><img src='images/API_gateway/method_test.png' alt="http request url" ></center>
+     <figcaption><i>Fig.4. Testing the resource method with trigger event.</i></figcaption>
+      </figure>
+<p>Now it is time to deploy the API to a stage. Simply go to the <i>Actions</i> drop-down, and select <i>Deploy API</i> and name the Deployment stage.
+  The tricky part is finding the right url for the API endpoint. You should go to <i>Stages</i>,
+  and expand the stage object to see the invoke url. It should follow this pattern: <b>https://{restapi_id}.execute-api.{region}.amazonaws.com/{stage_name}/{resource_name}</b>.
+  To make a http request, append the query string values with a ? mark. For example, my query string parameter is data, so this will be added to the url:
+  <b>?data={val1,val2,val3, val4...}</b> (Fig.5), where the {val1,val2,val3, val4...} represent the input feature values for model prediction. </p>
+  <figure>
+   <center><img src='images/API_gateway/api_deployed_url.png' alt="http request url" ></center>
+   <figcaption><i>Fig.5. Making a HTTP request with query parameter values.</i></figcaption>
+    </figure>
+<p>That's all there is to it! For other type of API configuration such as HTTP proxy integration, check out the <a href='https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-http.html'>article</a>
+  here.</p>
 
 <h3> REFERENCES </h3>
-<p>[1]<b>Amazon SageMaker – Accelerating Machine Learning</b>, AWS News Blog, https://aws.amazon.com/blogs/aws/sagemaker/</p>
-<p>[2]X, Guang. <i>Start Your Machine Learning on AWS SageMaker</i>, https://medium.com/weareservian/machine-learning-on-aws-sagemaker-53e1a5e218d9</p>
-<p>[3]<i> Dependencies are not completely specified #509 </i>, https://github.com/aws/sagemaker-python-sdk/issues/509 </p>
-
+<p>[1]Olsen,R. <i>Call an Amazon SageMaker model endpoint using Amazon API Gateway and AWS Lambda</i>,https://aws.amazon.com/blogs/machine-learning/call-an-amazon-sagemaker-model-endpoint-using-amazon-api-gateway-and-aws-lambda/?ref=Welcome.AI</p>
+<p>[2]<b>Tutorial: Build an API with HTTP proxy integration </b>, https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-http.html</p>
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
 <noscript>Please enable JavaScript to view the comments.</noscript>
