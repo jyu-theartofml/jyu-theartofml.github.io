@@ -26,35 +26,6 @@
 
 	<!-- Open Sans & CSS -->
 	<!--link href='http://fonts.googleapis.com/css?family=Open+Sans:700,400,300' rel='stylesheet' type='text/css'-->
-	  <style>
-
-    body{
-      font-family: 'Open Sans', sans-serif;
-      font-size:10px;
-      text-align: center;
-    }
-    @import url(style.css);
-
-    #circle circle {
-    fill: none;
-    pointer-events: all;
-    }
-
-    .group path {
-    fill-opacity: .5;
-    }
-
-    path.chord {
-    stroke: #000;
-    stroke-width: .05px;
-  }
-
-    #circle:hover path.fade {
-    display: none;
-    }
-
-
-	  </style>
 
  </head>
 
@@ -126,9 +97,41 @@
           </header>
 
           <div class="article-content">
+
       <script src="http://d3js.org/d3.v3.js"></script>
       <script src="https://jyu-theartofml.github.io/posts/jquery.min.js"></script>
       <svg width="560" height="560" ></svg>
+
+      <style>
+
+      body{
+        font-family: 'Open Sans', sans-serif;
+        font-size:10px;
+        text-align: center;
+      }
+      @import url(style.css);
+
+      #circle circle {
+      fill: none;
+      pointer-events: all;
+      }
+
+      .group path {
+      fill-opacity: .5;
+      }
+
+      path.chord {
+      stroke: #000;
+      stroke-width: .05px;
+    }
+
+      #circle:hover path.fade {
+      display: none;
+      }
+
+
+  	  </style>
+
 		  <div id="chart">
 			  <script src="chord.js"></script>
       </div>
