@@ -65,7 +65,7 @@
              <figure>
               <center><img src='images/API_gateway/api-backends.png' alt="api design" width="100%" height="100%"></center>
                </figure>
-            <p>In a previous post, I talked in details about using Amazon SageMaker as a Machine Learning service platform that
+            <p>In a previous <u><a href='https://jyu-theartofml.github.io/posts/sagemaker'>post</a></u>, I talked in details about using Amazon SageMaker as a Machine Learning service platform that
             eliminates the need for backend OS management, so users can focus on the machine learning part. An extension of
           SageMaker is that the model endpoint can be deployed as a public API through API Gateway with Lambda integration.</p>
 
@@ -147,16 +147,13 @@
    runtime= boto3.client('runtime.sagemaker')
 
    def lambda_handler(event, context):
-       #data = json.dumps(event)
-
+ 
        payload = event["queryStringParameters"]["data"]
-
        response = runtime.invoke_endpoint(EndpointName=ENDPOINT_NAME,
                                           ContentType='text/csv',
                                           Body=payload)
        result = json.loads(response['Body'].read().decode())
        print(result)
-
        predicted_label = result
 
        return {
@@ -164,7 +161,6 @@
                "headers": {"Content-Type": "application/json"},
                "body": json.dumps(predicted_label),
                }
-       # return predicted_label
    </code></pre></figure>
 
   <p>At this point, it is a good idea to test your lambda function. In the browser frame where you entered the lambda code, go
