@@ -1,4 +1,4 @@
-var svg3 = d3.select("svg"),
+var svg3 = d3.select("#svg3"),
     margin3 = 20,
     diameter = +svg3.attr("width"),
     g3 = svg3.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
