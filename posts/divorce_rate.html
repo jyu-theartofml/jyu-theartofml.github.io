@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<meta charset="utf-8">
 
 <head>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -18,7 +19,7 @@
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
 
     <link rel="stylesheet" href="/assets/light.css">
-    <!-- D3.js -->
+
 
     	<!-- jQuery -->
 
@@ -90,13 +91,14 @@
           </header>
 
           <div class="article-content">
+        <div class="tooltip"></div>
 
-            <div class="tooltip"></div>
 
-        <script src="https://d3js.org/d3.v5.min.js"></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js'></script>
         <h3>Percent of first marriages ending in divorce</h3>
-        <svg width="760" height="460" id="svg1"></svg>
+
+
+
+
         	<!-- define svg before script-->
 
         <style>
@@ -118,16 +120,76 @@ font: 8px sans-serif;
 padding: 5px;
 text-align: center;
 }
-        </style>
+.d3-tip {
+      line-height: 1;
+      padding: 6px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+    }
 
-<p align="center">
-    <script src='barchart.js'></script>
-  </p>
+
+  .node {
+    cursor: pointer;
+  }
+
+  .node:hover {
+    stroke: #000;
+    stroke-width: 1.5px;
+  }
+
+  .node--leaf {
+    fill: white;
+  }
+
+  .label {
+    font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-anchor: middle;
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+  }
+
+  .label,
+  .node--root,
+  .node--leaf {
+    pointer-events: none;
+  }
+
+
+</style>
+
+  <svg width="700" height="460" id="svg1"></svg>
+  <!-- D3.js -->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+
+  <div id="fchart"></div>
+<p> Second bar chart looks at the effect of age at marriage.</p>
+
+
+
+<script src='bar_total.js'></script>
+
+
+
+
+  <div id='circle'></div>
+  <svg width="560" height="560" id="svg3"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src='circle2.js'>
+
+
+  </script>
+
+
+
+
+
 
 <h4 id="reference">REFERENCE</h4>
-<p>[1] https://medium.com/@Marianattestad/a-treatise-on-making-circos-plots-from-genomic-data-7ff496849e0</p>
+<p>[1] https://medium.com/@Marianattestad/a-treatise-on-making-circos-plots-from-genomic-data-7ff496849e0 </p>
 <p>[2] <b>How to create a Flow diagram with a circular Twist</b>, Visual Cinnamon, https://www.visualcinnamon.com/2015/08/stretched-chord.html</p>
-		  <p>[3] <i>Andrew's Chord Example </i> http://bl.ocks.org/AndrewRP/7468330 </p>
+<p>[3] <i>Andrew's Chord Example </i> http://bl.ocks.org/AndrewRP/7468330 </p>
 
 
 
