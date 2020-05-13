@@ -1,0 +1,6 @@
+Age,less than HS, HS graduate no college, college or associate degree, Bachelor degree or higher
+age15-22,0.688,0.572,0.60,0.466
+age23-28,0.541,0.499,0.456,0.313
+age29-34,0.439,0.426,0.406,0.234
+age35-40,0.307,0.251,0.258,0.134
+age41-46,0.091,0.084,0.139,0.106
