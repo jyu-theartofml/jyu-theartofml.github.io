@@ -63,8 +63,24 @@
 
         <article class="article appear">
           <header class="article-header">
-            <h1 id="circos plot"> Marriage trend in America </h1>
-            <p>Data visualization of marriage trend of the boomer generation. Source of data is from Bureau of Labor and Statistics.</p>
+            <h1 id="divorce rate in boomers">When love is not enough</h1>
+            <figure>
+              <center><img src='https://static01.nyt.com/images/2016/05/29/opinion/sunday/29botton/29botton-jumbo.jpg?quality=90&auto=webp' width=80% heigh=80% alt="covid19" /></center>
+               <figcaption>Source: Marion Fayolle, The New York Times.</figcaption></figure>
+            <p>I cringe when I hear people quoting the statistic that half of all marriages end in divorce. Not only it's an
+              <a href='https://time.com/5434949/divorce-rate-children-marriage-benefits/'><u>outdated measure</u></a> from a time in the 80s,
+              it's also a glaring example of how
+              popular culture has turned a multi-faceted phenonmenon into a misleading number devoid of any nuances.
+              When I came across the data set National Longitudinal Survey of Youth 1979[1], I decided to wrap those numbers
+              into D3 visualizations for the marriage trend of the boomer generation, and to show that context matters.</p>
+              <p>The patterns in these visualization are somewhat reminiscent of Eli Finkel's book <i>The All-or-Nothing Marriage</i>, in which he argued
+                that American marriage has shifted from love-based to self-expressive[2], in an attempt to satisfy higher-level needs.
+                As our society adjust to those changing expectations, he noted,
+                <blockquote class="w3-panel w3-leftbar w3-light-grey">
+                  <i>"The pursuit of self-expression through marriage simultaneously makes achieving marital
+                    success harder and the value of doing so greater."</i>
+                 </blockquote>
+              </p>
 
 
             <div class="article-list-footer">
@@ -73,13 +89,13 @@
               </span>
               <span class="article-list-divider">-</span>
               <span class="article-list-minutes">
-              10 minute read
+              5 minute read
               </span>
 
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
 
-                <span class="article-list-divider">D3, Data visualization, Chord diagram </span>
+                <span class="article-list-divider">D3, Data sketch, divorce in America </span>
               </div>
             </div>
           </header>
@@ -87,99 +103,133 @@
           <div class="article-content">
         <div class="tooltip"></div>
 
-
-        <h3>Percent of first marriages ending in divorce</h3>
-
-
-
-
-        	<!-- define svg before script-->
-
         <style>
-        .axis .domain {
+                .axis .domain {
+                display: none;
+            }
+            .toolTip {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        position: absolute;
         display: none;
-    }
-    .toolTip {
-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-position: absolute;
-display: none;
-width: auto;
-height: auto;
-background: none repeat scroll 0 0 white;
-border: 0 none;
-border-radius: 4px 4px 4px 4px;
-box-shadow: -3px 3px 15px #888888;
-color: black;
-font: 8px sans-serif;
-padding: 5px;
-text-align: center;
-}
-.d3-tip {
-      line-height: 1;
-      padding: 6px;
-      background: rgba(0, 0, 0, 0.7);
-      color: #fff;
-      border-radius: 4px;
-      font-size: 12px;
-    }
+        width: auto;
+        height: auto;
+        background: none repeat scroll 0 0 white;
+        border: 0 none;
+        border-radius: 4px 4px 4px 4px;
+        box-shadow: -3px 3px 15px #888888;
+        color: black;
+        font: 8px sans-serif;
+        padding: 5px;
+        text-align: center;
+        }
+        .d3-tip {
+              line-height: 1;
+              padding: 6px;
+              background: rgba(0, 0, 0, 0.7);
+              color: #fff;
+              border-radius: 4px;
+              font-size: 12px;
+            }
 
+          .node {
+            cursor: pointer;
+          }
 
-  .node {
-    cursor: pointer;
-  }
+          .node:hover {
+            stroke: #000;
+            stroke-width: 1.5px;
+          }
 
-  .node:hover {
-    stroke: #000;
-    stroke-width: 1.5px;
-  }
+          .node--leaf {
+            fill: white;
+          }
 
-  .node--leaf {
-    fill: white;
-  }
+          .label {
+            font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+            text-anchor: middle;
+            text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+          }
 
-  .label {
-    font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-anchor: middle;
-    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
-  }
+          .label,
+          .node--root,
+          .node--leaf {
+            pointer-events: none;
+          }
+        </style>
+  <h2>Data Source</h2>
+    <p>The survey dataset was collected from cohorts born between 1957-1964. The study
+    follows the participants up to the age of 46, and tracks the marriage and divorce outcomes by age
+  group, gender, race, and education attainment. The sample size was 7,357 people and 8,112 marriages during
+the course of the study. The data used in the study is weighted to reflect the demographic representation
+of those born in the U.S. during the period 1957-1964.</p>
 
-  .label,
-  .node--root,
-  .node--leaf {
-    pointer-events: none;
-  }
-
-
-</style>
-
+<h2>Demographic trends</h2>
+<p>Of all the variables in the study, I was most interested in gender and age at marriage. Although I suspect
+  that those factors are correlated with education attainment to some extent.</p>
+  <h3>Percent of first marriages ending in divorce</h3>
   <svg width="700" height="460" id="svg1"></svg>
   <!-- D3.js -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
-
   <div id="fchart"></div>
-<p> Second bar chart looks at the effect of age at marriage.</p>
+  <p>Across the board, women from the boomer generation have slightly higher divorce rates than their male counterpart.
+  It's not surprising to see the probability of divorce decreases with education attainment. But the difference is
+  more stark for men who have Bachelor degrees vs. men who only completed high school (25% points). By contrast, the different in divorce rate for women who has
+  Bachelor's degree vs. high school diploma is 12.1%, about half of the difference seen in the male counterpart. </p>
+ <p> The second bar chart looks at the effect of age at marriage. Here, the observation is in unit of marriage(not individuals).
+ It shows the percentage of divorces along with the age at the start of the marriage, with a breakdown by education level.</p>
 
+  <h3>Percent of marriages ending in divorce by age groups</h3>
 <svg width="700" height="460" id="svg2"></svg>
-
 <script src='divorce_rate/bar_total.js'></script>
-
+<p>This barchart shows that the percentage of divorce is <b>below</b> 50% for cohorts who got married at age 29 or older.</p>
+<p>While the likelihood of divorce trends downward with older age at marriage, there're some confounding factors. For instance,
+age at marriage is directly proportionally to education attainment, so it's hard to attribute the lower divorce rates to just one variable (eg. education).
+Having a Bachelor's degree or higher signals a significantly lower chance of divorce compared to those without a degree. The biggest difference is seen in participants age 29-34,
+where having a bachelor's degree or higher means the chance of divorce declines by at least 17.2% compared to someone who doesn't have a degree. However, the <i>magnitude</i> of that difference
+tapers off for cohorts older than 35. The older age group is more likely to have observation samples of second or third marriages, so another
+confounding factor is the baseline likelihood of divorce in marriages after the first. </p>
 
 
   <div id='circle'></div>
+  <p align=center>
+  <h3>Distribution of marital status by gender and age groups</h3>
   <svg width="560" height="560" id="svg3"></svg>
-<script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src='divorce_rate/circle2.js'></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src='divorce_rate/circle2.js'></script>
+
+</p>In this zoomable circle packing digram, the size of the inner circle is proportional to the percentage of people in that category.
+The overall trend is that boomer women tend to get married much earlier than men, and through out their lives they go through more transitions
+(as seen by the number of colored bubbles in each age group). </p>
+<p> If we look at Maslow's hierarchy of needs (Fig.1), it is reasonable to map the migration of the lower-level needs to higher-level needs
+in the context of aging.</p>
+<figure ><center>
+<img src="images/divorce_rate/maslow.jpeg" width=65% height=65%></center>
+<figcaption>Fig.1. Maslow's pyramid of needs (source: simplepsychology.org).
+</figcaption>
+</figure>
+<p>As people become better educated and accumulate more life experiences, their expectations transition
+  towards the top of Maslow's pyramid. According to Finkel, the desire for self-actualization
+  goes beyond compatibility, it also requires a system of mutual support based on deep insights
+  of each other's essence and aspirations.
+  That kind of understanding through out the course of the relationship hinges on
+  the investment of time and energy from the couple. </p>
+  <p>Ironically, the average marriage seems to be
+  getting worse over time just as the best marriages have been getting better.
+  Divorce rate is declining, but only because marriage is becoming more exclusive to privileged groups[3].
+
+</p>
 
 
 
-
+<br></br>
 
 
 <h4 id="reference">REFERENCE</h4>
-<p>[1] https://medium.com/@Marianattestad/a-treatise-on-making-circos-plots-from-genomic-data-7ff496849e0 </p>
-<p>[2] <b>How to create a Flow diagram with a circular Twist</b>, Visual Cinnamon, https://www.visualcinnamon.com/2015/08/stretched-chord.html</p>
-<p>[3] <i>Andrew's Chord Example </i> http://bl.ocks.org/AndrewRP/7468330 </p>
+<p>[1] <i>Marriage and divorce: patterns by gender, race, and educational attainment</i>, U.S.Bureau of Labor Statistics. </p>
+<p>[2] Finkel, E.J. <b>The All-or-Nothing Marriage</b>, 2017.</p>
+<p>[3] Luscombe, B. <i>The Divorce Rate Is Dropping. That May Not Actually Be Good News</i>, TIME.</p>
+<p>[4] Mike Bostock's circle example, https://gist.github.com/mbostock/7607535 </p>
 
 
 
