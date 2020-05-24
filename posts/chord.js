@@ -22,7 +22,7 @@ var layout = d3.layout.chord()
 var path = d3.svg.chord()
 .radius(innerRadius);
 
-var svg = d3.select("#chart").append("svg")
+var svg = d3.select("#svg1")
 .attr("width", (width+margin.left+margin.right))
 .attr("height", (height+margin.top+margin.bottom))
 .append("g")
