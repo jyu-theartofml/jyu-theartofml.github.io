@@ -173,163 +173,131 @@ dictionary allows us to loop over the labeled objects in each class and draw the
                )
                cv2.circle(frame, (centroid[0], centroid[1]), 10, (0, 255, 0), -1)
 </code></pre></figure>
-<p>Centroid tracking</p> 
-<h2>The types of API </h2>
-<p> The AWS document labyrinth made it difficult to piece things together in a cohesive fashion. So I did some
-  digging around and found some useful literature with clear description of the SM system. In essense, the API
-  has three tiers: Amazon SageMaker SDK (high-level), AWS SDK for Python (Boto3), and awscli & Docker (low-level)[2].</p>
 
-<p> The high-level Amazon SageMaker SDK is the most common, especially for beginners. It is hosted in a Jupyter Notebook IDE, and the user
-  trains the model by specifying the instance types, and number of distributed workers. The SageMaker SDK will then
-  automate the training jobs and the subsequent deployment to an endpoint. However, SageMaker SDK does not work with event-driven Lambda functions, and that's
-  where Boto3 comes in [3]. The Boto3 API requires that the source code be uploaded to S3, and specifying the relevant configurations for SageMaker to run. It has more low-level features
-since Boto3 is the SDK for all of the AWS ecosystem. On the other hand, the awscli & docker API offers more ways to customize codes and system configuration. It's ideal for situations where
-the model or algorithm you want to use is not supported by SageMaker.</p>
- <p> This blog post will focus only on the Amazon SageMaker SDK, because it's more user friendly and intuitive. By using the San Francisco crime dataset, I will
-    walk through a straight forward tutorial on training a Xgboost classifier with hyperparameter search. I chose this after realizing that most SageMaker tutorials for xgboost are only for <i>binary</i> classifier and not multiclass, and doesn't
-    offer more in depth details on the hyperparameter tuning API. </p>
+<h2>Draw out the movment</h2>
 
-<h2>Training with SageMaker</h2>
-
-<p>To get started, head to the Amazon SageMaker Dashboard. On the left menu, select <i>Notebook instances</i>. To create a new notebook, click on
-  <i>Create notebook instance</i> (see Fig.2). At a minimum, it expects an instance type of ml.t2.medium.</p>
-  <figure>
-   <center><img src='images/sagemaker/notebook_instance_sm.png' alt="sagemaker new notebook instance" width="80%" height="80%"></center>
-   <figcaption><i>Fig.2. Setting up a notebook instance. Under "Additional configuration" the user can specify the volume size of the SM notebook.</i>
-    </figure>
-
-<p>To train models in SM notebook, the datasets need to be stored in S3, and its path need to be established using <code class='highlighter-rouge'>sagemaker.s3_input</code>.
-    To instantiate the xgboost model, you need to call the docker image for SM xgboost as shown in the code below. The output_path is the S3 bucket that stores the trained model as .tar.gz file.</p>
-
-    <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-   sess = sagemaker.Session()
-   container = get_image_uri(region, 'xgboost', '0.90-1')
-   role = get_execution_role()
-   bucket = 'kaggle.sf.crime'
-
-   xgb = sagemaker.estimator.Estimator(container,
-                                       role,
-                                       train_instance_count=1,
-                                       train_instance_type='ml.m4.xlarge',
-                                       output_path='s3://{}/output/'.format(bucket),
-                                       sagemaker_session=sess)
-
-  # for multiclass target the user needs to specify num_class, otherwise it won't work, for some reason, can't change learning rate
-
-  xgb.set_hyperparameters(
-  objective='multi:softmax',
-  eval_metric='merror',
-  num_round=100,
-  colsample_bytree=1,
-  gamma=1.2,
-  seed=2,
-  num_class=len(concat_df['crime'].unique().tolist())
-  )
-  objective_metric_name = 'validation:merror'
-   </code></pre></figure>
-
-  <p>At this point, the model object is ready for training by calling <code class='highlighter-rouge'>xgb.fit({'train':'s3://my-bucket/training', 'validation':'s3://my-bucket/validation})</code>.
-    An alternative is to perform hyperparameter tuning by setting up the parameter ranges as show below. Here, max_jobs refers to the number of sampling points from the grid range, and <code class='highlighter-rouge'>HyperparameterTuningJobAnalytics </code> returns
-    a table showing the status of the training jobs and the objective metric used to evaluated the model on
-   the validation set (under <i>FinalObjectiveValue</i>).</p>
-
-  <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-  hyperparameter_ranges = {
-       'subsample': ContinuousParameter(0.5, 1),
-       'max_depth': IntegerParameter(3, 10)
-   }
-
-   gridsearch= HyperparameterTuner(
-       xgb,
-       objective_metric_name,
-       hyperparameter_ranges,
-       objective_type='Minimize',
-       max_jobs=5,
-       max_parallel_jobs=10,
-       early_stopping_type='Auto',
-       strategy='Random')
-
-   gridsearch.fit({'train': s3_input_train, 'validation': s3_input_validation}, include_cls_metadata=False)
-
-   sagemaker.HyperparameterTuningJobAnalytics(gridsearch.latest_tuning_job.job_name).dataframe()
-
- </code></pre></figure>
-
-<p>As show in Fig.3., the SM console shows the comprehensive activity status while the notebook is running. On the left panel,
- you can go to <i> Hyperparameter tuning jobs</i> under <i>Training</i> to view the progress of the training. Not only can
- you see the training and validation errors, but it also shows the CPU and memory utilization metrics.</p>
- <figure>
-  <center><img src='images/sagemaker/SM_job_status.png' alt="sagemaker status" width="85%" height="85%"> </center>
-  <figcaption><i>Fig.3. SageMaker provides overall status update.</i>
-   </figure>
-
-
-<h2>Endpoint deployment</h2>
-<p>When the model is ready for deployment after parameter tuning, the best parameter can be automatically attached to the model Estimator.
- The user needs to specify the number of instance and type of instance for deploying the model. The endpoint is an object identifiable
-   by an Amazon Resource Name(ARN) and defaults to private setting (keep reading to see how to share this resouce with IAM role permission).
-  </p>
-
-  <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-  # Attach to an existing hyperparameter tuning job, which consists of multiple training job tasks
-  xgb_tuning_job_name = gridsearch.latest_tuning_job.job_name
-  xgb_tuner = HyperparameterTuner.attach(xgb_tuning_job_name)
-
-  # Get the best XGBoost training job name from thejob
-  xgb_best_job = xgb_tuner.best_training_job()
-  xgb_tuned = sagemaker.estimator.Estimator.attach(xgb_best_job)
-
-  # to deploy and then invoke the endpoint to make inference
-  xgb_tuned.deploy(initial_instance_count=1, instance_type='ml.t2.medium')
-
-  endpt_predictor=sagemaker.predictor.RealTimePredictor(endpoint=xgb_best_job)
-  endpt_predictor.content_type='text/csv'
-  endpt_predictor.serializer=csv_serializer
-  endpt_predictor.deserializer= None
-
-  select_cols=cols[1:]
-  arr_val=validation[select_cols][-10:].values
-  pred_result=endpt_predictor.predict(arr_val).decode("utf-8").split(',')
- </code></pre></figure>
-
-<p>Keep in mind that <b>charges will incur</b> while the endpoint is being hosted and the notebook instance
-   is running. You can delete the endpoint from the console by going to <i>Endpoints</i> under <i>Inference</i>,
-   and you can stop or delete the notebook by going to the <i> Notebook instances</i>. </p>
-
-<h2>Invoking the endpoint</h2>
-<p>If you are working in a team and would like to share access to the model endpoint for future development and/or updating,
- it's best practice to assign permission based on a policy and IAM role. To invoke the endpoint, I
- followed a similar approach as this <a href='https://towardsdatascience.com/sharing-your-sagemaker-model-eaa6c5d9ecb5'> article</a> by Zak Jost.
- I first had to set up a custom policy for a specific role ("Version" of policy should be "2012-10-17"). Then
-  I created a third party account (child account) with a new user. The child account id is required in order
-  for the parent account to grant the permission to the child. For this to work,
-the child account must have a user that will assume the role with its attached policy, for some reason using the root does *not* work.
-
-</p>
+<p>Centroid tracking is a convenient tool that allows for frame-to-frame tracking of movement, like the path of a bicyclist.
+I modified the <code class='highlighter-rouge'>detect</code> function to allow for movement tracking by identifying the same label ID from the same class in the previous frame.
+And using the <code class='highlighter-rouge'>deque</code> function from the <i>collections</i> package to update the list of centroids for each frame. Here's the complete function
+that includes additional looping to draw the movement in lines.</p>
 
 <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-# after calling the client with boto3, invoke endpoint.
-endpoint_name='sagemaker-xgboost-200204-1841-002-fc901d44'
+  def tracking(frame, net, transform, f_idx, track_pts):
+    """
+    frame: individual frame
+    net: pretrained object detector mdoel
+    transform: function to transform image of the frame
+    f_idx: frame count
+    track_pts: deque collection of centroids
+    """
+    height, width = frame.shape[:2]  # We get the height and the width of the frame.
+    frame_t = transform(frame)[0]  # We apply the transformation to our frame.
+    # We convert the frame into a torch tensor.
+    x = torch.from_numpy(frame_t).permute(2, 0, 1)
+    x = x.unsqueeze(0)  # We add a fake dimension corresponding to the batch.
+    with torch.no_grad():
+        # We feed the neural network ssd with the image and we get the output y.
+        y = net(x)
+    # the dimension is (N,i,j,b), i is the class, j is the number of detecttion, b axis is confidence and bounding box coordinates
+    detections = y.data
+    scale = torch.Tensor([width, height, width, height])
 
-# payload_file is StringIO class that writes out strings
-response = client.invoke_endpoint(
-    EndpointName= endpoint_name,
-    Body= payload_file.getvalue(),
-    ContentType = 'text/csv')
+    # keep track of centroid points for this individual frame
+    centroid_pts = {f_idx: {}}
+    color_ls = [
+        (79, 111, 243),
+        (129, 199, 190),
+        (86, 160, 82),
+        (181, 190, 183),
+        (49, 90, 93),
+        (142, 132, 21),
+        (69, 116, 8),
+        (9, 68, 193),
+        (126, 152, 167),
+        (103, 95, 90),
+        (98, 117, 184),
+        (186, 112, 111),
+        (234, 54, 27),
+        (90, 218, 83),
+        (134, 185, 119),
+        (174, 1, 141),
+        (2, 222, 238),
+        (219, 86, 39),
+        (155, 151, 186),
+        (192, 221, 232),
+        (174, 149, 85),
+    ]
 
-str_result = response['Body'].read().decode()
+    for i in range(detections.size(1)):  # For every class:
+        # We initialize the loop variable j that will correspond to the occurrences of the class.
+        j = 0
+        rects = []
+        # We take into account all the occurrences j of the class i that have a matching score larger than 0.6.
+        while detections[0, i, j, 0] >= 0.6:
+            # We get the coordinates of the points at the upper left and the lower right of the detector rectangle.
+            pt = (detections[0, i, j, 1:] * scale).numpy()
+            cv2.rectangle(
+                frame,
+                (int(pt[0]), int(pt[1])),
+                (int(pt[2]), int(pt[3])),
+                color_ls[i],
+                3,
+            )
+            # save the bounding box coordinates (startX, startY, endX, endY)
+            rects.append((int(pt[0]), int(pt[1]), int(pt[2]), int(pt[3])))
+            j += 1
+            objects = ct.update(rects)
+
+            # loop over the tracked centroids
+            centroid_pts[f_idx][i] = {}
+            for (objectID, centroid) in objects.items():
+                # add centroid pt to deque list for each class
+                w = {objectID: centroid}
+                centroid_pts[f_idx][i].update(w)
+
+                #  draw the centroid of the object on the output frame
+                cv2.circle(frame, (centroid[0], centroid[1]), 15, color_ls[i], -1)
+                text = labelmap[i - 1] + "_" + str(objectID)
+                cv2.putText(
+                    frame,
+                    text,
+                    (centroid[0] - 10, centroid[1] - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    2,
+                    (0, 255, 0),
+                    2,
+                    cv2.LINE_AA,
+                )
+
+    track_pts.appendleft(centroid_pts)  # update the deque list
+    # loop through track_pts dictionary and plot the line of the object movement
+    for i in range(len(track_pts) - 1):
+        frame_idx = list(track1[i].keys())[0]
+        current = track1[i][frame_idx]
+        for class_idx, v in current.items():
+            for label_id, coord in v.items():
+                try:
+                    y = track1[i][frame_idx][class_idx][label_id]
+                    y_t = track1[i + 1][frame_idx - 1][class_idx][label_id]
+                    # draw the line
+                    thickness = int(np.sqrt(64 / float(i + 1)) * 2.5)
+                    cv2.line(
+                        frame, tuple(y_t), tuple(y), color_ls[class_idx], thickness
+                    )
+                except KeyError:
+                    pass
+
+    return frame, track_pts
+
 </code></pre></figure>
+<p>This function has the additional argument `f_idx` and `track_pts` because it needs to keep track of the frame sequence, and it needs a pre-initialized dictionary deque object.
+Here, the dictionary `track_pts` can have specified maxlength to keep the line drawn at a certain length. The critical part is the loops towards the end, where it
+checks to see if the current centroid (y) shares matching label ID and class with centroids in the previous frame (y_t). An output sample clip is shown below.</p>
 
-<p>For more details on compiling the codes, I've uploaded my notebooks at this <a href='https://github.com/jyu-theartofml/kaggle_SFCrime/tree/master/sagemaker'> link</a>.
-The notebook "xgboost_sm_train" should be run as a SM notebook instance, and "xgboost_sm_inference" can be run on a local computer with the
- right awscli <a href='https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html'> configuration</a>. You
- will also need the parent account ID (the account that grants the policy) for assuming the role.</p>
 
- <h2>Beyond the basics</h2>
- <p>The material in this post covers the fundamentals to get started with AWS SageMaker, but there's more to it!
-  If you want to retrain the model with new data on a schedule, and automatically push the updated model to the endpoint,
- then you need tools like Step Function or Lambda. Lambda function can be managed by AWS CloudWatch to set up resources and schedules.
- For future project, I'd like to turn the current endpoint I have into a public API using Lambda and API Gateway.</p>
+<video width="600" controls>
+  <source src="images/horse_tracking.mp4" type="video/mp4">
+</video>
 
 
 <h3> REFERENCES </h3>
