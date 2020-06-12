@@ -70,7 +70,7 @@
            After being expose to object detection models and some basic computer vision tools via OpenCV, I wanted to expand on that project and come up with a simple way to
           track the movement of detected objects across multiple classes. This is handy for applications like estimating distance, velocity, and traffic density.</p>
 
-        <p>After doing some research, I found articles on the awesome <a href='https://www.pyimagesearch.com/'>Pyimagesearch</a> blog that offered example tutorials on object detection. However,
+        <p>After doing some research, I found articles on the awesome <u><a href='https://www.pyimagesearch.com/'>Pyimagesearch</a></u> blog that offered example tutorials on object detection. However,
           the examples I came across are either for tracking single-class object or not recording the object class. So I tweaked the codes to include multi-class object trackings based
           on the output of the SSD detection. For this post, I will share the custom functions that I came up with to integrate multiple class tracking using OpenCV.
 
@@ -155,8 +155,8 @@
             objects = ct.update(rects)
    </code></pre></figure>
 <p>The bbox coordinates are saved in the object instance <code class='highlighter-rouge'>ct = CentroidTracker()</code>,
-  which was a class function provided by Adrian Rosebrock @ Pyimagesearch to calculate and group the centroids by its ID. Having this
-dictionary allows us to loop over the labeled objects in each class and draw the centroids as shown below. </p>
+  which was a class function provided by Adrian Rosebrock @ Pyimagesearch to calculate and group the centroids by its ID[2]. Having this
+dictionary allows us to loop over the labeled objects within each class and draw the centroids as shown below. </p>
 <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
        for (objectID, centroid) in objects.items():
                # draw the centroid of the object on the output frame and put text on the frame
@@ -174,10 +174,10 @@ dictionary allows us to loop over the labeled objects in each class and draw the
                cv2.circle(frame, (centroid[0], centroid[1]), 10, (0, 255, 0), -1)
 </code></pre></figure>
 
-<h2>Draw out the movment</h2>
+<h2>Draw out the movement</h2>
 
 <p>Centroid tracking is a convenient tool that allows for frame-to-frame tracking of movement, like the path of a bicyclist.
-I modified the <code class='highlighter-rouge'>detect</code> function to allow for movement tracking by identifying the same label ID from the same class in the previous frame.
+I modified the above <code class='highlighter-rouge'>detect</code> function to allow for movement tracking by identifying the same label ID from the same class in the previous frame.
 And using the <code class='highlighter-rouge'>deque</code> function from the <i>collections</i> package to update the list of centroids for each frame. Here's the complete function
 that includes additional looping to draw the movement in lines.</p>
 
@@ -296,13 +296,14 @@ checks to see if the current centroid (y) shares matching label ID and class wit
 
 
 <video width="600" controls>
-  <source src="images/horse_tracking.mp4" type="video/mp4">
+  <source src="images/object_tracking/horse_tracking.mp4" type="video/mp4">
 </video>
-
+<p>There's some misclassified objects that were labeled as cows, and only the foreground horses were detected. As a result, some of the movement tracking were off due to the mislabeling.
+Like many object detection model, SSD did not perform as well when there's substantial amount of background noises blending in with the image and the foreground scenary.</p>
 
 <h3> REFERENCES </h3>
-<p>[1]Liu, W., Anguelov, D., Erhan, D., et al. <i>SSD: Single Shot MultiBox Detector</i>,arXiv preprint arXiv:1512.02325, 2015.</p>
-
+<p>[1]Liu, W., Anguelov, D., Erhan, D., et al. <i>SSD: Single Shot MultiBox Detector</i>, arXiv preprint arXiv:1512.02325, 2015.</p>
+<p>[2]Simple object tracking with OpenCV, https://www.pyimagesearch.com/2018/07/23/simple-object-tracking-with-opencv/</p>
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
 <noscript>Please enable JavaScript to view the comments.</noscript>
