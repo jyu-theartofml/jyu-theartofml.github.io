@@ -290,8 +290,8 @@ that includes additional looping to draw the movement in lines.</p>
     return frame, track_pts
 
 </code></pre></figure>
-<p>This function has the additional argument `f_idx` and `track_pts` because it needs to keep track of the frame sequence, and it needs a pre-initialized dictionary deque object.
-Here, the dictionary `track_pts` can have specified maxlength to keep the line drawn at a certain length. The critical part is the loops towards the end, where it
+<p>This function has the additional argument `f_idx` and `track_pts` because it needs to keep track of the frame sequence, and it needs a pre-initialized dictionary object.
+Here, the dictionary `track_pts` can have specified maxlength to keep the line drawn at a certain max length. The critical part is the loops towards the end, where it
 checks to see if the current centroid (y) shares matching label ID and class with centroids in the previous frame (y_t). An output sample clip is shown below.</p>
 
 
@@ -299,7 +299,24 @@ checks to see if the current centroid (y) shares matching label ID and class wit
   <source src="images/object_tracking/horse_tracking.mp4" type="video/mp4">
 </video>
 <p>There's some misclassified objects that were labeled as cows, and only the foreground horses were detected. As a result, some of the movement tracking were off due to the mislabeling.
-Like many object detection model, SSD did not perform as well when there's substantial amount of background noises blending in with the image and the foreground scenary.</p>
+Like many object detection model, SSD did not perform as well when there's substantial background noises blending in with the image and the foreground scenery. Next, I tried out the algorithm
+on a second clip that captures street traffic at night.</p>
+<video width="600" controls>
+  <source src="images/object_tracking/street_tracking.mp4" type="video/mp4">
+</video>
+<p>The SSD model yielded worse detection performance, mislabeling some cars as person. Whenever there are other objects
+positioned directly behind the pedestrian, the model struggles to make the right classification, and at times no classfication was made for the pedestrian.
+One thing to try for reducing the "noise" is to modify the <code class='highlighter-rouge'>ct = CentroidTracker()</code> method. Instead of
+using the default last frame(t-1) to associate old centroids with new centroids corresponding to the same object,
+we can try to skip a frame (t-2), holding the same underlying assumption that
+the distance between a given object centroid for frames t and t-2 will be smaller
+than its distances to other object centroids. </p>
+
+<p>If you are interested, <b>the complete codes for the material presented in this post can be found in my
+  github <a href='https://github.com/jyu-theartofml/object_tracking'>repo</a></b>. And feel free to leave comments here.</p>
+
+<br></br>
+
 
 <h3> REFERENCES </h3>
 <p>[1]Liu, W., Anguelov, D., Erhan, D., et al. <i>SSD: Single Shot MultiBox Detector</i>, arXiv preprint arXiv:1512.02325, 2015.</p>
