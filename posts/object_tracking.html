@@ -305,7 +305,7 @@ on a second clip that captures street traffic at night.</p>
 <video width="600" controls>
   <source src="images/object_tracking/street_tracking.mp4" type="video/mp4">
 </video>
-<p>The SSD model yielded worse detection performance, mislabeling some cars as person. Whenever there are other objects
+<p>This dim lit video yielded worse detection performance, mislabeling some cars as person. Whenever there are other objects
 positioned directly behind the pedestrian, the model struggles to make the right classification, and at times no classfication was made for the pedestrian.
 One thing to try for reducing the "noise" is to modify the <code class='highlighter-rouge'>ct = CentroidTracker()</code> method. Instead of
 using the default last frame(t-1) to associate old centroids with new centroids corresponding to the same object,
@@ -313,7 +313,7 @@ we can try to skip a frame (t-2), holding the same underlying assumption that
 the distance between a given object centroid for frames t and t-2 will be smaller
 than its distances to other object centroids. </p>
 
-<p>For detection tasks that preserves privacy, you can substitue the output video with a base frame (a frame that only shows the plain background)
+<p>For detection tasks that preserve privacy, you can substitue the output video with a base frame (a frame that only shows the plain background)
   and only show the bounding boxes and the trackings.
   I have written another code to accomodate that, and the example output can be downloaded <a href='https://github.com/jyu-theartofml/jyu-theartofml.github.io/blob/master/posts/images/object_tracking/street_tracking_baseframe.mp4?raw=true'>here</a>.
   You can view <b>the complete codes for the material presented in this post in my
