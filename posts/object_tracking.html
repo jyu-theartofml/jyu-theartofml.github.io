@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jyu-theartofml.github.io/posts/object_tracking.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
-  <meta property="og:image" content="images/object_tracking/epic_horse_snap.png">
+  <meta property="og:image" content="images/object_tracking/pedestrian_snap.png">
   <meta charset="UTF-8">
 
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -62,7 +62,7 @@
           <header class="article-header">
             <h1>Automatic multiple object tracking with OpenCV</h1>
              <figure>
-              <center><img src='images/object_tracking/epic_horse_snap.png' alt="object detection" width="100%" height="100%"></center>
+              <center><img src='images/object_tracking/pedestrian_snap.png' alt="object detection" width="100%" height="100%"></center>
                </figure>
             <p>A while back I took the Udemy course <b>Deep Learning and Computer Vision A-Z </b>by Hadelin de Ponteves and Kirill Eremenko. One of the projects
             was object detection using the Deep learning model Single Shot MultiBox Detector (SSD). The SSD
@@ -297,13 +297,13 @@ checks to see if the current centroid (y) shares matching label ID and class wit
 
 
 <video width="600" controls>
-  <source src="images/object_tracking/horse_tracking.mp4" type="video/mp4">
+  <source src="images/object_tracking/street_day_output.mp4" type="video/mp4">
 </video>
-<p>There's some misclassified objects that were labeled as cows, and only the foreground horses were detected. As a result, some of the movement tracking were off due to the mislabeling.
+<p>There're some misclassified objects in between frames, and only the foreground runners were detected. As a result, some of the movement tracking were off due to the mislabeling.
 Like many object detection model, SSD did not perform as well when there's substantial background noises blending in with the image and the foreground scenery. Next, I tried out the algorithm
 on a second clip that captures street traffic at night.</p>
 <video width="600" controls>
-  <source src="images/object_tracking/street_tracking.mp4" type="video/mp4">
+  <source src="images/object_tracking/street_nite_tracking.mp4" type="video/mp4">
 </video>
 <p>This dim lit video yielded worse detection performance, mislabeling some cars as person. Whenever there are other objects
 positioned directly behind the pedestrian, the model struggles to make the right classification, and at times no classfication was made for the pedestrian.
@@ -315,7 +315,7 @@ than its distances to other object centroids. </p>
 
 <p>For detection tasks that preserve privacy, you can substitue the output video with a base frame (a frame that only shows the plain background)
   and only show the bounding boxes and the trackings.
-  I have written another code to accomodate that, and the example output can be downloaded <a href='https://github.com/jyu-theartofml/jyu-theartofml.github.io/blob/master/posts/images/object_tracking/street_tracking_baseframe.mp4?raw=true'>here</a>.
+  I have written another code to accomodate that, and the example output can be downloaded <a href='https://github.com/jyu-theartofml/jyu-theartofml.github.io/blob/master/posts/images/object_tracking/street_day_tracking_baseframe.mp4?raw=true'>here</a>.
   You can view <b>the complete codes for the material presented in this post in my
   github <a href='https://github.com/jyu-theartofml/object_tracking'>repo</a></b>. And feel free to leave comments here.</p>
 
