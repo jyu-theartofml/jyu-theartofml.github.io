@@ -72,7 +72,7 @@
 
         <p>After doing some research, I found articles on the awesome <u><a href='https://www.pyimagesearch.com/'>Pyimagesearch</a></u> blog that offered example tutorials on object tracking. However,
           the examples I came across are either for tracking single-class object or not recording the object class. So I tweaked the codes to include multi-class object trackings based
-          on the output of the SSD detection. For this post, I will share the custom functions that I came up with to integrate multiple class tracking using OpenCV.</p>
+          on the output of the SSD detection. For this post, I will share the custom functions that I came up with to integrate multiple class and multiple label tracking using OpenCV.</p>
 
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -156,8 +156,9 @@
             objects = ct.update(rects)
    </code></pre></figure>
 <p>The bbox coordinates are saved in the object instance <code class='highlighter-rouge'>ct = CentroidTracker()</code>,
-  which was a class function provided by Adrian Rosebrock @ Pyimagesearch to calculate and group the centroids by its ID labels[2]. Having this
-dictionary allows us to loop over the labeled objects within each class and draw the centroids as shown below. </p>
+  which was a class function provided by Adrian Rosebrock @ Pyimagesearch to calculate and group the centroids by its ID labels[2].
+  The underlying assumption is that the distance between a given object centroid for frames t and t-1 will be smaller
+ than its distances to other object centroids. Having this dictionary allows us to loop over the labeled objects within each class and draw the centroids as shown below. </p>
 <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
        for (objectID, centroid) in objects.items():
                # draw the centroid of the object on the output frame and put text on the frame
@@ -175,7 +176,7 @@ dictionary allows us to loop over the labeled objects within each class and draw
                cv2.circle(frame, (centroid[0], centroid[1]), 10, (0, 255, 0), -1)
 </code></pre></figure>
 
-<h2>Draw out the movement</h2>
+<h2>Follow the centroid</h2>
 
 <p>Centroid tracking is a convenient tool that allows for frame-to-frame tracking of movement, like the path of a bicyclist.
 I modified the above <code class='highlighter-rouge'>detect</code> function to allow for movement tracking by identifying the same label ID from the same class in the previous frame.
@@ -307,11 +308,9 @@ on a second clip that captures street traffic at night.</p>
 </video>
 <p>This dim lit video yielded worse detection performance, mislabeling some cars as person. Whenever there are other objects
 positioned directly behind the pedestrian, the model struggles to make the right classification, and at times no classfication was made for the pedestrian.
-One thing to try for reducing the "noise" is to modify the <code class='highlighter-rouge'>ct = CentroidTracker()</code> method. Instead of
-using the default last frame(t-1) to associate old centroids with new centroids corresponding to the same object,
-we can try to skip a frame (t-2), holding the same underlying assumption that
-the distance between a given object centroid for frames t and t-2 will be smaller
-than its distances to other object centroids. </p>
+One thing to try for reducing the "noise" is to dial up the default value of <code class='highlighter-rouge'>maxDisappeared=50</code> in the CentroidTracker class function, where
+ <code class='highlighter-rouge'>maxDisappeared</code> is defined to be the number of maximum consecutive frames a given object is allowed to be marked as "disappeared"
+ until its tracking stops. We can also adjust `y` and `y_t` to skip a frame (e.g i+2,frame_idx - 2) so it's more robust to the occasional misclassification in between frames.</p>
 
 <p>For detection tasks that preserve privacy, you can substitue the output video with a base frame (a frame that only shows the plain background)
   and only show the bounding boxes and the trackings.
