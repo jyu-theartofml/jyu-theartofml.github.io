@@ -123,15 +123,13 @@
        transform: function to transform image of the frame
        """
        height, width = frame.shape[:2]
-       frame_t = transform(frame)[0]  # We apply the transformation to our frame.
-       # We convert the frame into a torch tensor.
+       frame_t = transform(frame)[0]
        x = torch.from_numpy(frame_t).permute(2, 0, 1)
-       x = x.unsqueeze(0)  # We add a fake dimension corresponding to the batch.
-       # We feed the neural network ssd with the image and we get the output y.
+       x = x.unsqueeze(0)
+       # We feed the neural network ssd with the image to get prediction output.
        with torch.no_grad():
            y = net(x)
-       # We create the detections tensor contained in the output y,
-       # the dimension is (N,i,j,b), i is the class, j is the number of detecttion, b axis is confidence and bounding box coordinates
+       # the dimension is (N,i,j,b), i is the class, j is the number of detection, b axis is confidence and bounding box coordinates
        detections = y.data
        scale = torch.Tensor([width, height, width, height])
  </code></pre></figure>
@@ -142,12 +140,11 @@
 
    <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
       for i in range(detections.size(1)):
-          # We initialize the loop variable j that will correspond to the occurrences of the class.
           j = 0
           rects = []
-          # keep track of occurrences j of the class i
+          # for each class, filter for bbox with confidence score >=0.6.
           while detections[0, i, j, 0] >= 0.6:
-            # We get the coordinates of the points at the upper left and the lower right of the detector rectangle.
+            # SSD returns the points at the upper left and the lower right of the bbox.
             pt = (detections[0, i, j, 1:] * scale).numpy()
             cv2.rectangle(
                frame,
@@ -200,15 +197,14 @@ that loops through each class, and updates the list of centroids, then draws the
     f_idx: frame count
     track_pts: deque collection of centroids
     """
-    height, width = frame.shape[:2]  # We get the height and the width of the frame.
-    frame_t = transform(frame)[0]  # We apply the transformation to our frame.
-    # We convert the frame into a torch tensor.
+    height, width = frame.shape[:2]
+    frame_t = transform(frame)[0]
     x = torch.from_numpy(frame_t).permute(2, 0, 1)
-    x = x.unsqueeze(0)  # We add a fake dimension corresponding to the batch.
+    x = x.unsqueeze(0)
     with torch.no_grad():
-        # We feed the neural network ssd with the image and we get the output y.
+        # We feed the neural network ssd with the image to get prediction output.
         y = net(x)
-    # the dimension is (N,i,j,b), i is the class, j is the number of detecttion, b axis is confidence and bounding box coordinates
+    # the dimension is (N,i,j,b), i is the class, j is the number of detection (200), b axis is confidence and bounding box coordinates
     detections = y.data
     scale = torch.Tensor([width, height, width, height])
 
@@ -238,13 +234,12 @@ that loops through each class, and updates the list of centroids, then draws the
         (174, 149, 85),
     ]
 
-    for i in range(detections.size(1)):  # For every class:
-        # We initialize the loop variable j that will correspond to the occurrences of the class.
+    for i in range(detections.size(1)):
         j = 0
         rects = []
-        # We take into account all the occurrences j of the class i that have a matching score larger than 0.6.
+        # for each class, filter for bbox with confidence score >=0.6.
         while detections[0, i, j, 0] >= 0.6:
-            # We get the coordinates of the points at the upper left and the lower right of the detector rectangle.
+            # SSD returns the points at the upper left and the lower right of the bbox
             pt = (detections[0, i, j, 1:] * scale).numpy()
             cv2.rectangle(
                 frame,
@@ -261,7 +256,7 @@ that loops through each class, and updates the list of centroids, then draws the
             # loop over the tracked centroids
             centroid_pts[f_idx][i] = {}
             for (objectID, centroid) in objects.items():
-                # add centroid pt to deque list for each class
+                # add centroid pt to list for each class
                 w = {objectID: centroid}
                 centroid_pts[f_idx][i].update(w)
 
