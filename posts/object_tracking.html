@@ -62,9 +62,11 @@
           <header class="article-header">
             <h1>Automatic multiple object tracking with OpenCV</h1>
              <figure>
-              <center><img src='images/object_tracking/pedestrian_snap.png' alt="object detection" width="100%" height="100%"></center>
+              <center><img src='images/object_tracking/posture_snap.png' alt="object detection" width="90%" height="90%"></center>
                </figure>
-            <p>A while back I took the Udemy course <b>Deep Learning and Computer Vision A-Z </b>by Hadelin de Ponteves and Kirill Eremenko. One of the projects
+            <p>Image analysis and object detection have always been something I'm interested in, my first exposure was
+              writing a Matlab program to automatically detect fluorescent microarray spots and extract the pixel intensity values.
+              A while back I took the Udemy course <b>Deep Learning and Computer Vision A-Z </b>by Hadelin de Ponteves and Kirill Eremenko. One of the projects
             was object detection using the Deep learning model Single Shot MultiBox Detector (SSD). The SSD
              model showed significant improvement in detection speed due to the elimination of bounding box proposal and resampling of pixels, while achieving high accuracy[1].
              I wanted to expand on that project and come up with a straightforward way to
@@ -73,7 +75,8 @@
 
         <p>After doing some research, I found articles on the awesome <u><a href='https://www.pyimagesearch.com/'>Pyimagesearch</a></u> blog that offered example tutorials on object tracking. However,
           the examples I came across are either for tracking single-class object or not recording the object class. So I tweaked the codes to include multi-class object trackings based
-          on the output of the SSD detection. For this post, I will share the custom functions that I came up with to integrate multiple class and multiple label tracking using OpenCV.</p>
+          on the output of the SSD detection. For this post, I will share the custom functions that I came up with to integrate multiple class and multiple label tracking using OpenCV,
+        as well as posture estimation.</p>
 
             <div class="article-list-footer">
               <span class="article-list-date">
@@ -317,6 +320,22 @@ to transform low-light images to well-lit RGB outputs[3].</p>
 <p>For continuous tracking, we can try to reduce the "noise" by increasing the default value of <code class='highlighter-rouge'>maxDisappeared=50</code> in the CentroidTracker class function, where
  <code class='highlighter-rouge'>maxDisappeared</code> is the number of maximum consecutive frames a given object is allowed to be marked as "disappeared"
  until its tracking stops. We can also adjust `y` and `y_t` to skip a frame (e.g i+2,frame_idx - 2) so it's more robust to the occasional misclassification in between frames.</p>
+
+<h2>2D posture detection</h2>
+
+<p>There has been a wealth of research and open source programs to detect human poses, with the most promising library <b>OpenPose</b>
+released by the Perceptual Computing Lab @ Carnegie Mellon University, and won the COCO keypoints challenge in 2016. It uses the first 10
+layers of the VGGnet as input for downstream CNN network to predict confidence maps of body key points (should, hands, legs, etc), and
+the affinity vectors between parts to estimate the 2D keypoint coordinates for all the human subjects.</p>
+<p>I utilitized the body estimator model from the <a href='https://github.com/Hzzone/pytorch-openpose'>pytorch-openpose</a> repo, and applied trigonometric
+functions to pick out the runners in the video frame based on angles of the arms and legs.</p>
+
+<video width="600" controls>
+  <source src="images/object_tracking/posture_output.mp4" type="video/mp4">
+</video>
+
+<p>The result performance was sensitive to "loud" background, and the overlapping of the subjects in the frame. I managed to fine-tune the angle thresholds
+to reduce the false positives of "Runner" detection. </p>
 
 <p>For detection tasks that preserve privacy, you can substitue the output video with a base frame (a frame that only shows the plain background)
   and only show the bounding boxes and the trackings.
