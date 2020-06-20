@@ -72,14 +72,12 @@
                    <p>Image analysis and object detection have always been something I'm interested in, my first exposure was
                      writing a Matlab program to automatically detect fluorescent microarray spots and extract the pixel intensity values.
                      A while back I took the Udemy course <b>Deep Learning and Computer Vision A-Z </b>by Hadelin de Ponteves and Kirill Eremenko. One of the projects
-                   was object detection using the Deep learning model Single Shot MultiBox Detector (SSD). The SSD
-                    model showed significant improvement in detection speed due to the elimination of bounding box proposal and resampling of pixels, while achieving high accuracy[1].
-                    I wanted to expand on that project and come up with a straightforward way to
+                   was object detection using the Deep learning model Single Shot MultiBox Detector (SSD). I wanted to expand on that project and come up with a straightforward way to
                  track the movement of detected objects across multiple classes in video feeds. This is the basis for applications like
                  traffic monitoring, estimating velocity, and security monitoring.</p>
 
-               <p>After doing some research, I found articles on the awesome <u>Pyimagesearch</u> blog that offered example tutorials on object tracking. However,
-                 the examples I came across are either for tracking single-class object or not recording the object class. So I tweaked the codes to include multi-class object trackings based
+               <p>After browsing the computer vision blog <u>Pyimagesearch</u>, I came across some example tutorials on object tracking. However,
+                 the examples I came across are either for tracking single-class object or not recording the object class. So I modified the codes to include multi-class object trackings based
                  on the output of the SSD detection. For this post, I will share the custom functions that I came up with to integrate multiple class and multiple label tracking using OpenCV,
                as well as posture estimation.</p>
 

@@ -67,14 +67,12 @@
             <p>Image analysis and object detection have always been something I'm interested in, my first exposure was
               writing a Matlab program to automatically detect fluorescent microarray spots and extract the pixel intensity values.
               A while back I took the Udemy course <b>Deep Learning and Computer Vision A-Z </b>by Hadelin de Ponteves and Kirill Eremenko. One of the projects
-            was object detection using the Deep learning model Single Shot MultiBox Detector (SSD). The SSD
-             model showed significant improvement in detection speed due to the elimination of bounding box proposal and resampling of pixels, while achieving high accuracy[1].
-             I wanted to expand on that project and come up with a straightforward way to
+            was object detection using the Deep learning model Single Shot MultiBox Detector (SSD). I wanted to expand on that project and come up with a straightforward way to
           track the movement of detected objects across multiple classes in video feeds. This is the basis for applications like
           traffic monitoring, estimating velocity, and security monitoring.</p>
 
-        <p>After doing some research, I found articles on the awesome <u><a href='https://www.pyimagesearch.com/'>Pyimagesearch</a></u> blog that offered example tutorials on object tracking. However,
-          the examples I came across are either for tracking single-class object or not recording the object class. So I tweaked the codes to include multi-class object trackings based
+        <p>After browsing the computer vision blog <u><a href='https://www.pyimagesearch.com/'>Pyimagesearch</a></u>, I came across some example tutorials on object tracking. However,
+          the examples I came across are either for tracking single-class object or not recording the object class. So I modified the codes to include multi-class object trackings based
           on the output of the SSD detection. For this post, I will share the custom functions that I came up with to integrate multiple class and multiple label tracking using OpenCV,
         as well as posture estimation.</p>
 
@@ -100,8 +98,7 @@
 
 <h2>Disentangle the matrix</h2>
 
-<p>The code base I have were written for SSD300 (input image size 300x300) and PyTorch 1.5, the packages <a href='https://pypi.org/project/opencv-python/'>OpenCV</a>
-  and <a href='https://imageio.readthedocs.io/en/stable/installation.html'>Imageio</a> are also required. I won't go into details on how SSD model works and the training mechanism,
+<p>The SSD model showed significant improvement in detection speed due to the elimination of bounding box proposal and resampling of pixels, while achieving high accuracy[1].I won't go into details on how SSD model works and the training mechanism,
   if you're interested check out the in-depth <a href='https://mc.ai/real-time-object-detection-part-1-understanding-ssd/'>article </a> written by Aman Dalmia. What is most
   relevant to this post is the output matrix of SSD. By default, when the model makes an inference on an image, it returns 8,732 bounding boxes for each class to accommodate for the range of
   scale and aspect ratios. Then it tidys up the prediction using non-maximum suppression to remove overlapping boxes which exceeds the IoU threshold of 0.45, keeping only the top 200 boxes total.
@@ -334,8 +331,9 @@ functions to pick out the runners in the video frame based on angles of the arms
   <source src="images/object_tracking/posture_output.mp4" type="video/mp4">
 </video>
 
-<p>The result performance was sensitive to "loud" background, and the overlapping of the subjects in the frame. I managed to fine-tune the angle thresholds
-to reduce the false positives of "Runner" detection. </p>
+<p>The result performance was sensitive to "loud" background, and the overlapping of the subjects in the frame.
+  For some odd reason, the pedestrians walking past the trash cans were misclassified as "Runner" in a few frames.
+  I managed to fine-tune the angle thresholds to reduce the false positives of "Runner" detection. </p>
 
 <p>For detection tasks that preserve privacy, you can substitue the output video with a base frame (a frame that only shows the plain background)
   and only show the bounding boxes and the trackings.
