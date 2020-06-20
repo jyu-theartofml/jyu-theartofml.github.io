@@ -98,7 +98,7 @@
 
 <h2>Disentangle the matrix</h2>
 
-<p>The SSD model showed significant improvement in detection speed due to the elimination of bounding box proposal and resampling of pixels, while achieving high accuracy[1].I won't go into details on how SSD model works and the training mechanism,
+<p>The SSD model showed significant improvement in detection speed due to the elimination of bounding box proposal and resampling of pixels, while achieving high accuracy[1]. I won't go into details on how SSD model works and the training mechanism,
   if you're interested check out the in-depth <a href='https://mc.ai/real-time-object-detection-part-1-understanding-ssd/'>article </a> written by Aman Dalmia. What is most
   relevant to this post is the output matrix of SSD. By default, when the model makes an inference on an image, it returns 8,732 bounding boxes for each class to accommodate for the range of
   scale and aspect ratios. Then it tidys up the prediction using non-maximum suppression to remove overlapping boxes which exceeds the IoU threshold of 0.45, keeping only the top 200 boxes total.
@@ -311,7 +311,7 @@ on a second clip that captures street traffic at night.</p>
 </video>
 <p>This dim lit video yielded worse detection performance, mislabeling some cars as person. Whenever there are other objects
 positioned directly behind the pedestrian, the model struggles to make the right classification, and at times no classfication was made for the pedestrian.
-In terms of the detection, it is well known that object detection models experience significant decrease in performance when they makes inference on dark images.
+In terms of the detection, it is well known that object detection models experience significant decrease in performance when they make inference on dark images.
 One way to mitigate that is to preprocess the video feeds to retrieve the details, using pretrained models like <a href='https://www.youtube.com/watch?v=qWKUFK7MWvg&feature=youtu.be'>See in the Dark (SID)</a>
 to transform low-light images to well-lit RGB outputs[3].</p>
 <p>For continuous tracking, we can try to reduce the "noise" by increasing the default value of <code class='highlighter-rouge'>maxDisappeared=50</code> in the CentroidTracker class function, where
@@ -322,18 +322,20 @@ to transform low-light images to well-lit RGB outputs[3].</p>
 
 <p>There has been a wealth of research and open source programs to detect human poses, with the most promising library <b>OpenPose</b>
 released by the Perceptual Computing Lab @ Carnegie Mellon University, and won the COCO keypoints challenge in 2016. It uses the first 10
-layers of the VGGnet as input for downstream CNN network to predict confidence maps of body key points (should, hands, legs, etc), and
-the affinity vectors between parts to estimate the 2D keypoint coordinates for all the human subjects.</p>
-<p>I utilitized the body estimator model from the <a href='https://github.com/Hzzone/pytorch-openpose'>pytorch-openpose</a> repo, and applied trigonometric
+layers of the VGGnet as input for downstream CNN network to predict confidence maps of body key points (shoulders, hands, legs, etc), and
+the affinity vectors between parts to estimate the 2D keypoint coordinates for the human subjects[4].</p>
+<p>I utilitized the body estimator model from the <a href='https://github.com/Hzzone/pytorch-openpose'>pytorch-openpose</a> repo. For rendering the skeleton,
+  the model returns a total of 18 key points from an array of candidate points. After extracting those key points, I applied trigonometric
 functions to pick out the runners in the video frame based on angles of the arms and legs.</p>
 
 <video width="600" controls>
   <source src="images/object_tracking/posture_output.mp4" type="video/mp4">
 </video>
 
-<p>The result performance was sensitive to "loud" background, and the overlapping of the subjects in the frame.
+<p>The result performance was sensitive to "loud" background, and the overlapping and proximity of the subjects in the frame.
   For some odd reason, the pedestrians walking past the trash cans were misclassified as "Runner" in a few frames.
-  I managed to fine-tune the angle thresholds to reduce the false positives of "Runner" detection. </p>
+  I managed to fine-tune the angle thresholds to reduce the false positives of "Runner" detection. To
+run one frame without a GPU it took about 59 seconds, with a Colab Tesla T4 notebook it was cut down to ~2.5 seconds.</p>
 
 <p>For detection tasks that preserve privacy, you can substitue the output video with a base frame (a frame that only shows the plain background)
   and only show the bounding boxes and the trackings.
@@ -348,6 +350,7 @@ functions to pick out the runners in the video frame based on angles of the arms
 <p>[1]Liu, W., Anguelov, D., Erhan, D., et al. <i>SSD: Single Shot MultiBox Detector</i>, arXiv preprint arXiv:1512.02325, 2015.</p>
 <p>[2]Rosebrock, A., <b>Simple object tracking with OpenCV</b>, https://www.pyimagesearch.com/2018/07/23/simple-object-tracking-with-opencv/</p>
 <p>[3]Z,I., Safer YOLO, in the Dark (I), https://medium.com/@turboergouzhi/safer-yolo-in-the-dark-i-98ddaa7db3ad</p>
+<p>[4]Z Cao, G Hidalgo, T Simon, SE Wei, Y Sheikh, <i>OpenPose: realtime multi-person 2D pose estimation using Part Affinity Fields</i>,arXiv preprint arXiv:1812.08008</p>
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
 <noscript>Please enable JavaScript to view the comments.</noscript>
