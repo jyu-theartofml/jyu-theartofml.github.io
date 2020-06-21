@@ -72,7 +72,7 @@
           traffic monitoring, estimating velocity, and security monitoring.</p>
 
         <p>After browsing the computer vision blog <u><a href='https://www.pyimagesearch.com/'>Pyimagesearch</a></u>, I came across some example tutorials on object tracking. However,
-          the examples I came across are either for tracking single-class object or not recording the object class. So I modified the codes to include multi-class object trackings based
+          those examples are either for tracking single-class object or not recording the object class. So I modified the codes to include multi-class object trackings based
           on the output of the SSD detection. For this post, I will share the custom functions that I came up with to integrate multiple class and multiple label tracking using OpenCV,
         as well as posture estimation.</p>
 
@@ -333,14 +333,28 @@ functions to pick out the runners in the video frame based on angles of the arms
 </video>
 
 <p>The result performance was sensitive to "loud" background, and the overlapping and proximity of the subjects in the frame.
-  For some odd reason, the pedestrians walking past the trash cans were misclassified as "Runner" in a few frames.
+  For some odd reason, when the pedestrians walked past the trash cans they were misclassified as "Runner" in a few frames.
   I managed to fine-tune the angle thresholds to reduce the false positives of "Runner" detection. To
-run one frame without a GPU it took about 59 seconds, with a Colab Tesla T4 notebook it was cut down to ~2.5 seconds.</p>
+run one frame without a GPU it took about 59 seconds, with a Colab Tesla T4 instance it was cut down to 3 seconds.</p>
 
-<p>For detection tasks that preserve privacy, you can substitue the output video with a base frame (a frame that only shows the plain background)
-  and only show the bounding boxes and the trackings.
-  I have written another code to accomodate that, and the example output can be downloaded <a href='https://github.com/jyu-theartofml/jyu-theartofml.github.io/blob/master/posts/images/object_tracking/street_day_baseframe.mp4?raw=true'>here</a>.
-  You can view <b>the complete codes for the material presented in this post in my
+<p>With the wide spread of video surveillance comes high-stake privacy concerns for certain applications.
+  For detection tasks that preserve privacy, you can substitue the output video with a base frame (a frame that only shows the plain background)
+  and only show the bounding boxes and the trackings. This means only the relevant outputs are kept while the original raw data
+  can be deleted after model inference.
+  I have written another code to accomodate that, and the example output
+  can be downloaded <a href='https://github.com/jyu-theartofml/jyu-theartofml.github.io/blob/master/posts/images/object_tracking/street_day_baseframe.mp4?raw=true'>here</a>.</p>
+
+
+<p>It is fairly straightforward to implement AI in real-time object detection
+and tracking. The biggest challenge for these algorithms seems to be sensitivity to crowding, where the classification of one object/subject is
+somehow influenced by nearby objects and background leading to mislabeling. This is probably due to the fact that many object detection models were trained on
+benchmark dataset such as COCO and ImageNet, which consist mostly cleaner images than real world samples. Another constraint is that these Deep
+Learning models would need to be deployed on a GPU to achieve a reasonable latency. Some example solutions for that include
+cloud platform like <a href='https://aws.amazon.com/blogs/machine-learning/analyze-live-video-at-scale-in-real-time-using-amazon-kinesis-video-streams-and-amazon-sagemaker/'>
+  AWS Kinesis </a> and SageMaker, or embed the trained model to an <a href='https://nvidianews.nvidia.com/news/nvidia-launches-edge-computing-platform-to-bring-real-time-ai-to-global-industries'>
+    edge device</a> that runs the model on the device itself. </p>
+
+  <p>You can view <b>the complete codes for the material presented in this post in my
   github <a href='https://github.com/jyu-theartofml/object_tracking'>repo</a></b>. And feel free to leave comments here.</p>
 
 <br></br>
