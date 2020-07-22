@@ -19,6 +19,8 @@
 
   <link rel="stylesheet" href="/assets/light.css">
 
+  <script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/gist-embed@1.0.4/dist/gist-embed.min.js"></script>
 
 </head>
 
@@ -135,33 +137,9 @@
    You can multiple triggers for one function, and each trigger will act independently. Under <i>Environment variables</i>,
    enter the SM endpoint name. The actual lambda function for my model is shown below.</p>
 
-    <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-   import os
-   import io
-   import boto3
-   import json
-   import csv
+   <code data-gist-id="8fe05e2fb4bc8ad605483465af15db78" ></code>
 
-   # grab environment variables
-   ENDPOINT_NAME = os.environ['ENDPOINT_NAME']
-   runtime= boto3.client('runtime.sagemaker')
 
-   def lambda_handler(event, context):
- 
-       payload = event["queryStringParameters"]["data"]
-       response = runtime.invoke_endpoint(EndpointName=ENDPOINT_NAME,
-                                          ContentType='text/csv',
-                                          Body=payload)
-       result = json.loads(response['Body'].read().decode())
-       print(result)
-       predicted_label = result
-
-       return {
-               "statusCode": 200,
-               "headers": {"Content-Type": "application/json"},
-               "body": json.dumps(predicted_label),
-               }
-   </code></pre></figure>
 
   <p>At this point, it is a good idea to test your lambda function. In the browser frame where you entered the lambda code, go
   to <i>Test</i> then <i>Configure Events</i>. This feature gives the user the option to choose the event template to test against, and modify the code
