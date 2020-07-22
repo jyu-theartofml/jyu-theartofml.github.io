@@ -19,6 +19,8 @@
 
   <link rel="stylesheet" href="/assets/light.css">
 
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gist-embed@1.0.4/dist/gist-embed.min.js"></script>
+
 </head>
 
 <body>
@@ -115,6 +117,8 @@
 
   <p>Keeping that in mind, the following function returns the bounding box matrix "detections". The function takes one frame, and adds the first axis for batching, and runs a
   single forward pass through the pretrained network. The scale variable is needed to later transform the array back to the original frame size.</p>
+<code data-gist-id="d4b8803650ba02ba8f4d4afc166fa069" data-gist-line="35-50"></code>
+
   <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
     def detect(frame, net, transform):
        """
