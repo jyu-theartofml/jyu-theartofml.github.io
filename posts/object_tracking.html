@@ -19,7 +19,8 @@
 
   <link rel="stylesheet" href="/assets/light.css">
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gist-embed@1.0.4/dist/gist-embed.min.js"></script>
+  <script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/gist-embed@1.0.4/dist/gist-embed.min.js"></script>
 
 </head>
 
@@ -119,70 +120,22 @@
   single forward pass through the pretrained network. The scale variable is needed to later transform the array back to the original frame size.</p>
 <code data-gist-id="d4b8803650ba02ba8f4d4afc166fa069" data-gist-line="35-50"></code>
 
-  <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-    def detect(frame, net, transform):
-       """
-       frame: individual frame
-       net: pretrained object detector model
-       transform: function to transform image of the frame
-       """
-       height, width = frame.shape[:2]
-       frame_t = transform(frame)[0]
-       x = torch.from_numpy(frame_t).permute(2, 0, 1)
-       x = x.unsqueeze(0)
-       # We feed the neural network ssd with the image to get prediction output.
-       with torch.no_grad():
-           y = net(x)
-       # the dimension is (N,i,j,b), i is the class, j is the number of detection, b axis is confidence and bounding box coordinates
-       detections = y.data
-       scale = torch.Tensor([width, height, width, height])
- </code></pre></figure>
+
 
  <p>Next, the array is looped through by each class, and boxes with confidence score
    greater than or equal to 0.6 are selected. And the bounding boxes are drawn using <code class='highlighter-rouge'>cv2.rectangle()</code>.
  Note that many of the OpenCV utility drawing functions directly overwrites the pixels in that image, so the original image is altered.</p>
 
-   <figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-      for i in range(detections.size(1)):
-          j = 0
-          rects = []
-          # for each class, filter for bbox with confidence score >=0.6.
-          while detections[0, i, j, 0] >= 0.6:
-            # SSD returns the points at the upper left and the lower right of the bbox.
-            pt = (detections[0, i, j, 1:] * scale).numpy()
-            cv2.rectangle(
-               frame,
-               (int(pt[0]), int(pt[1])),
-               (int(pt[2]), int(pt[3])),
-               (255, 0, 0),
-               2,
-           )
+ <code data-gist-id="d4b8803650ba02ba8f4d4afc166fa069" data-gist-line="52-70"></code>
 
-            # save the bounding box coordinates (startX, startY, endX, endY)
-            rects.append((int(pt[0]), int(pt[1]), int(pt[2]), int(pt[3])))
-            j += 1
-            objects = ct.update(rects)
-   </code></pre></figure>
+
+
 <p>The bbox coordinates are saved in the object instance <code class='highlighter-rouge'>ct = CentroidTracker()</code>,
   which was a class function provided by Adrian Rosebrock @ Pyimagesearch to calculate the centroid and assign its ID label[2].
   The underlying assumption is that the distance between a given object centroid for frames t and t-1 will be smaller
  than its distances to other object centroids. Having this dictionary allows us to loop over the labeled objects within each class and draw the centroids as shown below. </p>
-<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-       for (objectID, centroid) in objects.items():
-               # draw the centroid of the object on the output frame and put text on the frame
-               text = labelmap[i - 1] + "_" + str(objectID)
-               cv2.putText(
-                   frame,
-                   text,
-                   (centroid[0] - 10, centroid[1] - 10),
-                   cv2.FONT_HERSHEY_SIMPLEX,
-                   2,
-                   (0, 255, 0),
-                   2,
-                   cv2.LINE_AA,
-               )
-               cv2.circle(frame, (centroid[0], centroid[1]), 10, (0, 255, 0), -1)
-</code></pre></figure>
+ <code data-gist-id="d4b8803650ba02ba8f4d4afc166fa069" data-gist-line="71-85"></code>
+
 
 <h2>Follow the centroid</h2>
 
@@ -191,113 +144,8 @@ I modified the above <code class='highlighter-rouge'>detect</code> function to a
 And using the <code class='highlighter-rouge'>deque</code> object from the <i>collections</i> package to update the list of centroids for each frame. Here's the complete function
 that loops through each class, and updates the list of centroids, then draws the movement in lines color-coded by class.</p>
 
-<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-  def tracking(frame, net, transform, f_idx, track_pts):
-    """
-    frame: individual frame
-    net: pretrained object detector mdoel
-    transform: function to transform image of the frame
-    f_idx: frame count
-    track_pts: deque collection of centroids
-    """
-    height, width = frame.shape[:2]
-    frame_t = transform(frame)[0]
-    x = torch.from_numpy(frame_t).permute(2, 0, 1)
-    x = x.unsqueeze(0)
-    with torch.no_grad():
-        # We feed the neural network ssd with the image to get prediction output.
-        y = net(x)
-    # the dimension is (N,i,j,b), i is the class, j is the number of detection (200), b axis is confidence and bounding box coordinates
-    detections = y.data
-    scale = torch.Tensor([width, height, width, height])
+<code data-gist-id="718c3366461be1af1d49f8bed555f660" data-gist-line="36-140"></code>
 
-    # keep track of centroid points for this individual frame
-    centroid_pts = {f_idx: {}}
-    color_ls = [
-        (79, 111, 243),
-        (129, 199, 190),
-        (86, 160, 82),
-        (181, 190, 183),
-        (49, 90, 93),
-        (142, 132, 21),
-        (69, 116, 8),
-        (9, 68, 193),
-        (126, 152, 167),
-        (103, 95, 90),
-        (98, 117, 184),
-        (186, 112, 111),
-        (234, 54, 27),
-        (90, 218, 83),
-        (134, 185, 119),
-        (174, 1, 141),
-        (2, 222, 238),
-        (219, 86, 39),
-        (155, 151, 186),
-        (192, 221, 232),
-        (174, 149, 85),
-    ]
-
-    for i in range(detections.size(1)):
-        j = 0
-        rects = []
-        # for each class, filter for bbox with confidence score >=0.6.
-        while detections[0, i, j, 0] >= 0.6:
-            # SSD returns the points at the upper left and the lower right of the bbox
-            pt = (detections[0, i, j, 1:] * scale).numpy()
-            cv2.rectangle(
-                frame,
-                (int(pt[0]), int(pt[1])),
-                (int(pt[2]), int(pt[3])),
-                color_ls[i],
-                3,
-            )
-            # save the bounding box coordinates (startX, startY, endX, endY)
-            rects.append((int(pt[0]), int(pt[1]), int(pt[2]), int(pt[3])))
-            j += 1
-            objects = ct.update(rects)
-
-            # loop over the tracked centroids
-            centroid_pts[f_idx][i] = {}
-            for (objectID, centroid) in objects.items():
-                # add centroid pt to list for each class
-                w = {objectID: centroid}
-                centroid_pts[f_idx][i].update(w)
-
-                #  draw the centroid of the object on the output frame
-                cv2.circle(frame, (centroid[0], centroid[1]), 15, color_ls[i], -1)
-                text = labelmap[i - 1] + "_" + str(objectID)
-                cv2.putText(
-                    frame,
-                    text,
-                    (centroid[0] - 10, centroid[1] - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    2,
-                    (0, 255, 0),
-                    2,
-                    cv2.LINE_AA,
-                )
-
-    track_pts.appendleft(centroid_pts)  # update the deque list
-    # loop through track_pts dictionary and plot the line of the object movement
-    for i in range(len(track_pts) - 1):
-        frame_idx = list(track1[i].keys())[0]
-        current = track1[i][frame_idx]
-        for class_idx, v in current.items():
-            for label_id, coord in v.items():
-                try:
-                    y = track1[i][frame_idx][class_idx][label_id]
-                    y_t = track1[i + 1][frame_idx - 1][class_idx][label_id]
-                    # draw the line
-                    thickness = int(np.sqrt(64 / float(i + 1)) * 2.5)
-                    cv2.line(
-                        frame, tuple(y_t), tuple(y), color_ls[class_idx], thickness
-                    )
-                except KeyError:
-                    pass
-
-    return frame, track_pts
-
-</code></pre></figure>
 <p>This function has the additional argument `f_idx` and `track_pts` because it needs to keep track of the frame sequence, and it needs a pre-initialized dictionary object.
 Here, the dictionary `track_pts` can have specified maxlength to keep the line drawn at a certain max length. The critical part is the loops towards the end, where it
 checks to see if the current centroid (y) shares matching label ID and class with centroids in the previous frame (y_t). An output sample clip is shown below.</p>
