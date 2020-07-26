@@ -13,13 +13,16 @@
   <meta property="og:site_name" content="The Art of Machine Learning">
   <meta property="og:image" content="https://yinniyu.github.io/posts/images/rna_seq/xgb_multi_tree.png">
 
- 
+
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
 
     <link rel="stylesheet" href="/assets/light.css">
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/gist-embed@1.0.4/dist/gist-embed.min.js"></script>
 
-  
+
+
 </head>
 
 <body>
@@ -40,37 +43,37 @@
         <a href="https://yinniyu.github.io/ai_art">AiArt
         </a>
       </li>
-    
+
     <li>
         <a href="https://github.com/yinniyu" rel="noreferrer noopener" target="_blank" title="GitHub">
           <span class="icon icon-github"></span>
         </a>
       </li>
-    
-    
+
+
       <li>
         <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
           <span class="icon icon-linkedin"></span>
         </a>
-      </li>   
+      </li>
   </ul>
 </nav>
 
-        
+
         <article class="article appear">
           <header class="article-header">
             <h1>Sparse PCA and XGboost for predicting tumor type</h1>
              <figure>
               <img src="images/rna_seq/xgb_multi_tree.png" alt="xgb" ></figure>
-            <p>The Pan-Cancer intiative at <a href="https://portal.gdc.cancer.gov/">The Cancer Genome Atlas (TCGA) Research Network </a>  
+            <p>The Pan-Cancer intiative at <a href="https://portal.gdc.cancer.gov/">The Cancer Genome Atlas (TCGA) Research Network </a>
               has analyzed numerous types of tumor using different technologies to profile the genomic, transcriptomic and epigenomic landscapes.
-              This body of work represents an approach to study cancers not only based on the organ of origin, but also the broader biomarker 
+              This body of work represents an approach to study cancers not only based on the organ of origin, but also the broader biomarker
               profiles [1]. For this post, high-throughput gene expression data are used to build a classifier for 5 tumor types: breast cancer, lung cancer,
-            colorectal cancer, kidney cancer and prostate cancer. The public data was provided and maintained by TCGA, the raw RNA sequence data were 
+            colorectal cancer, kidney cancer and prostate cancer. The public data was provided and maintained by TCGA, the raw RNA sequence data were
               normalized to Fragment per kilobase transcript per million mapped reads (FPKM) to adjust for differences in transcript lengths.
-              The normalized data are compiled and hosted by 
+              The normalized data are compiled and hosted by
               <a href="https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq#">UCI Machine Learning Repository</a>.</p>
-            
+
             <div class="article-list-footer">
               <span class="article-list-date">
                 Dec 4th, 2017
@@ -79,10 +82,10 @@
               <span class="article-list-minutes">
               15 minute read
               </span>
-              
+
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
-                
+
                 <span class="article-list-divider">R, Sparse PCA, XGBoost, Cancer Research </span>
               </div>
             </div>
@@ -103,15 +106,15 @@
     PRAD- Prostate cancer.
    </figcaption>
    </figure>
-  
+
 <p> For a detailed explanation on Prinicipal Component Analysis (PCA), I highly recommend <a href="https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues">
-  this link</a> (it's the best I've seen and the visual is awesome!). Briefly, PCA is a technique commonly used to reduce 
-  high dimensional numerical data to lower dimensional space. Eigen decomposition of the feature covariance/correlation matrix 
+  this link</a> (it's the best I've seen and the visual is awesome!). Briefly, PCA is a technique commonly used to reduce
+  high dimensional numerical data to lower dimensional space. Eigen decomposition of the feature covariance/correlation matrix
   results in the eigenvector matrix and its correpsonding eigenvalue matrix.
-   Traditional PCA works by combining all original features with linear weights (aka: loadings) to capture the maximum variance 
-  of the data. Loading values can be obtained by <i> eigenvector*square root (eigenvalue)</i>.The analysis results in several principal components, which are ranked by the amount of variance it captures (first PC captures the most). 
-  Each Principal Component(PC) will have its own eigenvector and eigenvalues that characterizes the variance, and each PC will have its own loadings 
-  for transforming the original data. For example, to calculate the first PC score for one sample, let <i>C<sub>i,j </sub></i> be the loadings for the <i>i-th</i> PC 
+   Traditional PCA works by combining all original features with linear weights (aka: loadings) to capture the maximum variance
+  of the data. Loading values can be obtained by <i> eigenvector*square root (eigenvalue)</i>.The analysis results in several principal components, which are ranked by the amount of variance it captures (first PC captures the most).
+  Each Principal Component(PC) will have its own eigenvector and eigenvalues that characterizes the variance, and each PC will have its own loadings
+  for transforming the original data. For example, to calculate the first PC score for one sample, let <i>C<sub>i,j </sub></i> be the loadings for the <i>i-th</i> PC
   and the <i>jth </i> <a href="https://izabelcavassim.files.wordpress.com/2015/03/screenshot-from-2015-03-08-2245511.png">FPKM-normalized </a>
     gene expression feature:
   <p align="center">PC1 Score = gene_measurement{1} x C<sub>1,1</sub></i> +
@@ -119,52 +122,25 @@
                                 gene_measurement{j} x C<sub>1,j</sub></i></p>
 
 
-<p>When we are dealing with genomic data such as gene expression measurements, typically there's hundreds of thousands to 
+<p>When we are dealing with genomic data such as gene expression measurements, typically there's hundreds of thousands to
   millions of gene or transcript being quantified per sample. Based on existing literature, we know that only a fraction of those
   genomic features are driving the target of interest. To apply this constraint and
-  to select sub group of features, we can use sparse PCA which results in sparse loadings.  Sparsity of the loadings is 
-  effectively a form of feature selection, and it offers practical advantages such as easier interpretation and the need for 
-  less variable measurements, which can be costly in RNA sequencing. One of the well 
-  known sparse PCA methods was published by Zou, Hastie, and Tibshirani in 2005[2]. In <a href="https://web.stanford.edu/~hastie/Papers/spc_jcgs.pdf">this paper</a>, 
-  they approached PCA as a 
-  regression problem optimized by lasso shrinkage of the coefficients resulting in some loadings of zero values. In this example, I used the 
-  nsprcomp package in R, which allows you to specifiy the maximum number of non-zero loadings for each PC (and optional constraint for non-negative loadings). 
+  to select sub group of features, we can use sparse PCA which results in sparse loadings.  Sparsity of the loadings is
+  effectively a form of feature selection, and it offers practical advantages such as easier interpretation and the need for
+  less variable measurements, which can be costly in RNA sequencing. One of the well
+  known sparse PCA methods was published by Zou, Hastie, and Tibshirani in 2005[2]. In <a href="https://web.stanford.edu/~hastie/Papers/spc_jcgs.pdf">this paper</a>,
+  they approached PCA as a
+  regression problem optimized by lasso shrinkage of the coefficients resulting in some loadings of zero values. In this example, I used the
+  nsprcomp package in R, which allows you to specifiy the maximum number of non-zero loadings for each PC (and optional constraint for non-negative loadings).
   I picked 1000 (5% of the total number of genes), but it's a parameter that can be further optimized. The codes for sparse
   PCA are shown below (complete R script can be found at the <a href="https://github.com/yinniyu/tumor_rna_seq">github repo</a>).
   I tried both traditional PCA (<code class="highlighter-rouge"> prcomp() </code>) and sparse PCA to generate the plots in Fig.2.</p>
 
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(data.table)
-library(plyr)
-library(caret)
-library(nsprcomp)
+  <code data-gist-id="b8d7807b7d1c1030928841e782e7b21e" data-gist-line="1-28"></code>
 
-raw.data<-fread('data.csv')
-label<-fread('labels.csv')
-raw.data<-data.frame(raw.data)
-### exclude columns where values are all 0s
-df<-raw.data[,-(which(colSums(raw.data) == 0))]
+<br>
 
-### the gene expressions values are normalized, no need to set scale to True in nspca()
-pca.df<-nsprcomp(df, k=c(1000,1000,1000,1000,1000,1000,1000,1000,1000,1000))
-df_out <- as.data.frame(pca.df$x)
-df_out$group <- label$Class
 
-library(ggplot2)
-library(grid)
-library(gridExtra)
-
-#### Use plotly to generatate 3D interactive chart. 
-library(plotly)
-p <- plot_ly(df_out, x = ~PC1, y = ~PC2, z = ~PC3, color = ~group) %>%
-  add_markers() %>%
-  layout(scene = list(xaxis = list(title = 'PC1'),
-                      yaxis = list(title = 'PC2'),
-                      zaxis = list(title = 'PC3')))
-p
-</code></pre></figure>
-
-  
  <figure>
    <div>
     <a href="https://plot.ly/~jypucca/2/?share_key=YRmcUqgqP0CZ02GCRwjcCY" target="_blank" title="pca_plot" style="display: block; text-align: center;"><img src="https://plot.ly/~jypucca/2.png?share_key=YRmcUqgqP0CZ02GCRwjcCY" alt="pca_plot" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
@@ -177,75 +153,31 @@ p
    <figcaption>Fig.2. Top-3D plot of PCA scores using traditional PCA on entire dataset. Bottom-3D plot of PCA scores using <b>sparse</b> PCA on entire dataset.
    </figcaption>
    </figure>
-  
-<p>As shown above, the sparse PCA resulted in clear clustering of the groups along the PC axes, showing that 
+
+<p>As shown above, the sparse PCA resulted in clear clustering of the groups along the PC axes, showing that
   selection of subgroup of gene expressions did not compromise the performance of the PCs.</p>
-  
-<h2 id="xgboost of gene expression PCA">XGB model of PC scores</h2>  
-<p>After getting the loadings for 1,000 gene expression features, 10 PC scores are computed for each sample. This would serve as the input matrix to 
-  the classification model Xtreme Gradient Boosting (XGB). In short, XGB is a regularized boosting algorithm in which the weak 
-  classifier learns its parameters based on the performance of the previous iteration, giving more weight to previously misclassified samples 
-  (or large error in case of regression) (see fig 3). The regularization in XGB helps to control for overfitting common in Gradient Boosting 
+
+<h2 id="xgboost of gene expression PCA">XGB model of PC scores</h2>
+<p>After getting the loadings for 1,000 gene expression features, 10 PC scores are computed for each sample. This would serve as the input matrix to
+  the classification model Xtreme Gradient Boosting (XGB). In short, XGB is a regularized boosting algorithm in which the weak
+  classifier learns its parameters based on the performance of the previous iteration, giving more weight to previously misclassified samples
+  (or large error in case of regression) (see fig 3). The regularization in XGB helps to control for overfitting common in Gradient Boosting
   Machine (GBM) as boosting tries to reduce the bias of its learner.</p>
-  
+
   <figure>
    <img src="images//rna_seq/xgboost.png" alt="schematic of xgb" >
    <figcaption>Fig.3. Schematic of gradient boosting trees. The growth of the tree is guided by the gradient/error of the previous iteration.
      (Source:https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/)
    </figcaption>
    </figure>
-  
-<figure class="highlight"><pre><code class="language-R" data-lang="R">
-library(xgboost)
-cv_folds <- createFolds(target, k=5)
-val_split<-lapply(cv_folds, function(ind, dat) dat[ind,], dat=df)
-train_split<-lapply(cv_folds, function(ind, dat) dat[-ind,], dat=df)
 
-# placeholder for 5 CV and 5 classes F1 scores
-f1_val<-matrix(NA, nrow=5, ncol=5)
+   <code data-gist-id="b8d7807b7d1c1030928841e782e7b21e" data-gist-line="32-73"></code>
 
-for (i in 1:length(cv_folds)){
-  group<-names(cv_folds)[i]
-  val.df<-val_split[[group]]
-  train.df<-train_split[[group]]
-  ## perform sparse PCA on training set, limit to 1K non-zero loadings for the feature variables
-  library(doSNOW)
-  library(ff)
-  library(doSNOW)
-  cluster<-makeCluster(6,"SOCK")
-  registerDoSNOW(cluster)
-  spca.train<-nsprcomp(train.df, k=c(1000,1000,1000,1000,1000,1000,1000,1000,1000,1000))
-  ## transformed data in training set
-  train.spc<-spca.train$x
-  ## get loadings for validation data frame
-  val.spc<-predict(spca.train, val.df)
-  
-  #get target info
-  valIdx<-cv_folds[group][[group]]
-  train.target<-target.num[-valIdx]
-  val.target<-target.num[valIdx]
-  
-  #set up for xgb
-  dtrain.sparse<-xgb.DMatrix(data = as.matrix(train.spc), label =as.numeric(train.target))
-  dval.sparse<-xgb.DMatrix(data = as.matrix(val.spc), label = as.numeric(val.target))
-  watchlist <- list(train=dtrain.sparse, test=dval.sparse)
-  xgb.model <- xgb.train(data=dtrain.sparse, max_depth=2, eta=0.0001, nthread = 4,colsample_bytree=0.3, nrounds=150, verbose=F,
-                         watchlist=watchlist,num_class=5, early_stopping_rounds=3,objective = "multi:softmax", eval_metric="merror")
-  
-  prob<-predict(xgb.model,dval.sparse)
-  g<-confusionMatrix(prob, val.target)
-  f1_val[i,]<-as.vector(g$byClass[,7])
-}
-colnames(f1_val) <- c("BRCA","COAD", "KIRC",'LUAD','PRAD')
-rownames(f1_val)<-c("CV1","CV2", "CV3",'CV4','CV5')
-as.table(f1_val)
-
-</code></pre></figure>
 <p>Within each cross validation, sparse PCA is performed on training data only, and subsequent loadings are calculated for the validation data.
-  At the end of each cross validations, the F1 scores of the predictions are obtained (Table 1). F1 score is the weighted average of precision and recall, 
+  At the end of each cross validations, the F1 scores of the predictions are obtained (Table 1). F1 score is the weighted average of precision and recall,
   and it's useful when you are working with an imbalanced dataset. The F1 value is calculated as 2*(precision*recall)/(precision+recall), and
-  it reflects how precise and robust the classifier is. </p>  
-  
+  it reflects how precise and robust the classifier is. </p>
+
   <table align="center" >
   <colgroup span="11"></colgroup>
   <tr>
@@ -277,21 +209,22 @@ as.table(f1_val)
       <td>0.9836</td><td>0.9677</td><td>0.9830</td><td>0.9818</td><td>0.9811</td>
      </tr>
   </table>
+
   <p align="center"> <i> Table 1. F1 scores of the 5 cross validation.</i></p>
    <p> The classifications of Colorectal and Lung cancers have the lowest average (about 0.967) and wider variations (0.025). This is consistent with the plot of the PC scores shown in Fig.2, where
   the clusters of Colorectal cancer and Lung cancer are in close proximity, making it a bit harder to classify between these two cancers based on the
-  gene expression data. Beyond this set of data related to tumor specimen gene expression, I think the approach described in this post 
+  gene expression data. Beyond this set of data related to tumor specimen gene expression, I think the approach described in this post
      can be extended to liquid biopsy of blood samples for prognosis of disease.
-    
+
 <h3> REFERENCES </h3>
-<p>[1].The Cancer Genome Atlas Research Network, Weinstein, J., Collisson, E.A., Mills,G.B., et al. <b>The Cancer Genome Atlas 
+<p>[1].The Cancer Genome Atlas Research Network, Weinstein, J., Collisson, E.A., Mills,G.B., et al. <b>The Cancer Genome Atlas
   Pan-Cancer analysis project</b>, <i>Nature Genetics</i> 45, 1113–1120 (2013)</p>
 <p>[2].Zou, H., Hastie, T., Tibshirani, R., <b>Sparse Principal Component Analysis</b>,<i>Journal of Computational and Graphical Statistics</i>, Volume 15, Number 2, Pages 265–286</p>
-          
+
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
 <noscript>Please enable JavaScript to view the comments.</noscript>
-          
+
 </article>
 <footer class="footer appear">
   <p>
@@ -304,7 +237,7 @@ as.table(f1_val)
       </div>
     </div>
   </main>
-  
+
   <script>
     window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
     ga('create','UA-28631876-6','auto');ga('send','pageview')

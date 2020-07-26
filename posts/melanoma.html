@@ -13,13 +13,16 @@
   <meta property="og:site_name" content="The Art of Machine Learning">
   <meta property="og:image" content="images/melanoma/melanoma_skin.jpg">
 
- 
+
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
 
     <link rel="stylesheet" href="/assets/light.css">
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/gist-embed@1.0.4/dist/gist-embed.min.js"></script>
 
-  
+
+
 </head>
 
 <body>
@@ -34,7 +37,7 @@
         <a href="https://yinniyu.github.io/about">About Me
         </a>
       </li>
-    
+
     <li>
         <a href="https://yinniyu.github.io/toolbox">My Toolbox</a>
      </li>
@@ -42,23 +45,23 @@
         <a href="https://yinniyu.github.io/ai_art">AiArt
         </a>
       </li>
-    
+
     <li>
         <a href="https://github.com/yinniyu" rel="noreferrer noopener" target="_blank" title="GitHub">
           <span class="icon icon-github"></span>
         </a>
       </li>
-    
-    
+
+
       <li>
         <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
           <span class="icon icon-linkedin"></span>
         </a>
-      </li>   
+      </li>
   </ul>
 </nav>
 
-        
+
         <article class="article appear">
           <header class="article-header">
             <h1>Binary Classifier for Melanoma Using MobileNet</h1>
@@ -66,13 +69,13 @@
               <img src='images/melanoma/melanoma_skin.jpg' alt="skin" >
                <figcaption>Source:NHGRI news feature.</figcaption></figure>
             <p>I recently read an article about a team of researchers (led by Dr. Andre Esteva) tuning a
-                Deep Learning model(InceptionV3) to detect melanoma, showing promising results toward automated medical diagnostic 
-                application. CDC reports that in the year 2014, there were 76,665 Americans diagnosed with melanoma resulting in 9,324 deaths. 
-             Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry, 
+                Deep Learning model(InceptionV3) to detect melanoma, showing promising results toward automated medical diagnostic
+                application. CDC reports that in the year 2014, there were 76,665 Americans diagnosed with melanoma resulting in 9,324 deaths.
+             Currently, dermatologists can recognize advanced melanoma using standard criteria such as  Asymmetry,
               Border irregularity, Color variation, Diameter and Evolving shape (aka, ABCDE) [1].
-            In case if you are wondering how well your eyes can detect malignant lesion, 
+            In case if you are wondering how well your eyes can detect malignant lesion,
               here's a sample collage of pictures (I will admit that when I tried, it was as good as tossing a coin).</p>
-            
+
             <div class="article-list-footer">
               <span class="article-list-date">
                 January 10th, 2018
@@ -81,10 +84,10 @@
               <span class="article-list-minutes">
               10 minute read
               </span>
-              
+
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
-                
+
                 <span class="article-list-divider">Python, Image Classification, MobilNet, DeepLearning </span>
               </div>
             </div>
@@ -97,32 +100,32 @@
    <img src="images/melanoma/collage2x4.png" alt="skin lesions" >
    <figcaption>Fig.1. Can you guess which ones are malignant and which ones are not? Answers are at the end of this post.
    (Source: isic-archive.com)</figcaption>
-</figure>  
+</figure>
 
 <p><b>UPDATE: After playing around with MobileNet and DenseNet, I've come to the conclusion that DenseNet had better and more robust performance
   in terms of log-loss, AUC(90% val/92% test), and F1 score(86% val/88% test). I updated my <a href='https://github.com/yinniyu/ISIC_melanoma'>
-  github repo </a>with the codes for training a 3-class classification model. 
-  The final metrics were calculated only based on the melanoma class as if it's a binary classifier.<b></p>
-  
-<p>The largest public collection of dermoscopic images of skin lesions is maintained by International Skin 
-  Imaging Collaboration (ISIC). The images were collected from established clinical centers worldwide, and they were 
+  github repo </a>with the codes for training a 3-class classification model.
+  The final metrics were calculated only based on the melanoma class as if it's a binary classifier.</b></p>
+
+<p>The largest public collection of dermoscopic images of skin lesions is maintained by International Skin
+  Imaging Collaboration (ISIC). The images were collected from established clinical centers worldwide, and they were
   captured by various devices within each center. The goal of ISIC's collaboration effort can be summed up in this statement:
-  
+
    <blockquote class="w3-panel w3-leftbar w3-light-grey">
-     <i>"As inexpensive consumer dermatoscope attachments for smart phones are beginning to reach the market, 
+     <i>"As inexpensive consumer dermatoscope attachments for smart phones are beginning to reach the market,
   the opportunity for automated dermoscopic assessment algorithms to positively influence patient care increases."</i>
-    </blockquote> 
+    </blockquote>
  </p>
 
 <h2>MobileNet - one channel at a time</h2>
-  
+
 <p> With that in mind, I want to train a lightweight deep neural net called  <a href='https://research.googleblog.com/2017/06/mobilenets-open-source-models-for.html'>
   MobileNet</a> with dermascopic images, and see how it performs as a binary classifier (see complete training <a href='https://github.com/yinniyu/ISIC_melanoma/blob/master/melanoma-mobilenet-tf.py'>
-  code</a>). 
+  code</a>).
   What makes MobileNet special is its small and elegant architecture optimized for mobile devices, while not compromising too much in accuracy
   as shown in its <a href='https://keras.io/applications/'>ImageNet performance </a>. Instead of using<a href='https://cdn-images-1.medium.com/max/1600/1*_34EtrgYk6cQxlJ2br51HQ.gif'>
-    regular convolution layer</a> to learn image features(i.e., shape, area), it uses depthwise convolution followed by 
-  point-wise convolution to dramatically reduce computational 
+    regular convolution layer</a> to learn image features(i.e., shape, area), it uses depthwise convolution followed by
+  point-wise convolution to dramatically reduce computational
   cost (Fig.2). MobileNet is loaded with 4.3M parameters, compare to InceptionV3 which has 23.9M parameters.</p>
 
   <figure>
@@ -132,127 +135,54 @@
      building block unit of the MobileNet, which consists of repeating depthwise separable convolutions and full-connected layers at the end.
    </figcaption>
    </figure>
-        
+
 <p>A regular convolution both filters and combines inputs into a feature map
-in one step. In contrast, depthwise separable convolution performs convolution on each channel separately first, 
-  effectively filters and selects features for the channel, then applies pointwise (1x1) convolution to merge the features to 
-  generate a new feature map. According to the Mobilenet paper [2], for a 3×3 kernel depthwise separable convolution is about 9X faster than regular convolution 
+in one step. In contrast, depthwise separable convolution performs convolution on each channel separately first,
+  effectively filters and selects features for the channel, then applies pointwise (1x1) convolution to merge the features to
+  generate a new feature map. According to the Mobilenet paper [2], for a 3×3 kernel depthwise separable convolution is about 9X faster than regular convolution
   operation. MobileNet has 28 layers, most of which are repeats of depthwise separable convolution,
   and 95% of the total computation is spent on the 1x1 pointwise convolution[2].</p>
 
 <h2>Data Processing </h2>
-    <p>The dermoscopic images had many distracting artifacts (e.g, vignette borders, measurement scale, hair, etc) that can possilby interfere with the model learning. 
+    <p>The dermoscopic images had many distracting artifacts (e.g, vignette borders, measurement scale, hair, etc) that can possilby interfere with the model learning.
       Instead of writing a code for each type of artifacts to clean up the image,
-      I realize it's more efficient to apply binary segmentation mask to select for the general lesion area. For segmentation, I used the SegNet autoencoder 
+      I realize it's more efficient to apply binary segmentation mask to select for the general lesion area. For segmentation, I used the SegNet autoencoder
   model where it achieved a Dice coefficient (metric of overlap) of 78% on validation data.</p>
 
-    <p>Another issue is that the malignant category was underpresented (20%), and it's difficult to  train a deep neural net 
+    <p>Another issue is that the malignant category was underpresented (20%), and it's difficult to  train a deep neural net
       model with fewer than 1,000 pictures per class(yes, I did try). I used augmentation (rotation and translation)
-      to produce copies of the original malignant images to mitigate the under-representation. No other augmentation methods were used at this stage. </p>   
+      to produce copies of the original malignant images to mitigate the under-representation. No other augmentation methods were used at this stage. </p>
 
- <h2>Transfer the learning with Bottleneck </h2>  
+ <h2>Transfer the learning with Bottleneck </h2>
         <p>There's a wonderful <a href='https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html'>
-           tutorial</a> by the creator of Keras illustrating transfer learning for deep neural net. What it means is that you take 
-          advantage of fine-tuned model trained on large datasets, 
-          and start training new data with the pre-trained weights to save time and computational cost. One common way to do that is 
-          using 'bottleneck' features - output of the 'bottom' part of a deep learning model, essentially it's all the convolutional layers (everything up to the fully-connected layers ). I saved the bottleneck features as 
-          numpy array, then train a customized 'top' part of the model for a binary classifier (see code below). Training the top part separately ensures that the 
+           tutorial</a> by the creator of Keras illustrating transfer learning for deep neural net. What it means is that you take
+          advantage of fine-tuned model trained on large datasets,
+          and start training new data with the pre-trained weights to save time and computational cost. One common way to do that is
+          using 'bottleneck' features - output of the 'bottom' part of a deep learning model, essentially it's all the convolutional layers (everything up to the fully-connected layers ). I saved the bottleneck features as
+          numpy array, then train a customized 'top' part of the model for a binary classifier (see code below). Training the top part separately ensures that the
           top model weight provides a consistent and smooth training when it's attached to the bottom model later on.</p>
+          <code data-gist-id="a9980825e867b942f08576707dae63ef" data-gist-line="52, 95-128"></code>
 
-<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-base_model = MobileNet(input_shape=(192,192,3), include_top=False,weights='imagenet')
 
-def Top_model(input_dim):
-    top_model = Sequential()
-    top_model.add(Flatten(input_shape=input_dim))
-    top_model.add(Dense(512, activation='relu'))
-    top_model.add(Dropout(0.6))
-    top_model.add(Dense(512, activation='relu'))
-    top_model.add(Dropout(0.6))
-    top_model.add(Dense(1, activation='sigmoid'))
-   
-    return top_model
-
-model2=Top_model(train_data.shape[1:])
-model2.compile(optimizer=RMSprop(lr=0.0001), loss='binary_crossentropy', metrics=['accuracy',f1])
-
-model2.fit(train_data, train_labels,
-              epochs=5, batch_size=32,verbose=1,
-              validation_data=(validation_data, validation_labels))
-
-################# Use functional API to  create the full model#############
-top_model2 = Top_model(base_model.output_shape[1:])
-top_model2.load_weights('bottleneck_fc_model(3layer)_512size_mobilenet.h5')
-model = Model(input=base_model.input, output=top_model2(base_model.output))
-
-for layer in model.layers[:4]:
-    layer.trainable=False
-model.compile(loss='binary_crossentropy',
-              optimizer=SGD(lr=1e-3, momentum=0.9),
-              metrics=['accuracy',f1])
-</code></pre></figure>
-<p>After training the top model, I augmented the image files with <code class='highlighter-rouge'>ImageDataGenerator()</code> along with 
-  the default preprocessing function to scale the pixel values. I chose Stochastic Gradient Descend as the optimizer 
+<p>After training the top model, I augmented the image files with <code class='highlighter-rouge'>ImageDataGenerator()</code> along with
+  the default preprocessing function to scale the pixel values. I chose Stochastic Gradient Descend as the optimizer
   because that was the optimizer used on the original MobileNet.</p>
 
-<figure class="highlight"><pre><code class="language-Python" data-lang="Python">
-train_datagen = ImageDataGenerator(
-        height_shift_range=0.2,
-        shear_range=0.4,
-        rotation_range=40,
-        preprocessing_function=preprocess_input)
+<code data-gist-id="a9980825e867b942f08576707dae63ef" data-gist-line="138-168"></code>
 
-validation_datagen=ImageDataGenerator(preprocessing_function=preprocess_input)
-
-ROWS=192
-COLS=192
-train_generator = train_datagen.flow_from_directory(
-            train_data_dir,
-            classes=['benign_masked','malignant_masked'],
-            target_size=(ROWS, COLS),
-            batch_size=32,
-            class_mode='binary',
-            shuffle='True')
-
-validation_generator = validation_datagen.flow_from_directory(
-            validation_data_dir,
-            classes=['benign_masked','malignant_masked'],
-            target_size=(ROWS, COLS),
-            batch_size=32,
-            class_mode='binary',
-            shuffle='True')
-
-from sklearn.utils import class_weight
-class_weight = class_weight.compute_class_weight('balanced', np.unique(train_labels), train_labels)
-
-early_stopping =EarlyStopping(monitor='val_loss', patience=4)
-model_checkpoint = ModelCheckpoint('training_weights_mobilenet_bottlneck.h5',
-                                    monitor='val_loss', save_best_only=True,save_weights_only=True)
-
-model_full=model.fit_generator(train_generator,
-                           steps_per_epoch=86,
-                           validation_data=validation_generator,
-                           validation_steps=1,
-                           class_weight=class_weight,
-                           callbacks=[early_stopping, model_checkpoint],
-                           epochs=20,verbose=1)  
-</code></pre></figure>
-  
-        
-  
-        <p>Binary cross entropy was a loss function used to optimize the model(the lower the score the better), it takes into account <i>confidence</i> of the prediction along with 
-          accuracy. The validation binary cross entropy was <b>0.43</b>, F1 score (balanced accuracy accounting for imbalanced 
+        <p>Binary cross entropy was a loss function used to optimize the model(the lower the score the better), it takes into account <i>confidence</i> of the prediction along with
+          accuracy. The validation binary cross entropy was <b>0.43</b>, F1 score (balanced accuracy accounting for imbalanced
           class distribution) was <b>86%</b>, and AUC for ROC was <b>0.89 </b>(1 being the best).</p>
-  
+
 
   <figure>
-    <center><img src="images/melanoma/roc.png" alt="ROC of validation" width="125%"/></center>
-   <figcaption>Fig.3. ROC of the validation dataset showing the trade-off between sensitivity (True Positive) and specificity (False Positive). 
+    <img src="images/melanoma/roc.png" alt="ROC of validation" width="125%"/>
+   <figcaption>Fig.3. ROC of the validation dataset showing the trade-off between sensitivity (True Positive) and specificity (False Positive).
    </figcaption></figure>
-  
-<p>While the AUC score was lower than the ones presented by Esteve et al[4], I should point out that this MobileNet model was trained on 
-  a smaller training dataset provided by <a href='https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a'> ISIC 2017 Challenge</a>. 
-  I expect that better performance (>90% balanced accuracy) can be achieved with a larger training set, as well as bigger image array. For my own future reference, here are some things to 
+
+<p>While the AUC score was lower than the ones presented by Esteve et al[4], I should point out that this MobileNet model was trained on
+  a smaller training dataset provided by <a href='https://challenge.kitware.com/#challenge/583f126bcad3a51cc66c8d9a'> ISIC 2017 Challenge</a>.
+  I expect that better performance (>90% balanced accuracy) can be achieved with a larger training set, as well as bigger image array. For my own future reference, here are some things to
   keep in mind when training a deep learning model for image classification:
 <ul>
   <li>Pay attention to preprocessing step for a given deep neural net model. It's NOT always mean centered or standard deviation normalized to 1.
@@ -261,10 +191,10 @@ model_full=model.fit_generator(train_generator,
   <li>Explore augmentation options such as contrasting or adaptive histogram equilization. It is a handy tool especially
     when poor lighting or resolution of the digital image becomes an issue (Note to self: need to  explore this further).</li>
   <li>Obviously there's room for improvement. For example,the number of filters in each layer and dropout rate can be tuned.
-</ul>  
+</ul>
 
-<p><b>Note: For Fig.1, the center 4 images are melanoma, and the rest are benign. </b></p>       
-          
+<p><b>Note: For Fig.1, the center 4 images are melanoma, and the rest are benign. </b></p>
+
 <h3> REFERENCES </h3>
   <p>[1]Herman, C. <b>Emerging Technologies for the Detection of Melanoma: Achieving Better Outcomes.</b>
     <i>Clinical, Cosmetic and Investigational Dermatology</i> 5 (2012): 195–212.</p>
@@ -275,7 +205,7 @@ model_full=model.fit_generator(train_generator,
 <div id="disqus_thread" class="article-comments"></div>
 <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
 <noscript>Please enable JavaScript to view the comments.</noscript>
-          
+
 </article>
 <footer class="footer appear">
   <p>
@@ -288,7 +218,7 @@ model_full=model.fit_generator(train_generator,
       </div>
     </div>
   </main>
-  
+
   <script>
     window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
     ga('create','UA-28631876-6','auto');ga('send','pageview')
