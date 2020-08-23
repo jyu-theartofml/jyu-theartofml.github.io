@@ -218,9 +218,9 @@
                 The colored 2D blocks refer to the backpropagated gradients, while the 1D block represents the weights of the feature maps[5].</figcaption>
             </figure>
             <p>The guiding principle is that it backpropagates the gradient of the class prediction with respect to a pre-determined activation layer, followed by global
-              average pooling to estimate the relative importance of each feature map. Based on the importance value, a weighted combination of those feature maps are generated as a heatmap.
+              average pooling to estimate the relative importance of each feature map. Based on the importance value, a weighted combination of those feature maps are created as a heatmap.
               Within this heatmap, the positive values correspond to pixels that contributes to the prediction of the class of interest. In the last step, the heatmap passes
-              through the ReLU function to remove negative values which correspond to pixels that contributes to the prediction of other classes (not the class of interest).
+              through the ReLU function to drown out negative values which correspond to pixels that contributes to the prediction of other classes (not the class of interest).
             </p>
 
 
@@ -242,10 +242,14 @@
             <h2>The concept of Humble AI</h2>
 
             <p>Companies like GE and DataRobot have advocated for tools branded as Humble AI, which helps the user to assess the risk and reliability of a model and have custom rules set in place. Having tools like SHAP values and
-              Grad-CAM are useful in evaluating the trust worthiness of the model. A user can take advantage of the SHAP value output, and check for outliers in the top contributing features before making
-              an inference, or visually inspect a gradient heatmap to make sure the model is looking at the right spot for making a label prediction. Most of the recent improvements are targeted at machine learning models and convolutional
-              models, but there's also progress made for NLP models such as exBERT for probing transformer representations. </p>
-            <p>With the far-reaching power of AI, model explainability would soon be a requisite for commercial applications and deployment. </p>
+              Grad-CAM are useful in evaluating the trust worthiness and potential biases of the model. A user can take advantage of the SHAP output, and check for outliers in the top contributing features before making
+              an inference, or visually inspect a gradient heatmap to make sure the model is looking at the right spot for making a label prediction. </p>
+
+            <p>Most of the recent improvements are targeted at machine learning models and convolutional
+              models, but there's also progress made for NLP models such as <a href='https://www.infoq.com/news/2020/04/exbert-explainable-nlp/'>exBERT</a>
+              for probing transformer representations. With the recent <a href='https://twitter.com/togelius/status/1284131360857358337'>criticisms</a>
+              of harmful biases rolled out by GPT-3, it presents an urgent need for explainable
+              AI tailored to NLP models. Given the far-reaching power of AI, model explainability would soon be a requisite for commercial applications and deployment.</p>
 
             <br>
 
