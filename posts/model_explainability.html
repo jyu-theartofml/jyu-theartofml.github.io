@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>The Art of Machine Learning</title>
+  <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Model explainability for decision tree and neural network">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jyu-theartofml.io/posts/model_explainability.html">
+  <meta property="og:site_name" content="The Art of Machine Learning">
+  <meta property="og:image" content="https://jyu-theartofml.io/posts/images/model_explainability/XKCD_model.png">
+
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
+
+  <link rel="stylesheet" href="/assets/light.css">
+
+
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav appear">
+          <a href="/" class="header-logo" title="The Art of Machine Learning">The Art of Machine Learning</a>
+          <ul class="header-links">
+
+            <li>
+              <a href="https://jyu-theartofml.github.io/about">About Me
+              </a>
+            </li>
+
+            <li>
+              <a href="https://jyu-theartofml.github.io/toolbox">My Toolbox</a>
+            </li>
+
+            <li>
+              <a href="https://jyu-theartofml.io/ai_art">AiArt
+              </a>
+            </li>
+
+            <li>
+              <a href="https://github.com/jyu-theartofml" rel="noreferrer noopener" target="_blank" title="GitHub">
+                <span class="icon icon-github"></span>
+              </a>
+            </li>
+
+
+            <li>
+              <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+                <span class="icon icon-linkedin"></span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+
+        <article class="article appear">
+          <header class="article-header">
+            <h1>Model explainability for decision trees and neural network</h1>
+            <figure>
+              <center><img src='images/model_explainability/XKCD_model.png' alt="explain_model" width='90%' height='90%'></center>
+              <figcaption>Source:XKCD </figcaption>
+            </figure>
+            <p>As AI and machine learning alogrithms are becoming ever more ubiquitous, we as a society start to scrutinize more
+              on how these black-boxes arrive at its predictions, and whether or not we can trust it. To that end, an assortment of algorithms
+              have sprung up to address model explainability such as LIME, Permutation feature importance, and SHAP (SHapley Additive exPlanation) values.
+              The SHAP value method
+              stands out because it returns the actual value of contribution to the final prediction. There are two approaches for using it to
+              explain machine learning models: KernelSHAP and TreeSHAP. KernelSHAP approximates the SHAP values via marginal expectation, and is very similar to LIME
+              except for the weighting mechanism. TreeSHAP computes the actual SHAP values based on conditional expectations. I will focus on
+              how TreeSHAP works since there are very few existing tutorials.</p>
+            <p>Many AI tasks also rely on Convolutional Neural Network (CNN), and one way to probe the model's output is a method
+              called Gradient-weighted Class Activation Mapping (Grad-CAM). As shown in the example at the end of this post, it's an intuitive way to show what the model is looking
+              at to come up with the prediction.
+
+
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                August 22th, 2020
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                15 minute read
+              </span>
+
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+
+                <span class="article-list-divider">Python, ExplainableAI, DeepLearning, SHAP </span>
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+
+            <p>In attempting to explain ML models, there are two general approaches: explanation that targets the global model behavior <i>or</i> the local behavior
+              (i.e. explain the decision of the model around an instance). One example of global explanation is the feature importance method that comes with
+              many tree-based estimators. However, the feature importance value is derived from impurity-based metric (measure of homogeneity of the labels in the node),
+              and it is biased against low cardinality features(feature with small number of unique values). It can also assign misleading importance to features that don't predict well
+              on new test data due to overfitting of the model[1]. On the other hand, <a href='https://scikit-learn.org/stable/modules/permutation_importance.html'>
+                permutation feature importance </a> examines how the permutation of a feature
+              decreases the model performance, but it doesn't capture how much of the output variance is explained by that feature. There's also debate
+              on whether to apply permutation feature importance on the training dataset or the test dataset[2].</p>
+            <p>Enter localized model explanation, such as LIME and SHAP values. </p>
+            <p> The premise of SHAP is to calculate the <b>average marginal contribution</b> of a feature across all possible combination of features. I've written an old <a href='https://jyu-theartofml.github.io/posts/lime'> blog </a> on LIME
+              before, and one of the drawbacks is
+              that LIME doesn't work for regression model. With SHAP values, it works beautifully for both classifier and regression models,
+              the trade off is that it can be computationally expensive.
+            </p>
+
+            <h2>TreeSHAP - order matters</h2>
+
+            <p> TreeSHAP is used to explain a <i>single</i> prediction instance in terms of marginal contributions from
+              sets of permuted input features in the decision tree model. It's marginal because it's the contribution to some reference baseline value, and
+              the governing equation is as follows [3]: </p>
+            <figure>
+              <center><img src="images/model_explainability/SHAP_eqn.png" width='70%' height='70%'></center>
+
+            </figure>
+
+            <p>
+              <math>|M|</math> = the size of total number of features<br>
+              <math>S</math> = a subset of features that excludes the i-th feature used in one iteration <br>
+              <math>|S|</math> = the size of a given subset <br>
+              <math>&#402;<sub>x</sub><math>(S&#8746;{i})</math></math> and <math>&#402;<sub>x</sub><math>(S)</math> </math>are
+              the conditional expectations for feature vector with the i-th
+              feature and without, respectively <br>
+              <math>&#402;<sub>x</sub> (<math>S</math>) = <math>E</math>[&#402;(x) | x<sub>s</sub>]</math> (for TreeSHAP, <math>&#402;<sub>x</sub>(<math>S</math>) is the conditional expectation)
+            </p>
+
+            <p>To illustrate how TreeSHAP works, I will use an example from a work project I did. A Gradient Boosted
+              model was used to predict malnutrition rate based on explanatory variables like precipitation(CHIRPS),
+              population, Consumer Price Index (CPI), consumption expenditure, etc. There's total of 6 variables, so that would be
+              720 permute sequences. For simplicity, I will only show the example with 3 variables: precipitation, CPI, and population, on
+              one gradient boosted tree.</p>
+
+
+            <figure>
+              <center><img src="images/model_explainability/tree.png" alt="GBM tree"></center>
+              <figcaption>Fig.1. An example gradient boosted tree estimator that predicts malnutrition rate.</figcaption>
+            </figure>
+
+            <p>To start, we first need to compute the SHAP value for the null model, and that's the weighted average of the leaf node values (output). The given instance is
+              Population= -0.20 CPI= -0.35 CHIRPS = -0.10.
+              From the tree in Fig.1., the average would be (0.043*65+0.01*138+(-0.02)*210+0.008*15)/(65+138+210+15) = 0.00022</p>
+            <p>Next, we extract the prediction conditioned on the subset of the feature vector, and calculate the marginal contribution as each feature is added.
+              It's worth noting that the result we get will depend on the order of the sequence.
+              For the first example, we will start with <span style="background-color:#cedcee">Population</span> -- <span style="background-color:#cedcee">CHIRPS</span> --
+              <span style="background-color:#cedcee">CPI</span>, where we add the feature Population to the null model.
+              The value of -0.20 for Population leads to the right child node (n2), where the
+              feature CPI is used to split. Since CPI is not added as a feature at this stage, we simply take the weighted average of the child nodes from this point, which is
+              (-0.02*210+0.008*15)/(225)=-0.018, so &theta;<sub>pop_1</sub> = -0.018-0.00022 = -0.0182. Then we add the feature CHIRPS to it,
+              however for this test instance
+              it doesn't use CHIRPS to split it, the predicted value is the same as
+              before adding CHIRPS, so &theta;<sub>chirps_1</sub> = 0.
+              Continuing with the sequence, we add the feature CPI and that led to the prediction of -0.02, so &theta;<sub>CPI_1</sub> = -0.02-(-0.018) = -0.002. </p>
+            <p>Let's look at what happens when we try a new permutation of <span style="background-color:#cedcee">CHIRPS</span> -- <span style="background-color:#cedcee">Population</span> --
+              <span style="background-color:#cedcee">CPI</span>.
+              In this case scenario, CHIRPS didn't show up in node n0, so we take the average of the child nodes n1 and n2,
+              (prediction_n1*203+prediction_n2*225)/(203+225). For prediction_n1, the CHIRPS value is used to arrive at the prediction of 0.01.
+              For prediction_n2, it's the
+              same as before, (-0.02*210+0.008*15)/(225)=-0.018. Therefore, prediction with CHIRPS as the only feature is
+              (0.01*203+(-0.018)*225)/(203+225)=-0.0047, So &theta;<sub>chirps_2</sub>=- 0.0047- 0.00022=-0.00492. Next, adding population results
+              in n2_prediction of -0.018, &theta;<sub>pop_2</sub>=-0.018-(-0.0047)= -0.0133. Finally, adding CPI gives a prediction of -0.02,
+              so &theta;<sub>CPI_2</sub>=-0.02-(-0.018)=-0.002. </p>
+            <p>The process is repeated for all the possible permute sequences of the subset (<math>S</math>) variables in order to estimate the average &theta;<sub>x</sub>,
+              where x is a given feature. This example only shows one tree, but for the whole ensemble tree model,
+              each prediction value would be derived by running through all the tree estimators. The SHAP package developed by Lundberg et al
+              runs in <math>O(TLD<sup>2</sup>)</math> time and <math>O(D<sup>2</sup>+M)</math> memory (an improvement over
+              conventional method that ran in exponential time), where
+              <math>T</math> is the number of trees, <math>L</math> is the max number of leaves in any tree,
+              <math>D</math> is the maximum depth of any tree, and <math>M</math> is the number of features[3]. </p>
+            <p>In Python, we can leverage the SHAP package to easily run TreeSHAP on a trained model.
+              Fig.2(a) shows the few lines of code to generate the SHAP plot, where it displays the top features with the
+              highest contributions for one test sample. The summary plot in Fig.2(b) shows a more "global" snapshot of the distriubtion of impact.
+              In this case, higher poulation (red dots) tends to lower the model outcome of malnutrition rate.</p>
+
+            <figure>
+              <center><img src="images/model_explainability/TreeSHAP_example.png" alt="TreeSHPA plot"></center>
+              <p align='center'>(a)</p>
+              <center><img src="images/model_explainability/SHAP_summary.png"></center>
+              <p align='center'>(b)</p>
+              <figcaption>Fig.2. (a)An output plot for SHAP values of the features. The numbers displayed on the left of the y-axis
+                are the variable values of the test instance. The plot also shows the SHAP values(contributions) of the individual feature which
+                pushes the prediction towards the final value of 0.141 from the average value of 0.126. (b)The summary plot displays the impact distribution
+                using all the test samples, the features are sorted by the sum of the SHAP value magnitudes. </figcaption>
+            </figure>
+
+            <br>
+
+            <h2>Convolutional Neural Net (CNN) transparency with Grad-CAM </h2>
+            <p>CNN is the building block of many AI models out there. While it's proven to be versatile and powerful, it's often difficult
+              to understand how all the internal workings of the model yields the output, especially when you consider the breaking of linearity within
+              the convolutional feature maps through nonlinear functions (e.g. ReLU). </p>
+            <p>It is well documented That CNN model often overfit during training. This means it's "memorizing" features on the training set data that are not really
+              the relevant features, so the model doesn't perform well on new test data. One way to validate a CNN model is by visualizing the activation feature maps,
+              identifying the pixels/area that the model attends to in predicting the target. One way to accomplish this is saliency map offerd by <code class='highlighter-rouge'>keras-vis</code>.
+              The saliency map hightlights the parts of the image that are used to help the model predict the target label; it maps the relationship of the input to the generated
+              prediction by computing the gradient of the output with respect
+              to the input pixel array when the input is perturbed [4].</p>
+
+            <p>Despite its usefulness, saliency map is not class discriminative[5]. It means the same spots can be highlighted that correlates with various class labels,
+              so those features are not specific to the prediction of any one class. Grad-CAM was created to solve this problem, because it aims to highlight only
+              the regions that correspond to the label of interest. Fig.3. shows the schematic for generating the Grad-CAM heatmap. </p>
+            <figure>
+              <center><img src="images/model_explainability/grad_cam_diagram.jpg" alt="grad cam function" width='70%' height='70%'></center>
+
+              <figcaption>Fig.3. Schematic of Grad-Cam calculation. Object A is the feature activation map, and object B is the fully connected layer activation.
+                The colored 2D blocks refer to the backpropagated gradients. The 1D block represents the weights of the feature maps[5].</figcaption>
+            </figure>
+            <p>The guiding principle is that it backpropagates the gradient of the class prediction with respect to a pre-determined activation layer, followed by global
+              average pooling to estimate the relative importance of each feature maps. Based on the importance value, a weighted combination of those feature maps are generated as a heatmap.
+              Within this heatmap, the positive values correspond to pixels that contributes to the prediction of the class of interest. In the last step, the heatmap passes
+              through the ReLU function to remove negative values which correspond to pixels that contributes to the prediction of other classes (not the class of interest).
+            </p>
+
+
+            <p>Inspired by the examples from the Keras <a href='https://keras.io/examples/vision/grad_cam/'>blog</a> and
+              <a href='https://github.com/jacobgil/keras-grad-cam/blob/master/grad-cam.py'>jacobgil</a>, I tred out Grad-Cam on an image of
+              a jelly fish with the following
+              function to calculate Grad-CAM.</p>
+
+            <script src="https://gist.github.com/jyu-theartofml/7c900b481cd648d03f95c18eed26bce4.js"></script>
+            <p>This function can be used on any DL model classifier that has convolution and activation layers. The input <code class=' highlighter-rouge'>layer_name</code> is the
+              name of the activation layer (the ReLU) post convolution. For this example, I ran Grad-CAM through the last 8 activation layers in pretrained Xception model and compiled the heatmaps into a
+              video clip (see below). As displayed in the animation, during the earlier convolutions the model is looking at the environment around the jelly fish, as it progresses it has "learned" to look at the right spots at the final
+              activation layer (Activation map
+              8).</p>
+            <video width="600" controls>
+              <source src="images/model_explainability/heatmap_images.mp4" type="video/mp4">
+            </video>
+            <br><br>
+            <h2>The concept of Humble AI</h2>
+
+            <p>Companies like GE and DataRobot have advocated for tools branded as Humble AI, which helps the user to access the risk and reliability of a model and have custom rules set in place. Having tools like SHAP values and
+              Grad-CAM are useful in evaluating the trust worthiness of the model. A user can take advantage of the SHAP value output, and check for outliers in the top contributing features before making
+              an inference, or visually inspect a gradient heatmap to make sure the model is looking at the right spot for making a label prediction. Most of the recent improvements are targeted at machine learning models and convolutional
+              models, but there's also progress made for NLP models such as exBERT for probing transformer representations. </p>
+            <p>With the power of AI, model explainability would soon be a requisite for main stream adoption or deployment. </p>
+
+            <br>
+
+            <h3> REFERENCES </h3>
+            <p>[1]Scikit-learn documetation, <i> Relation to impurity-based importance in trees </i>,https://scikit-learn.org/stable/modules/permutation_importance.html#permutation-importance </p>
+            <p>[2]Molnar, C. Interpretable Machine Learning, https://christophm.github.io/interpretable-ml-book/feature-importance.html</p>
+            <p>[3]SM Lundberg, GG Erion, SI Lee, <b> Consistent individualized feature attribution for tree ensembles</b>, arXiv preprint arXiv:1802.03888</p>
+            <p>[4]Visualizing Keras CNN attention: Grad-CAM Class Activation Maps, 2019, https://www.machinecurve.com/index.php/2019/11/28/visualizing-keras-cnn-attention-grad-cam-class-activation-maps/</p>
+            <p>[5]Selvaraju, R. R., Cogswell, M., Das, A., Vedantam, R., Parikh, D., & Batra, D. <i>Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization</i>. 2017 IEEE International Conference on Computer Vision (ICCV).
+              doi:10.1109/iccv.2017.74</p>
+
+            <div id="disqus_thread" class="article-comments"></div>
+            <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+
+        </article>
+        <footer class="footer appear">
+          <p>
+            Chalk is a high quality, completely customizable, performant and 100% free
+            blog template for Jekyll built by
+            <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+          </p>
+        </footer>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    window.ga = function() {
+      ga.q.push(arguments)
+    };
+    ga.q = [];
+    ga.l = +new Date;
+    ga('create', 'UA-28631876-6', 'auto');
+    ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
+  <script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+  <script src="/assets/application.js"></script>
+
+
+</body>
+
+</html>
+
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+
+Contact GitHub
+API
+Training
+Shop
+Blog
+About
