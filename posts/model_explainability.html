@@ -7,7 +7,7 @@
   <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta property="og:title" content="Model explainability for decision tree and neural network">
+  <meta property="og:title" content="Model explainability for decision trees and neural network">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://jyu-theartofml.io/posts/model_explainability.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
@@ -73,13 +73,12 @@
               on how these black-boxes arrive at its predictions, and whether or not we can trust it. To that end, an assortment of algorithms
               have sprung up to address model explainability such as LIME, Permutation feature importance, and SHAP (SHapley Additive exPlanation) values.
               The SHAP value method
-              stands out because it returns the actual value of contribution to the final prediction. There are two approaches for using it to
-              explain machine learning models: KernelSHAP and TreeSHAP. KernelSHAP approximates the SHAP values via marginal expectation, and is very similar to LIME
-              except for the weighting mechanism. TreeSHAP computes the actual SHAP values based on conditional expectations. I will focus on
+              stands out because it returns the actual value of contribution to the final prediction. It offers two algorithms for
+              explaining machine learning models: KernelSHAP and TreeSHAP. I will focus on
               how TreeSHAP works since there are very few existing tutorials.</p>
             <p>Many AI tasks also rely on Convolutional Neural Network (CNN), and one way to probe the model's output is a method
-              called Gradient-weighted Class Activation Mapping (Grad-CAM). As shown in the example at the end of this post, it's an intuitive way to show what the model is looking
-              at to come up with the prediction.
+              called Gradient-weighted Class Activation Mapping (Grad-CAM). As shown in the example at the end of this post, it's an intuitive way to visualize what the model is looking
+              at to come up with the prediction.</p>
 
 
             <div class="article-list-footer">
@@ -110,10 +109,12 @@
               decreases the model performance, but it doesn't capture how much of the output variance is explained by that feature. There's also debate
               on whether to apply permutation feature importance on the training dataset or the test dataset[2].</p>
             <p>Enter localized model explanation, such as LIME and SHAP values. </p>
-            <p> The premise of SHAP is to calculate the <b>average marginal contribution</b> of a feature across all possible combination of features. I've written an old <a href='https://jyu-theartofml.github.io/posts/lime'> blog </a> on LIME
+            <p> The premise of SHAP is to calculate the <b>average marginal contributions</b> of features across all possible permuted subsets.
+              I've written an old <a href='https://jyu-theartofml.github.io/posts/lime'> blog </a> on LIME
               before, and one of the drawbacks is
-              that LIME doesn't work for regression model. With SHAP values, it works beautifully for both classifier and regression models,
-              the trade off is that it can be computationally expensive.
+              that LIME doesn't work for regression model. With SHAP values, it works beautifully for both classifier and regression models.
+              KernelSHAP approximates the SHAP values via marginal expectation, and is very similar to LIME except for the weighting mechanism.
+              On the other hand, TreeSHAP computes the actual SHAP values based on conditional expectations.
             </p>
 
             <h2>TreeSHAP - order matters</h2>
@@ -151,9 +152,9 @@
             <p>To start, we first need to compute the SHAP value for the null model, and that's the weighted average of the leaf node values (output). The given instance is
               Population= -0.20 CPI= -0.35 CHIRPS = -0.10.
               From the tree in Fig.1., the average would be (0.043*65+0.01*138+(-0.02)*210+0.008*15)/(65+138+210+15) = 0.00022</p>
-            <p>Next, we extract the prediction conditioned on the subset of the feature vector, and calculate the marginal contribution as each feature is added.
+            <p>Next, we extract the prediction conditioned on a subset of the feature vector, and calculate the marginal contribution as each feature is added in order.
               It's worth noting that the result we get will depend on the order of the sequence.
-              For the first example, we will start with <span style="background-color:#cedcee">Population</span> -- <span style="background-color:#cedcee">CHIRPS</span> --
+              For the first example, we will start with the subset <math>S</math> that is <span style="background-color:#cedcee">Population</span> -- <span style="background-color:#cedcee">CHIRPS</span> --
               <span style="background-color:#cedcee">CPI</span>, where we add the feature Population to the null model.
               The value of -0.20 for Population leads to the right child node (n2), where the
               feature CPI is used to split. Since CPI is not added as a feature at this stage, we simply take the weighted average of the child nodes from this point, which is
@@ -168,10 +169,10 @@
               (prediction_n1*203+prediction_n2*225)/(203+225). For prediction_n1, the CHIRPS value is used to arrive at the prediction of 0.01.
               For prediction_n2, it's the
               same as before, (-0.02*210+0.008*15)/(225)=-0.018. Therefore, prediction with CHIRPS as the only feature is
-              (0.01*203+(-0.018)*225)/(203+225)=-0.0047, So &theta;<sub>chirps_2</sub>=- 0.0047- 0.00022=-0.00492. Next, adding population results
-              in n2_prediction of -0.018, &theta;<sub>pop_2</sub>=-0.018-(-0.0047)= -0.0133. Finally, adding CPI gives a prediction of -0.02,
+              (0.01*203+(-0.018)*225)/(203+225)=-0.0047, so &theta;<sub>chirps_2</sub>=- 0.0047- 0.00022=-0.00492. Next, adding population results
+              in prediction_n2 of -0.018, &theta;<sub>pop_2</sub>=-0.018-(-0.0047)= -0.0133. Finally, adding CPI gives a prediction of -0.02,
               so &theta;<sub>CPI_2</sub>=-0.02-(-0.018)=-0.002. </p>
-            <p>The process is repeated for all the possible permute sequences of the subset (<math>S</math>) variables in order to estimate the average &theta;<sub>x</sub>,
+            <p>The process is repeated for all the permute sequences of all the subsets (<math>S</math>) in order to estimate the average &theta;<sub>x</sub>,
               where x is a given feature. This example only shows one tree, but for the whole ensemble tree model,
               each prediction value would be derived by running through all the tree estimators. The SHAP package developed by Lundberg et al
               runs in <math>O(TLD<sup>2</sup>)</math> time and <math>O(D<sup>2</sup>+M)</math> memory (an improvement over
@@ -181,7 +182,7 @@
             <p>In Python, we can leverage the SHAP package to easily run TreeSHAP on a trained model.
               Fig.2(a) shows the few lines of code to generate the SHAP plot, where it displays the top features with the
               highest contributions for one test sample. The summary plot in Fig.2(b) shows a more "global" snapshot of the distriubtion of impact.
-              In this case, higher poulation (red dots) tends to lower the model outcome of malnutrition rate.</p>
+              In this case, higher population (red dots) tends to correlate with lower value of malnutrition rate.</p>
 
             <figure>
               <center><img src="images/model_explainability/treeSHAP_example.png" alt="TreeSHAP plot"></center>
@@ -189,7 +190,7 @@
               <center><img src="images/model_explainability/SHAP_summary.png"></center>
               <p align='center'>(b)</p>
               <figcaption>Fig.2. (a)An output plot for SHAP values of the features. The numbers displayed on the left of the y-axis
-                are the variable values of the test instance. The plot also shows the SHAP values(contributions) of the individual feature which
+                are the variable values of a single test instance. The plot also shows the SHAP values(contributions) of the individual feature which
                 pushes the prediction towards the final value of 0.141 from the average value of 0.126. (b)The summary plot displays the impact distribution
                 using all the test samples, the features are sorted by the sum of the SHAP value magnitudes. </figcaption>
             </figure>
@@ -202,22 +203,22 @@
               the convolutional feature maps through nonlinear functions (e.g. ReLU). </p>
             <p>It is well documented That CNN model often overfit during training. This means it's "memorizing" features on the training set data that are not really
               the relevant features, so the model doesn't perform well on new test data. One way to validate a CNN model is by visualizing the activation feature maps,
-              identifying the pixels/area that the model attends to in predicting the target. One way to accomplish this is saliency map offerd by <code class='highlighter-rouge'>keras-vis</code>.
-              The saliency map hightlights the parts of the image that are used to help the model predict the target label; it maps the relationship of the input to the generated
+              identifying the pixels/area that the model attends to in predicting the target. One way to accomplish this is saliency map offered by <code class='highlighter-rouge'>keras-vis</code>.
+              The saliency map hightlights the parts of the image that are most impactful in model prediction; it maps the relationship of the input to the generated
               prediction by computing the gradient of the output with respect
               to the input pixel array when the input is perturbed [4].</p>
 
             <p>Despite its usefulness, saliency map is not class discriminative[5]. It means the same spots can be highlighted that correlates with various class labels,
               so those features are not specific to the prediction of any one class. Grad-CAM was created to solve this problem, because it aims to highlight only
-              the regions that correspond to the label of interest. Fig.3. shows the schematic for generating the Grad-CAM heatmap. </p>
+              the regions that correspond to the label of interest. Fig.3. shows the clever way for generating the Grad-CAM heatmap. </p>
             <figure>
               <center><img src="images/model_explainability/grad_cam_diagram.jpg" alt="grad cam function" width='70%' height='70%'></center>
 
               <figcaption>Fig.3. Schematic of Grad-Cam calculation. Object A is the feature activation map, and object B is the fully connected layer activation.
-                The colored 2D blocks refer to the backpropagated gradients. The 1D block represents the weights of the feature maps[5].</figcaption>
+                The colored 2D blocks refer to the backpropagated gradients, while the 1D block represents the weights of the feature maps[5].</figcaption>
             </figure>
             <p>The guiding principle is that it backpropagates the gradient of the class prediction with respect to a pre-determined activation layer, followed by global
-              average pooling to estimate the relative importance of each feature maps. Based on the importance value, a weighted combination of those feature maps are generated as a heatmap.
+              average pooling to estimate the relative importance of each feature map. Based on the importance value, a weighted combination of those feature maps are generated as a heatmap.
               Within this heatmap, the positive values correspond to pixels that contributes to the prediction of the class of interest. In the last step, the heatmap passes
               through the ReLU function to remove negative values which correspond to pixels that contributes to the prediction of other classes (not the class of interest).
             </p>
@@ -244,7 +245,7 @@
               Grad-CAM are useful in evaluating the trust worthiness of the model. A user can take advantage of the SHAP value output, and check for outliers in the top contributing features before making
               an inference, or visually inspect a gradient heatmap to make sure the model is looking at the right spot for making a label prediction. Most of the recent improvements are targeted at machine learning models and convolutional
               models, but there's also progress made for NLP models such as exBERT for probing transformer representations. </p>
-            <p>With the power of AI, model explainability would soon be a requisite for main stream adoption or deployment. </p>
+            <p>With the far-reaching power of AI, model explainability would soon be a requisite for commercial applications and deployment. </p>
 
             <br>
 
