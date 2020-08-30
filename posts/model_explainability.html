@@ -201,9 +201,10 @@
             <p>CNN is the building block of many AI models out there. While it's proven to be versatile and powerful, it's often difficult
               to understand how all the internal workings of the model yields the output, especially when you consider the breaking of linearity within
               the convolutional feature maps through nonlinear functions (e.g. ReLU). </p>
-            <p>It is well documented That CNN model often overfit during training. This means it's "memorizing" features on the training set data that are not really
-              the relevant features, so the model doesn't perform well on new test data. One way to validate a CNN model is by visualizing the activation feature maps,
-              identifying the pixels/area that the model attends to in predicting the target. One way to accomplish this is saliency map offered by <code class='highlighter-rouge'>keras-vis</code>.
+            <p>It is well documented that CNN model often overfit during training. This means it's "memorizing" features on the training set data that are not really
+              the relevant features, so the model doesn't perform well on new test data. One way to validate a CNN model is by visualizing the activation features
+              through saliency map (offered by <code class='highlighter-rouge'>keras-vis</code>),
+              which identifies the pixels/area that the model attends to when predicting the target.
               The saliency map hightlights the parts of the image that are most impactful in model prediction; it maps the relationship of the input to the generated
               prediction by computing the gradient of the output with respect
               to the input pixel array when the input is perturbed [4].</p>
@@ -239,9 +240,9 @@
               <source src="images/model_explainability/heatmap_images.mp4" type="video/mp4">
             </video>
             <br><br>
-            <h2>The concept of Humble AI</h2>
 
-            <p>Companies like GE and DataRobot have advocated for tools branded as Humble AI, which helps the user to assess the risk and reliability of a model and have custom rules set in place. Having tools like SHAP values and
+            <h2>The concept of Humble AI</h2>
+            <p>Companies like GE and DataRobot have advocated for tools branded as Humble AI, which helps the user to assess the risk and reliability of a model and implement custom rules as guardrails. Having tools like SHAP values and
               Grad-CAM are useful in evaluating the trust worthiness and potential biases of the model. A user can take advantage of the SHAP output, and check for outliers in the top contributing features before making
               an inference, or visually inspect a gradient heatmap to make sure the model is looking at the right spot for making a label prediction. </p>
 
