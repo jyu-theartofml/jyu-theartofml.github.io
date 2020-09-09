@@ -121,7 +121,7 @@
 
             <p> TreeSHAP is used to explain a <i>single</i> prediction instance in terms of marginal contributions from
               sets of permuted input features in the decision tree model. It's marginal because it's the contribution to some reference baseline value, and
-              the governing equation is as follows [3]: </p>
+              the governing equation for the SHAP value of feature <i>i</i> is as follows [3]: </p>
             <figure>
               <center><img src="images/model_explainability/SHAP_eqn.png" width='70%' height='70%'></center>
 
@@ -172,8 +172,8 @@
               (0.01*203+(-0.018)*225)/(203+225)=-0.0047, so &theta;<sub>chirps_2</sub>=- 0.0047- 0.00022=-0.00492. Next, adding population results
               in prediction_n2 of -0.018, &theta;<sub>pop_2</sub>=-0.018-(-0.0047)= -0.0133. Finally, adding CPI gives a prediction of -0.02,
               so &theta;<sub>CPI_2</sub>=-0.02-(-0.018)=-0.002. </p>
-            <p>The process is repeated for all the permute sequences of all the subsets (<math>S</math>) in order to estimate the average &theta;<sub>x</sub>,
-              where x is a given feature. This example only shows one tree, but for the whole ensemble tree model,
+            <p>The process is repeated for all the permute sequences of all the subsets (<math>S</math>) in order to estimate the average &theta;<sub>i</sub>,
+              where i is a given feature; the summation of the &theta;<sub>i</sub>s equals to the final prediction value. This example only shows one tree, but for the whole ensemble tree model,
               each prediction value would be derived by running through all the tree estimators. The SHAP package developed by Lundberg et al
               runs in <math>O(TLD<sup>2</sup>)</math> time and <math>O(D<sup>2</sup>+M)</math> memory (an improvement over
               conventional method that ran in exponential time), where
