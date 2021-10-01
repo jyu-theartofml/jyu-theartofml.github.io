@@ -9,7 +9,7 @@
 
   <meta property="og:title" content="Binary classifier for melanoma using MobileNet">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://yinniyu.github.io/posts/melanoma.html">
+  <meta property="og:url" content="http://jyu-theartofml.github.io/posts/melanoma.html">
   <meta property="og:site_name" content="The Art of Machine Learning">
   <meta property="og:image" content="images/melanoma/melanoma_skin.jpg">
 
@@ -34,27 +34,27 @@
   <ul class="header-links">
 
     <li>
-        <a href="https://yinniyu.github.io/about">About Me
+        <a href="https://jyu-theartofml.github.io/about">About Me
         </a>
       </li>
 
     <li>
-        <a href="https://yinniyu.github.io/toolbox">My Toolbox</a>
+        <a href="https://jyu-theartofml.github.io/toolbox">My Toolbox</a>
      </li>
      <li>
-        <a href="https://yinniyu.github.io/ai_art">AiArt
+        <a href="https://jyu-theartofml.github.io/ai_art">AiArt
         </a>
       </li>
 
     <li>
-        <a href="https://github.com/yinniyu" rel="noreferrer noopener" target="_blank" title="GitHub">
+        <a href="https://github.com/jyu-theartofml" rel="noreferrer noopener" target="_blank" title="GitHub">
           <span class="icon icon-github"></span>
         </a>
       </li>
 
 
       <li>
-        <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+        <a href="https://linkedin.com/in/jenny-yu-co-80111" rel="noreferrer noopener" target="_blank" title="LinkedIn">
           <span class="icon icon-linkedin"></span>
         </a>
       </li>
@@ -103,7 +103,7 @@
 </figure>
 
 <p><b>UPDATE: After playing around with MobileNet and DenseNet, I've come to the conclusion that DenseNet had better and more robust performance
-  in terms of log-loss, AUC(90% val/92% test), and F1 score(86% val/88% test). I updated my <a href='https://github.com/yinniyu/ISIC_melanoma'>
+  in terms of log-loss, AUC(90% val/92% test), and F1 score(86% val/88% test). I updated my <a href='https://github.com/jyu-theartofml/ISIC_melanoma'>
   github repo </a>with the codes for training a 3-class classification model.
   The final metrics were calculated only based on the melanoma class as if it's a binary classifier.</b></p>
 
@@ -120,7 +120,7 @@
 <h2>MobileNet - one channel at a time</h2>
 
 <p> With that in mind, I want to train a lightweight deep neural net called  <a href='https://research.googleblog.com/2017/06/mobilenets-open-source-models-for.html'>
-  MobileNet</a> with dermascopic images, and see how it performs as a binary classifier (see complete training <a href='https://github.com/yinniyu/ISIC_melanoma/blob/master/melanoma-mobilenet-tf.py'>
+  MobileNet</a> with dermascopic images, and see how it performs as a binary classifier (see complete training <a href='https://github.com/jyu-theartofml/ISIC_melanoma/blob/master/melanoma-mobilenet-tf.py'>
   code</a>).
   What makes MobileNet special is its small and elegant architecture optimized for mobile devices, while not compromising too much in accuracy
   as shown in its <a href='https://keras.io/applications/'>ImageNet performance </a>. Instead of using<a href='https://cdn-images-1.medium.com/max/1600/1*_34EtrgYk6cQxlJ2br51HQ.gif'>

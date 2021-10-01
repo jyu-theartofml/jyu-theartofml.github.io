@@ -13,7 +13,7 @@
   <meta property="og:site_name" content="The Art of Machine Learning">
   <meta property="og:image" content="images/retinanet/example_tp.png">
 
- 
+
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
 
@@ -26,7 +26,7 @@
     border-width: 2px;
     border-color: #7DD6E8;
     border-style: solid;
-    margin-left:auto; 
+    margin-left:auto;
     margin-right:auto;
     color: #666666;
     }
@@ -34,7 +34,7 @@
 
   table.customTable td, table.customTable th {
     border-width: 2px;
-    border-color: #5977B0; 
+    border-color: #5977B0;
     border-style: solid;
     padding: 10px;
     }
@@ -43,8 +43,8 @@
     background-color: #7DD6E8;
       }
     </style>
-  
-  
+
+
 </head>
 
 <body>
@@ -59,7 +59,7 @@
         <a href="https://jyu-theartofml.github.io/about">About Me
         </a>
       </li>
-    
+
     <li>
         <a href="https://jyu-theartofml.github.io/toolbox">My Toolbox</a>
       </li>
@@ -67,46 +67,46 @@
         <a href="https://jyu-theartofml.github.io/ai_art">AiArt
         </a>
       </li>
-    
+
      <li>
         <a href="https://github.com/jyu-theartofml" rel="noreferrer noopener" target="_blank" title="GitHub">
           <span class="icon icon-github"></span>
         </a>
       </li>
-    
-    
+
+
       <li>
-        <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+        <a href="https://linkedin.com/in/jenny-yu-co-80111" rel="noreferrer noopener" target="_blank" title="LinkedIn">
           <span class="icon icon-linkedin"></span>
         </a>
-      </li>   
+      </li>
   </ul>
 </nav>
 
-        
+
         <article class="article appear">
           <header class="article-header">
             <h1>RetinaNet lung opacity detection (with meta data)</h1>
             <figure>
               <img src='images/retinanet/example_tp_resize2.png' alt="dicom_bbox" />
             </figure>
-            <p>The Radiological Society of North America (RSNA) recently hosted a Kaggle competition, where Kagglers are asked to 
-              build a model to screen for marker of pneumonia by detecting lung opacity on chest radiographs. The standard practice for 
-             diagnosis of pneumonia is time consuming - requiring review of radiographs by trained professional, vital sign, and clinical 
+            <p>The Radiological Society of North America (RSNA) recently hosted a Kaggle competition, where Kagglers are asked to
+              build a model to screen for marker of pneumonia by detecting lung opacity on chest radiographs. The standard practice for
+             diagnosis of pneumonia is time consuming - requiring review of radiographs by trained professional, vital sign, and clinical
             history of the individual patient. The quality of the chest radiograph (CXR) also makes accurate diagnosis a challenging task,
-           because the opaque features can be caused by pulmonary edema, bleeding, or fluid in the 
+           because the opaque features can be caused by pulmonary edema, bleeding, or fluid in the
               pleural space[1]. To quote the RSNA:</p>
             <blockquote class="w3-panel w3-leftbar w3-light-grey">
-                <i>"They see the potential for ML to automate initial detection 
+                <i>"They see the potential for ML to automate initial detection
        (imaging screening) of potential pneumonia cases in order to prioritize and expedite their review."</i>
-            </blockquote> 
+            </blockquote>
 
             <p>I tried out the <u><a href='https://github.com/fizyr/keras-retinanet'> RetinaNet object detector </a> </u>
-              (implemented in Keras by Fizyr) on the image dataset, but unfortunately ran out of time to submit before the deadline. For this 
-              post, I will focus mostly on model performance and tradeoff associated with using meta data from the dicom image 
+              (implemented in Keras by Fizyr) on the image dataset, but unfortunately ran out of time to submit before the deadline. For this
+              post, I will focus mostly on model performance and tradeoff associated with using meta data from the dicom image
               files. But before going into that, I will explain why I chose RetinaNet.
             </p>
-            
+
             <div class="article-list-footer">
               <span class="article-list-date">
                 November 3th, 2018
@@ -115,62 +115,62 @@
               <span class="article-list-minutes">
               15 minute read
               </span>
-              
+
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
-                
+
                 <span class="article-list-divider">Keras, RetinaNet, Object Detection</span>
               </div>
             </div>
           </header>
 
           <div class="article-content">
-  
+
 
 <h2 id="background">What's special in RetinaNet?</h2>
 
-<p>RetinaNet is a single-stage object detector proposed in the paper 
-  <a href='https://arxiv.org/abs/1708.02002'><b>Focal Loss for Dense Object Detection</b></a> 
+<p>RetinaNet is a single-stage object detector proposed in the paper
+  <a href='https://arxiv.org/abs/1708.02002'><b>Focal Loss for Dense Object Detection</b></a>
   by Tsung-Yi Lin, Priya Goyal, et al. In addition to having faster processing speed,
-  it offers higher accuracy in small object detection compared to YOLO and even Single Shot Detector (SSD) [2], 
+  it offers higher accuracy in small object detection compared to YOLO and even Single Shot Detector (SSD) [2],
   thanks to Feature Pyramid Network (FPN) (Fig. 1) and Focal Loss function.</p>
- 
+
 
        <figure>
       <center><img src="images/retinanet/retinanet_schema.png" alt="retina architecture" ></center>
-   <figcaption>Fig.1. RetinaNet(Source:https://arxiv.org/pdf/1708.02002.pdf). 
+   <figcaption>Fig.1. RetinaNet(Source:https://arxiv.org/pdf/1708.02002.pdf).
    </figcaption>
-   </figure>  
-            
+   </figure>
+
   <p>Like other object detectors, RetinaNet is comprised of a backbone model (in this example it's ResNet50) to extract
-    features. As it goes through the convolution layers, the features become increasingly higher 
-    level abstractions (SSD uses the features from this downsampling path). <i>Unlike</i> most other object detectors, 
+    features. As it goes through the convolution layers, the features become increasingly higher
+    level abstractions (SSD uses the features from this downsampling path). <i>Unlike</i> most other object detectors,
     there's also an upsampling/upconvolution path in the FPN, and it has
-    skipped connections with the backbone features. In essence, this is a U-Net! It improves upon SSD by merging 
-    high resolution 
-    features together with finer semantic abstractions from the downsampling path. I can't help but notice that 
+    skipped connections with the backbone features. In essence, this is a U-Net! It improves upon SSD by merging
+    high resolution
+    features together with finer semantic abstractions from the downsampling path. I can't help but notice that
     skipped connection design
     has been dominating many recent DL developments (e.g., DenseNet, <a href='https://medium.com/@jonathan_hui/gan-super-resolution-gan-srgan-b471da7270ec'>
     Super Resolution GAN</a>).</p>
-    <p>Each of the pyramid feature maps is attached to two subnets, one for classification and one for bounding box 
-      regression. Within a task, for example classification, the subnet parameters are shared across the pyramid levels, but 
+    <p>Each of the pyramid feature maps is attached to two subnets, one for classification and one for bounding box
+      regression. Within a task, for example classification, the subnet parameters are shared across the pyramid levels, but
       the parameters for
-      classification  and bbox regression are NOT shared, and each pyramid level will have its own prediction to derive the final prediction. In contrast 
-      with Region Proposal Network (RPN), the 
+      classification  and bbox regression are NOT shared, and each pyramid level will have its own prediction to derive the final prediction. In contrast
+      with Region Proposal Network (RPN), the
       task subnets are independent from each other.</p>
-       <p>Finally, focal loss function is simply a modified form of Cross Entropy loss function. It gives less weight 
-         to the loss value 
-         of well trained class (i.e., background), while giving more weight to under-represented, poorly trained class to 
+       <p>Finally, focal loss function is simply a modified form of Cross Entropy loss function. It gives less weight
+         to the loss value
+         of well trained class (i.e., background), while giving more weight to under-represented, poorly trained class to
          help the model 'learn' more efficiently [4].
-  <figure> 
+  <figure>
       <center><img src="images/retinanet/object_detect_comp.png" alt="COCO data comparison" ></center>
-   <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </a> of performance on COCO dataset. 
+   <figcaption>Fig.2. <a href='https://medium.com/@jonathan_hui/object-detection-speed-and-accuracy-comparison-faster-r-cnn-r-fcn-ssd-and-yolo-5425656ae359'>Comparison </a> of performance on COCO dataset.
    </figcaption>
-   </figure>  
+   </figure>
 
 <h2 id="preprocessing">Data Preprocessing</h2>
 
-<p>The size of the original dicom image is 1024x1024, which is too expensive for most deep learning models. Another issue is that the 
+<p>The size of the original dicom image is 1024x1024, which is too expensive for most deep learning models. Another issue is that the
   RetinaNet model takes 3-channel pixel array (i.e., RGB). So in preprocessing the data, several steps take place. Fig.3 shows an example of the image prepocesing. </p>
             <ol>
               <li> Apply gamma correction[5] and CLAHE (Contrast Limited Adaptive Histogram Equilization) to the image separately.</li>
@@ -178,41 +178,41 @@
               <li>Resize the image to 256X256, save them in the proper directory.</li>
                 <li> Based on the resize factor, adjust bounding box coordinates in the annotation .csv file. </li>
             </ol>
-      
+
      <figure>
       <center><img src="images/retinanet/dicom_contrast.png" alt="dicom_contrast" ></center>
    <figcaption>Fig.3. Example of image contrasts applied, where the 3-channel image at the bottom would be used for training RetinaNet.
    </figcaption>
    </figure>
-   
+
   <h3>Model Performance (No meta data vs. Meta data)</h3>
-       <p>Following the documentation on Fizyr's git repo, it was very straightforward to train RetinaNet until the losses plateau. 
-         After looking at some validation inference by this model (RetinaNet50_1), I notice that it's very sensitive to the 
+       <p>Following the documentation on Fizyr's git repo, it was very straightforward to train RetinaNet until the losses plateau.
+         After looking at some validation inference by this model (RetinaNet50_1), I notice that it's very sensitive to the
          confidence score threshold, and it ended up capturing more opacity (true positive) at a lower threshold value.
          The model at this point also struggled to predict bounding box for smaller opaque regions, that means it had higher
-         number of false negatives, especially in radiographs of smaller stature patients 
+         number of false negatives, especially in radiographs of smaller stature patients
          such as children.</p>
          <p>After seeing this trend, I wanted to incorporate the available meta data, age and gender, with the correpsonding image to help the model
-       learn better. One crude way to do this is by padding the input pixel array with a vector for age and another 
-           vector for values mapped to the gender variable. And a new RetinaNet model (RetinaNet50_2) was trained on 
+       learn better. One crude way to do this is by padding the input pixel array with a vector for age and another
+           vector for values mapped to the gender variable. And a new RetinaNet model (RetinaNet50_2) was trained on
            these data, Fig.4 shows an example of how the two models perform.</p>
             <figure>
       <center><img src="images/retinanet/comparison_bbox.png" alt="model comparisons" ></center>
    <figcaption>Fig.4. The prediction on the left missed one bounding box, while prediction with meta data on the right
      captured the second box but at a low confidence score.
    </figure>
-           
 
 
-  
-      <p>After training, evaluation was done for the two models (see Table 1). mAP is a standard metric for object detection task, 
-            it calculates the average pixel-wise precision in each image and takes the mean across all images in the dataset. 
-            On the other hand, precision and recall values were calculated based on whether or not it correctly generated a 
+
+
+      <p>After training, evaluation was done for the two models (see Table 1). mAP is a standard metric for object detection task,
+            it calculates the average pixel-wise precision in each image and takes the mean across all images in the dataset.
+            On the other hand, precision and recall values were calculated based on whether or not it correctly generated a
         bounding box
-            (sometimes there's two bounding boxes in one radiograph), but it's not a pixel-wise calculation for the 
+            (sometimes there's two bounding boxes in one radiograph), but it's not a pixel-wise calculation for the
         sake of simple comparison. High precision means lower false positives, and high recall means lower false negatives.</p>
-    
-            
+
+
    <table class="customTable">
   <thead>
     <tr>
@@ -237,15 +237,15 @@
     </tr>
   </tbody>
 </table
-  <p align='center'><small>Table 1. Comparison of performance metrics between RetinaNet50_1 with no meta data and 
+  <p align='center'><small>Table 1. Comparison of performance metrics between RetinaNet50_1 with no meta data and
      RetinaNet50_2 with meta data.</small></p>
-            
+
     <p>The mAP values don't differ significantly for the two models, however it's clear that there's a trade off between false negative
             and false positive. With meta data padding, RetinaNet does seem to do a better job in capturing opaque
-            regions (higher recall). One idea for potential improvement is to concatenate the meta data with 
-      the feature map within the model. It is possible that these two models can work together to identify prediction outputs that 
+            regions (higher recall). One idea for potential improvement is to concatenate the meta data with
+      the feature map within the model. It is possible that these two models can work together to identify prediction outputs that
       are likely to be false negative or false positive.</p>
-            
+
   <h3> REFERENCES </h3>
   <p>[1]RSNA Pneumonia Detection Challenge, https://www.kaggle.com/c/rsna-pneumonia-detection-challenge</p>
   <p>[2]Hui, J. 2018, Medium.com <b>Object detection: speed and accuracy comparison (Faster R-CNN, R-FCN, SSD, FPN, RetinaNet and YOLOv3). </b></p>
@@ -253,18 +253,18 @@
   <p>[4]Lin T., Goyal, P., et al, Feb 2018, <i>Focal Loss for Dense Object Detection</i>, ArVix:1708.02002</p>
   <p>[5]Ikhsan I.A., Hussain A.,et al, Mar 2014, <i>An analysis of x-ray image enhancement methods for vertebral bone segmentation</i>, 2014 IEEE 10th International Colloquium on Signal Processing and its Applications </p>
 
-  
-    
-    
-    
+
+
+
+
             <div id="disqus_thread" class="article-comments"></div>
             <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
             <noscript>Please enable JavaScript to view the comments.</noscript>
-          
+
         </article>
         <footer class="footer appear">
-          
-   
+
+
     Chalk is a high quality, completely customizable, performant and 100% free
     blog template for Jekyll built by
     <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
@@ -274,7 +274,7 @@
       </div>
     </div>
   </main>
-  
+
   <script>
     window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
     ga('create','UA-28631876-6','auto');ga('send','pageview')
