@@ -50,7 +50,7 @@
 
 
       <li>
-        <a href="https://linkedin.com/in/jenny-yu-b495243" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+        <a href="https://linkedin.com/in/jenny-yu-co-80111" rel="noreferrer noopener" target="_blank" title="LinkedIn">
           <span class="icon icon-linkedin"></span>
         </a>
       </li>
@@ -135,7 +135,7 @@ normal curve. However, sometimes the distribution is SO skewed that a simple log
   to omit. </p>
   <p>This is where Principal Component Analysis (PCA) comes in as a remedy. In capturing the maximum variance of the data, PCA reduces the
   variable dimensions into uncorrelated components, which effectively remove the effect of multicollinearity. There's a detailed explanation of how PCA
-  works in an old <a href='https://yinniyu.github.io/posts/tumor_rna'> post</a>. If working with categorical data and dummy variables,
+  works in an old <a href='https://jyu-theartofml.github.io/posts/tumor_rna'> post</a>. If working with categorical data and dummy variables,
    use <a href='https://pypi.org/project/mca/'> Multiple Correspondence Analysis (MCA)</a> to reduce the high dimensions. For R, the MCA function
    can be found in library such as <code class="highlighter-rouge">FactoMineR</code>.
 </p>
@@ -175,7 +175,7 @@ normal curve. However, sometimes the distribution is SO skewed that a simple log
    <code class="highlighter-rouge">Skew</code>, <code class="highlighter-rouge">PercentTrue</code>, and etc for a variable of interest.
    The user can also perform more than 1 level of stacking to generate more granular features. This type of methodology can be useful
    in feature engineering without domain knowledge, for instance when the column names are encripted.</p>
-   <p>There's also a package called <b><a href='https://github.com/WillKoehrsen/feature-selector'>FeatureSelector</b></a> for doing routine selection 
+   <p>There's also a package called <b><a href='https://github.com/WillKoehrsen/feature-selector'>FeatureSelector</b></a> for doing routine selection
      based on criterias like percentage of missing values, multicollinearity, feature importance, etc. It's a handy module that removes highly-correlated
      variables, and identifies features with zero or low importance based on a LightGBM model[3].</p>
 
