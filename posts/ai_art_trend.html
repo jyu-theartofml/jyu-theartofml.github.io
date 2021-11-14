@@ -121,14 +121,16 @@ counterpart of X_hat, which is compared to the ground truth X to quantify the lo
               To make things more interesting enter Generative Adversarial Network(GAN), a deep learning model created by Ian Goodfellow that is a generative model for unsupervised learning (but uses a supervised learning loss function).
               It is composed of a discriminator and a generator (each being a Deep Convolutional Neural Net), where the generator tries to learn and mimic the data distribution of the training dataset in order to fool the discriminator and pass as a "real" image.
               Much like counterfeit bills. The training is adversarial in that it alternates between the discriminator and generator, the generator is held constant during the discriminator training and vice versa. </p>
-              <p>After training the two models, the generator can take a latent vector (usuall 256) that is randomly generated and generate something novel.</p>
+              <p>After training the two models, the generator can take a latent 1-D vector that is randomly generated and generate something novel.</p>
               <figure>
                 <center><img src="images/ai_art_trend/GAN_model.png"  width='75%' height='75%'></center>
                 <figcaption>Fig.3. The innner working of a vanilla GAN(source: Hunger Heindenreich, <a href='http://hunterheidenreich.com/blog/what-is-a-gan/'>What is a Generative Adversarial Network</a>).</figcaption>
               </figure>
 
+              <p>But there is a downside to generating through Deep Convolutional GAN.</p>
+
            <p>
-              The downside to training a Deep Convolutional GAN is the limit to the resolution of the image. Take a look at the DCGAN generated outputs floating around, and you'll see that they are usually 64x64 or 128x128 at best.
+              Take a look at the DCGAN generated outputs floating around, and you'll see that they are usually 64x64 or 128x128 at best.
               This is because training a DCGAN to higher resolution leads to a common problem called <a href= 'https://wandb.ai/authors/DCGAN-ndb-test/reports/Measuring-Mode-Collapse-in-GANs--VmlldzoxNzg5MDk'>'mode collapse'</a>, a
               phenonmenon where the generator over-optimizes for the discriminator by producing the same subset of output that succeeds in fooling the discriminator which is currently stuck in
               local minimum. With mode collapse, it will generate repeated patterns that lack expressive diversity again and again.
