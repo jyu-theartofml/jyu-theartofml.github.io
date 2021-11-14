@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge" charset="utf-8">
+  <title>The Art of Machine Learning</title>
+  <meta name="description" content="Machine Learning, Deep Learning, Jenny Yu ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Creativity in ARTificial Intelligence">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jyu-theartofml.io/posts/ai_art_trend.html">
+  <meta property="og:site_name" content="The Art of Machine Learning">
+  <meta property="og:image" content="images/ai_art_trend/alfred_bubble.jpg">
+
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="http://chalk.nielsenramon.com/feed.xml" type="application/rss+xml" rel="alternate" title="Chalk Last 10 blog posts" />
+
+  <link rel="stylesheet" href="/assets/light.css">
+
+
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav appear">
+          <a href="/" class="header-logo" title="The Art of Machine Learning">The Art of Machine Learning</a>
+          <ul class="header-links">
+
+            <li>
+              <a href="https://jyu-theartofml.github.io/about">About Me
+              </a>
+            </li>
+
+            <li>
+              <a href="https://jyu-theartofml.github.io/toolbox">My Toolbox</a>
+            </li>
+
+            <li>
+              <a href="https://jyu-theartofml.io/ai_art">AiArt
+              </a>
+            </li>
+
+            <li>
+              <a href="https://github.com/jyu-theartofml" rel="noreferrer noopener" target="_blank" title="GitHub">
+                <span class="icon icon-github"></span>
+              </a>
+            </li>
+
+
+            <li>
+              <a href="https://linkedin.com/in/jenny-yu-co-80111" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+                <span class="icon icon-linkedin"></span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+
+        <article class="article appear">
+          <header class="article-header">
+            <h1>Art from Artificial Intelligence</h1>
+            <center>
+              <figure>
+                <img src='images/ai_art_trend/alfred_bubble.jpg' alt="alfred" width='75%' height='75%'>
+              </figure>
+            </center>
+
+            <p>In recent years, AI and machine learning has expanded into many corners of modern society. One niche area that has
+          been transformed by AI is the art. Many algorithms have emerged that can generate original content, whether it is art 🎨 or music 🎶 (e.g. Jukebox from openAI).
+        As someone who loves art as a hobby, I have spent some time exploring the fascinating world of AiArt, especially cycleGAN and Progressive GAN. </p>
+        <p> My own art works are available in my art blog <u><a href='https://www.jennyyuart.com/ai-art'>page</a></u>.
+
+
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                October 2nd, 2021
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                10 minute read
+              </span>
+
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+
+                <span class="article-list-divider">Python, AiArt </span>
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+
+            <blockquote class="w3-panel w3-leftbar w3-light-grey" >
+              <i>XXXX</i>
+             </blockquote>
+
+    <h2>Beyond Photoshop style transfer</h2>
+
+            <p>One of the first Deep Learning models used to affect visual content is the Style Transfer algorithm (which is now a <a href='https://creativecloud.adobe.com/cc/discover/article/how-to-transfer-styles-to-images-with-adobe-photoshop?locale=en'>feature </a> of Photoshop).
+            It maps the style content from one image to another image while maintaining the content of the second image. It works by fine tuning specific feature maps of a pre-trained convolutional model to create stylistic change.</p>
+
+            <figure>
+              <center><img src="images/ai_art_trend/example_st_hockney.png"  width='85%' height='85%'></center>
+              <figcaption>Fig.1. Style transfer from a David Hockney print.</figcaption>
+            </figure>
+
+  <p>The downside to style transfer is it requires a one-to-one pairing between the two images, and it only transfers the style of <b>one</b> image, which doesn't fully encapsulate the overall style of a particular artist or genre.
+  An alternative to that is cycleGAN, which trains the network to recognize the style using a collection of training images. This model is optimized on cycle-consistency loss, where the generated image Y_hat is used to generate the
+counterpart of X_hat, which is compared to the ground truth X to quantify the loss metric.</p>
+
+            <figure>
+              <center><img src="https://devblogs.microsoft.com/cse/wp-content/uploads/sites/55/2017/06/full_cycle-768x501-1.jpg"  width='75%' height='75%'></center>
+              <figcaption>Fig.2. The model architecture of cycleGAN.</figcaption>
+            </figure>
+
+ <h2>Generating new content</h2>
+            <p>
+              To make things more interesting enter Generative Adversarial Network(GAN), a deep learning model created by Ian Goodfellow that is a generative model for unsupervised learning (but uses a supervised learning loss function).
+              It is composed of a discriminator and a generator (each being a Deep Convolutional Neural Net), where the generator tries to learn and mimic the data distribution of the training dataset in order to fool the discriminator and pass as a "real" image.
+              Much like counterfeit bills. The training is adversarial in that it alternates between the discriminator and generator, the generator is held constant during the discriminator training and vice versa. </p>
+              <p>After training the two models, the generator can take a latent vector (usuall 256) that is randomly generated and generate something novel.</p>
+              <figure>
+                <center><img src="images/ai_art_trend/GAN_model.png"  width='75%' height='75%'></center>
+                <figcaption>Fig.3. The innner working of a vanilla GAN(source: Hunger Heindenreich, <a href='http://hunterheidenreich.com/blog/what-is-a-gan/'>What is a Generative Adversarial Network</a>).</figcaption>
+              </figure>
+
+           <p>
+              The downside to training a Deep Convolutional GAN is the limit to the resolution of the image. Take a look at the DCGAN generated outputs floating around, and you'll see that they are usually 64x64 or 128x128 at best.
+              This is because training a DCGAN to higher resolution leads to a common problem called <a href= 'https://wandb.ai/authors/DCGAN-ndb-test/reports/Measuring-Mode-Collapse-in-GANs--VmlldzoxNzg5MDk'>'mode collapse'</a>, a
+              phenonmenon where the generator over-optimizes for the discriminator by producing the same subset of output that succeeds in fooling the discriminator which is currently stuck in
+              local minimum. With mode collapse, it will generate repeated patterns that lack expressive diversity again and again.
+            </p>
+
+            <p>
+              In an attempt to overcome this problem, the researchers at NVIDIA came up with the methodology of Progessive GAN(PGAN) to avoid 'shocking' the model network into mode collapse at high resolution[1].
+              The PGAN model starts training from low resolution (4x4) and gradually trains to higher resolution (1024x1024) to stabilize and speed up the training process. The idea is that it's easier for
+              the model to learn the big shape and edges first before progressing to learn the finer details of the composition. In fact, the idea behind PGAN is a lot
+              like how artists approach oil painting - first block in the big shapes and the tonal values, then gradually add the smaller details to complete the painting. Figure 5 below
+              gives a taste of how the image pixels evolve throughout a PGAN training.
+          </p>
+
+          <figure>
+            <center><img src="images/ai_art_trend/proGan_schematic.png"  width='75%' height='75%' ></center>
+            <figcaption>Fig.4. An example of generated content at each layer of the ProGan model during training.</figcaption>
+          </figure>
+         <p></p>
+
+              <center><img src="images/ai_art_trend/progan_portrait_relativistic.gif"  width='55%' height='55%'></center>
+              <center><i>Fig.5. The generated contents at each layer of the ProGan model during training.</i></center>
+
+
+<p></p>
+          <h2>Is it really art</h2>
+
+            <h3> REFERENCES </h3>
+            <p>[1]T Karras, T Aila, S Laine, J Lehtinen, <b>Progressive growing of gans for improved quality, stability, and variation</b>, arXiv preprint arXiv:1710.10196, 2017</p>
+            <p>[2]Molnar, C. Interpretable Machine Learning, https://christophm.github.io/interpretable-ml-book/feature-importance.html</p>
+            <p>[3]SM Lundberg, GG Erion, SI Lee, <b> Consistent individualized feature attribution for tree ensembles</b>, arXiv preprint arXiv:1802.03888</p>
+            <p>[4]Visualizing Keras CNN attention: Grad-CAM Class Activation Maps, 2019, https://www.machinecurve.com/index.php/2019/11/28/visualizing-keras-cnn-attention-grad-cam-class-activation-maps/</p>
+            <p>[5]Selvaraju, R. R., Cogswell, M., Das, A., Vedantam, R., Parikh, D., & Batra, D. <i>Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization</i>. 2017 IEEE International Conference on Computer Vision (ICCV).
+              doi:10.1109/iccv.2017.74</p>
+
+            <div id="disqus_thread" class="article-comments"></div>
+            <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+
+        </article>
+        <footer class="footer appear">
+          <p>
+            Chalk is a high quality, completely customizable, performant and 100% free
+            blog template for Jekyll built by
+            <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+          </p>
+        </footer>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    window.ga = function() {
+      ga.q.push(arguments)
+    };
+    ga.q = [];
+    ga.l = +new Date;
+    ga('create', 'UA-28631876-6', 'auto');
+    ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
+  <script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+  <script src="/assets/application.js"></script>
+
+
+</body>
+
+</html>
+
+© 2018 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+
+Contact GitHub
+API
+Training
+Shop
+Blog
+About
