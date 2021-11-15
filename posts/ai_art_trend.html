@@ -65,13 +65,15 @@
             <center>
               <figure>
                 <img src='images/ai_art_trend/alfred_bubble.jpg' alt="alfred" width='75%' height='75%'>
+                <figcaption>Example of a GAN portrait from my training of a ProGan model.</figcaption>
+
               </figure>
             </center>
 
             <p>In recent years, AI and machine learning has expanded into many pockets of modern society. One niche area that has
-          been transformed by AI is the art. Many algorithms have emerged that can generate original content, whether it is art 🎨 or music 🎶 (e.g. Jukebox from openAI).
-        As someone who loves art as a hobby, I have spent some time exploring the fascinating world of AiArt, especially cycleGAN and Progressive GAN. </p>
-        <p> My own art works are available in this art blog <u><a href='https://www.jennyyuart.com/ai-art'>page</a></u>.
+          been transformed by AI is the art world. Many algorithms have emerged that can generate original content, whether it is art 🎨 or music 🎶 (e.g. Jukebox from openAI).
+         Since I enjoy art as a <u><a href='https://www.jennyyuart.com/ai-art'>hobby</a></u>, I decided to spent some time exploring the quirky world of AI Art, 
+         especially cycleGAN and Progressive GAN. </p>
 
 
             <div class="article-list-footer">
@@ -86,7 +88,7 @@
               <span class="article-list-divider">-</span>
               <div class="article-list-tags">
 
-                <span class="article-list-divider">Python, AiArt </span>
+                <span class="article-list-divider">Python, AI Art </span>
               </div>
             </div>
           </header>
@@ -94,7 +96,7 @@
           <div class="article-content">
 
             <blockquote class="w3-panel w3-leftbar w3-light-grey" >
-              <i>XXXX</i>
+              <i>"Art is not what you see, but what you make others see." - Edgar Degas </i>
              </blockquote>
 
     <h2>Beyond Photoshop style transfer</h2>
@@ -103,64 +105,129 @@
             It maps the style content from one image to another image while maintaining the content of the second image. It works by fine tuning specific feature maps of a pre-trained convolutional model to create stylistic change.</p>
 
             <figure>
-              <center><img src="images/ai_art_trend/example_st_hockney.png"  width='85%' height='85%'></center>
+              <center><img src="images/ai_art_trend/example_st_hockney.png"  width='95%' height='95%'></center>
               <figcaption>Fig.1. Style transfer from a David Hockney print.</figcaption>
             </figure>
 
-  <p>The downside to style transfer is it requires a one-to-one pairing between the two images, and it only transfers the style of <b>one</b> image, which doesn't fully encapsulate the overall style of a particular artist or genre.
-  An alternative to that is cycleGAN, which trains the network to recognize the style using a collection of training images. This model is optimized on cycle-consistency loss, where the generated image Y_hat is used to generate the
-counterpart of X_hat, which is compared to the ground truth X to quantify the loss metric.</p>
+  <p>The limitation with style transfer is it requires a one-to-one pairing between the two images, and it only transfers the style of <b>one</b> image, 
+    which doesn't fully encapsulate the overall style of a particular artist or genre.
+  An alternative to that is cycleGAN, which trains the network to translate style using two sets 
+  of training images representing different genres. 
+  This model runs on something called `full translation cycle'. For each cycle, the Generator
+   G produces Ŷ to try to fool the discriminator D_Y, and generator F produces X̂ to try to fool 
+   the discriminator D_x.  The optimization is done using cycle-consistency loss, where the generated 
+   image Ŷ is translated to the counterpart image X̂, which is compared to the ground truth X to 
+   quantify the loss metric and improve the generator network.</p>
 
             <figure>
               <center><img src="https://devblogs.microsoft.com/cse/wp-content/uploads/sites/55/2017/06/full_cycle-768x501-1.jpg"  width='75%' height='75%'></center>
-              <figcaption>Fig.2. The model architecture of cycleGAN.</figcaption>
+              <center><img src="images/ai_art_trend/CartoonGAN_example.png" width='75%' height='75%'></center>
+              <figcaption>Fig.2. The model architecture of cycleGAN, here X and Y refer to the different genres of the training data. The bottom 
+                graphic is an example of image translation from a picture to a Miyazaki animation(CartoonGAN)[1].</figcaption>
             </figure>
 
  <h2>Generating new content</h2>
             <p>
               To make things more interesting enter Generative Adversarial Network(GAN), a deep learning model created by Ian Goodfellow that is a generative model for unsupervised learning (but uses a supervised learning loss function).
               It is composed of a discriminator and a generator (each being a Deep Convolutional Neural Net), where the generator tries to learn and mimic the data distribution of the training dataset in order to fool the discriminator and pass as a "real" image.
-              Much like counterfeit bills. The training is adversarial in that it alternates between the discriminator and generator, the generator is held constant during the discriminator training and vice versa. </p>
-              <p>After training the two models, the generator can take a latent 1-D vector that is randomly generated and generate something novel.</p>
+              Much like counterfeit bills. The training is adversarial in that it alternates between the discriminator and generator, the generator is held constant during the discriminator training and vice versa, ensuring that both neural networks 
+              are learning at the same pace. 
+            </p>
+              <p>After training the two models, the generator can take a latent 1-D vector that is randomly generated and generate something novel that mimics the training dataset.</p>
               <figure>
                 <center><img src="images/ai_art_trend/GAN_model.png"  width='75%' height='75%'></center>
                 <figcaption>Fig.3. The innner working of a vanilla GAN(source: Hunger Heindenreich, <a href='http://hunterheidenreich.com/blog/what-is-a-gan/'>What is a Generative Adversarial Network</a>).</figcaption>
               </figure>
 
-              <p>But there is a downside to generating through Deep Convolutional GAN.</p>
+              <p>But there is a downside to Deep Convolutional GAN.</p>
 
            <p>
-              Take a look at the DCGAN generated outputs floating around, and you'll see that they are usually 64x64 or 128x128 at best.
-              This is because training a DCGAN to higher resolution leads to a common problem called <a href= 'https://wandb.ai/authors/DCGAN-ndb-test/reports/Measuring-Mode-Collapse-in-GANs--VmlldzoxNzg5MDk'>'mode collapse'</a>, a
-              phenonmenon where the generator over-optimizes for the discriminator by producing the same subset of output that succeeds in fooling the discriminator which is currently stuck in
+              Take a look at the DCGAN generated images floating around, and you'll notice that they are usually 64x64 or 128x128 at best.
+              This is because training a conventional DCGAN to higher resolution leads to a common problem called <a href= 'https://wandb.ai/authors/DCGAN-ndb-test/reports/Measuring-Mode-Collapse-in-GANs--VmlldzoxNzg5MDk'>'mode collapse'</a>: a
+              phenonmenon where the generator over-optimizes for the discriminator by producing the same subset of output that succeeds in fooling the discriminator which is stuck in
               local minimum. With mode collapse, it will generate repeated patterns that lack expressive diversity again and again.
             </p>
 
             <p>
-              In an attempt to overcome this problem, the researchers at NVIDIA came up with the methodology of Progessive GAN(PGAN) to avoid 'shocking' the model network into mode collapse at high resolution[1].
-              The PGAN model starts training from low resolution (4x4) and gradually trains to higher resolution (1024x1024) to stabilize and speed up the training process. The idea is that it's easier for
-              the model to learn the big shape and edges first before progressing to learn the finer details of the composition. In fact, the idea behind PGAN is a lot
-              like how artists approach oil painting - first block in the big shapes and the tonal values, then gradually add the smaller details to complete the painting. Figure 5 below
-              gives a taste of how the image pixels evolve throughout a PGAN training.
+              In an attempt to overcome this problem, the researchers at NVIDIA came up with the idea of Progessive GAN(PGAN) to avoid 'shocking' the model network into mode collapse at high resolution[2].
+              The PGAN model starts training from low resolution (4x4) and gradually trains to higher resolution (1024x1024) to stabilize and speed up the training process. The intuition is that it's easier for
+              the model to learn the big shape and edges first before progressing to learn the finer details of the composition. In fact, the underlying concept is a lot
+              like how artists approach oil painting - first block in the big shapes plus the highest and lowest tonal values, then gradually add the smaller details and mid-range values to complete the painting. Figure 5 below
+              gives a glimpse of how the image pixels evolve in a training I did with an open-source PGAN model written by Animesh Karenewar[3].
           </p>
 
           <figure>
             <center><img src="images/ai_art_trend/proGan_schematic.png"  width='75%' height='75%' ></center>
-            <figcaption>Fig.4. An example of generated content at each layer of the ProGan model during training.</figcaption>
+            <figcaption>Fig.4. An example of generated content at each layer of the ProGan model during training. The introduction
+              of a new resolution layer is done with a fading parameter that treats the higher resolution layer as a residual block[2].
+            </figcaption>
           </figure>
-         <p></p>
 
+         <br>
+         <p>
               <center><img src="images/ai_art_trend/progan_portrait_relativistic.gif"  width='55%' height='55%'></center>
-              <center><i>Fig.5. The generated contents at each layer of the ProGan model during training.</i></center>
-
+              <center><i>Fig.5. The generated contents at each layer/resolution of a ProGan model I trained, starting at 4x4.
+                (source code: https://github.com/akanimax/pro_gan_pytorch)
+              </i></center>
+            </p>
 
 <p></p>
-          <h2>Is it really art</h2>
+
+    <h2>Natural language as art</h2>
+         <p>A new approach to AI Art has recently caught people's attention with the release of <a href='https://openai.com/blog/dall-e/'>DALL-E</a>(a portmanteau of Dalí and Pixar’s WALL·E) from OpenAI.
+          It is essentially an instance of GPT-3 (with 12 billion parameters) that learned how to map the input text to an output of pixel arrays via Transformer, and the output image is ranked 
+          by <a href='https://openai.com/blog/clip/'>CLIP</a> to obtain the top 32 results. All of the images generated by DALL-E are novel because they are synthesized from the concepts of the input prompt.
+          </p>
+          <p>The ability to capture various contexts and blending them means that DALL-E can come up with new designs from seemingly unrelated concepts. 
+            My personal favorite is the butterly lamps generated from the text 'a lamp in the style of a butterfly wing' as shown in Fig.6. 
+           And it actually resembles something I'd buy!</p>
+          <figure>
+            <center><img src="images/ai_art_trend/Dalle_generated_art.png"  width='65%' height='65%' ></center>
+            <figcaption>Fig.6. The array of plausible images generated from the text prompt.</figcaption>
+          </figure>
+
+          <p>For a more whimsical interpretation, check out the armchair in the style of a strawberry.🍓</p>
+
+          <h2>Is it really art?</h2>
+          <p>Before the headline-grabbing auction of the GAN art 'Portrait of Edmond Belamy' by Obvious, London-based artist <a href='https://www.artsy.net/artist/memo-akten'>Memo Akten</a>
+            was among the first few artists to sell
+           AI-generated art, the most notable being the piece <a href='http://www.memo.tv/works/all-watched-over-by-machines-of-loving-grace-deepdream-edition/'><i>
+             All watched over by machines of loving grace</i></a> at a Google charity auction in 2016. It was based on a satellite image of GCHQ reimagined through the lens of Google 
+             DeepDream(it surprisingly didn't look gauche). </p>
+
+            <p>While a GAN model 
+            learns the artistic style and content and is able to produce art on its own, it still requires the involvement of humans in the form of data collection and training. 
+            It acts as a medium because unlike human it cannot be inspired to come up with new <i>styles</i> or artistic interpretation in the same vein that Jackson Pollock 
+            fine-tuned the 'drip technique'. </p>
+
+            <p>The elephant in the room is the question of ownership - specifically who owns the training codes and the output. 
+              The general consensus is that the person who curates the data set and trains the model to generate the output 
+              has rights to those art work[4], 
+              with the assumption that they used training images that are public domain. If the training image is copyrighted then it is best practice to ask for the permission of the copyright holder. However, technically speaking,
+              AI Art modeling can be covered under the Fair Use principle. According to Creative Future, 
+              <i>"artistic works that are transformed in some way by another artist to comment on the original with new 
+                expression or meaning are often considered to be fair uses and do not lead to litigation." </i>[5]
+            </p>
+
+         <p>Ultimately, any artistic creativity is expressed by the human artist who designed the code and/or trained the model, with influences from the artists behind the training data. 
+        And the evolution of art can be aptly summarized by this quote:
+        <blockquote class="w3-panel w3-leftbar w3-light-grey" >
+          <i>“Learn the rules like a pro, so you can break them like an artist.” - Pablo Picasso </i>
+         </blockquote>
+        <p>While AI Art is carving out a niche within the art bubble, I'm a firm believer that 
+          conventional artists would not be replaced by AI (at least with the current models), 
+          because human sensibilities and the whim to deviate from the norm are not 
+          something any current algorithm can emulate.</p>
+      </p>
+        <br>
+
 
             <h3> REFERENCES </h3>
-            <p>[1]T Karras, T Aila, S Laine, J Lehtinen, <b>Progressive growing of gans for improved quality, stability, and variation</b>, arXiv preprint arXiv:1710.10196, 2017</p>
-
-
+            <p>[1]F Anderssen, S Arvidsson, Generative Adversarial Networks for photo to Hayao Miyazaki style cartoons, arXiv preprint arXiv:2005.07702, 2020</p>
+            <p>[2]T Karras, T Aila, S Laine, J Lehtinen, <b>Progressive growing of gans for improved quality, stability, and variation</b>, arXiv preprint arXiv:1710.10196, 2017</p>
+            <p>[3]A Karenewar, pro_gan_pytorch, https://github.com/akanimax/pro_gan_pytorch</p>
+            <p>[4]S Gaskin, When Art Created by Artificial Intelligence Sells, Who Gets Paid?,https://www.artsy.net/article/artsy-editorial-art-created-artificial-intelligence-sells-paid</p>
+            <p>[5]The Fair Use Confusion Game, https://www.creativefuture.org/why-this-matters/fairuse/</p>
             <div id="disqus_thread" class="article-comments"></div>
             <script src="https://chalk-1.disqus.com/embed.js" async defer></script>
             <noscript>Please enable JavaScript to view the comments.</noscript>
