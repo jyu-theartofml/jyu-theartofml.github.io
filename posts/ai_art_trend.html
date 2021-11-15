@@ -124,7 +124,7 @@
               <figcaption>Fig.2. The model architecture of cycleGAN, here X and Y refer to the different genres of the training data. The bottom 
                 graphic is an example of image translation from a picture to a Miyazaki animation(CartoonGAN)[1].</figcaption>
             </figure>
-
+<br>
  <h2>Generating new content</h2>
             <p>
               To make things more interesting enter Generative Adversarial Network(GAN), a deep learning model created by Ian Goodfellow that is a generative model for unsupervised learning (but uses a supervised learning loss function).
@@ -150,7 +150,7 @@
             <p>
               In an attempt to overcome this problem, the researchers at NVIDIA came up with the idea of Progessive GAN(PGAN) to avoid 'shocking' the model network into mode collapse at high resolution[2].
               The PGAN model starts training from low resolution (4x4) and gradually trains to higher resolution (1024x1024) to stabilize and speed up the training process. The intuition is that it's easier for
-              the model to learn the big shape and edges first before progressing to learn the finer details of the composition. In fact, the underlying concept is a lot
+              the model to learn the big shape and edges first before progressing to learn the finer details of the composition. In fact, this underlying concept is a lot
               like how artists approach oil painting - first block in the big shapes plus the highest and lowest tonal values, then gradually add the smaller details and mid-range values to complete the painting. Figure 5 below
               gives a glimpse of how the image pixels evolve in a training I did with an open-source PGAN model written by Animesh Karenewar[3].
           </p>
@@ -163,14 +163,14 @@
           </figure>
 
          <br>
-         <p style="font-size:13.3333px;">
+         <p>
               <center><img src="images/ai_art_trend/progan_portrait_relativistic.gif"  width='55%' height='55%'></center>
-              <center><i>Fig.5. The generated contents at each layer/resolution of a ProGan model I trained, starting at 4x4.
-                (source code: https://github.com/akanimax/pro_gan_pytorch)
+              <center><i><span style="font-size: 13.333px">Fig.5. The generated contents at each layer/resolution of a ProGan model I trained, starting at 4x4.
+                (source code: https://github.com/akanimax/pro_gan_pytorch)</span>
               </i></center>
             </p>
 
-<p></p>
+            <br>
 
     <h2>Natural language as art</h2>
          <p>A new approach to AI Art has recently caught people's attention with the release of <a href='https://openai.com/blog/dall-e/'>DALL-E</a>(a portmanteau of Dalí and Pixar’s WALL·E) from OpenAI.
