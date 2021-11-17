@@ -101,7 +101,7 @@
     <h2>Beyond Photoshop style transfer</h2>
 
             <p>One of the first Deep Learning models used to affect visual content is the Style Transfer algorithm (which is now a <a href='https://creativecloud.adobe.com/cc/discover/article/how-to-transfer-styles-to-images-with-adobe-photoshop?locale=en'>feature </a> of Photoshop).
-            It maps the style from one image to another image while maintaining the content of the second image. It works by fine tuning specific feature maps of a pre-trained convolutional model to create stylistic change.</p>
+            It maps the style from one image to another image while maintaining the content of the second image. It works by fine tuning specific feature maps of a pre-trained convolutional model to induce stylistic change.</p>
 
             <figure>
               <center><img src="images/ai_art_trend/example_st_hockney.png"  width='95%' height='95%'></center>
@@ -127,12 +127,13 @@
 <br>
  <h2>Generating new content</h2>
             <p>
-              To make things more interesting enter Generative Adversarial Network(GAN), a deep learning model created by Ian Goodfellow that is a generative model for unsupervised learning (but uses a supervised learning loss function).
-              It is composed of a discriminator and a generator (each being a Deep Convolutional Neural Net), where the generator tries to learn and mimic the data distribution of the training dataset in order to fool the discriminator and pass as a "real" image.
-              Much like counterfeit bills. The training is adversarial in that it alternates between the discriminator and generator, the generator is held constant during the discriminator training and vice versa, ensuring that both neural networks 
-              are learning at the same pace. 
+              To make things more interesting enter Generative Adversarial Network(GAN), a deep learning model created by Ian Goodfellow in 2014 that is a generative model for unsupervised learning (but uses a supervised learning loss function).
+              The system tries to learn the salient features of the training image dataset using convolutional neural networks. It is composed of a discriminator and a generator (each being a Deep Convolutional Neural Net), 
+              where the generator attempts to mimic the data distribution of the training data so it can fool the discriminator and pass its generated output as a "real" image.
+              Much like counterfeit bills. The training is adversarial in that it alternates between the discriminator and generator, the generator is held constant during the discriminator training and vice versa, 
+              ensuring that both neural networks are learning at the same pace. 
             </p>
-              <p>After training the two models, the generator can take a latent 1-D vector that is randomly generated and generate something novel that mimics the training dataset.</p>
+              <p>After training the two models, the generator can take a latent 1-D vector that is randomly generated and generate something novel in the genre of the training images.</p>
               <figure>
                 <center><img src="images/ai_art_trend/GAN_model.png"  width='75%' height='75%'></center>
                 <figcaption>Fig.3. The innner working of a vanilla GAN(source: Hunger Heindenreich, <a href='http://hunterheidenreich.com/blog/what-is-a-gan/'>What is a Generative Adversarial Network</a>).</figcaption>
