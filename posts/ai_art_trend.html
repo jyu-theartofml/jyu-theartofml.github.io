@@ -143,7 +143,7 @@
 
            <p>
               Take a look at the DCGAN generated images floating around, and you'll notice that they are usually 64x64 or 128x128 at best.
-              This is because training a conventional DCGAN to higher resolution leads to a common problem called <a href= 'https://wandb.ai/authors/DCGAN-ndb-test/reports/Measuring-Mode-Collapse-in-GANs--VmlldzoxNzg5MDk'>'mode collapse'</a>: a
+              This is because training a vanilla DCGAN to higher resolution leads to a common problem called <a href= 'https://wandb.ai/authors/DCGAN-ndb-test/reports/Measuring-Mode-Collapse-in-GANs--VmlldzoxNzg5MDk'>'mode collapse'</a>: a
               phenonmenon where the generator over-optimizes for the discriminator by producing the same subset of output that succeeds in fooling the discriminator which is stuck in
               local minimum. With mode collapse, it will generate repeated patterns that lack expressive diversity again and again.
             </p>
