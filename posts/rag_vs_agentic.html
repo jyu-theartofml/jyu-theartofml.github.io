@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge" charset="utf-8">
+  <title>RAG vs. Agentic Models: Choosing the Right AI Approach</title>
+  <meta name="description" content="Machine Learning, LLMs, RAG, Agentic Models">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="RAG vs. Agentic Models: Choosing the Right AI Approach">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jyu-theartofml.io/posts/rag_vs_agentic.html">
+  <meta property="og:site_name" content="The Art of Machine Learning">
+  <meta property="og:image" content="https://imgs.xkcd.com/comics/tasks.png">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="http://jyu-theartofml.io/feed.xml" type="application/rss+xml" rel="alternate" title="Latest blog posts" />
+
+  <link rel="stylesheet" href="/assets/light.css">
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav appear">
+          <a href="/" class="header-logo" title="The Art of Machine Learning">The Art of Machine Learning</a>
+          <ul class="header-links">
+            <li>
+              <a href="https://jyu-theartofml.github.io/about">About Me</a>
+            </li>
+            <li>
+              <a href="https://jyu-theartofml.github.io/toolbox">My Toolbox</a>
+            </li>
+            <li>
+              <a href="https://jyu-theartofml.github.io/ai_art/">AiArt</a>
+            </li>
+            <li>
+              <a href="https://github.com/jyu-theartofml" rel="noreferrer noopener" target="_blank" title="GitHub">
+                <span class="icon icon-github"></span>
+              </a>
+            </li>
+            <li>
+              <a href="https://linkedin.com/in/jenny-yu-co-80111" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+                <span class="icon icon-linkedin"></span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <article class="article appear">
+          <header class="article-header">
+            <h1>RAG vs. Agentic Models: Choosing the Right AI Approach</h1>
+            <center>
+              <figure>
+                <img src='https://imgs.xkcd.com/comics/tasks.png' alt="XKCD #1425: Tasks" width='100%' height='100%'>
+                <figcaption>Source: XKCD #1425 "Tasks" by Randall Munroe, licensed under CC BY-NC 2.5</figcaption>
+              </figure>
+            </center>
+
+            <p>In a world where we are innudated with a variety of choices for AI adoptions, it is important to know 
+              how they fit into our applications. Imagine if your AI assistant can either be a know-it-all librarian with perfect recall or a resourceful 
+              Sherlock Holmes who can solve complex problems on the fly. Sounds like a tough choice, right? Should you implement 
+              Retrieval-Augmented Generation (RAG) or agentic models? It's a bit like choosing between having an 
+              encyclopedic friend or a clever problem-solver as your sidekick.</p>
+
+            <p>RAG systems are the brainiacs of the AI world, fetching relevant content from vast knowledge sources 
+              to generate accurate, factual responses. They're all about grounding outputs in real data that provides <b>context</b>. 
+              Agentic models, meanwhile, are the clever tinkerers who can reason through problems, use tools, and figure things out step by step. 
+              They're the "let me think about this and get back to you with a solution" type of AI.</p>
+              
+            <p>This architectural fork in the road raises fascinating questions about the future of AI applications: 
+              will the robust memory of RAG systems win the day, or will the reasoning prowess of agentic models 
+              become the dominant approach?? This article will look at both architectures and explore when you might want 
+              one over the other (or maybe even both at once).</p>
+
+              Note: this article was writtn with assist from o1 and Claude.
+
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                March 8, 2025
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                7 minute read
+              </span>
+
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                <span class="article-list-divider">RAG, Agentic Models, LLM Architecture, AI Development, XKCD</span>
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h2>RAG - Your AI's Personal Research Assistant</h2>
+
+            <p>Retrieval-Augmented Generation(RAG), is basically what happens when you give an LLM its own 
+              personal research assistant. First cooked up by Facebook AI researchers back in 2020, RAG has quickly 
+              become the darling of applications where you absolutely need high accuracy or you are relying on 
+              real-time data (such as the news or stock market).
+            </p>
+
+            <p>The magic behind RAG works in three simple steps:
+              <ul>
+                <li>Your question gets processed and used to match for relevant information in a knowledge base</li>
+                <li>The juicy bits of information get handed over to the language model as context</li>
+                <li>The model crafts a response using this information</li>
+              </ul>
+            </p>
+            
+            <p>
+              This approach tackles one of the biggest facepalm moments with LLMs - their tendency to confidently make up 
+              facts when they don't know something!🤦🏻‍♀️ It's like that friend who never admits they don't know and instead spins an 
+              elaborate story. By grounding responses in actual retrieved information, RAG systems dramatically reduce 
+              these "creative interpretations" and can actually point to their sources.
+            </p>
+
+              The cool thing about RAG is that it's not just about accuracy. These systems can stay up-to-date with fresh information 
+              without having to retrain the entire model (let's face it, GPUs are expensive). 
+              They're also more transparent since you can peek behind the curtain to see which documents the system consulted for an answer.
+            </p>
+
+            <p>
+              But it's not all sunshine and rainbows. RAG systems have their own headaches. You need to carefully curate and update the knowledge base 
+              (garbage in, garbage out), build effective retrieval systems via similarity search algorithm that can find the right information even with vague questions, 
+              and figure out what to do when different documents contradict each other. Plus, they tend to be less creative and more 
+              constrained than their freewheeling generative cousins - more like a cautious librarian than a creative writer.
+            </p>
+          
+            <h2>Agentic Models - The AI Sherlock</h2>
+            <p>
+              While RAG systems are busy hitting the books, agentic models are more like AI Sherlock - they're all about taking action 
+              and solving problems. These systems don't just answer your questions; they roll up their virtual sleeves to take actions, 
+              using tools, and adapting to accomplish whatever task you've set for them.
+            </p>
+
+            <p>
+              What makes an agentic model work? It's a combination of some pretty nifty capabilities:
+              <ul>
+                <li>Planning: Breaking down "make me a marketing strategy" into actual actionable steps</li>
+                <li>Reasoning: Making logical leaps and decisions based on what they know (or think they know)</li>
+                <li>Tool use: Grabbing calculators, APIs, web browsers, and whatever else they need to get the job done</li>
+                <li>Learning: Getting better at tasks by remembering what worked and what faceplanted last time</li>
+              </ul>
+            </p>
+
+            <p>
+              These AI problem-solvers shine when things get complicated. Imagine having an AI data science assistant that doesn't just 
+              stare blankly at your CSV file but actually interprets and analyzes it, creates suggestions that make sense, 
+              spots the weird outliers - all without you having to spell out every tiny step along the way.
+            </p>
+
+            <p>
+              The real superpower of agentic models is their versatility and creativity in tackling open-ended problems. 
+              They can navigate through complex decisions, learn from feedback, and use a whole toolkit of 
+              resources to reach their answers. They're especially valuable when a task would otherwise need either multiple 
+              separate AI systems or a human babysitting the processs.
+            </p>
+
+            <p>
+              Of course, with great power comes... a whole bunch of new problems to solve. These models need robust ways to 
+              handle failures (because they will happen), careful guardrails to prevent unintended consequences, and 
+              sophisticated monitoring to keep track of their decision-making. They're also typically more complicated to build 
+              and maintain than 
+              their simpler cousins - think sports car vs. bicycle maintenance schedules.
+            </p>
+
+            <h2>So which one should you pick?</h2>
+            <p>
+              So you're standing at this AI architecture crossroads, RAG in one hand, agentic models in the other, 
+              wondering which way to go. Let's break it down into some practical decision points:
+            </p>
+
+            <h3>When to pick each approach</h3>
+            <p>
+              <strong>Go with RAG when:</strong>
+              <ul>
+                <li>You cannot afford to make stuff up (think medical info or legal advice where hallucinations could land you in hot water)</li>
+                <li>Your app needs to know very specific domain knowledge (like a technical support bot that needs to quote the exact manual)</li>
+                <li>You need to show your receipts (i.e., cite sources for every claim)</li>
+                <li>Your knowledge base is constantly evolving</li>
+              </ul>
+
+              <strong>Go with agentic models when:</strong>
+              <ul>
+                <li>Your tasks involve multiple steps that need figuring out on the fly (like research assistance or coding)</li>
+                <li>You need the AI to use external tools (calculators, web searches, data analysis tools)</li>
+                <li>The problems you're tackling are open-ended with many possible solutions</li>
+                <li>Creativity and adaptability matter more than perfect factual accuracy</li>
+              </ul>
+            </p>
+
+            <h3>What it'll cost you (resource-wise)</h3>
+            <p>
+              Both options come with their own price tags:
+              <ul>
+                <li>RAG requires investing in a well-maintained knowledge base (which is not a set-it-and-forget-it situation)</li>
+                <li>Agentic models need more sophisticated safety guardrails (because more freedom = more potential for chaos)</li>
+                <li>RAG systems might hit your wallet harder on infrastructure costs due to all that retrieval processing</li>
+                <li>Agentic models often demand more complex integration work with external systems and tools</li>
+              </ul>
+            </p>
+
+            <h3>Where you've probably seen them in the wild</h3>
+            <p >
+              Still confused? Here's where these approaches are already thriving:
+              <ul>
+                <li>That super helpful customer support chatbot that knows exactly which page of the manual to quote? RAG.</li>
+                <li>The AI assistant that helps data scientists analyze datasets and suggests visualizations? Agentic.</li>
+                <li>Medical information systems that can cite specific research papers? Definitely RAG.</li>
+                <li>Your AI productivity assistant that helps you draft emails, schedule meetings, and organize your life? Agentic.</li>
+              </ul>
+            </p>
+
+            <h2>Why not both? (The chocolate-and-peanut-butter solution)</h2>
+            <p>
+              Here's where things get interesting. More and more AI developers are discovering what the makers of Reese's figured out long ago - 
+              sometimes two great things are even better together. Hybrid systems that combine RAG and agentic capabilities are 
+              becoming the new hotness, letting AI systems look up information when needed but also reason about it and take action.
+              It's like giving your AI both superpowers at once - the factual accuracy of RAG with the problem-solving skills of agentic models.
+            </p>
+
+            <p>
+              Picture an AI research assistant that can search academic databases to find relevant papers (that's the RAG part), 
+              analyze patterns across those papers, identify gaps in the research, and then synthesize all this into a coherent literature review 
+              (that's the agentic part). It's like having both a librarian and a research partner rolled into one AI package.
+            </p>
+
+            <figure>
+              <center><img src='https://imgs.xkcd.com/comics/machine_learning_captcha.png' width='95%' height='95%'></center>
+              <figcaption>Fig.3. XKCD #2228 "Machine Learning Captcha" by Randall Munroe, licensed under CC BY-NC 2.5 </figcaption>
+            </figure>
+
+            <p>
+              Building these hybrid systems is definitely more complicated - it's like trying to design a car that's also occasionally a bike. 
+              You need to figure out when to switch between retrieval and reasoning modes, how to maintain a coherent flow between these different 
+              processes, and how to optimize for both factual accuracy and problem-solving efficiency. 
+            </p>
+
+            <p>
+              The most significant advances will likely come at the intersection of these approaches, with systems 
+              that can seamlessly blend knowledge retrieval, reasoning, and action in ways that amplify their respective 
+              strengths while mitigating their weaknesses. As you evaluate which approach is right for your specific needs, remember that the choice isn't 
+              necessarily binary. Consider starting with the simpler approach that addresses your core requirements, 
+              with the flexibility to incorporate elements of the other as needed. The right architecture is ultimately 
+              the one that best serves your users and meets your specific use case.
+            </p>
+
+            <br>
+
+            <h3>REFERENCES</h3>
+            <p>[1] Lewis, P., et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. <i>Advances in Neural Information Processing Systems</i>, 33.</p>
+            <p>[2] Yao, S., et al. (2023). ReAct: Synergizing Reasoning and Acting in Language Models. <i>International Conference on Learning Representations (ICLR)</i>.</p>
+            <p>[3] Nakano, R., et al. (2022). WebGPT: Browser-assisted question-answering with human feedback. <i>arXiv preprint arXiv:2112.09332</i>.</p>
+            <p>[4] Schick, T., et al. (2023). Toolformer: Language Models Can Teach Themselves to Use Tools. <i>arXiv preprint arXiv:2302.04761</i>.</p>
+            <p>[5] Huang, W., et al. (2022). InstructGPT: Training language models to follow instructions with human feedback. <i>arXiv preprint arXiv:2203.02155</i>.</p>
+
+            <div id="disqus_thread" class="article-comments"></div>
+            <script src="https://ai-insights.disqus.com/embed.js" async defer></script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+          </div>
+        </article>
+
+        <footer class="footer appear">
+          
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    window.ga = function() {
+      ga.q.push(arguments)
+    };
+    ga.q = [];
+    ga.l = +new Date;
+    ga('create', 'UA-12345678-9', 'auto');
+    ga('send', 'pageview')
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+  <script src="/assets/vendor.js"></script>
+  <script src="/assets/webfonts.js"></script>
+  <script src="/assets/scrollappear.js"></script>
+  <script src="/assets/application.js"></script>
+</body>
+</html>
